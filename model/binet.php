@@ -16,4 +16,14 @@
     $req->execute(array(':subsidy_steps' => $subsidy_steps));
   }
 
-  
+  function get_members($binet) {
+    $sql = "SELECT *
+            FROM student
+            INNER JOIN binet_admin
+            ON student.id = binet_admin.student
+            WHERE binet_admin.binet = :binet";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
