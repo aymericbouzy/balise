@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_ShfJ8E4KEeSQyOpXs3hWfw" name="balise">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_05NoEE4KEeSQyOpXs3hWfw" name="Binet"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_23QCEE4KEeSQyOpXs3hWfw" name="Kes"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_3kaDAE4KEeSQyOpXs3hWfw" name="Binet subventionneur"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_UXfM0E4LEeSQyOpXs3hWfw" name="site_web" useCase="_pwvpYE4LEeSQyOpXs3hWfw _uLWMcE4LEeSQyOpXs3hWfw _2Bb-8E4LEeSQyOpXs3hWfw">
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_pwvpYE4LEeSQyOpXs3hWfw" name="Consulter des opérations" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_uLWMcE4LEeSQyOpXs3hWfw" name="Effectuer une dépense pour un binet" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_2Bb-8E4LEeSQyOpXs3hWfw" name="Consulter un solde de subvention restante" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_7rk3QE4LEeSQyOpXs3hWfw" name="" memberEnd="_7rk3QU4LEeSQyOpXs3hWfw _7rk3RE4LEeSQyOpXs3hWfw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_7rk3QU4LEeSQyOpXs3hWfw" name="binet" type="_05NoEE4KEeSQyOpXs3hWfw" association="_7rk3QE4LEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7rk3Qk4LEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7rk3Q04LEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_7rk3RE4LEeSQyOpXs3hWfw" name="effectuer une dépense pour un binet" type="_uLWMcE4LEeSQyOpXs3hWfw" association="_7rk3QE4LEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_7rk3RU4LEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_7rk3Rk4LEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_9J2zIE4LEeSQyOpXs3hWfw" name="" memberEnd="_9J3aME4LEeSQyOpXs3hWfw _9J3aM04LEeSQyOpXs3hWfw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_9J3aME4LEeSQyOpXs3hWfw" name="binet" type="_05NoEE4KEeSQyOpXs3hWfw" association="_9J2zIE4LEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_9J3aMU4LEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_9J3aMk4LEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_9J3aM04LEeSQyOpXs3hWfw" name="consulter des opérations" type="_pwvpYE4LEeSQyOpXs3hWfw" association="_9J2zIE4LEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_9J3aNE4LEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_9J3aNU4LEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_98XOIE4LEeSQyOpXs3hWfw" name="" memberEnd="_98XOIU4LEeSQyOpXs3hWfw _98XOJE4LEeSQyOpXs3hWfw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_98XOIU4LEeSQyOpXs3hWfw" name="binet" type="_05NoEE4KEeSQyOpXs3hWfw" association="_98XOIE4LEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_98XOIk4LEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_98XOI04LEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_98XOJE4LEeSQyOpXs3hWfw" name="consulter un solde de subvention restante" type="_2Bb-8E4LEeSQyOpXs3hWfw" association="_98XOIE4LEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_98XOJU4LEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_98XOJk4LEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_CRsPoE4MEeSQyOpXs3hWfw" name="" memberEnd="_CRsPoU4MEeSQyOpXs3hWfw _CRsPpE4MEeSQyOpXs3hWfw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_CRsPoU4MEeSQyOpXs3hWfw" name="kes" type="_23QCEE4KEeSQyOpXs3hWfw" association="_CRsPoE4MEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_CRsPok4MEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_CRsPo04MEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_CRsPpE4MEeSQyOpXs3hWfw" name="effectuer une dépense pour un binet" type="_uLWMcE4LEeSQyOpXs3hWfw" association="_CRsPoE4MEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_CRsPpU4MEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_CRsPpk4MEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_E-sBYE4MEeSQyOpXs3hWfw" memberEnd="_E-sBYU4MEeSQyOpXs3hWfw _E-sBZE4MEeSQyOpXs3hWfw">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_E-sBYU4MEeSQyOpXs3hWfw" name="kes" type="_23QCEE4KEeSQyOpXs3hWfw" association="_E-sBYE4MEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_E-sBYk4MEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E-sBY04MEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_E-sBZE4MEeSQyOpXs3hWfw" name="consulter des opérations" type="_pwvpYE4LEeSQyOpXs3hWfw" association="_E-sBYE4MEeSQyOpXs3hWfw">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_E-sBZU4MEeSQyOpXs3hWfw" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E-sBZk4MEeSQyOpXs3hWfw" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_NNeAsE4MEeSQyOpXs3hWfw" name="Base de données"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_OZmcoE4MEeSQyOpXs3hWfw" name="Ensemble des factures"/>
+</uml:Model>
