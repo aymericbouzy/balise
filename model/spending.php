@@ -37,3 +37,25 @@
     $spending = $req->fetch(PDO::FETCH_ASSOC);
     return $spending["id"];
   }
+
+  function validate_spending($spending) {
+    $sql = "UPDATE spending
+            SET binet_validation_by = :student
+            WHERE id = :spending
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function validate_kes_spending($spending) {
+    $sql = "UPDATE spending
+            SET kes_validation_by = :student
+            WHERE id = :spending
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->execute();
+  }
