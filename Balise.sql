@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 07, 2014 at 08:28 AM
+-- Generation Time: Oct 07, 2014 at 10:22 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `binet` (
   `name` varchar(50) NOT NULL,
   `subsidy_provider` tinyint(1) NOT NULL DEFAULT '0',
   `active` tinyint(1) NOT NULL DEFAULT '1',
-  `subsidy_steps` text NOT NULL
+  `subsidy_steps` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `binet` (
 
 CREATE TABLE IF NOT EXISTS `binet_admin` (
   `binet` int(11) NOT NULL,
+  `validated_by` int(11) DEFAULT NULL,
   `student` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

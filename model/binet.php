@@ -4,9 +4,10 @@
     $req = Database::get()->prepare("INSERT INTO binet(name) VALUES(':name')");
     $req->execute(array('name' => $name));
     $binet = $req->fetch(PDO::FETCH_ASSOC);
-    $req = Database::get()->prepare("INSERT INTO binet_admin(binet, student) VALUES(:binet, :admin)");
+    $req = Database::get()->prepare("INSERT INTO binet_admin(binet, student, validated_by) VALUES(:binet, :admin, :validated_by)");
     $req->bindParam(':binet', $binet["id"], PDO::PARAM_INT);
     $req->bindParam(':admin', $admin, PDO::PARAM_INT);
+    $req->bindParam(':validated_by', $_SESSION["student_id"], PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -21,7 +22,7 @@
             FROM student
             INNER JOIN binet_admin
             ON student.id = binet_admin.student
-            WHERE binet_admin.binet = :binet";
+            WHERE binet_admin.binet = :binet AND binet_admin.validated_by != NULL";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
