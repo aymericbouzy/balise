@@ -9,6 +9,7 @@
     $req->bindParam(':admin', $admin, PDO::PARAM_INT);
     $req->bindParam(':validated_by', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
+    return $binet["id"]
   }
 
   function set_subsidy_provider($binet, $subsidy_steps) {
@@ -39,4 +40,17 @@
     $req->bindParam(':student', $student, PDO::PARAM_INT);
     $req->bindParam(':validated_by', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
+  }
+
+  function request_admin_binet($binet) {
+    $sql = "INSERT INTO binet_admin(binet, student)
+            VALUES(:binet, :student)";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function get_status_admin_binet($binet) {
+    
   }
