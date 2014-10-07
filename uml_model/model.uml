@@ -3,12 +3,131 @@
   <packagedElement xmi:type="uml:Actor" xmi:id="_05NoEE4KEeSQyOpXs3hWfw" name="Binet"/>
   <packagedElement xmi:type="uml:Actor" xmi:id="_23QCEE4KEeSQyOpXs3hWfw" name="Kes"/>
   <packagedElement xmi:type="uml:Actor" xmi:id="_3kaDAE4KEeSQyOpXs3hWfw" name="Binet subventionneur"/>
-  <packagedElement xmi:type="uml:Class" xmi:id="_UXfM0E4LEeSQyOpXs3hWfw" name="site_web" useCase="_pwvpYE4LEeSQyOpXs3hWfw _uLWMcE4LEeSQyOpXs3hWfw _2Bb-8E4LEeSQyOpXs3hWfw _qfxvQE4vEeSgbe172Nt0EA _wF0xwE4vEeSgbe172Nt0EA">
+  <packagedElement xmi:type="uml:Actor" xmi:id="_OZmcoE4MEeSQyOpXs3hWfw" name="Ensemble des factures"/>
+  <packagedElement xmi:type="uml:Actor" xmi:id="_j4n1EE4vEeSgbe172Nt0EA" name="utilisateur"/>
+  <packagedElement xmi:type="uml:Class" xmi:id="_UXfM0E4LEeSQyOpXs3hWfw" name="site_web" useCase="_pwvpYE4LEeSQyOpXs3hWfw _uLWMcE4LEeSQyOpXs3hWfw _2Bb-8E4LEeSQyOpXs3hWfw _qfxvQE4vEeSgbe172Nt0EA _wF0xwE4vEeSgbe172Nt0EA _9aeCME4wEeSgbe172Nt0EA _HABDUE41EeSgbe172Nt0EA" classifierBehavior="_6y77EE43EeS36f3bFI7xaQ">
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_pwvpYE4LEeSQyOpXs3hWfw" name="Consulter des opérations" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_uLWMcE4LEeSQyOpXs3hWfw" name="Effectuer une dépense pour un binet" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_2Bb-8E4LEeSQyOpXs3hWfw" name="Consulter un solde de subvention restante" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_qfxvQE4vEeSgbe172Nt0EA" name="Valider une dépense" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
     <ownedUseCase xmi:type="uml:UseCase" xmi:id="_wF0xwE4vEeSgbe172Nt0EA" name="attribuer une subvention" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_9aeCME4wEeSgbe172Nt0EA" name="Valider une dépense utilisateur" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
+    <ownedUseCase xmi:type="uml:UseCase" xmi:id="_HABDUE41EeSgbe172Nt0EA" name="gerer liste binets" subject="_UXfM0E4LEeSQyOpXs3hWfw"/>
+    <ownedBehavior xmi:type="uml:Activity" xmi:id="_6y77EE43EeS36f3bFI7xaQ" name="Activity1"/>
+    <nestedClassifier xmi:type="uml:Actor" xmi:id="_NNeAsE4MEeSQyOpXs3hWfw" name="Base de données"/>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_51aYUE42EeS36f3bFI7xaQ" name="spending">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KygLkE43EeS36f3bFI7xaQ" name="id"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_U0o-4E43EeS36f3bFI7xaQ" name="date"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_W10McE43EeS36f3bFI7xaQ" name="amount"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Yr5kUE43EeS36f3bFI7xaQ" name="bill"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_daxHME43EeS36f3bFI7xaQ" name="created_by"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_f4xasE43EeS36f3bFI7xaQ" name="binet_validation_by"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_kXg24E43EeS36f3bFI7xaQ" name="kes_validation_by"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_nQaWoE43EeS36f3bFI7xaQ" name="paid_by"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_qpX2gE43EeS36f3bFI7xaQ" name="comment"/>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_AwXYQE43EeS36f3bFI7xaQ" name="spending_subsidy">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_JAj3YE44EeS36f3bFI7xaQ" name="spending"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_M05rsE44EeS36f3bFI7xaQ" name="subsidy"/>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_PKN9QE44EeS36f3bFI7xaQ" name="amount"/>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_-AG6UE46EeS36f3bFI7xaQ" name="binet">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_BnNj4E47EeS36f3bFI7xaQ" name="name" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_E8DYwE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E8Em4E47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Gy3JYE47EeS36f3bFI7xaQ" name="subsidy_provider" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_JlPxcE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_JlQ_kE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_KQ7ywE47EeS36f3bFI7xaQ" name="active" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_L3ObIE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_L3PpQE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Mgn9cE47EeS36f3bFI7xaQ" name="subsidy_steps" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_OxLDwE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_OxLq0E47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_RK4tIE47EeS36f3bFI7xaQ" name="binet_admin">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_TtM44E47EeS36f3bFI7xaQ" name="binet" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_VPdV0E47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_VPej8E47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_WZKv4E47EeS36f3bFI7xaQ" name="validated_by" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_X0VGUE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_X0WUcE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Y0BowE47EeS36f3bFI7xaQ" name="student" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_axKD0E47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_axLR8E47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_cWS1oE47EeS36f3bFI7xaQ" name="income">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_etnSUE47EeS36f3bFI7xaQ" name="id" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_lKOwcE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lKP-kE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ffR_0E47EeS36f3bFI7xaQ" name="date" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_nFp7UE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_nFrwgE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_g9MvUE47EeS36f3bFI7xaQ" name="amount" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ohqmUE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ohr0cE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_hewkQE47EeS36f3bFI7xaQ" name="origin" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_qjXYUE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_qjYmcE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ia41UE47EeS36f3bFI7xaQ" name="created_by" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_seKREE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_seLfME47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_jKzPUE47EeS36f3bFI7xaQ" name="kes_validation_by" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_urJGAE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_urK7ME47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_kEoaUE47EeS36f3bFI7xaQ" name="comment" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_wJjkwE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_wJlZ8E47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_zMfxUE47EeS36f3bFI7xaQ" name="income_origin">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_0PQ14E47EeS36f3bFI7xaQ" name="id" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_2ZSdcE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_2ZTrkE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_09Ch4E47EeS36f3bFI7xaQ" name="name" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5LiioE47EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5LjwwE47EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_Awb3cE48EeS36f3bFI7xaQ" name="income_tag">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_CsAzUE48EeS36f3bFI7xaQ" name="income" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_E-elME48EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E-gaYE48EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_DWmBYE48EeS36f3bFI7xaQ" name="tag" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_GQJBYE48EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_GQJocE48EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_VzxuYE48EeS36f3bFI7xaQ" name="student">
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_YdOc4E48EeS36f3bFI7xaQ" name="id" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_c6boAE48EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_c6c2IE48EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_ZDDGwE48EeS36f3bFI7xaQ" name="name" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_eN1JkE48EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_eN2XsE48EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:type="uml:Property" xmi:id="_Zn0nwE48EeS36f3bFI7xaQ" name="email" visibility="public">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_ftBEYE48EeS36f3bFI7xaQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_ftCSgE48EeS36f3bFI7xaQ" value="1"/>
+      </ownedAttribute>
+    </nestedClassifier>
+    <nestedClassifier xmi:type="uml:DataType" xmi:id="_iFAPcE48EeS36f3bFI7xaQ" name="subsidy"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Association" xmi:id="_7rk3QE4LEeSQyOpXs3hWfw" name="" memberEnd="_7rk3QU4LEeSQyOpXs3hWfw _7rk3RE4LEeSQyOpXs3hWfw">
     <ownedEnd xmi:type="uml:Property" xmi:id="_7rk3QU4LEeSQyOpXs3hWfw" name="binet" type="_05NoEE4KEeSQyOpXs3hWfw" association="_7rk3QE4LEeSQyOpXs3hWfw">
@@ -60,9 +179,6 @@
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_E-sBZk4MEeSQyOpXs3hWfw" value="1"/>
     </ownedEnd>
   </packagedElement>
-  <packagedElement xmi:type="uml:Actor" xmi:id="_NNeAsE4MEeSQyOpXs3hWfw" name="Base de données"/>
-  <packagedElement xmi:type="uml:Actor" xmi:id="_OZmcoE4MEeSQyOpXs3hWfw" name="Ensemble des factures"/>
-  <packagedElement xmi:type="uml:Actor" xmi:id="_j4n1EE4vEeSgbe172Nt0EA" name="utilisateur"/>
   <packagedElement xmi:type="uml:Association" xmi:id="_olPVME4vEeSgbe172Nt0EA" name="" memberEnd="_olPVMU4vEeSgbe172Nt0EA _olPVNE4vEeSgbe172Nt0EA">
     <ownedEnd xmi:type="uml:Property" xmi:id="_olPVMU4vEeSgbe172Nt0EA" name="utilisateur" type="_j4n1EE4vEeSgbe172Nt0EA" association="_olPVME4vEeSgbe172Nt0EA">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_olPVMk4vEeSgbe172Nt0EA" value="1"/>
@@ -78,7 +194,7 @@
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tSZA0k4vEeSgbe172Nt0EA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tSZA004vEeSgbe172Nt0EA" value="1"/>
     </ownedEnd>
-    <ownedEnd xmi:type="uml:Property" xmi:id="_tSZA1E4vEeSgbe172Nt0EA" name="valider une dépense" type="_qfxvQE4vEeSgbe172Nt0EA" association="_tSZA0E4vEeSgbe172Nt0EA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_tSZA1E4vEeSgbe172Nt0EA" name="valider une dépense" type="_9aeCME4wEeSgbe172Nt0EA" association="_tSZA0E4vEeSgbe172Nt0EA">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_tSZA1U4vEeSgbe172Nt0EA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_tSZA1k4vEeSgbe172Nt0EA" value="1"/>
     </ownedEnd>
@@ -171,6 +287,16 @@
     <ownedEnd xmi:type="uml:Property" xmi:id="_BLhHZE4wEeSgbe172Nt0EA" name="valider une dépense" type="_qfxvQE4vEeSgbe172Nt0EA" association="_BLhHYE4wEeSgbe172Nt0EA">
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_BLhHZU4wEeSgbe172Nt0EA" value="1"/>
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_BLhHZk4wEeSgbe172Nt0EA" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_Jk-6cE41EeSgbe172Nt0EA" name="" memberEnd="_Jk-6cU41EeSgbe172Nt0EA _Jk-6dE41EeSgbe172Nt0EA">
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Jk-6cU41EeSgbe172Nt0EA" name="kes" type="_23QCEE4KEeSQyOpXs3hWfw" association="_Jk-6cE41EeSgbe172Nt0EA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Jk-6ck41EeSgbe172Nt0EA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Jk-6c041EeSgbe172Nt0EA" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:type="uml:Property" xmi:id="_Jk-6dE41EeSgbe172Nt0EA" name="gerer liste binets" type="_HABDUE41EeSgbe172Nt0EA" association="_Jk-6cE41EeSgbe172Nt0EA">
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_Jk-6dU41EeSgbe172Nt0EA" value="1"/>
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_Jk-6dk41EeSgbe172Nt0EA" value="1"/>
     </ownedEnd>
   </packagedElement>
 </uml:Model>
