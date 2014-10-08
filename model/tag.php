@@ -74,3 +74,23 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function select_active_tags_binet($binet) {
+    $sql = "SELECT *
+            FROM tag
+            WHERE binet = :binet AND state = 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
+  function select_tags_binet($binet) {
+    $sql = "SELECT *
+            FROM tag
+            WHERE binet = :binet";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
