@@ -92,3 +92,14 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function consumed_amount_subsidy($subsidy) {
+    $sql = "SELECT SUM(amount) as amount
+            FROM spending_subsidy
+            WHERE subsidy = :subsidy";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->execute();
+    $res = $req->fetch(PDO::FETCH_ASSOC);
+    return $res["amount"] or 0;
+  }

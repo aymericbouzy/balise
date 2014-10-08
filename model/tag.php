@@ -137,14 +137,22 @@
     return $req->fetchAll();
   }
 
-  function select_subsidies_tag($tag) {
+  function select_subsidies_tag_array($tags) {
     $sql = "SELECT *
             FROM subsidy_tag
             INNER JOIN subsidy
             ON subsidy.id = subsidy_tag.subsidy
-            WHERE subsidy_tag.tag = :tag";
+            WHERE true";
+    $i = 0;
+    foreach($tags as $tag) {
+      $sql .= "AND subsidy_tag.tag = :tag" + $i;
+      $i++;
+      $bindparams[":tag" + $i] = $tag;
+    }
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    foreach($bindparams as $key => $value) {
+      $req->bindParam($key, $value, PDO::PARAM_INT);
+    }
     $req->execute();
     return $req->fetchAll();
   }
