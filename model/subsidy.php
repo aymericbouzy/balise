@@ -26,3 +26,14 @@
     $req->execute();
     return $req->fetch(PDO::FETCH_ASSOC);
   }
+
+  function validate_subsidy($subsidy) {
+    $sql = "UPDATE subsidy
+            SET validation_by = :student
+            WHERE id = :subsidy";
+    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  
