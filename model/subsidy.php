@@ -93,6 +93,24 @@
     return $req->fetchAll();
   }
 
+  function select_subsidies_tag_array($tags) {
+    $sql = "SELECT *
+            FROM subsidy
+            WHERE true";
+    $i = 0;
+    foreach($tags as $tag) {
+      $sql .= " AND EXISTS (SELECT * FROM subsidy_tag WHERE subsidy_tag.subsidy = subsidy.id AND subsidy_tag.tag = :tag" + $i + ")";
+      $i++;
+      $bindparams[":tag" + $i] = $tag;
+    }
+    $req = Database::get()->prepare($sql);
+    foreach($bindparams as $key => $value) {
+      $req->bindParam($key, $value, PDO::PARAM_INT);
+    }
+    $req->execute();
+    return $req->fetchAll();
+  }
+
   function consumed_amount_subsidy($subsidy) {
     $sql = "SELECT SUM(amount) as amount
             FROM spending_subsidy
