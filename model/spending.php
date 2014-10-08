@@ -72,3 +72,15 @@
       }
     }
   }
+
+  function select_spendings_subsidy($subsidy) {
+    $sql = "SELECT *
+            FROM spending_subsidy
+            INNER JOIN spending
+            ON spending.id = spending_subsidy.spending
+            WHERE spending_subsidy.subsidy = :subsidy";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }

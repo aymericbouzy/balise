@@ -80,3 +80,15 @@
     $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
     $req->execute();
   }
+
+  function select_subsidies_spending($spending) {
+    $sql = "SELECT *
+            FROM spending_subsidy
+            INNER JOIN subsidy
+            ON subsidy.id = spending_subsidy.subsid
+            WHERE spending_subsidy.spending = :spending";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
