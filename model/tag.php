@@ -94,3 +94,12 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function add_tag_subsidy($tag, $subsidy) {
+    $sql = "INSERT INTO subsidy_tag(subsidy, tag)
+            VALUES(:subsidy, :tag)";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->execute();
+  }
