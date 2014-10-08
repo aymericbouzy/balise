@@ -62,3 +62,15 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function select_spendings_tag($tag) {
+    $sql = "SELECT *
+            FROM spending_tag
+            INNER JOIN spending
+            ON spending.id = spending_tag.spending
+            WHERE spending_tag.tag = :tag";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
