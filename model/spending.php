@@ -84,3 +84,24 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function spent_amount_tag_array($tags) {
+    $sql = "SELECT SUM(spending.amount) as amount
+            FROM spending
+            INNER JOIN spending_tag
+            ON spending.id = spending_tag.spending
+            WHERE true";
+    $i = 0;
+    foreach($tags as $tag) {
+      $sql .= " AND spending_tag.tag = :tag" + $i;
+      $i++;
+      $bindparams[":tag" + $i] = $tag;
+    }
+    $req = Database::get()->prepare($sql);
+    foreach($bindparams as $key => $value) {
+      $req->bindParam($key, $value, PDO::PARAM_INT);
+    }
+    $req->execute();
+    $res = $req->fetch(PDO::FETCH_ASSOC);
+    return $res["amount"] or 0;
+  }

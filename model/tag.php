@@ -94,7 +94,25 @@
     return $req->fetchAll();
   }
 
-  function select_spendings_tag($tag) {
+  function select_spendings_tag_array($tags) {
+    $sql = "SELECT *
+            FROM spending_tag
+            INNER JOIN spending
+            ON spending.id = spending_tag.spending
+            WHERE true";
+    $i = 0;
+    foreach($tags as $tag) {
+      $sql .= " AND spending_tag.tag = :tag" + $i;
+      $i++;
+      $bindparams[":tag" + $i] = $tag;
+    }
+    $req = Database::get()->prepare($sql);
+    foreach($bindparams as $key => $value) {
+      $req->bindParam($key, $value, PDO::PARAM_INT);
+    }
+    $req->execute();
+    return $req->fetchAll();
+
     $sql = "SELECT *
             FROM spending_tag
             INNER JOIN spending
@@ -145,7 +163,7 @@
             WHERE true";
     $i = 0;
     foreach($tags as $tag) {
-      $sql .= "AND subsidy_tag.tag = :tag" + $i;
+      $sql .= " AND subsidy_tag.tag = :tag" + $i;
       $i++;
       $bindparams[":tag" + $i] = $tag;
     }
