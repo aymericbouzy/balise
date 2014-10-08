@@ -157,13 +157,11 @@
 
   function select_subsidies_tag_array($tags) {
     $sql = "SELECT *
-            FROM subsidy_tag
-            INNER JOIN subsidy
-            ON subsidy.id = subsidy_tag.subsidy
+            FROM subsidy
             WHERE true";
     $i = 0;
     foreach($tags as $tag) {
-      $sql .= " AND subsidy_tag.tag = :tag" + $i;
+      $sql .= " AND EXISTS (SELECT * FROM subsidy_tag WHERE subsidy_tag.subsidy = subsidy.id AND subsidy_tag.tag = :tag" + $i + ")";
       $i++;
       $bindparams[":tag" + $i] = $tag;
     }
