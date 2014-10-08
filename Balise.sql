@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 07, 2014 at 10:22 AM
+-- Generation Time: Oct 08, 2014 at 01:41 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -94,6 +94,7 @@ CREATE TABLE IF NOT EXISTS `spending` (
 `id` int(11) NOT NULL,
   `date` date NOT NULL COMMENT 'creation date',
   `amount` int(10) unsigned NOT NULL,
+  `binet` int(11) NOT NULL,
   `bill` varchar(30) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `binet_validation_by` int(11) DEFAULT NULL,
@@ -149,7 +150,9 @@ CREATE TABLE IF NOT EXISTS `subsidy` (
   `beneficiary` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
   `expiration_date` date DEFAULT NULL,
-  `purpose` tinytext NOT NULL
+  `purpose` tinytext NOT NULL,
+  `created_by` int(11) NOT NULL,
+  `validation_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -171,9 +174,9 @@ CREATE TABLE IF NOT EXISTS `subsidy_tag` (
 
 CREATE TABLE IF NOT EXISTS `tag` (
 `id` int(11) NOT NULL,
-  `date` date NOT NULL,
   `state` tinyint(1) NOT NULL DEFAULT '1',
-  `binet` int(11) NOT NULL
+  `binet` int(11) NOT NULL,
+  `name` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 --
