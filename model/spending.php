@@ -22,6 +22,17 @@
     return $spending["id"];
   }
 
+  function select_spending($spending) {
+    $sql = "SELECT *
+            FROM spending
+            WHERE id = :spending
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
+
   function create_kes_spending($amount, $binet, $comment = "", $paid_by = 0, $bill = 0) {
     $sql = "INSERT INTO spending(date, amount, binet, bill, created_by, binet_validation_by, kes_validation_by, paid_by, comment)
             VALUES(CURDATE(), :amount, :binet, :bill, :student, :student, :student, :paid_by, :comment)";

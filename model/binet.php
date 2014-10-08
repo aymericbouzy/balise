@@ -17,6 +17,17 @@
     return $binet["id"];
   }
 
+  function select_binet($binet) {
+    $sql = "SELECT *
+            FROM binet
+            WHERE id = :binet
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
+
   function set_subsidy_provider($binet, $subsidy_steps) {
     $sql = "UPDATE binet
             SET subsidy_provider = 1, subsidy_steps = :subsidy_steps

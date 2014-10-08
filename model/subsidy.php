@@ -14,3 +14,14 @@
     $subsidy = $req->fetch(PDO::FETCH_ASSOC);
     return $subsidy["id"];
   }
+
+  function select_subsidy($subsidy) {
+    $sql = "SELECT *
+            FROM subsidy
+            WHERE id = :subsidy
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
