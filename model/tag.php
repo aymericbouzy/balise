@@ -40,3 +40,25 @@
     $req->bindParam(':tag', $tag, PDO::PARAM_INT);
     $req->execute();
   }
+
+  function remove_tag_spending($tag, $spending) {
+    $sql = "DELETE
+            FROM spending_tag
+            WHERE tag = :tag AND spending = :spending";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function select_tags_spending($spending) {
+    $sql = "SELECT *
+            FROM spending_tag
+            INNER JOIN tag
+            ON tag.id = spending_tag.tag
+            WHERE spending_tag.spending = :spending";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
