@@ -32,6 +32,26 @@
     $req->execute();
   }
 
+  function select_active_tags_binet($binet) {
+    $sql = "SELECT *
+            FROM tag
+            WHERE binet = :binet AND state = 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
+  function select_tags_binet($binet) {
+    $sql = "SELECT *
+            FROM tag
+            WHERE binet = :binet";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
   function add_tag_spending($tag, $spending) {
     $sql = "INSERT INTO spending_tag(spending, tag)
             VALUES(:spending, :tag)";
@@ -75,26 +95,6 @@
     return $req->fetchAll();
   }
 
-  function select_active_tags_binet($binet) {
-    $sql = "SELECT *
-            FROM tag
-            WHERE binet = :binet AND state = 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetchAll();
-  }
-
-  function select_tags_binet($binet) {
-    $sql = "SELECT *
-            FROM tag
-            WHERE binet = :binet";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetchAll();
-  }
-
   function add_tag_subsidy($tag, $subsidy) {
     $sql = "INSERT INTO subsidy_tag(subsidy, tag)
             VALUES(:subsidy, :tag)";
@@ -102,4 +102,38 @@
     $req->bindParam(':tag', $tag, PDO::PARAM_INT);
     $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
     $req->execute();
+  }
+
+  function remove_tag_subsidy($tag, $subsidy) {
+    $sql = "DELETE
+            FROM subsidy_tag
+            WHERE tag = :tag AND subsidy = :subsidy";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function select_tags_subsdiy($subsidy) {
+    $sql = "SELECT *
+            FROM subsidy_tag
+            INNER JOIN tag
+            ON tag.id = subsidy_tag.tag
+            WHERE subsidy_tag.subsidy = :subsidy";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
+  function select_subsidies_tag($tag) {
+    $sql = "SELECT *
+            FROM subsidy_tag
+            INNER JOIN subsidy
+            ON subsidy.id = subsidy_tag.subsidy
+            WHERE subsidy_tag.tag = :tag";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
   }
