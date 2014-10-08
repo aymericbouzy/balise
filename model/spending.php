@@ -102,3 +102,13 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function select_spendings_binet($binet) {
+    $sql = "SELECT *
+            FROM spending
+            WHERE binet = :binet";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }

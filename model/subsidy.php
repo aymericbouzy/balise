@@ -121,3 +121,23 @@
     $res = $req->fetch(PDO::FETCH_ASSOC);
     return $res["amount"] or 0;
   }
+
+  function select_subsidies_origin($binet) {
+    $sql = "SELECT *
+            FROM subsidy
+            WHERE origin = :binet";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
+  function select_subsidies_beneficiary($binet) {
+    $sql = "SELECT *
+            FROM subsidy
+            WHERE beneficiary = :binet";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
