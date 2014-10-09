@@ -73,12 +73,18 @@
     }
   }
 
-  function select_spendings_subsidy($subsidy) {
+  function select_spendings_subsidy($subsidy, $kes_validated = true, $binet_validated = true) {
     $sql = "SELECT *
             FROM spending_subsidy
             INNER JOIN spending
             ON spending.id = spending_subsidy.spending
             WHERE spending_subsidy.subsidy = :subsidy";
+    if ($kes_validated) {
+      $sql .= " AND spending.kes_validated_by != NULL";
+    }
+    if ($binet_validated) {
+      $sql .= " AND spending.binet_validated_by != NULL";
+    }
     $req = Database::get()->prepare($sql);
     $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
     $req->execute();
