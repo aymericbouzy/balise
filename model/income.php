@@ -59,3 +59,16 @@
       }
     }
   }
+
+  function select_incomes_binet($binet, $validated = true) {
+    $sql = "SELECT *
+            FROM income
+            WHERE binet = :binet";
+    if ($validated) {
+      $sql .= " AND validated_by != NULL";
+    }
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
