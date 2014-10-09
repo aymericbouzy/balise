@@ -72,3 +72,24 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function select_incomes_tag_array($tags, $validated = true) {
+    $sql = "SELECT *
+            FROM income
+            WHERE true";
+    $i = 0;
+    foreach($tags as $tag) {
+      $sql .= " AND EXISTS (SELECT * FROM income_tag WHERE income_tag.income = income.id AND income_tag.tag = :tag".$i.")";
+      $i++;
+      $bindparams[":tag".$i] = $tag;
+    }
+    if ($validated) {
+      $sql .= " AND validated_by != NULL";
+    }
+    $req = Database::get()->prepare($sql);
+    foreach($bindparams as $key => $value) {
+      $req->bindParam($key, $value, PDO::PARAM_INT);
+    }
+    $req->execute();
+    return $req->fetchAll();
+  }
