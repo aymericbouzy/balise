@@ -15,4 +15,23 @@
     return $income["id"];
   }
 
-  
+  function select_income($income) {
+    $sql = "SELECT *
+            FROM income
+            WHERE id = :income
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':income', $income, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
+
+  function validate_income($income) {
+    $sql = "UPDATE income
+            SET validation_by = :student
+            WHERE id = :income
+            LIMIT 1";
+    $req->bindParam(':income', $income, PDO::PARAM_INT);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->execute();
+  }
