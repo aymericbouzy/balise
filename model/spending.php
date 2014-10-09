@@ -96,10 +96,10 @@
       $bindparams[":tag" + $i] = $tag;
     }
     if ($kes_validated) {
-      $sql .= " AND kes_validated_by = true";
+      $sql .= " AND kes_validated_by != NULL";
     }
-    if ($kes_validated) {
-      $sql .= " AND binet_validated_by = true";
+    if ($binet_validated) {
+      $sql .= " AND binet_validated_by != NULL";
     }
     $req = Database::get()->prepare($sql);
     foreach($bindparams as $key => $value) {
@@ -114,10 +114,10 @@
             FROM spending
             WHERE binet = :binet";
     if ($kes_validated) {
-      $sql .= " AND kes_validated_by = true";
+      $sql .= " AND kes_validated_by != NULL";
     }
-    if ($kes_validated) {
-      $sql .= " AND binet_validated_by = true";
+    if ($binet_validated) {
+      $sql .= " AND binet_validated_by != NULL";
     }
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);

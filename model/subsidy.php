@@ -93,7 +93,7 @@
     return $req->fetchAll();
   }
 
-  function select_subsidies_tag_array($tags) {
+  function select_subsidies_tag_array($tags, $validated = true) {
     $sql = "SELECT *
             FROM subsidy
             WHERE true";
@@ -102,6 +102,9 @@
       $sql .= " AND EXISTS (SELECT * FROM subsidy_tag WHERE subsidy_tag.subsidy = subsidy.id AND subsidy_tag.tag = :tag" + $i + ")";
       $i++;
       $bindparams[":tag" + $i] = $tag;
+    }
+    if ($validated) {
+      $sql .= " AND validated_by != NULL";
     }
     $req = Database::get()->prepare($sql);
     foreach($bindparams as $key => $value) {
