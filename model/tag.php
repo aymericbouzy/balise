@@ -113,7 +113,7 @@
     $req->execute();
   }
 
-  function select_tags_subsdiy($subsidy) {
+  function select_tags_subsidy($subsidy) {
     $sql = "SELECT *
             FROM subsidy_tag
             INNER JOIN tag
@@ -121,6 +121,37 @@
             WHERE subsidy_tag.subsidy = :subsidy";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
+  function add_tag_income($tag, $income) {
+    $sql = "INSERT INTO income_tag(income, tag)
+            VALUES(:income, :tag)";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->bindParam(':income', $income, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function remove_tag_income($tag, $income) {
+    $sql = "DELETE
+            FROM income_tag
+            WHERE tag = :tag AND income = :income";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':income', $income, PDO::PARAM_INT);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function select_tags_income($income) {
+    $sql = "SELECT *
+            FROM income_tag
+            INNER JOIN tag
+            ON tag.id = income_tag.tag
+            WHERE income_tag.income = :income";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':income', $income, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
