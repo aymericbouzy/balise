@@ -59,14 +59,14 @@
         $req = Database::get()->prepare($sql);
         $req->bindParam(':spending', $spending, PDO::PARAM_INT);
         if (in_array($column, array("amount"))) {
-          $req->bindParam(':'+$value, $value, PDO::PARAM_INT);
+          $req->bindParam(':'.$value, $value, PDO::PARAM_INT);
           $req->execute(array(
-            (':'+$column) => $column
+            (':'.$column) => $column
           ));
         } else {
           $req->execute(array(
-            (':'+$column) => $column,
-            (':'+$value) => $value
+            (':'.$column) => $column,
+            (':'.$value) => $value
           ));
         }
       }
@@ -97,9 +97,9 @@
             WHERE true";
     $i = 0;
     foreach($tags as $tag) {
-      $sql .= " AND EXISTS (SELECT * FROM spending_tag WHERE spending_tag.spending = spending.id AND spending_tag.tag = :tag" + $i + ")";
+      $sql .= " AND EXISTS (SELECT * FROM spending_tag WHERE spending_tag.spending = spending.id AND spending_tag.tag = :tag".$i.")";
       $i++;
-      $bindparams[":tag" + $i] = $tag;
+      $bindparams[":tag".$i] = $tag;
     }
     if ($kes_validated) {
       $sql .= " AND kes_validated_by != NULL";
