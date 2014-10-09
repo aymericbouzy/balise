@@ -85,7 +85,7 @@
     return $req->fetchAll();
   }
 
-  function select_spendings_tag_array($tags) {
+  function select_spendings_tag_array($tags, $kes_validated = true, $binet_validated = true) {
     $sql = "SELECT *
             FROM spending
             WHERE true";
@@ -95,6 +95,12 @@
       $i++;
       $bindparams[":tag" + $i] = $tag;
     }
+    if ($kes_validated) {
+      $sql .= " AND kes_validated_by = true";
+    }
+    if ($kes_validated) {
+      $sql .= " AND binet_validated_by = true";
+    }
     $req = Database::get()->prepare($sql);
     foreach($bindparams as $key => $value) {
       $req->bindParam($key, $value, PDO::PARAM_INT);
@@ -103,10 +109,16 @@
     return $req->fetchAll();
   }
 
-  function select_spendings_binet($binet) {
+  function select_spendings_binet($binet, $kes_validated = true, $binet_validated = true) {
     $sql = "SELECT *
             FROM spending
             WHERE binet = :binet";
+    if ($kes_validated) {
+      $sql .= " AND kes_validated_by = true";
+    }
+    if ($kes_validated) {
+      $sql .= " AND binet_validated_by = true";
+    }
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
