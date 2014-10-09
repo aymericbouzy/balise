@@ -125,20 +125,26 @@
     return $res["amount"] or 0;
   }
 
-  function select_subsidies_origin($binet) {
+  function select_subsidies_origin($binet, $validated = true) {
     $sql = "SELECT *
             FROM subsidy
             WHERE origin = :binet";
+    if ($validated) {
+      $sql .= " AND validated_by != NULL";
+    }
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
 
-  function select_subsidies_beneficiary($binet) {
+  function select_subsidies_beneficiary($binet, $validated = true) {
     $sql = "SELECT *
             FROM subsidy
             WHERE beneficiary = :binet";
+    if ($validated) {
+      $sql .= " AND validated_by != NULL";
+    }
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
