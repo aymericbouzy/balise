@@ -1,16 +1,15 @@
 <?php
 
-  function create_subsidy($origin, $beneficiary, $amount, $expiration_date = NULL, $purpose = "") {
-    $sql = "INSERT INTO subsidy(origin, beneficiary, amount, expiration_date, purpose, created_by)
-            VALUES(:origin, :beneficiary, :amount, :expiration_date, :purpose, :student)";
+  function create_subsidy($binet, $wave, $amount, $purpose = "") {
+    $sql = "INSERT INTO subsidy(binet, wave, requested_amount, purpose, created_by)
+            VALUES(:binet, :wave, :amount, :purpose, :student)";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':origin', $origin, PDO::PARAM_INT);
-    $req->bindParam(':beneficiary', $beneficiary, PDO::PARAM_INT);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':wave', $wave, PDO::PARAM_INT);
     $req->bindParam(':amount', $amount, PDO::PARAM_INT);
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute(array(
-      ':purpose' => $purpose,
-      ':expirationdate' => $expiration_date
+      ':purpose' => $purpose
     ));
     $subsidy = $req->fetch(PDO::FETCH_ASSOC);
     return $subsidy["id"];
