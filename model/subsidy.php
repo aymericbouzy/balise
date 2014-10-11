@@ -139,3 +139,23 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function select_subsidies($criteria) {
+    $selectable_int_fields = array("binet", "wave");
+    $sql = "SELECT *
+            FROM subsidy
+            WHERE true";
+    foreach ($criteria as $column => $value) {
+      if (in_array($column, $selectable_int_fields)) {
+        $sql .= " AND ".$column." = :".$column;
+      }
+    }
+    $req = Database::get()->prepare($sql);
+    foreach ($criteria as $column => $value) {
+      if (in_array($column, $selectable_int_fields)) {
+        $req->bindParam(':'.$column, $value, PDO::PARAM_INT);
+      }
+    }
+    $req->execute();
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
