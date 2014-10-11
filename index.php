@@ -8,3 +8,4 @@
   include $MODEL_PATH."tag.php";
   include $MODEL_PATH."subsidy.php";
   include $MODEL_PATH."income.php";
+  include $MODEL_PATH."wave.php";
