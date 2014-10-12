@@ -26,28 +26,10 @@
   }
 
   function select_waves($criteria) {
-    $sql = "SELECT *
-            FROM wave
-            WHERE true";
-    foreach ($criteria as $column => $value) {
-      if (in_array($column, array("submission_date", "expiry_date"))) {
-        $sql .= " AND ".$column." > :".$column;
-      }
-      if (in_array($column, array("binet", "published"))) {
-        $sql .= " AND ".$column." = :".$column;
-      }
-    }
-    $req = Database::get()->prepare($sql);
-    foreach ($criteria as $column => $value) {
-      if (in_array($column, array("submission_date", "expiry_date"))) {
-        $req->bindParam(':'.$column, $value, PDO::PARAM_STR);
-      }
-      if (in_array($column, array("binet", "published"))) {
-        $req->bindParam(':'.$column, $value, PDO::PARAM_INT);
-      }
-    }
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+    return select_entries("wave",
+                          array("binet", "published"),
+                          array("submission_date", "expiry_date"),
+                          $criteria);
   }
 
   function publish_wave($wave) {

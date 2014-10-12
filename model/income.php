@@ -93,3 +93,10 @@
     $req->execute();
     return $req->fetchAll();
   }
+
+  function select_incomes($criteria) {
+    return select_entries("income",
+                          array("amount", "binet", "origin", "created_by", "kes_validation_by"),
+                          array("date"),
+                          $criteria);
+  }

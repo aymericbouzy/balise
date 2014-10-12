@@ -91,42 +91,9 @@
     return $req->fetchAll();
   }
 
-  function select_spendings_tag_array($tags, $kes_validated = true, $binet_validated = true) {
-    $sql = "SELECT *
-            FROM spending
-            WHERE true";
-    $i = 0;
-    foreach($tags as $tag) {
-      $sql .= " AND EXISTS (SELECT * FROM spending_tag WHERE spending_tag.spending = spending.id AND spending_tag.tag = :tag".$i.")";
-      $i++;
-      $bindparams[":tag".$i] = $tag;
-    }
-    if ($kes_validated) {
-      $sql .= " AND kes_validated_by != NULL";
-    }
-    if ($binet_validated) {
-      $sql .= " AND binet_validated_by != NULL";
-    }
-    $req = Database::get()->prepare($sql);
-    foreach($bindparams as $key => $value) {
-      $req->bindParam($key, $value, PDO::PARAM_INT);
-    }
-    $req->execute();
-    return $req->fetchAll();
-  }
-
-  function select_spendings_binet($binet, $kes_validated = true, $binet_validated = true) {
-    $sql = "SELECT *
-            FROM spending
-            WHERE binet = :binet";
-    if ($kes_validated) {
-      $sql .= " AND kes_validated_by != NULL";
-    }
-    if ($binet_validated) {
-      $sql .= " AND binet_validated_by != NULL";
-    }
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetchAll();
+  function select_spendings($criteria) {
+    return select_entries("spending",
+                          array("amount", "binet", "created_by", "binet_validation_by", "kes_validation_by", "paid_by"),
+                          array("bill", "date"),
+                          $criteria);
   }
