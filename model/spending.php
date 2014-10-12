@@ -73,6 +73,7 @@
     }
   }
 
+  /*
   function select_spendings_subsidy($subsidy, $kes_validated = true, $binet_validated = true) {
     $sql = "SELECT *
             FROM spending_subsidy
@@ -90,6 +91,7 @@
     $req->execute();
     return $req->fetchAll();
   }
+  */
 
   function select_spendings($criteria) {
     return select_entries("spending",
