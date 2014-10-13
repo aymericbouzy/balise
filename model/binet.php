@@ -1,15 +1,15 @@
 <?php
 
   /*
-  Creates a new binet with a least one name. 
-  
+  Creates a new binet with a least one name.
+
   @param string $name name of the binet, varchar(50) NOT NULL in table 'binet' and 'binet_admin'
   @param int $admin id of the student as admin of the binet, int(11) DEFAULT NULL in table 'binet_admin'
-  
+
   @return int Id of the binet
-  
+
   @uses $_SESSION["student"] to fill `validated_by` int(11) DEFAULT NULL in table 'binet' for insert
-  
+
   */
   function create_binet($name, $admin) {
     $sql = "INSERT INTO binet(name)
@@ -28,6 +28,17 @@
     return $binet["id"];
   }
 
+  function select_binet($binet) {
+    $sql = "SELECT *
+            FROM binet
+            WHERE id = :binet
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
+
   /*
   @param int $binet sets binet to be subsidy_provider if not 0 , tinyint(1) NOT NULL DEFAULT '0' in table 'binet'
   @param string $subsidy_steps text information about how to use/get subsidy, text in table 'binet'
@@ -41,10 +52,10 @@
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->execute(array(':subsidy_steps' => $subsidy_steps));
   }
-  
+
   /*
   @param int $binet id of the binet , int(11) NOT NULL in table 'binet'
-  
+
   @return array Array containing all admins of current binet
   */
   function get_admins($binet) {
@@ -58,11 +69,11 @@
     $req->execute();
     return $req->fetchAll();
   }
-  
+
   /*
   @param int $student id of the student to be set as admin, int(11) NOT NULL in table 'binet_admin'
   @param int $binet id of the binet , int(11) NOT NULL in table 'binet_admin'
-  
+
   @uses $_SESSION["student"] to fill `validated_by` int(11) DEFAULT NULL in table 'binet_admin' for update
   */
   function validate_admin_binet($student, $binet) {
@@ -76,10 +87,10 @@
     $req->bindParam(':validated_by', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
   }
-  
+
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet_admin'
-    
+
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet_admin' for insert
   */
   function request_admin_binet($binet) {
@@ -90,10 +101,10 @@
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
   }
-  
+
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet_admin'
-    
+
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
   function get_status_admin_binet($binet) {
@@ -138,7 +149,7 @@
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
   }
-  
+
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet'
   */
