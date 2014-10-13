@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 13, 2014 at 09:09 AM
+-- Generation Time: Oct 13, 2014 at 09:17 PM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `binet` (
 `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `subsidy_provider` tinyint(1) NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `current_term` smallint(6) DEFAULT NULL,
   `subsidy_steps` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -43,7 +43,8 @@ CREATE TABLE IF NOT EXISTS `binet` (
 CREATE TABLE IF NOT EXISTS `binet_admin` (
   `binet` int(11) NOT NULL,
   `validated_by` int(11) DEFAULT NULL,
-  `student` int(11) NOT NULL
+  `student` int(11) NOT NULL,
+  `term` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -63,6 +64,17 @@ CREATE TABLE IF NOT EXISTS `budget` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `budget_tag`
+--
+
+CREATE TABLE IF NOT EXISTS `budget_tag` (
+  `budget` int(11) NOT NULL,
+  `tag` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `income`
 --
 
@@ -71,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `income` (
   `date` date NOT NULL,
   `amount` int(11) NOT NULL,
   `binet` int(11) NOT NULL,
+  `term` smallint(6) NOT NULL,
   `type` tinyint(4) NOT NULL,
   `created_by` int(11) NOT NULL,
   `kes_validation_by` int(11) DEFAULT NULL,
@@ -80,12 +93,13 @@ CREATE TABLE IF NOT EXISTS `income` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `income_tag`
+-- Table structure for table `income_budget`
 --
 
-CREATE TABLE IF NOT EXISTS `income_tag` (
+CREATE TABLE IF NOT EXISTS `income_budget` (
   `income` int(11) NOT NULL,
-  `tag` int(11) NOT NULL
+  `budget` int(11) NOT NULL,
+  `amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -110,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `spending` (
   `date` date NOT NULL COMMENT 'creation date',
   `amount` int(10) unsigned NOT NULL,
   `binet` int(11) NOT NULL,
+  `term` smallint(6) NOT NULL,
   `bill` varchar(30) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `binet_validation_by` int(11) DEFAULT NULL,
@@ -121,24 +136,13 @@ CREATE TABLE IF NOT EXISTS `spending` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `spending_subsidy`
+-- Table structure for table `spending_budget`
 --
 
-CREATE TABLE IF NOT EXISTS `spending_subsidy` (
+CREATE TABLE IF NOT EXISTS `spending_budget` (
   `spending` int(11) NOT NULL,
-  `subsidy` int(11) NOT NULL,
+  `budget` int(11) NOT NULL,
   `amount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `spending_tag`
---
-
-CREATE TABLE IF NOT EXISTS `spending_tag` (
-  `spending` int(11) NOT NULL,
-  `tag` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -161,7 +165,7 @@ CREATE TABLE IF NOT EXISTS `student` (
 
 CREATE TABLE IF NOT EXISTS `subsidy` (
 `id` int(11) NOT NULL,
-  `binet` int(11) NOT NULL,
+  `budget` int(11) NOT NULL,
   `requested_amount` int(11) NOT NULL,
   `granted_amount` int(11) DEFAULT NULL,
   `purpose` tinytext NOT NULL,
@@ -173,24 +177,11 @@ CREATE TABLE IF NOT EXISTS `subsidy` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subsidy_tag`
---
-
-CREATE TABLE IF NOT EXISTS `subsidy_tag` (
-  `subsidy` int(11) NOT NULL,
-  `tag` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tag`
 --
 
 CREATE TABLE IF NOT EXISTS `tag` (
 `id` int(11) NOT NULL,
-  `state` tinyint(1) NOT NULL DEFAULT '1',
-  `binet` int(11) NOT NULL,
   `name` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -203,6 +194,7 @@ CREATE TABLE IF NOT EXISTS `tag` (
 CREATE TABLE IF NOT EXISTS `wave` (
 `id` int(11) NOT NULL,
   `binet` int(11) NOT NULL,
+  `term` smallint(6) NOT NULL,
   `submission_date` date NOT NULL,
   `expiry_date` date NOT NULL,
   `published` tinyint(1) NOT NULL DEFAULT '0'
@@ -258,7 +250,7 @@ ALTER TABLE `subsidy`
 -- Indexes for table `tag`
 --
 ALTER TABLE `tag`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`), ADD UNIQUE KEY `name_2` (`name`);
 
 --
 -- Indexes for table `wave`
