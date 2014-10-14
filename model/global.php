@@ -16,7 +16,17 @@
       if ($column === "tags") {
         $i = 0;
         foreach($value as $tag) {
-          $sql .= " AND EXISTS (SELECT * FROM ".$table."_tag WHERE ".$table."_tag.".$table." = ".$table.".id AND ".$table."_tag.tag = :tag".$i.")";
+          if ($table == "budget") {
+            $sql .= " AND EXISTS (SELECT *
+                                  FROM budget_tag
+                                  WHERE budget_tag.budget = budget.id AND budget_tag.tag = :tag".$i.")";
+          } else {
+            $sql .= " AND EXISTS (SELECT *
+                                  FROM budget_tag
+                                  INNER JOIN ".$table."_budget
+                                  ON ".$table."_budget.budget = budget_tag.budget
+                                  WHERE ".$table."_budget.".$table." = ".$table.".id AND budget_tag.tag = :tag".$i.")";
+          }
           $tags[$i] = $tag;
           $i++;
         }
