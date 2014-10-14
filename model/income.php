@@ -53,3 +53,22 @@
                           array("date"),
                           $criteria);
   }
+
+  function add_budgets_income($income, $amounts) {
+    foreach ($amounts as $budget => $amount) {
+      $sql = "INSERT INTO income_budget(income, budget, amount)
+              VALUES(:income, :budget, :amount)";
+      $req->bindParam(':income', $income, PDO::PARAM_INT);
+      $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+      $req->bindParam(':amount', $amount, PDO::PARAM_INT);
+      $req->execute();
+    }
+  }
+
+  function remove_budgets_income($income) {
+    $sql = "DELETE
+            FROM income_budget
+            WHERE income = :income";
+    $req->bindParam(':income', $income, PDO::PARAM_INT);
+    $req->execute();
+  }
