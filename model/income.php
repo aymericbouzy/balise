@@ -37,27 +37,11 @@
   }
 
   function update_income($income, $hash) {
-    foreach ($hash as $column => $value) {
-      if (in_array($column, array("amount", "type", "comment"))) {
-        $sql = "UPDATE income
-                SET :column = :value
-                WHERE id = :income
-                LIMIT 1";
-        $req = Database::get()->prepare($sql);
-        $req->bindParam(':income', $income, PDO::PARAM_INT);
-        if (in_array($column, array("amount", "type"))) {
-          $req->bindParam(':'.$value, $value, PDO::PARAM_INT);
-          $req->execute(array(
-            (':'.$column) => $column
-          ));
-        } else {
-          $req->execute(array(
-            (':'.$column) => $column,
-            (':'.$value) => $value
-          ));
-        }
-      }
-    }
+    update_entry("income",
+                  array("amount", "type"),
+                  array("comment"),
+                  $income,
+                  $hash);
   }
 
   /*
@@ -95,7 +79,7 @@
     return $req->fetchAll();
   }
   */
-  
+
   function select_incomes($criteria) {
     return select_entries("income",
                           array("amount", "binet", "origin", "created_by", "kes_validation_by"),

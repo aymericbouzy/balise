@@ -32,3 +32,11 @@
                             array(),
                             $criteria);
     }
+
+    function update_budget($budget, $hash) {
+      update_entry("budget",
+                    array("amount"),
+                    array("label"),
+                    $budget,
+                    $hash);
+    }

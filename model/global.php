@@ -61,7 +61,7 @@
     return $req->fetchAll();
   }
 
-  function update_entries($table, $entry, $hash, $updatable_int_fields, $updatable_str_fields) {
+  function update_entry($table, $updatable_int_fields, $updatable_str_fields, $entry, $hash) {
     foreach ($hash as $column => $value) {
       if (in_array($column, $updatable_int_fields) || in_array($column, $updatable_str_fields)) {
         $sql = "UPDATE ".$table."
