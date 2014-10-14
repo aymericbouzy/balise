@@ -34,21 +34,7 @@
                   $hash);
   }
 
-  /*
-  function select_subsidies_spending($spending) {
-    $sql = "SELECT *
-            FROM spending_subsidy
-            INNER JOIN subsidy
-            ON subsidy.id = spending_subsidy.subsid
-            WHERE spending_subsidy.spending = :spending";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetchAll();
-  }
-  */
-
-  function consumed_amount_subsidy($subsidy) {
+  function get_consumed_amount_subsidy($subsidy) {
     $subsidy = select_subsidy($subsidy);
     $consumed_amount = get_real_amount_budget($subsidy["budget"]);
     $subsidized_amount = get_subsidized_amount_budget($subsidy["budget"]);
