@@ -61,6 +61,22 @@
     return $req->fetchAll();
   }
 
-  function update_entries($table, $entry, $hash) {
-
+  function update_entries($table, $entry, $hash, $updatable_int_fields, $updatable_str_fields) {
+    foreach ($hash as $column => $value) {
+      if (in_array($column, $updatable_int_fields) || in_array($column, $updatable_str_fields)) {
+        $sql = "UPDATE ".$table."
+                SET :column = :value
+                WHERE id = :".$table."
+                LIMIT 1";
+        $req = Database::get()->prepare($sql);
+        $req->bindParam(':'.$table, $entry, PDO::PARAM_INT);
+        if (in_array($column, $updatable_int_fields)) {
+          $req->bindParam(':'.$value, $value, PDO::PARAM_INT);
+        } elseif (in_array($column, $updatable_str_fields)) {
+          $req->bindParam(':'.$value, $value, PDO::PARAM_STR);
+        }
+        $req->bindParam(':'.$column, $column, PDO::PARAM_STR);
+        $req->execute();
+      }
+    }
   }
