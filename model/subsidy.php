@@ -46,18 +46,18 @@
     $req->execute();
     return $req->fetchAll();
   }
+  */
 
   function consumed_amount_subsidy($subsidy) {
-    $sql = "SELECT SUM(amount) as amount
-            FROM spending_subsidy
-            WHERE subsidy = :subsidy";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
-    $req->execute();
-    $res = $req->fetch(PDO::FETCH_ASSOC);
-    return $res["amount"] or 0;
+    $subsidy = select_subsidy($subsidy);
+    $consumed_amount = get_real_amount_budget($subsidy["budget"]);
+    $subsidized_amount = get_subsidized_amount_budget($subsidy["budget"]);
+    if ($consumed_amount >= $subsidized_amount) {
+      return $subsidy["granted_amount"];
+    } else {
+      return $subsidy["granted_amount"] * $consumed_amount / $subsidized_amount;
+    }
   }
-  */
 
   function select_subsidies($criteria) {
     return select_entries("subsidy",
