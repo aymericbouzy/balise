@@ -1,10 +1,10 @@
 <?php
 
-  function create_subsidy($binet, $wave, $amount, $purpose = "") {
-    $sql = "INSERT INTO subsidy(binet, wave, requested_amount, purpose, created_by)
-            VALUES(:binet, :wave, :amount, :purpose, :student)";
+  function create_subsidy($budget, $wave, $amount, $purpose = "") {
+    $sql = "INSERT INTO subsidy(budget, wave, requested_amount, purpose, created_by)
+            VALUES(:budget, :wave, :amount, :purpose, :student)";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
     $req->bindParam(':wave', $wave, PDO::PARAM_INT);
     $req->bindParam(':amount', $amount, PDO::PARAM_INT);
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
