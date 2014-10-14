@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 13, 2014 at 09:17 PM
+-- Generation Time: Oct 14, 2014 at 10:03 AM
 -- Server version: 5.6.20
 -- PHP Version: 5.5.15
 
@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `binet` (
 
 CREATE TABLE IF NOT EXISTS `binet_admin` (
   `binet` int(11) NOT NULL,
-  `validated_by` int(11) DEFAULT NULL,
   `student` int(11) NOT NULL,
   `term` smallint(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
