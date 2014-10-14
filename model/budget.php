@@ -40,3 +40,27 @@
                     $budget,
                     $hash);
     }
+
+    function get_real_amount_budget($budget) {
+      $sql = "SELECT SUM(spending_budget.amount) as real_amount
+              FROM spending_budget
+              INNER JOIN spending
+              ON spending.id = spending_budget.spending
+              WHERE spending_budget.budget = :budget AND spending.kes_validation_by != NULL";
+      $req = Database::get()->prepare($sql);
+      $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+      $req->execute();
+      return $req->fetch(PDO::FETCH_ASSOC)["real_amount"];
+    }
+
+    function get_subsidized_amount_budget($budget) {
+      $sql = "SELECT SUM(subsidy.granted_amount) as subsidized_amount
+              FROM subsidy
+              INNER JOIN wave
+              ON wave.id = subsidy.wave
+              WHERE wave.published = 1 AND subsidy.budget = :budget";
+      $req = Database::get()->prepare($sql);
+      $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+      $req->execute();
+      return $req->fetch(PDO::FETCH_ASSOC)["subsidized_amount"];
+    }

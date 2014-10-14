@@ -35,26 +35,6 @@
   }
 
   /*
-  function add_spending_subsidy($spending, $amount, $subsidy) {
-    $sql = "INSERT INTO spending_subsidy(spending, subsidy, amount)
-            VALUES(:spending, :subsidy, :amount)";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
-    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
-    $req->bindParam(':amount', $amount, PDO::PARAM_INT);
-    $req->execute();
-  }
-
-  function remove_spending_subsidy($spending, $subsidy) {
-    $sql = "DELETE
-            FROM spending_subsidy
-            WHERE subsidy = :subsidy AND spending = :spending";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
-    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
-    $req->execute();
-  }
-
   function select_subsidies_spending($spending) {
     $sql = "SELECT *
             FROM spending_subsidy
