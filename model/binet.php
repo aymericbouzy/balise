@@ -60,6 +60,7 @@
             WHERE binet_admin.binet = :binet AND binet_admin.term = :term";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -84,19 +85,20 @@
 
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
-  function get_status_admin_binet($binet) {
-    $sql = "SELECT validated_by
+  function get_status_admin_binet($binet, $term) {
+    $sql = "SELECT *
             FROM binet_admin
-            WHERE binet = :binet AND student = :student
+            WHERE binet = :binet AND term = :term AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     if ($row = $req->fetch()) {
-      return $row["validated_by"]) or -1;
+      return true;
     } else {
-      return -2;
+      return false;
     }
   }
 
@@ -104,13 +106,14 @@
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet_admin'
     @param int $student if of the student, int(11) NOT NULL in table 'binet_admin'
   */
-  function remove_admin_binet($binet, $student) {
+  function remove_admin_binet($binet, $term, $student) {
     $sql = "DELETE
             FROM binet_admin
-            WHERE binet = :binet AND student = :student
+            WHERE binet = :binet AND term = :term AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->bindParam(':student', $student, PDO::PARAM_INT);
     $req->execute();
   }
@@ -119,7 +122,7 @@
   */
   function deactivate_binet($binet) {
     $sql = "UPDATE binet
-            SET active = 0
+            SET current_term = NULL
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
@@ -130,12 +133,13 @@
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet'
   */
-  function activate_binet($binet) {
+  function change_term_binet($binet, $term)
     $sql = "UPDATE binet
-            SET active = 1
+            SET term = :term
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
   }
