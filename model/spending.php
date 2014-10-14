@@ -89,3 +89,22 @@
                           array("bill", "date"),
                           $criteria);
   }
+
+  function add_budgets_spending($spending, $amounts) {
+    foreach ($amounts as $budget => $amount) {
+      $sql = "INSERT INTO spending_budget(spending, budget, amount)
+              VALUES(:spending, :budget, :amount)";
+      $req->bindParam(':spending', $income, PDO::PARAM_INT);
+      $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+      $req->bindParam(':amount', $amount, PDO::PARAM_INT);
+      $req->execute();
+    }
+  }
+
+  function remove_budgets_spending($spending) {
+    $sql = "DELETE
+            FROM spending_budget
+            WHERE spending = :spending";
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->execute();
+  }
