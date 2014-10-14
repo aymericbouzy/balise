@@ -8,7 +8,7 @@
     return $sum;
   }
 
-  function select_entries($table, $selectable_int_fields, $selectable_str_fields, $criteria) {
+  function select_entries($table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
     $sql = "SELECT *
             FROM ".$table."
             WHERE true";
@@ -31,6 +31,10 @@
         $sql .= " :".$column;
       }
     }
+    if ($order_by) {
+      $sql .= " ORDER BY :order_by".($ascending ? " ASC" : " DESC");
+
+    }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
       if ($column === "tags") {
@@ -50,6 +54,13 @@
         }
       }
     }
+    if ($order_by) {
+      $req->bindParam(':order_by', $order_by, PDO::PARAM_STR);
+    }
     $req->execute();
     return $req->fetchAll();
+  }
+
+  function update_entries($table, $entry, $hash) {
+
   }

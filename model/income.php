@@ -60,6 +60,7 @@
     }
   }
 
+  /*
   function select_incomes_binet($binet, $validated = true) {
     $sql = "SELECT *
             FROM income
@@ -93,7 +94,8 @@
     $req->execute();
     return $req->fetchAll();
   }
-
+  */
+  
   function select_incomes($criteria) {
     return select_entries("income",
                           array("amount", "binet", "origin", "created_by", "kes_validation_by"),
