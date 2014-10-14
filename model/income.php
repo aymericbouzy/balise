@@ -45,8 +45,11 @@
   }
 
   function select_incomes($criteria) {
+    if (!isset($criteria["kes_validation_by"])) {
+      $criteria["kes_validation_by"] = array("!=", NULL);
+    }
     return select_entries("income",
-                          array("amount", "binet", "origin", "created_by", "kes_validation_by"),
+                          array("amount", "binet", "term", "type", "created_by", "kes_validation_by"),
                           array("date"),
                           $criteria);
   }

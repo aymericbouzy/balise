@@ -78,8 +78,14 @@
   */
 
   function select_spendings($criteria) {
+    if (!isset($criteria["kes_validation_by"])) {
+      $criteria["kes_validation_by"] = array("!=", NULL)
+    }
+    if (!isset($criteria["binet_validation_by"])) {
+      $criteria["binet_validation_by"] = array("!=", NULL);
+    }
     return select_entries("spending",
-                          array("amount", "binet", "created_by", "binet_validation_by", "kes_validation_by", "paid_by"),
+                          array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by"),
                           array("bill", "date"),
                           $criteria);
   }
