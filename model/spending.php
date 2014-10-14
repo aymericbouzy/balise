@@ -50,27 +50,11 @@
   }
 
   function update_spending($spending, $hash) {
-    foreach ($hash as $column => $value) {
-      if (in_array($column, array("amount", "bill", "paid_by", "comment"))) {
-        $sql = "UPDATE spending
-                SET :column = :value
-                WHERE id = :spending
-                LIMIT 1";
-        $req = Database::get()->prepare($sql);
-        $req->bindParam(':spending', $spending, PDO::PARAM_INT);
-        if (in_array($column, array("amount"))) {
-          $req->bindParam(':'.$value, $value, PDO::PARAM_INT);
-          $req->execute(array(
-            (':'.$column) => $column
-          ));
-        } else {
-          $req->execute(array(
-            (':'.$column) => $column,
-            (':'.$value) => $value
-          ));
-        }
-      }
-    }
+    update_entry("spending",
+                  array("amount", "paid_by"),
+                  array("bill", "comment"),
+                  $spending,
+                  $hash);
   }
 
   /*

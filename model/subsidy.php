@@ -27,27 +27,11 @@
   }
 
   function update_subsidy($subsidy, $hash) {
-    foreach ($hash as $column => $value) {
-      if (in_array($column, array("requested_amount", "purpose", "granted_amount", "explanation"))) {
-        $sql = "UPDATE subsidy
-                SET :column = :value
-                WHERE id = :subsidy
-                LIMIT 1";
-        $req = Database::get()->prepare($sql);
-        $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
-        if (in_array($column, array("requested_amount", "granted_amount"))) {
-          $req->bindParam(':'.$value, $value, PDO::PARAM_INT);
-          $req->execute(array(
-            (':'.$column) => $column
-          ));
-        } else {
-          $req->execute(array(
-            (':'.$column) => $column,
-            (':'.$value) => $value
-          ));
-        }
-      }
-    }
+    update_entry("subsidy",
+                  array("requested_amount", "granted_amount"),
+                  array("purpose", "explanation"),
+                  $subsidy,
+                  $hash);
   }
 
   /*
