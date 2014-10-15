@@ -92,7 +92,7 @@
 
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
-  function get_status_admin_binet($binet, $term) {
+  function status_admin_binet($binet, $term) {
     $sql = "SELECT *
             FROM binet_admin
             WHERE binet = :binet AND term = :term AND student = :student
