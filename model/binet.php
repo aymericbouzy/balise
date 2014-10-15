@@ -33,6 +33,13 @@
     return $req->fetch(PDO::FETCH_ASSOC);
   }
 
+  function select_binets($criteria) {
+    return select_entries("binet",
+                          array("subsidy_provider", "current_term"),
+                          array("name"),
+                          $criteria);
+  }
+
   /*
   @param int $binet sets binet to be subsidy_provider if not 0 , tinyint(1) NOT NULL DEFAULT '0' in table 'binet'
   @param string $subsidy_steps text information about how to use/get subsidy, text in table 'binet'
