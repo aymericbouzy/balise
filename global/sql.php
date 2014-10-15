@@ -1,13 +1,5 @@
 <?php
 
-  function sum_array($array, $column) {
-    $sum = 0;
-    foreach($array as $entry) {
-      $sum += $entry[$column];
-    }
-    return $sum;
-  }
-
   function select_entries($table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
     $sql = "SELECT *
             FROM ".$table."
