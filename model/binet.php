@@ -33,7 +33,7 @@
     return $req->fetch(PDO::FETCH_ASSOC);
   }
 
-  function select_binets($criteria) {
+  function select_binets($criteria = array()) {
     return select_entries("binet",
                           array("subsidy_provider", "current_term"),
                           array("name"),

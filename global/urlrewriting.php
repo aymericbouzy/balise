@@ -1,5 +1,9 @@
 <?php
 
+  function standard_string($string) {
+    return $string;
+  }
+
   function urlrewrite() {
     $htaccess = fopen("../.htaccess", "w");
   	if (!$htaccess) {
@@ -14,7 +18,14 @@
 	       exit;
 	    }
 
-      $binets = select_binets()
-
+      foreach(select_binets() as $binet) {
+        $name = standard_string($binet["name"]);
+        if (fwrite($htaccess, "RewriteRule ".$name."  ./controller/budget/index.php?binet=".$binet["id"]."&%{QUERY_STRING} [L]
+                                RewriteRule ".$name."/budget  ./controller/budget/index.php?binet=".$binet["id"]."&%{QUERY_STRING} [L]
+                              ") === FALSE) {
+           echo ".htaccess could not be written for urlrewriting.";
+           exit;
+        }
+      }
     }
   }
