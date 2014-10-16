@@ -4,6 +4,29 @@
     return $string;
   }
 
+  function standard_name_binet($binet) {
+    return standard_string(select_binet($binet)["name"]);
+  }
+
+  function login_path() {
+    return "login";
+  }
+
+  function binet_index_path($binet) {
+    return standard_name_binet($binet);
+  }
+
+  function binet_budget_index_path($binet) {
+    return standard_name_binet($binet)."/budget";
+  }
+
+  function write_path_rule($htaccess, $path, $url) {
+    if (fwrite($htaccess, "RewriteRule ".$path." ".$url."%{QUERY_STRING} [L]
+    ") === FALSE) {
+      echo ".htaccess could not be written for urlrewriting.";
+    }
+  }
+
   function urlrewrite() {
     $htaccess = fopen("../.htaccess", "w");
   	if (!$htaccess) {
@@ -18,14 +41,12 @@
 	       exit;
 	    }
 
+      write_path_rule($htaccess, login_path(), "./login.php?");
+
+
       foreach(select_binets() as $binet) {
-        $name = standard_string($binet["name"]);
-        if (fwrite($htaccess, "RewriteRule ".$name."  ./controller/budget/index.php?binet=".$binet["id"]."&%{QUERY_STRING} [L]
-                                RewriteRule ".$name."/budget  ./controller/budget/index.php?binet=".$binet["id"]."&%{QUERY_STRING} [L]
-                              ") === FALSE) {
-           echo ".htaccess could not be written for urlrewriting.";
-           exit;
-        }
+        write_path_rule($htaccess, binet_index_path($binet["id"]), "./controller/budget/index.php?binet=".$binet["id"]."&");
+        write_path_rule($htaccess, binet_budget_index_path($binet["id"]), "./controller/budget/index.php?binet=".$binet["id"]."&");
       }
     }
   }
