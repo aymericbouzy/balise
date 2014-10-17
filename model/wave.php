@@ -18,11 +18,13 @@
     return select_entry("wave", $wave, $fields);
   }
 
-  function select_waves($criteria) {
+  function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries("wave",
                           array("binet", "published"),
                           array("submission_date", "expiry_date"),
-                          $criteria);
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }
 
   function publish_wave($wave) {

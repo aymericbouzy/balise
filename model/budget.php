@@ -19,11 +19,13 @@
       return select_entry("budget", $budget, $fields);
     }
 
-    function select_budgets($criteria) {
+    function select_budgets($criteria, $order_by = NULL, $ascending = true) {
       return select_entries("budget",
                             array("binet", "amount", "term"),
                             array(),
-                            $criteria);
+                            $criteria,
+                            $order_by,
+                            $ascending);
     }
 
     function update_budget($budget, $hash) {

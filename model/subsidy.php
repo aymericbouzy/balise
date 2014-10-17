@@ -38,7 +38,7 @@
     }
   }
 
-  function select_subsidies($criteria) {
+  function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
     return select_entries("subsidy",
                           array("binet", "wave", "requested_amount", "granted_amount", "created_by"),
                           array(),

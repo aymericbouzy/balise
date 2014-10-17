@@ -50,7 +50,7 @@
                   $hash);
   }
 
-  function select_spendings($criteria) {
+  function select_spendings($criteria, $order_by = NULL, $ascending = true) {
     if (!isset($criteria["kes_validation_by"])) {
       $criteria["kes_validation_by"] = array("!=", NULL)
     }
@@ -60,7 +60,9 @@
     return select_entries("spending",
                           array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by"),
                           array("bill", "date"),
-                          $criteria);
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }
 
   function add_budgets_spending($spending, $amounts) {

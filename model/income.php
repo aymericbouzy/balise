@@ -37,14 +37,16 @@
                   $hash);
   }
 
-  function select_incomes($criteria) {
+  function select_incomes($criteria, $order_by = NULL, $ascending = true) {
     if (!isset($criteria["kes_validation_by"])) {
       $criteria["kes_validation_by"] = array("!=", NULL);
     }
     return select_entries("income",
                           array("amount", "binet", "term", "type", "created_by", "kes_validation_by"),
                           array("date"),
-                          $criteria);
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }
 
   function add_budgets_income($income, $amounts) {

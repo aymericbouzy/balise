@@ -27,11 +27,13 @@
     return select_entry("binet", $binet), $fields;
   }
 
-  function select_binets($criteria = array()) {
+  function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries("binet",
                           array("subsidy_provider", "current_term"),
                           array("name", "clean_name"),
-                          $criteria);
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }
 
   /*
