@@ -23,12 +23,22 @@
                           $ascending);
   }
 
-  function select_tags_binet($binet) {
-    $sql = "SELECT *
+  function select_tags_binet($binet, $term = NULL) {
+    $sql = "SELECT DISTINCT id
             FROM tag
-            WHERE binet = :binet";
+            INNER JOIN budget_tag
+            ON budget_tag.tag = tag.id
+            INNER JOIN budget
+            ON budget.id = budget_tag.budget
+            WHERE budget.binet = :binet";
+    if ($term) {
+      $sql .= " AND budget.term = :term";
+    }
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    if ($term) {
+      $req->bindParam(':term', $term, PDO::PARAM_INT);
+    }
     $req->execute();
     return $req->fetchAll();
   }
