@@ -12,11 +12,11 @@
 
   */
   function create_binet($name, $term) {
-    $sql = "INSERT INTO binet(name, url_name, current_term)
-            VALUES(:name, :url_name, :term)";
+    $sql = "INSERT INTO binet(name, clean_name, current_term)
+            VALUES(:name, :clean_name, :term)";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':name', $name, PDO::PARAM_STR);
-    $req->bindParam(':url_name', standard_string($name), PDO::PARAM_STR);
+    $req->bindParam(':url_name', slean_string($name), PDO::PARAM_STR);
     $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
     $binet = $req->fetch(PDO::FETCH_ASSOC);
@@ -37,7 +37,7 @@
   function select_binets($criteria = array()) {
     return select_entries("binet",
                           array("subsidy_provider", "current_term"),
-                          array("name"),
+                          array("name", "clean_name"),
                           $criteria);
   }
 
