@@ -13,11 +13,11 @@
   }
 
   function binet_index_path($binet) {
-    return standard_name_binet($binet);
+    return "binet/".standard_name_binet($binet);
   }
 
   function binet_budget_index_path($binet) {
-    return standard_name_binet($binet)."/budget";
+    return "binet/".standard_name_binet($binet)."/budget";
   }
 
   function write_path_rule($htaccess, $path, $url) {
