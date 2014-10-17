@@ -146,3 +146,15 @@
     $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
   }
+
+  function solde_binet($binet, $term) {
+    $solde = 0;
+    foreach (select_budgets(array("binet" => $binet, "term" => $term)) as $budget) {
+      $real_amount = get_real_amount_budget($budget["id"]);
+      if ($real_amount < 0) {
+        $solde += min(0, $real_amount + get_subsidized_amount_budget($budget["id"]));
+      } else {
+        $solde += $real_amount;
+      }
+    }
+  }
