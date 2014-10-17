@@ -42,5 +42,7 @@
     return select_entries("subsidy",
                           array("binet", "wave", "requested_amount", "granted_amount", "created_by"),
                           array(),
-                          $criteria);
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }

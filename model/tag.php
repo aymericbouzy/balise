@@ -1,19 +1,26 @@
 <?php
 
-  function create_tag($binet, $name) {
-    $sql = "INSERT INTO tag(state, binet, name)
-            VALUES(1, :binet, :name)";
+  function create_tag($name) {
+    $sql = "INSERT INTO tag(name)
+            VALUES(:name)";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->execute(array(
-      ':name' => $name
-    ));
+    $req->bindParam(':name', $name, PDO::PARAM_STR);
+    $req->execute();
     $tag = $req->fetch(PDO::FETCH_ASSOC);
     return $tag["id"];
   }
 
   function select_tag($tag, $fields = NULL) {
     return select_entry("tag", $tag, $fields);
+  }
+
+  function select_tags($criteria = array(), $order_by = NULL, $ascending = true) {
+    return select_entries("tag",
+                          array(),
+                          array("name"),
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }
 
   function select_tags_binet($binet) {
