@@ -82,3 +82,25 @@
       }
     }
   }
+
+  function select_entry($table, $id, $fields = NULL) {
+    $sql = "SELECT ";
+    if ($fields) {
+      $initial = true;
+      foreach ($fields as $field) {
+        if ($initial) {
+          $initial = false;
+        } else {
+          $sql .= ", ";
+        }
+        $sql .= $field;
+      }
+    }
+    $sql .= " FROM ".$table."
+            WHERE id = :id
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':id', $id, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch(PDO::FETCH_ASSOC);
+  }
