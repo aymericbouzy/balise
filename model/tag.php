@@ -24,10 +24,8 @@
   }
 
   function select_tags_binet($binet, $term = NULL) {
-    $sql = "SELECT DISTINCT id
-            FROM tag
-            INNER JOIN budget_tag
-            ON budget_tag.tag = tag.id
+    $sql = "SELECT DISTINCT budget_tag.tag
+            FROM budget_tag
             INNER JOIN budget
             ON budget.id = budget_tag.budget
             WHERE budget.binet = :binet";
@@ -44,11 +42,11 @@
   }
 
   function select_tags_spending($spending) {
-    $sql = "SELECT *
-            FROM spending_tag
-            INNER JOIN tag
-            ON tag.id = spending_tag.tag
-            WHERE spending_tag.spending = :spending";
+    $sql = "SELECT budget_tag.tag
+            FROM budget_tag
+            INNER JOIN spending_budget
+            ON spending_budget.budget = budget_tag.budget
+            WHERE spending_budget.spending = :spending";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':spending', $spending, PDO::PARAM_INT);
     $req->execute();
@@ -56,11 +54,11 @@
   }
 
   function select_tags_subsidy($subsidy) {
-    $sql = "SELECT *
-            FROM subsidy_tag
-            INNER JOIN tag
-            ON tag.id = subsidy_tag.tag
-            WHERE subsidy_tag.subsidy = :subsidy";
+    $sql = "SELECT budget_tag.tag
+            FROM budget_tag
+            INNER JOIN subsidy
+            ON subsidy.budget = budget_tag.budget
+            WHERE subsidy.id = :subsidy";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
     $req->execute();
@@ -68,11 +66,11 @@
   }
 
   function select_tags_income($income) {
-    $sql = "SELECT *
-            FROM income_tag
-            INNER JOIN tag
-            ON tag.id = income_tag.tag
-            WHERE income_tag.income = :income";
+    $sql = "SELECT budget_tag.tag
+            FROM budget_tag
+            INNER JOIN income_budget
+            ON income_budget.budget = budget_tag.budget
+            WHERE income_budget.income = :income";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':income', $income, PDO::PARAM_INT);
     $req->execute();
