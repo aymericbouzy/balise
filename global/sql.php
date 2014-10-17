@@ -1,7 +1,7 @@
 <?php
 
   function select_entries($table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
-    $sql = "SELECT *
+    $sql = "SELECT id
             FROM ".$table."
             WHERE true";
     foreach ($criteria as $column => $value) {
