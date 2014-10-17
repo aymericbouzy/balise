@@ -12,6 +12,12 @@
             $sql .= " AND EXISTS (SELECT *
                                   FROM budget_tag
                                   WHERE budget_tag.budget = budget.id AND budget_tag.tag = :tag".$i.")";
+          } ($table == "binet") {
+            $sql .= " AND EXISTS (SELECT *
+                                  FROM budget_tag
+                                  INNER JOIN budget
+                                  ON budget.id = budget_tag.budget
+                                  WHERE budget.binet = binet.id budget_tag.tag = :tag".$i.")";
           } else {
             $sql .= " AND EXISTS (SELECT *
                                   FROM budget_tag

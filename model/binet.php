@@ -24,7 +24,7 @@
   }
 
   function select_binet($binet, $fields = NULL) {
-    return select_entry("binet", $binet), $fields;
+    return select_entry("binet", $binet, $fields);
   }
 
   function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
