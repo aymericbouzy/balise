@@ -21,8 +21,8 @@
   }
 
   function write_path_rule($htaccess, $path, $url) {
-    if (fwrite($htaccess, "RewriteRule ".$path." ".$url."%{QUERY_STRING} [L]
-    ") === FALSE) {
+    if (fwrite($htaccess, "RewriteRule ".$path." ./controller/".$url."%{QUERY_STRING} [L]
+    ") === FALSE && $_ENV["development"]) {
       echo ".htaccess could not be written for urlrewriting.";
     }
   }
@@ -41,12 +41,12 @@
 	       exit;
 	    }
 
-      write_path_rule($htaccess, login_path(), "./login.php?");
+      write_path_rule($htaccess, login_path(), "frankiz/login.php?");
 
 
       foreach(select_binets() as $binet) {
-        write_path_rule($htaccess, binet_index_path($binet["id"]), "./controller/budget/index.php?binet=".$binet["id"]."&");
-        write_path_rule($htaccess, binet_budget_index_path($binet["id"]), "./controller/budget/index.php?binet=".$binet["id"]."&");
+        write_path_rule($htaccess, binet_index_path($binet["id"]), "binet/budget/index.php?binet=".$binet["id"]."&");
+        write_path_rule($htaccess, binet_budget_index_path($binet["id"]), "binet/budget/index.php?binet=".$binet["id"]."&");
       }
     }
   }
