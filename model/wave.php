@@ -14,15 +14,8 @@
     return $wave["id"];
   }
 
-  function select_wave($wave) {
-    $sql = "SELECT *
-            FROM wave
-            WHERE id = :wave
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':wave', $wave, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_wave($wave, $fields = NULL) {
+    return select_entry("wave", $wave, $fields);
   }
 
   function select_waves($criteria) {

@@ -12,15 +12,8 @@
     return $tag["id"];
   }
 
-  function select_tag($tag) {
-    $sql = "SELECT *
-            FROM tag
-            WHERE id = :tag
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_tag($tag, $fields = NULL) {
+    return select_entry("tag", $tag, $fields);
   }
 
   function select_tags_binet($binet) {

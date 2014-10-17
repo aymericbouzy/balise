@@ -15,15 +15,8 @@
     return $income["id"];
   }
 
-  function select_income($income) {
-    $sql = "SELECT *
-            FROM income
-            WHERE id = :income
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':income', $income, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_income($income, $fields = NULL) {
+    return select_entry("income", $income, $fields);
   }
 
   function validate_income($income) {

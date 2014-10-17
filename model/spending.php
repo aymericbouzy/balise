@@ -16,15 +16,8 @@
     return $spending["id"];
   }
 
-  function select_spending($spending) {
-    $sql = "SELECT *
-            FROM spending
-            WHERE id = :spending
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_spending($spending, $fields = NULL) {
+    return select_entry("spending", $spending, $fields);
   }
 
   function validate_spending($spending) {

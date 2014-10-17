@@ -15,15 +15,8 @@
       return $budget["id"];
     }
 
-    function select_budget($budget) {
-      $sql = "SELECT *
-              FROM budget
-              WHERE id = :budget
-              LIMIT 1";
-      $req = Database::get()->prepare($sql);
-      $req->bindParam(':budget', $budget, PDO::PARAM_INT);
-      $req->execute();
-      return $req->fetch(PDO::FETCH_ASSOC);
+    function select_budget($budget, $fields = NULL) {
+      return select_entry("budget", $budget, $fields);
     }
 
     function select_budgets($criteria) {
