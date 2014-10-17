@@ -23,15 +23,8 @@
     return $binet["id"];
   }
 
-  function select_binet($binet) {
-    $sql = "SELECT *
-            FROM binet
-            WHERE id = :binet
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_binet($binet, $fields = NULL) {
+    return select_entry("binet", $binet), $fields;
   }
 
   function select_binets($criteria = array()) {

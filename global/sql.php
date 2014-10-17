@@ -95,6 +95,8 @@
         }
         $sql .= $field;
       }
+    } else {
+      $sql .= "*";
     }
     $sql .= " FROM ".$table."
             WHERE id = :id
