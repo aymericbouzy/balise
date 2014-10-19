@@ -74,29 +74,32 @@ CREATE TABLE IF NOT EXISTS `budget_tag` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `income`
+-- Table structure for table `operation`
 --
 
-CREATE TABLE IF NOT EXISTS `income` (
+CREATE TABLE IF NOT EXISTS `operation` (
 `id` int(11) NOT NULL,
   `date` date NOT NULL,
   `amount` int(11) NOT NULL,
   `binet` int(11) NOT NULL,
   `term` smallint(6) NOT NULL,
   `type` tinyint(4) NOT NULL,
+  `bill` varchar(30) DEFAULT NULL,
+  `reference` varchar(30) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `kes_validation_by` int(11) DEFAULT NULL,
+  `paid_by` int(11) DEFAULT NULL,
   `comment` tinytext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `income_budget`
+-- Table structure for table `operation_budget`
 --
 
-CREATE TABLE IF NOT EXISTS `income_budget` (
-  `income` int(11) NOT NULL,
+CREATE TABLE IF NOT EXISTS `operation_budget` (
+  `operation` int(11) NOT NULL,
   `budget` int(11) NOT NULL,
   `amount` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -107,42 +110,10 @@ CREATE TABLE IF NOT EXISTS `income_budget` (
 -- Table structure for table `income_type`
 --
 
-CREATE TABLE IF NOT EXISTS `income_type` (
+CREATE TABLE IF NOT EXISTS `operation_type` (
 `id` tinyint(4) NOT NULL,
   `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `spending`
---
-
-CREATE TABLE IF NOT EXISTS `spending` (
-`id` int(11) NOT NULL,
-  `date` date NOT NULL COMMENT 'creation date',
-  `amount` int(10) unsigned NOT NULL,
-  `binet` int(11) NOT NULL,
-  `term` smallint(6) NOT NULL,
-  `bill` varchar(30) DEFAULT NULL,
-  `created_by` int(11) NOT NULL,
-  `binet_validation_by` int(11) DEFAULT NULL,
-  `kes_validation_by` int(11) DEFAULT NULL,
-  `paid_by` int(11) DEFAULT NULL,
-  `comment` tinytext NOT NULL COMMENT 'name of the spending'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `spending_budget`
---
-
-CREATE TABLE IF NOT EXISTS `spending_budget` (
-  `spending` int(11) NOT NULL,
-  `budget` int(11) NOT NULL,
-  `amount` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -218,20 +189,15 @@ ALTER TABLE `budget`
 --
 -- Indexes for table `income`
 --
-ALTER TABLE `income`
+ALTER TABLE `operation`
  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `income_type`
 --
-ALTER TABLE `income_type`
+ALTER TABLE `operation_type`
  ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`);
 
---
--- Indexes for table `spending`
---
-ALTER TABLE `spending`
- ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `bill` (`bill`);
 
 --
 -- Indexes for table `student`
@@ -274,18 +240,13 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `income`
 --
-ALTER TABLE `income`
+ALTER TABLE `operation`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `income_type`
 --
-ALTER TABLE `income_type`
+ALTER TABLE `operation_type`
 MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `spending`
---
-ALTER TABLE `spending`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `student`
 --
