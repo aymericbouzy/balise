@@ -16,15 +16,8 @@
     return $spending["id"];
   }
 
-  function select_spending($spending) {
-    $sql = "SELECT *
-            FROM spending
-            WHERE id = :spending
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_spending($spending, $fields = NULL) {
+    return select_entry("spending", $spending, $fields);
   }
 
   function validate_spending($spending) {
@@ -50,52 +43,43 @@
   }
 
   function update_spending($spending, $hash) {
-    foreach ($hash as $column => $value) {
-      if (in_array($column, array("amount", "bill", "paid_by", "comment"))) {
-        $sql = "UPDATE spending
-                SET :column = :value
-                WHERE id = :spending
-                LIMIT 1";
-        $req = Database::get()->prepare($sql);
-        $req->bindParam(':spending', $spending, PDO::PARAM_INT);
-        if (in_array($column, array("amount"))) {
-          $req->bindParam(':'.$value, $value, PDO::PARAM_INT);
-          $req->execute(array(
-            (':'.$column) => $column
-          ));
-        } else {
-          $req->execute(array(
-            (':'.$column) => $column,
-            (':'.$value) => $value
-          ));
-        }
-      }
-    }
+    update_entry("spending",
+                  array("amount", "paid_by"),
+                  array("bill", "comment"),
+                  $spending,
+                  $hash);
   }
 
-  /*
-  function select_spendings_subsidy($subsidy, $kes_validated = true, $binet_validated = true) {
-    $sql = "SELECT *
-            FROM spending_subsidy
-            INNER JOIN spending
-            ON spending.id = spending_subsidy.spending
-            WHERE spending_subsidy.subsidy = :subsidy";
-    if ($kes_validated) {
-      $sql .= " AND spending.kes_validated_by != NULL";
+  function select_spendings($criteria, $order_by = NULL, $ascending = true) {
+    if (!isset($criteria["kes_validation_by"])) {
+      $criteria["kes_validation_by"] = array("!=", NULL)
     }
-    if ($binet_validated) {
-      $sql .= " AND spending.binet_validated_by != NULL";
+    if (!isset($criteria["binet_validation_by"])) {
+      $criteria["binet_validation_by"] = array("!=", NULL);
     }
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetchAll();
-  }
-  */
-
-  function select_spendings($criteria) {
     return select_entries("spending",
-                          array("amount", "binet", "created_by", "binet_validation_by", "kes_validation_by", "paid_by"),
+                          array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by"),
                           array("bill", "date"),
-                          $criteria);
+                          $criteria,
+                          $order_by,
+                          $ascending);
+  }
+
+  function add_budgets_spending($spending, $amounts) {
+    foreach ($amounts as $budget => $amount) {
+      $sql = "INSERT INTO spending_budget(spending, budget, amount)
+              VALUES(:spending, :budget, :amount)";
+      $req->bindParam(':spending', $income, PDO::PARAM_INT);
+      $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+      $req->bindParam(':amount', $amount, PDO::PARAM_INT);
+      $req->execute();
+    }
+  }
+
+  function remove_budgets_spending($spending) {
+    $sql = "DELETE
+            FROM spending_budget
+            WHERE spending = :spending";
+    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->execute();
   }

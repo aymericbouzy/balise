@@ -14,22 +14,17 @@
     return $wave["id"];
   }
 
-  function select_wave($wave) {
-    $sql = "SELECT *
-            FROM wave
-            WHERE id = :wave
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':wave', $wave, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_wave($wave, $fields = NULL) {
+    return select_entry("wave", $wave, $fields);
   }
 
-  function select_waves($criteria) {
+  function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries("wave",
                           array("binet", "published"),
                           array("submission_date", "expiry_date"),
-                          $criteria);
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }
 
   function publish_wave($wave) {

@@ -1,7 +1,7 @@
 <?php
 
   /*
-  Creates a new binet with a least one name.
+  Creates a new binet with at least one name.
 
   @param string $name name of the binet, varchar(50) NOT NULL in table 'binet' and 'binet_admin'
   @param int $admin id of the student as admin of the binet, int(11) DEFAULT NULL in table 'binet_admin'
@@ -11,32 +11,29 @@
   @uses $_SESSION["student"] to fill `validated_by` int(11) DEFAULT NULL in table 'binet' for insert
 
   */
-  function create_binet($name, $admin) {
-    $sql = "INSERT INTO binet(name)
-            VALUES(':name')";
+  function create_binet($name, $term) {
+    $sql = "INSERT INTO binet(name, clean_name, current_term)
+            VALUES(:name, :clean_name, :term)";
     $req = Database::get()->prepare($sql);
-    $req->execute(array('name' => $name));
-    $binet = $req->fetch(PDO::FETCH_ASSOC);
-
-    $sql = "INSERT INTO binet_admin(binet, student, validated_by)
-            VALUES(:binet, :admin, :validated_by)";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet["id"], PDO::PARAM_INT);
-    $req->bindParam(':admin', $admin, PDO::PARAM_INT);
-    $req->bindParam(':validated_by', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindParam(':name', $name, PDO::PARAM_STR);
+    $req->bindParam(':url_name', slean_string($name), PDO::PARAM_STR);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
+    $binet = $req->fetch(PDO::FETCH_ASSOC);
     return $binet["id"];
   }
 
-  function select_binet($binet) {
-    $sql = "SELECT *
-            FROM binet
-            WHERE id = :binet
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC);
+  function select_binet($binet, $fields = NULL) {
+    return select_entry("binet", $binet, $fields);
+  }
+
+  function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
+    return select_entries("binet",
+                          array("subsidy_provider", "current_term"),
+                          array("name", "clean_name"),
+                          $criteria,
+                          $order_by,
+                          $ascending);
   }
 
   /*
@@ -58,34 +55,17 @@
 
   @return array Array containing all admins of current binet
   */
-  function get_admins($binet) {
+  function get_admins($binet, $term) {
     $sql = "SELECT *
             FROM student
             INNER JOIN binet_admin
             ON student.id = binet_admin.student
-            WHERE binet_admin.binet = :binet AND binet_admin.validated_by != NULL";
+            WHERE binet_admin.binet = :binet AND binet_admin.term = :term";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
-  }
-
-  /*
-  @param int $student id of the student to be set as admin, int(11) NOT NULL in table 'binet_admin'
-  @param int $binet id of the binet , int(11) NOT NULL in table 'binet_admin'
-
-  @uses $_SESSION["student"] to fill `validated_by` int(11) DEFAULT NULL in table 'binet_admin' for update
-  */
-  function validate_admin_binet($student, $binet) {
-    $sql = "UPDATE binet_admin
-            SET validated_by = :validated_by
-            WHERE binet_admin.binet = :binet AND binet.admin.student = :student
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':student', $student, PDO::PARAM_INT);
-    $req->bindParam(':validated_by', $_SESSION["student"], PDO::PARAM_INT);
-    $req->execute();
   }
 
   /*
@@ -93,12 +73,13 @@
 
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet_admin' for insert
   */
-  function request_admin_binet($binet) {
-    $sql = "INSERT INTO binet_admin(binet, student)
-            VALUES(:binet, :student)";
+  function add_admin_binet($student, $binet, $term) {
+    $sql = "INSERT INTO binet_admin(student, binet, term)
+            VALUES(:student, :binet, :term)";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindParam(':student', $student, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -107,19 +88,20 @@
 
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
-  function get_status_admin_binet($binet) {
-    $sql = "SELECT validated_by
+  function status_admin_binet($binet, $term) {
+    $sql = "SELECT *
             FROM binet_admin
-            WHERE binet = :binet AND student = :student
+            WHERE binet = :binet AND term = :term AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     if ($row = $req->fetch()) {
-      return $row["validated_by"]) or -1;
+      return true;
     } else {
-      return -2;
+      return false;
     }
   }
 
@@ -127,13 +109,14 @@
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet_admin'
     @param int $student if of the student, int(11) NOT NULL in table 'binet_admin'
   */
-  function remove_admin_binet($binet, $student) {
+  function remove_admin_binet($binet, $term, $student) {
     $sql = "DELETE
             FROM binet_admin
-            WHERE binet = :binet AND student = :student
+            WHERE binet = :binet AND term = :term AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->bindParam(':student', $student, PDO::PARAM_INT);
     $req->execute();
   }
@@ -142,7 +125,7 @@
   */
   function deactivate_binet($binet) {
     $sql = "UPDATE binet
-            SET active = 0
+            SET current_term = NULL
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
@@ -153,12 +136,25 @@
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet'
   */
-  function activate_binet($binet) {
+  function change_term_binet($binet, $term)
     $sql = "UPDATE binet
-            SET active = 1
+            SET term = :term
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
+  }
+
+  function solde_binet($binet, $term) {
+    $solde = 0;
+    foreach (select_budgets(array("binet" => $binet, "term" => $term)) as $budget) {
+      $real_amount = get_real_amount_budget($budget["id"]);
+      if ($real_amount < 0) {
+        $solde += min(0, $real_amount + get_subsidized_amount_budget($budget["id"]));
+      } else {
+        $solde += $real_amount;
+      }
+    }
   }
