@@ -1,18 +1,16 @@
 <?php
 
-    function create_budget($binet, $amount, $label, $term) {
-      $binet = select_binet($binet);
-      $sql = "INSERT INTO wave(binet, amount, term, label)
-              VALUES(:binet, :amount, :term, :label)";
-      $req = Database::get()->prepare($sql);
-      $req->bindParam(':binet', $binet["id"], PDO::PARAM_INT);
-      $req->bindParam(':amount', $amount, PDO::PARAM_INT);
-      $req->bindParam(':term', $term ? $term : $binet["term"], PDO::PARAM_INT);
-      $req->execute(array(
-        ':label' => $label
-      ));
-      $budget = $req->fetch(PDO::FETCH_ASSOC);
-      return $budget["id"];
+    function create_budget($binet, $term, $amount, $label) {
+      $values["binet"] = $binet;
+      $values["term"] = $term;
+      $values["amount"] = $amount;
+      $values["label"] = $label;
+      return create_entry(
+        "budget",
+        array("binet", "term", "amout"),
+        array("label"),
+        $values
+      );
     }
 
     function select_budget($budget, $fields = NULL) {
