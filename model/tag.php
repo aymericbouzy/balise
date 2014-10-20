@@ -41,14 +41,14 @@
     return $req->fetchAll();
   }
 
-  function select_tags_spending($spending) {
+  function select_tags_operation($operation) {
     $sql = "SELECT budget_tag.tag
             FROM budget_tag
-            INNER JOIN spending_budget
-            ON spending_budget.budget = budget_tag.budget
-            WHERE spending_budget.spending = :spending";
+            INNER JOIN operation_budget
+            ON operation_budget.budget = budget_tag.budget
+            WHERE operation_budget.operation = :operation";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -61,18 +61,6 @@
             WHERE subsidy.id = :subsidy";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetchAll();
-  }
-
-  function select_tags_income($income) {
-    $sql = "SELECT budget_tag.tag
-            FROM budget_tag
-            INNER JOIN income_budget
-            ON income_budget.budget = budget_tag.budget
-            WHERE income_budget.income = :income";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':income', $income, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
