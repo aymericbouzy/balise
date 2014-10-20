@@ -1,18 +1,16 @@
 <?php
 
-  function create_subsidy($budget, $wave, $amount, $purpose = "") {
-    $sql = "INSERT INTO subsidy(budget, wave, requested_amount, purpose, created_by)
-            VALUES(:budget, :wave, :amount, :purpose, :student)";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
-    $req->bindParam(':wave', $wave, PDO::PARAM_INT);
-    $req->bindParam(':amount', $amount, PDO::PARAM_INT);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->execute(array(
-      ':purpose' => $purpose
-    ));
-    $subsidy = $req->fetch(PDO::FETCH_ASSOC);
-    return $subsidy["id"];
+  function create_subsidy($budget, $wave, $amount, $optional_values) {
+    $values["budget"] = $budget;
+    $values["wave"] = $wave;
+    $values["amount"] = $amount;
+    $values["created_by"] = $_SESSION["student"];
+    return create_entry(
+      "subsidy",
+      array("budget", "wave", "amount", "created_by"),
+      array("purpose"),
+      array_merge($values, $optional_values)
+    );
   }
 
   function select_subsidy($subsidy, $fields = NULL) {

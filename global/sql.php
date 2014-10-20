@@ -29,7 +29,7 @@
           $i++;
         }
       }
-      if (in_array($column, $selectable_int_fields + $selectable_str_fields)) {
+      if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
         $sql .= " AND ".$column;
         if (is_array($value)) {
           $sql .= " ".$value[0];
