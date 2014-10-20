@@ -49,7 +49,7 @@
     return select_request(
       "SUM(granted_amount) as subsidized_amount",
       "subsidy",
-      array("budget", "requested_amount", "granted_amount"),
+      array("budget", "requested_amount", "granted_amount", "wave"),
       array(),
       $criteria
     )[0]["subsidized_amount"];
