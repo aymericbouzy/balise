@@ -1,6 +1,6 @@
 <?php
 
-    function create_budget($binet, $amount, $label, $term = NULL) {
+    function create_budget($binet, $amount, $label, $term) {
       $binet = select_binet($binet);
       $sql = "INSERT INTO wave(binet, amount, term, label)
               VALUES(:binet, :amount, :term, :label)";

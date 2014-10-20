@@ -12,15 +12,15 @@
 
   */
   function create_binet($name, $term) {
-    $sql = "INSERT INTO binet(name, clean_name, current_term)
-            VALUES(:name, :clean_name, :term)";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':name', $name, PDO::PARAM_STR);
-    $req->bindParam(':url_name', slean_string($name), PDO::PARAM_STR);
-    $req->bindParam(':term', $term, PDO::PARAM_INT);
-    $req->execute();
-    $binet = $req->fetch(PDO::FETCH_ASSOC);
-    return $binet["id"];
+    $values["name"] = $name;
+    $values["term"] = $term;
+    $values["clean_name"] = clean_string($values["name"]);
+    return create_entry(
+      "binet",
+      array("term"),
+      array("name", "clean_name"),
+      $values
+    );
   }
 
   function select_binet($binet, $fields = NULL) {

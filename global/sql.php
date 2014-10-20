@@ -150,4 +150,6 @@
         }
       }
     }
+    $entry = $req->fetch(PDO::FETCH_ASSOC);
+    return $entry["id"];
   }
