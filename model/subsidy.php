@@ -46,10 +46,11 @@
   }
 
   function get_subsidized_amount($criteria) {
-    $sql = "SELECT SUM(subsidy.granted_amount) as subsidized_amount
-            FROM subsidy
-            WHERE true";
-    foreach ($criteria as $column => $value) {
-      
-    }
+    return select_request(
+      "SUM(granted_amount) as subsidized_amount",
+      "subsidy",
+      array("budget", "requested_amount", "granted_amount"),
+      array(),
+      $criteria
+    )[0]["subsidized_amount"];
   }
