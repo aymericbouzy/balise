@@ -1,6 +1,6 @@
 <?php
 
-  function create_income($amount, $binet, $type, $comment) {
+  function create_operation($amount, $binet, $type, $comment) {
     $sql = "INSERT INTO income(date, amount, type, created_by, comment)
             VALUES(CURDATE(), :amount, :binet, :type, :student, :comment)";
     $req = Database::get()->prepare($sql);

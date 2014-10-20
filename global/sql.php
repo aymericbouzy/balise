@@ -112,3 +112,42 @@
     $req->execute();
     return $req->fetch(PDO::FETCH_ASSOC);
   }
+
+  function create_entry($table, $creatable_int_fields, $creatable_str_fields, $values) {
+    $values = array_intersect_key($values, array_flip(array_merge($creatable_int_fields, $creatable_str_fields)));
+    $sql1 = "INSERT INTO ".$table."(";
+    $sql2 = "VALUES(";
+    $initial = true;
+    foreach($values as $column => $value) {
+      if ($initial) {
+        $initial = false;
+      } else {
+        $sql1 .= ", ";
+        $sql2 .= ", ";
+      }
+      $sql1 .= $column;
+      if (is_array($value)) {
+        switch ($value[0]) {
+        case "date":
+          $sql2 .= $value[1],
+          break;
+        default:
+          $sql2 .= "NULL";
+        }
+      } else {
+        $sql2 .= ":".$column;
+      }
+    }
+    $req = Database::get()->prepare($sql1.") ".$sql2.")");
+    foreach ($values as $column => $value) {
+      if (!is_array($value)) {
+        if (is_null($value)) {
+          $req->bindParam(':'.$column, NULL, PDO::PARAM_NULL);
+        } elseif (in_array($column, $creatable_int_fields)) {
+          $req->bindParam(':'.$column, $value, PDO::PARAM_INT);
+        } elseif (in_array($column, $creatable_str_fields)) {
+          $req->bindParam(':'.$column, $value, PDO::PARAM_STR);
+        }
+      }
+    }
+  }
