@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `operation` (
   `created_by` int(11) NOT NULL,
   `kes_validation_by` int(11) DEFAULT NULL,
   `paid_by` int(11) DEFAULT NULL,
-  `comment` tinytext NOT NULL
+  `comment` tinytext NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------

@@ -1,19 +1,18 @@
 <?php
 
-  function create_spending($amount, $binet, $comment = "", $paid_by = 0, $bill = 0) {
-    $sql = "INSERT INTO spending(date, amount, binet, bill, created_by, paid_by, comment)
-            VALUES(CURDATE(), :amount, :binet, :bill, :student, :paid_by, :comment)";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':amount', $amount, PDO::PARAM_INT);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->bindParam(':paid_by', $paid_by, PDO::PARAM_INT);
-    $req->execute(array(
-      ':bill' => $bill,
-      ':comment' => $comment
-    ));
-    $spending = $req->fetch(PDO::FETCH_ASSOC);
-    return $spending["id"];
+  function create_operation($binet, $term, $amount, $type, $optional_values = array()) {
+    $values["binet"] = $binet;
+    $values["term"] = $term;
+    $values["amount"] = $amount;
+    $values["type"] = $type;
+    $values["created_by"] = $_SESSION["student"];
+    $values["date"] = array("date", "CURDATE()");
+    return create_operation(
+      "operation",
+      array("binet", "term", "amount", "created_by", "paid_by", "type"),
+      array("date", "bill", "reference", "comment"),
+      array_merge($values, $optional_values);
+    );
   }
 
   function select_spending($spending, $fields = NULL) {

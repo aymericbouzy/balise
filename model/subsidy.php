@@ -1,6 +1,6 @@
 <?php
 
-  function create_subsidy($budget, $wave, $amount, $optional_values) {
+  function create_subsidy($budget, $wave, $amount, $optional_values = array()) {
     $values["budget"] = $budget;
     $values["wave"] = $wave;
     $values["amount"] = $amount;
