@@ -35,11 +35,11 @@
   }
 
   function get_real_amount_budget($budget) {
-    $sql = "SELECT SUM(spending_budget.amount) as real_amount
-            FROM spending_budget
-            INNER JOIN spending
-            ON spending.id = spending_budget.spending
-            WHERE spending_budget.budget = :budget AND spending.kes_validation_by != NULL";
+    $sql = "SELECT SUM(operation_budget.amount) as real_amount
+            FROM operation_budget
+            INNER JOIN operation
+            ON operation.id = operation_budget.operation
+            WHERE operation_budget.budget = :budget AND operation.kes_validation_by != NULL";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
