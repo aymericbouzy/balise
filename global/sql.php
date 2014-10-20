@@ -1,7 +1,11 @@
 <?php
 
   function select_entries($table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
-    $sql = "SELECT id
+    return select_request("id", $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by, $ascending);
+  }
+
+  function select_request($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
+    $sql = "SELECT ".$select_string."
             FROM ".$table."
             WHERE true";
     foreach ($criteria as $column => $value) {
@@ -41,7 +45,6 @@
     }
     if ($order_by) {
       $sql .= " ORDER BY :order_by".($ascending ? " ASC" : " DESC");
-
     }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {

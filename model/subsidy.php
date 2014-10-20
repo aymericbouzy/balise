@@ -44,3 +44,12 @@
                           $order_by,
                           $ascending);
   }
+
+  function get_subsidized_amount($criteria) {
+    $sql = "SELECT SUM(subsidy.granted_amount) as subsidized_amount
+            FROM subsidy
+            WHERE true";
+    foreach ($criteria as $column => $value) {
+      
+    }
+  }
