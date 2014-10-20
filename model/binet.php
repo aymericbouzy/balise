@@ -27,6 +27,7 @@
     return select_entry("binet", $binet, $fields);
   }
 
+  // TODO: selection by : solde, subsidised_amount, amount_subsidy_requested, spent_amount, earned_amount, subsidy_used
   function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries("binet",
                           array("subsidy_provider", "current_term"),
