@@ -1,13 +1,13 @@
 <?php
 
   function create_tag($name) {
-    $sql = "INSERT INTO tag(name)
-            VALUES(:name)";
-    $req = Database::get()->prepare($sql);
-    $req->bindParam(':name', $name, PDO::PARAM_STR);
-    $req->execute();
-    $tag = $req->fetch(PDO::FETCH_ASSOC);
-    return $tag["id"];
+    $values["name"] = $name;
+    return create_entry(
+      "tag",
+      array(),
+      array("name"),
+      $values
+    );
   }
 
   function select_tag($tag, $fields = NULL) {
