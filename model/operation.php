@@ -22,43 +22,43 @@
   function validate_operation($operation) {
     $sql = "UPDATE operation
             SET binet_validation_by = :student
-            WHERE id = :spending
+            WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
 
-  function validate_kes_spending($spending) {
-    $sql = "UPDATE spending
+  function validate_kes_operation($operation) {
+    $sql = "UPDATE operation
             SET kes_validation_by = :student
-            WHERE id = :spending
+            WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->bindParam(':spending', $spending, PDO::PARAM_INT);
+    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
 
-  function update_spending($spending, $hash) {
-    update_entry("spending",
-                  array("amount", "paid_by"),
-                  array("bill", "comment"),
-                  $spending,
+  function update_operation($operation, $hash) {
+    update_entry("operation",
+                  array("amount", "paid_by", "binet", "term", "type"),
+                  array("bill", "reference", "comment"),
+                  $operation,
                   $hash);
   }
 
-  function select_spendings($criteria, $order_by = NULL, $ascending = true) {
+  function select_operations($criteria, $order_by = NULL, $ascending = true) {
     if (!isset($criteria["kes_validation_by"])) {
       $criteria["kes_validation_by"] = array("!=", NULL)
     }
     if (!isset($criteria["binet_validation_by"])) {
       $criteria["binet_validation_by"] = array("!=", NULL);
     }
-    return select_entries("spending",
-                          array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by"),
-                          array("bill", "date"),
+    return select_entries("operation",
+                          array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),
+                          array("bill", "date", "reference"),
                           $criteria,
                           $order_by,
                           $ascending);
