@@ -15,12 +15,12 @@
     );
   }
 
-  function select_spending($spending, $fields = NULL) {
-    return select_entry("spending", $spending, $fields);
+  function select_operation($operation, $fields = array()) {
+    return select_entry("operation", $operation, $fields);
   }
 
-  function validate_spending($spending) {
-    $sql = "UPDATE spending
+  function validate_operation($operation) {
+    $sql = "UPDATE operation
             SET binet_validation_by = :student
             WHERE id = :spending
             LIMIT 1";

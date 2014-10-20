@@ -87,6 +87,7 @@ CREATE TABLE IF NOT EXISTS `operation` (
   `bill` varchar(30) DEFAULT NULL,
   `reference` varchar(30) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
+  `binet_validation_by` int(11) DEFAULT NULL,
   `kes_validation_by` int(11) DEFAULT NULL,
   `paid_by` int(11) DEFAULT NULL,
   `comment` tinytext NOT NULL DEFAULT ''
