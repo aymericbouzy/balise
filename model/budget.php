@@ -17,6 +17,7 @@
     return select_entry("budget", $budget, $fields);
   }
 
+  // TODO: selection by subsidied_amount, real_amount
   function select_budgets($criteria, $order_by = NULL, $ascending = true) {
     return select_entries("budget",
                           array("binet", "amount", "term"),
@@ -46,6 +47,7 @@
     return $req->fetch(PDO::FETCH_ASSOC)["real_amount"];
   }
 
+  // TODO : add date handling
   function get_subsidized_amount_budget($budget) {
     $sql = "SELECT SUM(subsidy.granted_amount) as subsidized_amount
             FROM subsidy

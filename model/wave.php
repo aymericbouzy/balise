@@ -17,6 +17,7 @@
     return select_entry("wave", $wave, $fields);
   }
 
+  // TODO: selection by : total_requested_amount, total_granted_amount, total_spent_amount
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries("wave",
                           array("binet", "term", "published"),

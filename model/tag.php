@@ -14,6 +14,7 @@
     return select_entry("tag", $tag, $fields);
   }
 
+  // TODO: selecion by : number of times used, order_by(number_of_times_used), 
   function select_tags($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries("tag",
                           array(),
