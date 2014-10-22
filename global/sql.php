@@ -43,7 +43,7 @@
         $sql .= " :".$column;
       }
     }
-    if ($order_by) {
+    if ($order_by && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields))) {
       $sql .= " ORDER BY :order_by".($ascending ? " ASC" : " DESC");
     }
     $req = Database::get()->prepare($sql);
