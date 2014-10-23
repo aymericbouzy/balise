@@ -26,3 +26,12 @@
                   $request,
                   $hash);
   }
+
+  function select_requests($criteria, $order_by = NULL, $ascending = true) {
+    return select_entries("request",
+                          array("wave"),
+                          array(),
+                          $criteria,
+                          $order_by,
+                          $ascending);
+  }
