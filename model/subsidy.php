@@ -24,6 +24,7 @@
                   $hash);
   }
 
+  // TODO: add date handling
   function get_consumed_amount_subsidy($subsidy) {
     $subsidy = select_subsidy($subsidy);
     $consumed_amount = get_real_amount_budget($subsidy["budget"]);
