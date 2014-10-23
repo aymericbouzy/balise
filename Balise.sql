@@ -29,6 +29,8 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `binet` (
 `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
+  `clean_name` varchar(50) NOT NULL,
+  `description` text,
   `subsidy_provider` tinyint(1) NOT NULL DEFAULT '0',
   `current_term` smallint(6) DEFAULT NULL,
   `subsidy_steps` text
