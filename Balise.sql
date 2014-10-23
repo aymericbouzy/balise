@@ -124,9 +124,7 @@ CREATE TABLE IF NOT EXISTS `operation_type` (
 
 CREATE TABLE IF NOT EXISTS `request` (
   `id` int(11) NOT NULL,
-  `binet` int(11) NOT NULL,
   `wave` int(11) NOT NULL,
-  `term` smallint(6) NOT NULL,
   `answer` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

@@ -1,13 +1,12 @@
 <?php
 
-  function create_subsidy($budget, $wave, $amount, $optional_values = array()) {
+  function create_subsidy($budget, $request, $amount, $optional_values = array()) {
     $values["budget"] = $budget;
-    $values["wave"] = $wave;
+    $values["request"] = $request;
     $values["amount"] = $amount;
-    $values["created_by"] = $_SESSION["student"];
     return create_entry(
       "subsidy",
-      array("budget", "wave", "amount", "created_by"),
+      array("budget", "request", "amount"),
       array("purpose"),
       array_merge($values, $optional_values)
     );
@@ -36,10 +35,10 @@
     }
   }
 
-  // TODO: selection by : consumed_amount 
+  // TODO: selection by : consumed_amount
   function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
     return select_entries("subsidy",
-                          array("binet", "wave", "requested_amount", "granted_amount", "created_by"),
+                          array("binet", "request", "requested_amount", "granted_amount"),
                           array(),
                           $criteria,
                           $order_by,
@@ -50,7 +49,7 @@
     return select_request(
       "SUM(granted_amount) as subsidized_amount",
       "subsidy",
-      array("budget", "requested_amount", "granted_amount", "wave"),
+      array("budget", "requested_amount", "granted_amount", "request"),
       array(),
       $criteria
     )[0]["subsidized_amount"];
