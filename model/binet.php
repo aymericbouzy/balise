@@ -25,10 +25,14 @@
   }
 
   function select_binet($binet, $fields = NULL) {
-    return select_entry("binet", $binet, $fields);
+    $binet = select_entry("binet", $binet, $fields);
+    if (in_array("balance", $fields)) {
+      $binet["balance"] = balance_binet($binet["id"]);
+    }
+    return $binet;
   }
 
-  // TODO: selection by : solde, subsidised_amount, amount_subsidy_requested, spent_amount, earned_amount, subsidy_used
+  // TODO: selection by : balance, subsidised_amount, amount_subsidy_requested, spent_amount, earned_amount, subsidy_used
   function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries("binet",
                           array("subsidy_provider", "current_term"),
@@ -160,14 +164,14 @@
     $req->execute();
   }
 
-  function solde_binet($binet, $term) {
-    $solde = 0;
+  function balance_binet($binet, $term) {
+    $balance = 0;
     foreach (select_budgets(array("binet" => $binet, "term" => $term)) as $budget) {
       $real_amount = get_real_amount_budget($budget["id"]);
       if ($real_amount < 0) {
-        $solde += min(0, $real_amount + get_subsidized_amount_budget($budget["id"]));
+        $balance += min(0, $real_amount + get_subsidized_amount_budget($budget["id"]));
       } else {
-        $solde += $real_amount;
+        $balance += $real_amount;
       }
     }
   }
