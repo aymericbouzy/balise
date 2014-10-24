@@ -1,19 +1,24 @@
 <?php
 
-  function create_subsidy($budget, $request, $amount, $optional_values = array()) {
+  function create_subsidy($budget, $request, $requested_amount, $optional_values = array()) {
     $values["budget"] = $budget;
     $values["request"] = $request;
-    $values["amount"] = $amount;
+    $values["requested_amount"] = $requested_amount;
     return create_entry(
       "subsidy",
-      array("budget", "request", "amount"),
+      array("budget", "request", "requested_amount"),
       array("purpose"),
       array_merge($values, $optional_values)
     );
   }
 
   function select_subsidy($subsidy, $fields = NULL) {
-    return select_entry("subsidy", $subsidy, $fields);
+    return select_entry(
+      "subsidy",
+      array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation")
+      $subsidy,
+      $fields
+    );
   }
 
   function update_subsidy($subsidy, $hash) {
