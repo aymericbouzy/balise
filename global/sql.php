@@ -92,20 +92,20 @@
     }
   }
 
-  function select_entry($table, $id, $fields = NULL) {
+  function select_entry($table, $selectable_fields, $id, $fields = array()) {
+    $fields = array_intersect_key($fields, array_flip($selectable_fields));
+    if (is_empty($fields)) {
+      $fields = $selectable_fields;
+    }
     $sql = "SELECT ";
-    if ($fields) {
-      $initial = true;
-      foreach ($fields as $field) {
-        if ($initial) {
-          $initial = false;
-        } else {
-          $sql .= ", ";
-        }
-        $sql .= $field;
+    $initial = true;
+    foreach ($fields as $field) {
+      if ($initial) {
+        $initial = false;
+      } else {
+        $sql .= ", ";
       }
-    } else {
-      $sql .= "*";
+      $sql .= $field;
     }
     $sql .= " FROM ".$table."
             WHERE id = :id

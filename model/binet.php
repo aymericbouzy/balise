@@ -24,7 +24,7 @@
     );
   }
 
-  function select_binet($binet, $fields = NULL) {
+  function select_binet($binet, $fields = array()) {
     $binet = select_entry("binet", $binet, $fields);
     if (in_array("balance", $fields)) {
       $binet["balance"] = balance_binet($binet["id"]);
