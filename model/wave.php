@@ -14,7 +14,12 @@
   }
 
   function select_wave($wave, $fields = NULL) {
-    return select_entry("wave", $wave, $fields);
+    return select_entry(
+      "wave",
+      array("id", "binet", "term", "submission_date", "expiry_date", "published"),
+      $wave,
+      $fields
+    );
   }
 
   // TODO: selection by : total_requested_amount, total_granted_amount, total_spent_amount
