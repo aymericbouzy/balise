@@ -13,19 +13,24 @@
   */
   function create_binet($name, $term) {
     $values["name"] = $name;
-    $values["term"] = $term;
+    $values["current_term"] = $term;
     $values["clean_name"] = clean_string($values["name"]);
     $values["description"] = "";
     return create_entry(
       "binet",
-      array("term"),
+      array("current_term"),
       array("name", "clean_name", "description"),
       $values
     );
   }
 
   function select_binet($binet, $fields = array()) {
-    $binet = select_entry("binet", $binet, $fields);
+    $binet = select_entry(
+      "binet",
+      array("name", "clean_name", "description", "term", "subsidy_provider", "subsidy_steps"),
+      $binet,
+      $fields
+    );
     if (in_array("balance", $fields)) {
       $binet["balance"] = balance_binet($binet["id"]);
     }
