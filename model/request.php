@@ -16,7 +16,12 @@
   }
 
   function select_request($request, $fields = NULL) {
-    $request = select_entry("request", $request, $fields);
+    $request = select_entry(
+      "request",
+      array("id", "wave", "answer"),
+      $request,
+      $fields
+    );
     if (in_array("binet", $fields) || in_array("term", $fields)) {
       $subsidies = select_subsidies(array("request" => $request["id"]));
       $budget = select_budget($subsidies[0]["budget"]);
