@@ -16,7 +16,12 @@
   }
 
   function select_operation($operation, $fields = array()) {
-    return select_entry("operation", $operation, $fields);
+    return select_entry(
+      "operation",
+      array("id", "binet", "term", "amount", "created_by", "paid_by", "type", "date", "bill", "reference", "comment", "binet_validation_by", "kes_validation_by"),
+      $operation,
+      $fields
+    );
   }
 
   function validate_operation($operation) {
