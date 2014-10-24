@@ -14,7 +14,12 @@
   }
 
   function select_budget($budget, $fields = NULL) {
-    return select_entry("budget", $budget, $fields);
+    return select_entry(
+      "budget",
+      array("id", "binet", "amount", "term", "label"),
+      $budget,
+      $fields
+    );
   }
 
   // TODO: selection by subsidied_amount, real_amount

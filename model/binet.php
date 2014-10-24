@@ -27,7 +27,7 @@
   function select_binet($binet, $fields = array()) {
     $binet = select_entry(
       "binet",
-      array("name", "clean_name", "description", "term", "subsidy_provider", "subsidy_steps"),
+      array("id", "name", "clean_name", "description", "term", "subsidy_provider", "subsidy_steps"),
       $binet,
       $fields
     );
