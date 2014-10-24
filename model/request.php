@@ -16,7 +16,18 @@
   }
 
   function select_request($request, $fields = NULL) {
-    return select_entry("request", $request, $fields);
+    $request = select_entry("request", $request, $fields);
+    if (in_array("binet", $fields) || in_array("term", $fields)) {
+      $subsidies = select_subsidies(array("request" => $request["id"]));
+      $budget = select_budget($subsidies[0]["budget"]);
+      if (in_array("binet", $fields)) {
+        $request["binet"] = $budget["binet"];
+      }
+      if (in_array("term", $fields)) {
+        $request["term"] = $budget["term"];
+      }
+    }
+    return $request;
   }
 
   function update_request($request, $hash) {
