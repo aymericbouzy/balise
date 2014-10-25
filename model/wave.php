@@ -41,3 +41,18 @@
     $req->bindParam(':wave', $wave, PDO::PARAM_INT);
     $req->execute();
   }
+
+  function get_used_amount_wave($wave) {
+    $amount = 0;
+    foreach(select_requests(array("wave" => $wave)) as $request) {
+      foreach(select_subsidies(array("request" => $request["id"])) as $subsidy) {
+        $subsidy = select_subsidy($subsidy["id"], array("id", "budget"));
+        foreach(get_subsidized_amount_used_details_budget($subsidy["budget"]) as $budget_subsidy) {
+          if ($budget_subsidy["id"] == $subsidy["id"]) {
+            $amount += $budget_subsidy["used_amount"];
+          }
+        }
+      }
+    }
+    return $amount;
+  }
