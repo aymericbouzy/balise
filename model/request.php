@@ -51,3 +51,11 @@
                           $order_by,
                           $ascending);
   }
+
+  function get_subsidied_amount_used_request($request) {
+    $amount = 0;
+    foreach(select_subsidies(array("request" => $request)) as $subsidy) {
+      $amount += get_used_amount_subsidy($subsidy);
+    }
+    return $amount;
+  }
