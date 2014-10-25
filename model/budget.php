@@ -91,3 +91,7 @@
     }
     return $subsidies;
   }
+
+  function get_subsidized_amount_used_budget($budget) {
+    return sum_array(get_subsidized_amount_used_details_budget($budget), "used_amount");
+  }

@@ -174,10 +174,7 @@
     foreach (select_budgets(array("binet" => $binet, "term" => $term)) as $budget) {
       $real_amount = get_real_amount_budget($budget["id"]);
       $balance += $real_amount;
-      foreach (select_subsidies(array("budget" => $budget["id"])) as $subsidy) {
-        $used_amount = get_used_amount_subsidy($subsidy["id"]);
-        $balance += $used_amount;
-      }
+      $balance += get_subsidized_amount_used_budget($budget["id"]);
     }
     return $balance;
   }
