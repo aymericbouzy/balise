@@ -173,10 +173,11 @@
     $balance = 0;
     foreach (select_budgets(array("binet" => $binet, "term" => $term)) as $budget) {
       $real_amount = get_real_amount_budget($budget["id"]);
-      if ($real_amount < 0) {
-        $balance += min(0, $real_amount + get_subsidized_amount_budget($budget["id"]));
-      } else {
-        $balance += $real_amount;
-      }
+      $balance += $real_amount;
     }
+    foreach (select_requests(array("binet" => $binet, "term" => $term)) as $request) {
+      $subsidied_amount_used = get_subsidied_amount_used_request($request["id"]);
+      $balance += $subsidied_amount_used;
+    }
+    return $balance;
   }
