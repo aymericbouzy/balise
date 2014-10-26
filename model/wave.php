@@ -56,3 +56,11 @@
     }
     return $amount;
   }
+
+  function get_granted_amount_wave($wave) {
+    $amount = 0;
+    foreach(select_requests(array("wave" => $wave)) as $request) {
+      $amount += get_granted_amount_request($request["id"]);
+    }
+    return $amount;
+  }
