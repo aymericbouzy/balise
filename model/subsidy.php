@@ -48,3 +48,13 @@
       $criteria
     )[0]["subsidized_amount"];
   }
+
+  function get_used_amount_subsidy($subsidy) {
+    $budget = select_subsidy($subsidy, array("budget"))["budget"];
+    foreach(get_subsidized_amount_used_details_budget($budget) as $budget_subsidy) {
+      if ($budget_subsidy["id"] == $subsidy) {
+        $amount = $budget_subsidy["used_amount"];
+      }
+    }
+    return $amount;
+  }
