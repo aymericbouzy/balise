@@ -1,7 +1,47 @@
 <?php
 
-  function select_entries($table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
-    return select_request("id", $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by, $ascending);
+  function select_entries($table, $selectable_int_fields, $selectable_str_fields, $selectable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
+    $entries = select_request("id", $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by, $ascending);
+    $virtual_criteria = array_intersect_key($criteria, array_flip($selectable_virtual_fields));
+    if (!empty($virtual_criteria)) {
+      $virtual_fields = array_flip(array_intersect_key(array_flip($selectable_virtual_fields), $criteria))
+      foreach($entries as $entry) {
+        $virtual_entry = "select_".$table($entry["id"], array_merge($virtual_fields, array("id"));
+        $keep_entry = true;
+        foreach($virtual_criteria as $column => $value) {
+          if (is_array($value)) {
+            switch ($value[0]) {
+            case "=":
+              $keep_entry = $keep_entry && $virtual_entry[$column] == $value[1];
+              break;
+            case "<":
+              $keep_entry = $keep_entry && $virtual_entry[$column] < $value[1];
+              break;
+            case ">":
+              $keep_entry = $keep_entry && $virtual_entry[$column] > $value[1];
+              break;
+            case "<=":
+              $keep_entry = $keep_entry && $virtual_entry[$column] <= $value[1];
+              break;
+            case ">=":
+              $keep_entry = $keep_entry && $virtual_entry[$column] >= $value[1];
+              break;
+            case "!=":
+              $keep_entry = $keep_entry && $virtual_entry[$column] != $value[1];
+              break;
+            }
+          } else {
+            $keep_entry = $keep_entry && $virtual_entry[$column] == $value;
+          }
+        }
+        if ($keep_entry) {
+          $virtual_entries[] = $virtual_entry;
+        }
+      }
+      return $virtual_entries;
+    } else {
+      return $entries;
+    }
   }
 
   function select_request($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
