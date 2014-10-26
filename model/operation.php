@@ -62,12 +62,15 @@
     if (!isset($criteria["binet_validation_by"])) {
       $criteria["binet_validation_by"] = array("!=", NULL);
     }
-    return select_entries("operation",
-                          array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),
-                          array("bill", "date", "reference"),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "operation",
+      array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),
+      array("bill", "date", "reference"),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function add_budgets_operation($operation, $amounts) {

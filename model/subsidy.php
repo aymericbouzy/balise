@@ -31,12 +31,15 @@
 
   // TODO: selection by : used_amount
   function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
-    return select_entries("subsidy",
-                          array("binet", "request", "requested_amount", "granted_amount"),
-                          array(),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "subsidy",
+      array("binet", "request", "requested_amount", "granted_amount"),
+      array(),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function get_subsidized_amount($criteria) {

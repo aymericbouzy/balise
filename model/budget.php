@@ -24,12 +24,15 @@
 
   // TODO: selection by subsidied_amount, real_amount
   function select_budgets($criteria, $order_by = NULL, $ascending = true) {
-    return select_entries("budget",
-                          array("binet", "amount", "term"),
-                          array(),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "budget",
+      array("binet", "amount", "term"),
+      array(),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function update_budget($budget, $hash) {

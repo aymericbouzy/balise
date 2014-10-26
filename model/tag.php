@@ -22,12 +22,15 @@
 
   // TODO: selecion by : number of times used, order_by(number_of_times_used),
   function select_tags($criteria = array(), $order_by = NULL, $ascending = true) {
-    return select_entries("tag",
-                          array(),
-                          array("name", "clean_name"),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "tag",
+      array(),
+      array("name", "clean_name"),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function select_tags_binet($binet, $term = NULL) {

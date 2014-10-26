@@ -44,12 +44,15 @@
   }
 
   function select_requests($criteria, $order_by = NULL, $ascending = true) {
-    return select_entries("request",
-                          array("wave"),
-                          array(),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "request",
+      array("wave"),
+      array(),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function get_subsidized_amount_used_request($request) {

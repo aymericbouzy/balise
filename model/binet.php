@@ -39,12 +39,15 @@
 
   // TODO: selection by : balance, subsidised_amount, amount_subsidy_requested, spent_amount, earned_amount, subsidy_used
   function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
-    return select_entries("binet",
-                          array("subsidy_provider", "current_term"),
-                          array("name", "clean_name"),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "binet",
+      array("subsidy_provider", "current_term"),
+      array("name", "clean_name"),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function update_binet($binet, $hash) {
