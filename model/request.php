@@ -48,7 +48,7 @@
       "request",
       array("wave"),
       array(),
-      array(),
+      array("binet", "term"),
       $criteria,
       $order_by,
       $ascending

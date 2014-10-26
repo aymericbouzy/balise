@@ -43,7 +43,7 @@
       "binet",
       array("subsidy_provider", "current_term"),
       array("name", "clean_name"),
-      array(),
+      array("balance"),
       $criteria,
       $order_by,
       $ascending
