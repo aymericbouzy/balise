@@ -38,6 +38,12 @@
           $virtual_entries[] = $virtual_entry;
         }
       }
+      if (!empty($order_by) && in_array($order_by, $selectable_virtual_fields)) {
+        function sort_by_virtual_field($e1, $e2) {
+          return ($ascending ? 1 : (-1))*strcmp($e1[$order_by], $s2[$order_by]);
+        }
+        usort($virtual_entries, "sort_by_virtual_field");
+      }
       return $virtual_entries;
     } else {
       return $entries;
