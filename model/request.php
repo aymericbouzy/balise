@@ -59,3 +59,19 @@
     }
     return $amount;
   }
+
+  function get_granted_amount_request($request) {
+    $amount = 0;
+    foreach(select_subsidies(array("request" => $request)) as $subsidy) {
+      $amount += select_subsidy($subsidy["id"], array("granted_amount"))["granted_amount"];
+    }
+    return $amount;
+  }
+
+  function get_requested_amount_request($request) {
+    $amount = 0;
+    foreach(select_subsidies(array("request" => $request)) as $subsidy) {
+      $amount += select_subsidy($subsidy["id"], array("requested_amount"))["requested_amount"];
+    }
+    return $amount;
+  }
