@@ -7,6 +7,15 @@
       case "balance":
         $term_binet[$field] = get_balance_term_binet($binet, $term);
         break;
+      case "subzidized_amount_requested":
+        $term_binet[$field] = get_subzidized_amount_requested_term_binet($binet, $term);
+        break;
+      case "subzidized_amount_granted":
+        $term_binet[$field] = get_subzidized_amount_granted_term_binet($binet, $term);
+        break;
+      case "subzidized_amount_used":
+        $term_binet[$field] = get_subzidized_amount_used_term_binet($binet, $term);
+        break;
       }
     }
     return $term_binet;
@@ -26,5 +35,19 @@
     $amount = 0;
     foreach (select_requests(array("binet" => $binet, "term" => $term)) as $request) {
       $amount += get_requested_amount_request($request["id"]);
+    }
+  }
+
+  function get_subzidized_amount_granted_term_binet($binet, $term) {
+    $amount = 0;
+    foreach (select_requests(array("binet" => $binet, "term" => $term)) as $request) {
+      $amount += get_granted_amount_request($request["id"]);
+    }
+  }
+
+  function get_subzidized_amount_used_term_binet($binet, $term) {
+    $amount = 0;
+    foreach (select_requests(array("binet" => $binet, "term" => $term)) as $request) {
+      $amount += get_used_amount_request($request["id"]);
     }
   }
