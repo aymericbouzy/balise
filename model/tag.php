@@ -12,12 +12,20 @@
   }
 
   function select_tag($tag, $fields = NULL) {
-    return select_entry(
+    $tag = select_entry(
       "tag",
       array("id", "name", "clean_name"),
       $tag,
       $fields
     );
+    foreach ($fields as $field) {
+      switch ($field) {
+      case "occurrences":
+        $tag[$field] = get_occurrences_tag($tag["id"]);
+        break;
+      }
+    }
+    return $tag;
   }
 
   // TODO: selecion by : number of times used, order_by(number_of_times_used),
@@ -73,4 +81,14 @@
     $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
+  }
+
+  function get_occurrences_tag($tag) {
+    $sql = "SELECT COUNT(1) as occurrences
+            FROM budget_tag
+            WHERE budget_tag.tag = :tag";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetch()["occurrences"];
   }
