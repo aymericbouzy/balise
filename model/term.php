@@ -21,3 +21,10 @@
     }
     return $balance;
   }
+
+  function get_subzidized_amount_requested_term_binet($binet, $term) {
+    $amount = 0;
+    foreach (select_requests(array("binet" => $binet, "term" => $term)) as $request) {
+      $amount += get_requested_amount_request($request["id"]);
+    }
+  }
