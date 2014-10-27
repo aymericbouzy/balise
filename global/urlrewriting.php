@@ -32,6 +32,42 @@
     return "binet/".select_binet($binet)["clean_name"]."/budget/create";
   }
 
+  function binet_budget_edit_path($binet, $budget) {
+    return "binet/".select_binet($binet)["clean_name"]."/budget/".$budget."/edit";
+  }
+
+  function binet_budget_update_path($binet, $budget) {
+    return "binet/".select_binet($binet)["clean_name"]."/budget/".$budget."/update";
+  }
+
+  function binet_budget_delete_path($binet, $budget) {
+    return "binet/".select_binet($binet)["clean_name"]."/budget/".$budget."/delete";
+  }
+
+  function binet_operation_index_path($binet) {
+    return "binet/".select_binet($binet)["clean_name"]."/operation";
+  }
+
+  function binet_operation_show_path($binet, $operation) {
+    return "binet/".select_binet($binet)["clean_name"]."/operation/".$operation;
+  }
+
+  function binet_operation_new_path($binet) {
+    return "binet/".select_binet($binet)["clean_name"]."/operation/new";
+  }
+
+  function binet_operation_create_path($binet) {
+    return "binet/".select_binet($binet)["clean_name"]."/operation/create";
+  }
+
+  function binet_operation_edit_path($binet, $operation) {
+    return "binet/".select_binet($binet)["clean_name"]."/operation/".$operation."/edit";
+  }
+
+  function binet_operation_update_path($binet, $operation) {
+    return "binet/".select_binet($binet)["clean_name"]."/operation/".$operation."/update";
+  }
+
   function write_path_rule($htaccess, $path, $url) {
     if (fwrite($htaccess, "RewriteRule ".$path." ./controller/".$url."%{QUERY_STRING} [L]
     ") === FALSE && $_ENV["development"]) {
@@ -61,6 +97,9 @@
         write_path_rule($htaccess, binet_budget_index_path($binet["id"]), "binet/budget.php?action=index&binet=".$binet["id"]."&");
         foreach (select_budgets(array("binet" => $binet["id"])) as $budget) {
           write_path_rule($htaccess, binet_budget_show_path($binet["id"], $budget["id"]), "binet/budget.php?action=index&binet=".$binet["id"]."&budget=".$budget["id"]."&");
+          write_path_rule($htaccess, binet_budget_edit_path($binet["id"], $budget["id"]), "binet/budget.php?action=edit&binet=".$binet["id"]."&budget=".$budget["id"]."&");
+          write_path_rule($htaccess, binet_budget_update_path($binet["id"], $budget["id"]), "binet/budget.php?action=update&binet=".$binet["id"]."&budget=".$budget["id"]."&");
+          write_path_rule($htaccess, binet_budget_delete_path($binet["id"], $budget["id"]), "binet/budget.php?action=delete&binet=".$binet["id"]."&budget=".$budget["id"]."&");
         }
         write_path_rule($htaccess, binet_budget_new_path($binet["id"]), "binet/budget.php?action=new&binet=".$binet["id"]."&");
         write_path_rule($htaccess, binet_budget_create_path($binet["id"]), "binet/budget.php?action=create&binet=".$binet["id"]."&");
