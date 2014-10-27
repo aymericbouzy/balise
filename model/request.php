@@ -18,7 +18,7 @@
   function select_request($request, $fields = NULL) {
     $request = select_entry(
       "request",
-      array("id", "wave", "answer"),
+      array("id", "wave", "answer", "sent"),
       $request,
       $fields
     );
@@ -44,15 +44,28 @@
   }
 
   function select_requests($criteria, $order_by = NULL, $ascending = true) {
+    if (!isset($criteria["sent"])) {
+      $criteria["sent"] = 1;
+    }
     return select_entries(
       "request",
-      array("wave"),
+      array("wave", "sent"),
       array(),
       array("binet", "term"),
       $criteria,
       $order_by,
       $ascending
     );
+  }
+
+  function send_request($request) {
+    $sql = "UPDATE request
+            SET sent = 1
+            WHERE id = :request
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':request', $request, PDO::PARAM_INT);
+    $req->execute();
   }
 
   function get_subsidized_amount_used_request($request) {
