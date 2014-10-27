@@ -20,6 +20,18 @@
     return "binet/".select_binet($binet)["clean_name"]."/budget";
   }
 
+  function binet_budget_show_path($binet, $budget) {
+    return "binet/".select_binet($binet)["clean_name"]."/budget/".$budget;
+  }
+
+  function binet_budget_new_path($binet) {
+    return "binet/".select_binet($binet)["clean_name"]."/budget/new";
+  }
+
+  function binet_budget_create_path($binet) {
+    return "binet/".select_binet($binet)["clean_name"]."/budget/create";
+  }
+
   function write_path_rule($htaccess, $path, $url) {
     if (fwrite($htaccess, "RewriteRule ".$path." ./controller/".$url."%{QUERY_STRING} [L]
     ") === FALSE && $_ENV["development"]) {
@@ -41,12 +53,17 @@
 	       exit;
 	    }
 
-      write_path_rule($htaccess, login_path(), "frankiz/login.php?");
-      write_path_rule($htaccess, logout_path(), "frankiz/logout.php?");
+      write_path_rule($htaccess, login_path(), "frankiz.php?action=login&");
+      write_path_rule($htaccess, logout_path(), "frankiz.php?action=logout&");
 
       foreach(select_binets() as $binet) {
-        write_path_rule($htaccess, binet_index_path($binet["id"]), "binet/budget/index.php?binet=".$binet["id"]."&");
-        write_path_rule($htaccess, binet_budget_index_path($binet["id"]), "binet/budget/index.php?binet=".$binet["id"]."&");
+        write_path_rule($htaccess, binet_index_path($binet["id"]), "binet/budget.php?action=index&binet=".$binet["id"]."&");
+        write_path_rule($htaccess, binet_budget_index_path($binet["id"]), "binet/budget.php?action=index&binet=".$binet["id"]."&");
+        foreach (select_budgets(array("binet" => $binet["id"])) as $budget) {
+          write_path_rule($htaccess, binet_budget_show_path($binet["id"], $budget["id"]), "binet/budget.php?action=index&binet=".$binet["id"]."&budget=".$budget["id"]."&");
+        }
+        write_path_rule($htaccess, binet_budget_new_path($binet["id"]), "binet/budget.php?action=new&binet=".$binet["id"]."&");
+        write_path_rule($htaccess, binet_budget_create_path($binet["id"]), "binet/budget.php?action=create&binet=".$binet["id"]."&");
       }
     }
   }
