@@ -14,15 +14,28 @@
   }
 
   function select_wave($wave, $fields = NULL) {
-    return select_entry(
+    $wave = select_entry(
       "wave",
       array("id", "binet", "term", "submission_date", "expiry_date", "published"),
       $wave,
       $fields
     );
+    foreach ($fields as $field) {
+      switch ($field) {
+      case "request_amount":
+        $wave[$field] = get_requested_amount_wave($wave);
+        break;
+      case "granted_amount":
+        $wave[$field] = get_granted_amount_wave($wave);
+        break;
+      case "used_amount":
+        $wave[$field] = get_used_amount_wave($wave);
+        break;
+      }
+    }
+    return $wave;
   }
 
-  // TODO: selection by : total_requested_amount, total_granted_amount, total_spent_amount
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries(
       "wave",
@@ -45,10 +58,18 @@
     $req->execute();
   }
 
+  function get_requested_amount_wave($wave) {
+    $amount = 0;
+    foreach(select_requests(array("wave" => $wave)) as $request) {
+      $amount += get_requested_amount_request($request);
+    }
+    return $amount;
+  }
+
   function get_used_amount_wave($wave) {
     $amount = 0;
     foreach(select_requests(array("wave" => $wave)) as $request) {
-      $amount += get_subsidized_amount_used_request($request);
+      $amount += get_used_amount_request($request);
     }
     return $amount;
   }
