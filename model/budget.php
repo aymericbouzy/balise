@@ -47,12 +47,13 @@
     return $req->fetch(PDO::FETCH_ASSOC)["real_amount"];
   }
 
-  // TODO : add date handling
   function get_subsidized_amount_budget($budget) {
     $sql = "SELECT SUM(subsidy.granted_amount) as subsidized_amount
             FROM subsidy
+            INNER JOIN request
+            ON request.id = subsidy.request
             INNER JOIN wave
-            ON wave.id = subsidy.wave
+            ON wave.id = request.wave
             WHERE wave.published = 1 AND subsidy.budget = :budget";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':budget', $budget, PDO::PARAM_INT);

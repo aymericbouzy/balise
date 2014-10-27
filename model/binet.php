@@ -15,10 +15,11 @@
     $values["name"] = $name;
     $values["term"] = $term;
     $values["clean_name"] = clean_string($values["name"]);
+    $values["description"] = "";
     return create_entry(
       "binet",
       array("term"),
-      array("name", "clean_name"),
+      array("name", "clean_name", "description"),
       $values
     );
   }
@@ -35,6 +36,17 @@
                           $criteria,
                           $order_by,
                           $ascending);
+  }
+
+  function update_binet($binet, $hash) {
+    if (isset($hash["name"])) {
+      $hash["clean_name"] = clean_string($values["name"]);
+    }
+    update_entry("binet",
+                  array("name", "clean_name"),
+                  array("description"),
+                  $binet,
+                  $hash);
   }
 
   /*
