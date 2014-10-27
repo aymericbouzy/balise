@@ -1,10 +1,14 @@
 <?php
 
-  function select_entries($table, $selectable_int_fields, $selectable_str_fields, $selectable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
+  function select_entries($table, $selectable_int_fields, $selectable_str_fields, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $entries = select_request("id", $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by, $ascending);
-    $virtual_criteria = array_intersect_key($criteria, array_flip($selectable_virtual_fields));
+    return filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by, $ascending);
+  }
+
+  function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
+    $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
     if (!empty($virtual_criteria)) {
-      $virtual_fields = array_flip(array_intersect_key(array_flip($selectable_virtual_fields), $criteria))
+      $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria))
       foreach($entries as $entry) {
         $virtual_entry = "select_".$table($entry["id"], array_merge($virtual_fields, array("id"));
         $keep_entry = true;
@@ -38,7 +42,7 @@
           $virtual_entries[] = $virtual_entry;
         }
       }
-      if (!empty($order_by) && in_array($order_by, $selectable_virtual_fields)) {
+      if (!empty($order_by) && in_array($order_by, $filterable_virtual_fields)) {
         function sort_by_virtual_field($e1, $e2) {
           return ($ascending ? 1 : (-1))*strcmp($e1[$order_by], $s2[$order_by]);
         }
