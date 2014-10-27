@@ -34,7 +34,6 @@
     return $binet;
   }
 
-  // TODO: selection by : balance, subsidised_amount, amount_subsidy_requested, spent_amount, earned_amount, subsidy_used
   function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries(
       "binet",

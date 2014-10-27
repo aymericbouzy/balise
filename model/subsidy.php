@@ -13,12 +13,20 @@
   }
 
   function select_subsidy($subsidy, $fields = NULL) {
-    return select_entry(
+    $subsidy = select_entry(
       "subsidy",
       array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation")
       $subsidy,
       $fields
     );
+    foreach ($fields as $field) {
+      switch ($field) {
+      case "used_amount":
+        $subsidy[$field] = get_used_amount_subsidy($subsidy["id"]);
+        break;
+      }
+    }
+    return $subsidy;
   }
 
   function update_subsidy($subsidy, $hash) {
@@ -29,13 +37,12 @@
                   $hash);
   }
 
-  // TODO: selection by : used_amount
   function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
     return select_entries(
       "subsidy",
       array("binet", "request", "requested_amount", "granted_amount"),
       array(),
-      array(),
+      array("used_amount"),
       $criteria,
       $order_by,
       $ascending
