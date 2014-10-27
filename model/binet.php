@@ -31,9 +31,6 @@
       $binet,
       $fields
     );
-    if (in_array("balance", $fields)) {
-      $binet["balance"] = balance_binet($binet["id"]);
-    }
     return $binet;
   }
 
@@ -43,7 +40,7 @@
       "binet",
       array("subsidy_provider", "current_term"),
       array("name", "clean_name"),
-      array("balance"),
+      array(),
       $criteria,
       $order_by,
       $ascending
@@ -170,14 +167,4 @@
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
-  }
-
-  function balance_binet($binet, $term) {
-    $balance = 0;
-    foreach (select_budgets(array("binet" => $binet, "term" => $term)) as $budget) {
-      $real_amount = get_real_amount_budget($budget["id"]);
-      $balance += $real_amount;
-      $balance += get_subsidized_amount_used_budget($budget["id"]);
-    }
-    return $balance;
   }
