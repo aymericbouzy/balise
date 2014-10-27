@@ -37,6 +37,9 @@
   }
 
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
+    if (!isset($criteria["published"])) {
+      $criteria["published"] = 1;
+    }
     return select_entries(
       "wave",
       array("binet", "term", "published"),
