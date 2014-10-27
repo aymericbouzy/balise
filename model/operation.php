@@ -54,7 +54,6 @@
                   $hash);
   }
 
-  // TODO: selection by : subsidied, subsidied_percentage
   function select_operations($criteria, $order_by = NULL, $ascending = true) {
     if (!isset($criteria["kes_validation_by"])) {
       $criteria["kes_validation_by"] = array("!=", NULL)
