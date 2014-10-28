@@ -17,11 +17,14 @@
       foreach ($input_parameters as $parameter => $value) {
         if (in_array($parameter, array_merge($required_parameters, $optionnal_parameters))) {
           switch ($parameter) {
+          case "action":
+            $valid = $valid && preg_match("[a-z_]+", $value);
+            break;
           case "binet":
-            $valid = $valid && preg_match("[a-z0-9-]+", $input_parameters[$parameter]);
+            $valid = $valid && preg_match("[a-z0-9-]+", $value);
             break;
           case "term":
-            $valid = $valid && is_numeric("term");
+            $valid = $valid && is_numeric($value);
             break;
           }
         }

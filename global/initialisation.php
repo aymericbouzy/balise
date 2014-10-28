@@ -3,10 +3,10 @@
   include "constants.php";
   session_start();
   include $GLOBAL_PATH."database.php";
-
   include $GLOBAL_PATH."agregation.php";
   include $GLOBAL_PATH."sql.php";
   include $GLOBAL_PATH."urlrewriting.php";
+  include $GLOBAL_PATH."before_actions.php";
 
   include $MODEL_PATH."budget.php";
   include $MODEL_PATH."tag.php";
