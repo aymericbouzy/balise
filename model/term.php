@@ -10,6 +10,7 @@
       case "id":
         $term_binet["binet"] = $binet;
         $term_binet["term"] = $term;
+        $term_binet["id"] = $binet."/".$term;
         break;
       case "balance":
         $term_binet[$field] = get_balance_term_binet($binet, $term);
@@ -34,15 +35,19 @@
     return $term_binet;
   }
 
-  function select_binet_admin($binet_admin, $fields = array()) {
-    return array("id" => $binet_admin);
-  }
-
   function select_terms($criteria = array(), $order_by = NULL, $ascending = true) {
-    return select_entries(
+    $terms = select_request(
+      "CONCAT(binet, '/', term) as id",
       "binet_admin",
       array("binet", "term"),
       array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
+    return filter_entries(
+      $terms,
+      "term_binet",
       array("balance", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used", "spent_amount", "earned_amount"),
       $criteria,
       $order_by,
