@@ -1,6 +1,6 @@
 <?php
 
-  function validate_input($required_parameters, $optionnal_parameters, $method = "get") {
+  function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
     switch ($method) {
     case "get":
       $input_parameters = $_GET;
