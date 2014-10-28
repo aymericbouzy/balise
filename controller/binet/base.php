@@ -11,3 +11,7 @@
     exit;
   }
   $binet = $binets[0]["id"];
+  if (!status_binet_admin($binet, $_GET["term"]) && !status_binet_admin($KES_ID) && !watch_rights($binet)) {
+    header("HTTP/1.1 401 Unauthorized");
+    exit;
+  }
