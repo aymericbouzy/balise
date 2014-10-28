@@ -1,9 +1,16 @@
 <?php
 
-  function select_term_binet($binet, $term, $fields = array()) {
+  function select_term_binet($term_binet, $fields = array()) {
+    $id = split($term_binet, "/");
+    $binet = $id[0];
+    $term = $id[1];
     $term_binet = array();
     foreach ($fields as $field) {
       switch ($field) {
+      case "id":
+        $term_binet["binet"] = $binet;
+        $term_binet["term"] = $term;
+        break;
       case "balance":
         $term_binet[$field] = get_balance_term_binet($binet, $term);
         break;
@@ -27,19 +34,15 @@
     return $term_binet;
   }
 
+  function select_binet_admin($binet_admin, $fields = array()) {
+    return array("id" => $binet_admin);
+  }
+
   function select_terms($criteria = array(), $order_by = NULL, $ascending = true) {
-    $terms = select_entries(
+    return select_entries(
       "binet_admin",
       array("binet", "term"),
       array(),
-      array(),
-      $criteria,
-      $order_by,
-      $ascending
-    );
-    return filter_entries(
-      $terms,
-      "term_binet",
       array("balance", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used", "spent_amount", "earned_amount"),
       $criteria,
       $order_by,

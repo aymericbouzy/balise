@@ -8,9 +8,11 @@
   function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
     if (!empty($virtual_criteria)) {
+      $table = $table == "binet_admin" ? "term_binet" : $table;
       $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria))
       foreach($entries as $entry) {
-        $virtual_entry = "select_".$table($entry["id"], array_merge($virtual_fields, array("id"));
+        $entry_id = $table == "term_binet" ? $entry["binet"]."/".$entry["term"] : $entry["id"];
+        $virtual_entry = "select_".$table($entry_id, array_merge($virtual_fields, array("id"));
         $keep_entry = true;
         foreach($virtual_criteria as $column => $value) {
           if (is_array($value)) {
@@ -55,6 +57,7 @@
   }
 
   function select_request($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
+    $select_string = $table == "binet_admin" ? "binet, term" : $select_string;
     $sql = "SELECT ".$select_string."
             FROM ".$table."
             WHERE true";

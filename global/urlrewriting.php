@@ -61,11 +61,11 @@
     write_scaphander_rules($htaccess, "binet", false, array("new", "create"), array("show", "edit", "update", "set_subsidy_provider", "change_term", "deactivate"), "([a-z-]+)/([0-9]+)", "binet=$1&term=$2");
     write_scaphander_rules($htaccess, "budget", true);
     write_scaphander_rules($htaccess, "operation", true, array("new", "create"), array("show", "edit", "update", "delete", "validate"));
-    write_scaphander_rules($htaccess, "request", true);
+    write_scaphander_rules($htaccess, "request", true, array("new", "create"), array("show", "edit", "update", "delete", "send"));
     write_scaphander_rules($htaccess, "tag", false, array("create"), array("show"));
     write_scaphander_rules($htaccess, "binet", false, array("new", "create"), array("show", "edit", "update"));
     write_scaphander_rules($htaccess, "wave", false, array(), array("show"));
     write_scaphander_rules($htaccess, "wave", true, array("new", "create"), array("show", "edit", "update"));
     write_scaphander_rules($htaccess, "admin", true, array("new", "create"), array("delete"));
-    write_scaphander_rules($htaccess, "operation", false, array("new", "create"), array("show", "edit", "update", "validate"));
+    write_scaphander_rules($htaccess, "operation", false, array("new", "create"), array("show", "edit", "update", "validate", "reject"));
   }
