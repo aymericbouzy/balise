@@ -67,4 +67,5 @@
     write_scaphander_rules($htaccess, "wave", false, array(), array("show"));
     write_scaphander_rules($htaccess, "wave", true, array("new", "create"), array("show", "edit", "update"));
     write_scaphander_rules($htaccess, "admin", true, array("new", "create"), array("delete"));
+    write_scaphander_rules($htaccess, "operation", false, array("new", "create"), array("show", "edit", "update", "validate"));
   }
