@@ -34,3 +34,23 @@
       return false;
     }
   }
+
+  function watching_subsidy_requester($binet) {
+    $sql = "SELECT request.id
+            FROM request
+            INNER JOIN wave
+            ON wave.id = request.wave
+            INNER JOIN binet_admin
+            ON binet_admin.binet = wave.binet AND binet_admin.term = wave.term
+            INNER JOIN subsidy
+            ON request.id = subsidy.request
+            INNER JOIN budget
+            ON budget.id = subsidy.budget
+            WHERE budget.binet = :binet AND binet_admin.student = :student AND request.sent = 1 AND wave.published = 0
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParma(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->execute();
+    return !empty($req->fetch());
+  }
