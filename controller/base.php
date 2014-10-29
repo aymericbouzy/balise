@@ -5,6 +5,6 @@
     exit;
   }
   if (!validate_input(array("student"), "session") && $_GET["action"] != "login") {
-    header("Location: http://".$HOST."/".path("login"));
+    header("Location: ".$SCHEME."://".$HOST."/".path("login"));
     exit;
   }
