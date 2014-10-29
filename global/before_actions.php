@@ -44,6 +44,9 @@
           case "admin":
             $valid = $valid && is_numeric($value);
             break;
+          case "student":
+            $valid = $valid && is_numeric($value);
+            break;
           }
         }
       }
