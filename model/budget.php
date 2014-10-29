@@ -127,3 +127,12 @@
   function get_subsidized_amount_used_budget($budget) {
     return sum_array(get_subsidized_amount_used_details_budget($budget), "used_amount");
   }
+
+  function select_budgets_operation($operation) {
+    $sql = "SELECT budget
+            FROM operation_budget
+            WHERE operation = :operation";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->execute();
+  }

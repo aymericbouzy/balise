@@ -72,10 +72,20 @@
     );
   }
 
+  function select_operations_budget($budget) {
+    $sql = "SELECT operation
+            FROM operation_budget
+            WHERE budget = :budget";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->execute();
+  }
+
   function add_budgets_operation($operation, $amounts) {
     foreach ($amounts as $budget => $amount) {
       $sql = "INSERT INTO operation_budget(operation, budget, amount)
               VALUES(:operation, :budget, :amount)";
+      $req = Database::get()->prepare($sql);
       $req->bindParam(':operation', $operation, PDO::PARAM_INT);
       $req->bindParam(':budget', $budget, PDO::PARAM_INT);
       $req->bindParam(':amount', $amount, PDO::PARAM_INT);
@@ -87,6 +97,7 @@
     $sql = "DELETE
             FROM operation_budget
             WHERE operation = :operation";
+    $req = Database::get()->prepare($sql);
     $req->bindParam(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
