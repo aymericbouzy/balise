@@ -21,10 +21,10 @@
         $header = "401 Unauthorized";
         break;
       case 403:
-        $header = "400 Forbidden";
+        $header = "403 Forbidden";
         break;
       case 404:
-        $header = "400 Not Found";
+        $header = "404 Not Found";
         break;
       }
       header("HTTP/1.1 ".$header);
@@ -46,7 +46,7 @@
     $entry = call_user_func("select_".$array["model_name"], $_GET[$array["model_name"]], array_merge(array("id"), array_keys($criteria));
     header_if(empty($entry), 404);
     foreach ($criteria as $column => $value) {
-      header_if($value != $entry[$column], 401);
+      header_if($value != $entry[$column], 403);
     }
   }
 
