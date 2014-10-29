@@ -8,6 +8,9 @@
     case "post":
       $input_parameters = $_POST;
       break;
+    case "session":
+      $input_parameters = $_SESSION;
+      break;
     }
     $valid = true;
     foreach ($required_parameters as $parameter) {
@@ -24,6 +27,21 @@
             $valid = $valid && preg_match("[a-z0-9-]+", $value);
             break;
           case "term":
+            $valid = $valid && is_numeric($value);
+            break;
+          case "budget":
+            $valid = $valid && is_numeric($value);
+            break;
+          case "operation":
+            $valid = $valid && is_numeric($value);
+            break;
+          case "tag":
+            $valid = $valid && is_numeric($value);
+            break;
+          case "wave":
+            $valid = $valid && is_numeric($value);
+            break;
+          case "admin":
             $valid = $valid && is_numeric($value);
             break;
           }
