@@ -7,3 +7,7 @@
     }
     return $sum;
   }
+
+  function average_array($array, $column) {
+    return sum_array($array, $column) / count($array);
+  }

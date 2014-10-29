@@ -6,38 +6,48 @@
     }
   }
 
-  function kessier() {
-    if (!status_binet_admin($KES_ID)) {
-      header("HTTP/1.1 401 Unauthorized");
+  function header_if($test, $status) {
+    if ($test) {
+      switch ($status) {
+      case 400:
+        $header = "400 Bad Request";
+        break;
+      case 401:
+        $header = "401 Unauthorized";
+        break;
+      case 403:
+        $header = "400 Forbidden";
+        break;
+      case 404:
+        $header = "400 Not Found";
+        break;
+      }
+      header("HTTP/1.1 ".$header);
       exit;
     }
+  }
+
+  function correct_action() {
+    header_if(!validate_input(array("action")), 400);
   }
 
   function correct_binet_term() {
-    if (!validate_input(array("binet", "term"))) {
-      header("HTTP/1.1 400 Bad Request");
-      exit;
-    }
+    header_if(!validate_input(array("binet", "term")), 400);
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
-    if (empty($binets)) {
-      header("HTTP/1.1 404 Not Found");
-      exit;
-    }
+    header_if(empty($binets), 404);
     $_GET["binet"] = $binets[0]["id"];
   }
 
+  function kessier() {
+    header_if(!status_binet_admin($KES_ID), 401);
+  }
+
   function member_binet_term() {
-    if (!status_binet_admin($_GET["binet"], $_GET["term"])) {
-      header("HTTP/1.1 401 Unauthorized");
-      exit;
-    }
+    header_if(!status_binet_admin($_GET["binet"], $_GET["term"]), 401);
   }
 
   function watcher_binet_term() {
-    if (!status_binet_admin($_GET["binet"], $_GET["term"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"])) {
-      header("HTTP/1.1 401 Unauthorized");
-      exit;
-    }
+    header_if(!status_binet_admin($_GET["binet"], $_GET["term"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
   }
 
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
