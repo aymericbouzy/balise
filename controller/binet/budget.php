@@ -15,10 +15,15 @@
     // TODO
   }
 
+  function budget_amount_not_null() {
+    // TODO
+  }
+
   before_action("check_budget", array("show", "edit", "update", "delete"));
   before_action("member_binet_term", array("new", "create", "edit", "update", "delete"));
-  before_action("budget_is_alone", array("delete"));
+  before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("budget_does_not_change_sign", array("update"));
+  before_action("budget_amount_not_null", array("create"));
 
   switch ($_GET["action"]) {
 
