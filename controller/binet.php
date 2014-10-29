@@ -35,6 +35,9 @@
   case "deactivate":
     break;
 
+  case "validation":
+    break;
+    
   default:
     header_if(true, 403);
     exit;

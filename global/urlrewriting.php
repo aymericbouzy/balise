@@ -57,7 +57,7 @@
     write_path_rule($htaccess, path("login"), "frankiz.php?action=login&");
     write_path_rule($htaccess, path("logout"), "frankiz.php?action=logout&");
 
-    write_scaphander_rules($htaccess, "binet", false, array("new", "create"), array("show", "edit", "update", "set_subsidy_provider", "change_term", "deactivate"));
+    write_scaphander_rules($htaccess, "binet", false, array("new", "create"), array("show", "edit", "update", "set_subsidy_provider", "change_term", "deactivate", "validation"));
     write_scaphander_rules($htaccess, "budget", true);
     write_scaphander_rules($htaccess, "operation", true, array("new", "create"), array("show", "edit", "update", "delete", "validate"));
     write_scaphander_rules($htaccess, "request", true, array("new", "create"), array("show", "edit", "update", "delete", "send"));
