@@ -1,8 +1,8 @@
 <?php
 
   include "base.php";
-  
-  before_action("correct_binet_term", array("edit", "update", "set_subsidy_provider", "show", "change_term", "deactivate"));
+
+  before_action("check_binet_term", array("edit", "update", "set_subsidy_provider", "show", "change_term", "deactivate"));
   before_action("kessier", array("new", "create", "change_term", "deactivate", "set_subsidy_provider"));
   before_action("member_binet_term", array("edit", "update"));
 

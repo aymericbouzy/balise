@@ -27,11 +27,7 @@
     }
   }
 
-  function correct_action() {
-    header_if(!validate_input(array("action")), 400);
-  }
-
-  function correct_binet_term() {
+  function check_binet_term() {
     header_if(!validate_input(array("binet", "term")), 400);
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(empty($binets), 404);
