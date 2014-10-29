@@ -2,12 +2,7 @@
 
   include "base.php";
 
-  function check_tag() {
-    header_if(!validate_input(array("tag")), 400);
-    header_if(empty(select_tag($_GET["tag"]), array("id")), 404);
-  }
-
-  before_action("check_tag", array("show"));
+  before_action("check_entry", array("show"), array("model_name" => "tag"));
 
   switch ($_GET["action"]) {
 

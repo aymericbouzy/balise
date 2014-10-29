@@ -2,12 +2,7 @@
 
   include "base.php";
 
-  function check_operation() {
-    header_if(!validate_input(array("operation")), 400);
-    header_if(empty(select_operation($_GET["operation"]), array("id")), 404);
-  }
-
-  before_action("check_operation", array("show", "edit", "update", "validate", "reject"));
+  before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation");
   before_action("kessier", array("validate", "reject"));
 
   function creator_operation_or_kessier() {
