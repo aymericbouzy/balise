@@ -4,10 +4,10 @@
 
   function check_operation() {
     header_if(!validate_input(array("operation")), 400);
-    header_if(empty(select_operation($_GET["operation"]), array("id")), 404);
+    header_if(empty(select_operation($_GET["operation"], array("id"))), 404);
   }
 
-  before_action("check_operation", array("show", "edit", "update", "delete", "validate"));
+  before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $_GET["binet"], "term" => $_GET["term"]));
   before_action("member_binet_term", array("new", "create", "edit", "update", "delete", "validate"));
 
   switch ($_GET["action"]) {

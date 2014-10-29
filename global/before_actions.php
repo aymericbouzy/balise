@@ -1,8 +1,13 @@
 <?php
 
-  function before_action($function, $actions) {
+  function before_action($function, $actions, $argument = NULL) {
     if (in_array($_GET["action"], $actions)) {
-      call_user_func($function);
+      if (empty($argument)) {
+        call_user_func($function);
+      } else {
+        call_user_func($function, $argument);
+      }
+
     }
   }
 
@@ -32,6 +37,17 @@
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(empty($binets), 404);
     $_GET["binet"] = $binets[0]["id"];
+  }
+
+  function check_entry($array) {
+    header_if(!validate_input(array($array["model_name"])), 400);
+    $criteria = $array;
+    unset($criteria["model_name"]);
+    $entry = call_user_func("select_".$array["model_name"], $_GET[$array["model_name"]], array_merge(array("id"), array_keys($criteria));
+    header_if(empty($entry), 404);
+    foreach ($criteria as $column => $value) {
+      header_if($value != $entry[$column], 401);
+    }
   }
 
   function kessier() {
