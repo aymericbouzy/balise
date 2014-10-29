@@ -7,7 +7,7 @@
     header_if(empty(select_student($_GET["admin"]), array("id")), 404);
   }
 
-  before_action("check_tag", array("delete"));
+  before_action("check_admin", array("delete"));
   before_action("kessier", array("new", "create", "delete"));
 
   switch ($_GET["action"]) {
