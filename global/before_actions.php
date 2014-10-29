@@ -1,5 +1,45 @@
 <?php
 
+  function before_action($function, $actions) {
+    if (in_array($_GET["action"], $actions)) {
+      call_user_func($function);
+    }
+  }
+
+  function kessier() {
+    if (!status_binet_admin($KES_ID)) {
+      header("HTTP/1.1 401 Unauthorized");
+      exit;
+    }
+  }
+
+  function correct_binet_term() {
+    if (!validate_input(array("binet", "term"))) {
+      header("HTTP/1.1 400 Bad Request");
+      exit;
+    }
+    $binets = select_binets(array("clean_name" => $_GET["binet"]));
+    if (empty($binets)) {
+      header("HTTP/1.1 404 Not Found");
+      exit;
+    }
+    $_GET["binet"] = $binets[0]["id"];
+  }
+
+  function member_binet_term() {
+    if (!status_binet_admin($_GET["binet"], $_GET["term"])) {
+      header("HTTP/1.1 401 Unauthorized");
+      exit;
+    }
+  }
+
+  function watcher_binet_term() {
+    if (!status_binet_admin($_GET["binet"], $_GET["term"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"])) {
+      header("HTTP/1.1 401 Unauthorized");
+      exit;
+    }
+  }
+
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
     switch ($method) {
     case "get":

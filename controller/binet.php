@@ -1,11 +1,10 @@
 <?php
 
   include "base.php";
+  before_action($correct_binet_term, array("edit", "update", "set_subsidy_provider", "show", "change_term", "deactivate"));
 
-  if (in_array($_GET["action"], array("new", "create", "change_term", "deactivate", "set_subsidy_provider")) && !status_binet_admin($KES_ID)) {
-    header("HTTP/1.1 401 Unauthorized");
-    exit;
-  }
+  before_action($kessier, array("new", "create", "change_term", "deactivate", "set_subsidy_provider"));
+  before_action($member_binet_term, array("edit", "update"));
 
   switch ($_GET["action"]) {
   case "index":
