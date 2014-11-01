@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   before_action("check_entry", array("delete"), array("model_name" => "admin", "binet" => $_GET["binet"], "term" => $_GET["term"]));
   before_action("kessier", array("new", "create", "delete"));
 

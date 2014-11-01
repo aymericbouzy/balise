@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   function budget_is_alone() {
     header_if(!empty(select_operations_budget($_GET["budget"])) || !empty(select_subsidies_budget($_GET["subsidy"])), 403);
   }

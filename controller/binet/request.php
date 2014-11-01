@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   function not_sent() {
     header_if(select_request($_GET["request"], array("sent"))["sent"], 403);
   }

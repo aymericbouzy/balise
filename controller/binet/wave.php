@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   function not_published() {
     header_if(select_wave($_GET["wave"], array("published"))["published"], 403);
   }

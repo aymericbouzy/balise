@@ -20,21 +20,21 @@
     write_path_rule(
       $htaccess,
       path("", $model_name, "", $binet_prefix ? "binet/([a-z-]+)/([0-9]+)/" : ""),
-      ($binet_prefix ? "binet/").$model_name.".php?action=index".($binet_prefix ? "&binet=$1&term=$2" : "")."&"
+      "base.php?controller=".$model_name.($binet_prefix ? "&prefix=binet")."&action=index".($binet_prefix ? "&binet=$1&term=$2" : "")."&"
     );
     $collection_actions[] = "index";
     foreach ($collection_actions as $action) {
       write_path_rule(
         $htaccess,
         path($action, $model_name, "", $binet_prefix ? "binet/([a-z-]+)/([0-9]+)/" : ""),
-        ($binet_prefix ? "binet/").$model_name.".php?action=".$action.($binet_prefix ? "&binet=$1&term=$2" : "")."&"
+        "base.php?controller=".$model_name.($binet_prefix ? "&prefix=binet")."&action=".$action.($binet_prefix ? "&binet=$1&term=$2" : "")."&"
       );
     }
     foreach ($member_actions as $action) {
       write_path_rule(
         $htaccess,
         path($action, $model_name, "([0-9]+)", $binet_prefix ? "binet/([a-z-]+)/([0-9]+)/" : ""),
-        ($binet_prefix ? "binet/").$model_name.".php?action=".$action.($binet_prefix ? "&binet=$1&term=$2" : "")."&".$model_name."=$".($binet_prefix ? "3" : "1")."&"
+        "base.php?controller=".$model_name.($binet_prefix ? "&prefix=binet")."&action=".$action.($binet_prefix ? "&binet=$1&term=$2" : "")."&".$model_name."=$".($binet_prefix ? "3" : "1")."&"
       );
     }
   }

@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation");
   before_action("kessier", array("validate", "reject"));
 

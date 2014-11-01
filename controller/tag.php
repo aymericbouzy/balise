@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   before_action("check_entry", array("show"), array("model_name" => "tag"));
 
   switch ($_GET["action"]) {

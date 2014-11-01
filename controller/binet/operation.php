@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $_GET["binet"], "term" => $_GET["term"]));
   before_action("member_binet_term", array("new", "create", "edit", "update", "delete", "validate"));
 

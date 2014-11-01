@@ -1,7 +1,5 @@
 <?php
 
-  include "base.php";
-
   switch ($_GET["action"]) {
 
   case "login":
