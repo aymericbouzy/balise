@@ -13,24 +13,29 @@
     break;
 
   case "create":
+    $_SESSION["notice"] = "Le binet ".$binet["name"]." a été créé avec succès.";
     break;
 
   case "edit":
     break;
 
   case "update":
+    $_SESSION["notice"] = "Le binet ".$binet["name"]." a été mis à jour avec succès.";
     break;
 
   case "set_subsidy_provider":
+    $_SESSION["notice"] = "Le binet ".$binet["name"]." est devenu un binet subventionneur.";
     break;
 
   case "show":
     break;
 
   case "change_term":
+    $_SESSION["notice"] = "Le mandat actuel du binet ".$binet["name"]." a été mis à jour.";
     break;
 
   case "deactivate":
+    $_SESSION["notice"] = "Le binet ".$binet["name"]." a été désactivé avec succès.";
     break;
 
   case "validation":
