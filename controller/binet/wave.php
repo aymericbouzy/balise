@@ -23,6 +23,7 @@
     break;
 
   case "create":
+    $_SESSION["notice"] = "Une nouvelle vague de subvention a été ouverte.";
     break;
 
   case "show":
@@ -32,9 +33,11 @@
     break;
 
   case "update":
+    $_SESSION["notice"] = "La vague de subventions a été mise à jour avec succès.";
     break;
 
   case "publish":
+    $_SESSION["notice"] = "Les attributions de la vague de subvention ont été publiées avec succès.";
     break;
 
   default:

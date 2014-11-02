@@ -27,6 +27,7 @@
     break;
 
   case "create":
+    $_SESSION["notice"] = "La ligne de budget a été créée avec succès.";
     break;
 
   case "show":
@@ -36,6 +37,7 @@
     break;
 
   case "update":
+    $_SESSION["notice"] = "La ligne de budget a été mise à jour avec succès.";
     break;
 
   case "delete":
