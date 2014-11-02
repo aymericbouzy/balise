@@ -28,6 +28,11 @@
         break;
       }
       header("HTTP/1.1 ".$header);
+
+      $_GET["controller"] = "error";
+      $_GET["action"] = $status;
+      unset($_GET["prefix"]);
+      include $LAYOUT_PATH."application.php";
       exit;
     }
   }
