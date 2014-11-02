@@ -11,30 +11,34 @@
 
   function write_path_rule($htaccess, $path, $url) {
     if (fwrite($htaccess, "RewriteRule ".$path." ./controller/".$url."%{QUERY_STRING} [L]
-    ") === FALSE && $_ENV["development"]) {
+    ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
     }
   }
 
-  function write_scaphander_rules($htaccess, $model_name, $binet_prefix = false, $collection_actions = array("new", "create"), $member_actions = array("show", "edit", "update", "delete")) {
+  function write_controller_rules($htaccess, $hash) {
+    $collection_actions = array_merge(array_diff(array("index", "new", "create"), $hash["except"]), $hash["action_on_collection"]);
+    $member_actions = array_merge(array_diff(array("show", "edit", "update", "delete"), $hash["except"]), $hash["action_on_member"]);
+    if (!isset($hash["root"])) {
+      $hash["root"] = "index";
+    }
     write_path_rule(
       $htaccess,
-      path("", $model_name, "", $binet_prefix ? "binet/([a-z-]+)/([0-9]+)/" : ""),
-      "base.php?controller=".$model_name.($binet_prefix ? "&prefix=binet")."&action=index".($binet_prefix ? "&binet=$1&term=$2" : "")."&"
+      path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)/" : ""),
+      "base.php?controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet")."&action=".$hash["root"].($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&"
     );
-    $collection_actions[] = "index";
     foreach ($collection_actions as $action) {
       write_path_rule(
         $htaccess,
-        path($action, $model_name, "", $binet_prefix ? "binet/([a-z-]+)/([0-9]+)/" : ""),
-        "base.php?controller=".$model_name.($binet_prefix ? "&prefix=binet")."&action=".$action.($binet_prefix ? "&binet=$1&term=$2" : "")."&"
+        path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)/" : ""),
+        "base.php?controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet")."&action=".$action.($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&"
       );
     }
     foreach ($member_actions as $action) {
       write_path_rule(
         $htaccess,
-        path($action, $model_name, "([0-9]+)", $binet_prefix ? "binet/([a-z-]+)/([0-9]+)/" : ""),
-        "base.php?controller=".$model_name.($binet_prefix ? "&prefix=binet")."&action=".$action.($binet_prefix ? "&binet=$1&term=$2" : "")."&".$model_name."=$".($binet_prefix ? "3" : "1")."&"
+        path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)/" : ""),
+        "base.php?controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet")."&action=".$action.($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&".$$hash["controller"]."=$".($hash["binet_prefix"] ? "3" : "1")."&"
       );
     }
   }
@@ -53,18 +57,15 @@
        exit;
     }
 
-    write_path_rule($htaccess, path(), "frankiz.php?action=login&");
-    write_path_rule($htaccess, path("login"), "frankiz.php?action=login&");
-    write_path_rule($htaccess, path("logout"), "frankiz.php?action=logout&");
+    write_controller_rules($htaccess, array("controller" => "frankiz", "except" => array("index", "new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout"), "root" => "login"));
+    write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "deactivate", "validation")));
+    write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
+    write_controller_rules($htaccess, array("controller" => "tag", "except" => array("new", "edit", "update", "delete")));
+    write_controller_rules($htaccess, array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete"));
 
-    write_scaphander_rules($htaccess, "binet", false, array("new", "create"), array("show", "edit", "update", "set_subsidy_provider", "change_term", "deactivate", "validation"));
-    write_scaphander_rules($htaccess, "operation", false, array("new", "create"), array("show", "edit", "update", "validate", "reject"));
-    write_scaphander_rules($htaccess, "tag", false, array("create"), array("show"));
-    write_scaphander_rules($htaccess, "wave", false, array(), array("show"));
-
-    write_scaphander_rules($htaccess, "admin", true, array("new", "create"), array("delete"));
-    write_scaphander_rules($htaccess, "budget", true);
-    write_scaphander_rules($htaccess, "operation", true, array("new", "create"), array("show", "edit", "update", "delete", "validate"));
-    write_scaphander_rules($htaccess, "request", true, array("new", "create"), array("show", "edit", "update", "delete", "send"));
-    write_scaphander_rules($htaccess, "wave", true, array("new", "create"), array("show", "edit", "update", "publish"));
+    write_controller_rules($htaccess, array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
+    write_controller_rules($htaccess, array("controller" => "budget", "binet_prefix" => true));
+    write_controller_rules($htaccess, array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate")));
+    write_controller_rules($htaccess, array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send")));
+    write_controller_rules($htaccess, array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
   }

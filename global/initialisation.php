@@ -7,6 +7,7 @@
   include $GLOBAL_PATH."sql.php";
   include $GLOBAL_PATH."urlrewriting.php";
   include $GLOBAL_PATH."before_actions.php";
+  include $GLOBAL_PATH."common.php";
 
   include $MODEL_PATH."budget.php";
   include $MODEL_PATH."tag.php";
