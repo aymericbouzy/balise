@@ -1,19 +1,24 @@
 <?php
 
-  function create_subsidy($budget, $request, $amount, $optional_values = array()) {
+  function create_subsidy($budget, $request, $requested_amount, $optional_values = array()) {
     $values["budget"] = $budget;
     $values["request"] = $request;
-    $values["amount"] = $amount;
+    $values["requested_amount"] = $requested_amount;
     return create_entry(
       "subsidy",
-      array("budget", "request", "amount"),
+      array("budget", "request", "requested_amount"),
       array("purpose"),
       array_merge($values, $optional_values)
     );
   }
 
   function select_subsidy($subsidy, $fields = NULL) {
-    return select_entry("subsidy", $subsidy, $fields);
+    return select_entry(
+      "subsidy",
+      array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation")
+      $subsidy,
+      $fields
+    );
   }
 
   function update_subsidy($subsidy, $hash) {
@@ -24,26 +29,17 @@
                   $hash);
   }
 
-  // TODO: add date handling
-  function get_consumed_amount_subsidy($subsidy) {
-    $subsidy = select_subsidy($subsidy);
-    $consumed_amount = get_real_amount_budget($subsidy["budget"]);
-    $subsidized_amount = get_subsidized_amount_budget($subsidy["budget"]);
-    if ($consumed_amount >= $subsidized_amount) {
-      return $subsidy["granted_amount"];
-    } else {
-      return $subsidy["granted_amount"] * $consumed_amount / $subsidized_amount;
-    }
-  }
-
-  // TODO: selection by : consumed_amount
+  // TODO: selection by : used_amount
   function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
-    return select_entries("subsidy",
-                          array("binet", "request", "requested_amount", "granted_amount"),
-                          array(),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "subsidy",
+      array("binet", "request", "requested_amount", "granted_amount"),
+      array(),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function get_subsidized_amount($criteria) {
@@ -54,4 +50,14 @@
       array(),
       $criteria
     )[0]["subsidized_amount"];
+  }
+
+  function get_used_amount_subsidy($subsidy) {
+    $budget = select_subsidy($subsidy, array("budget"))["budget"];
+    foreach(get_subsidized_amount_used_details_budget($budget) as $budget_subsidy) {
+      if ($budget_subsidy["id"] == $subsidy) {
+        $amount = $budget_subsidy["used_amount"];
+      }
+    }
+    return $amount;
   }

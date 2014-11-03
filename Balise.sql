@@ -166,7 +166,8 @@ CREATE TABLE IF NOT EXISTS `subsidy` (
 
 CREATE TABLE IF NOT EXISTS `tag` (
 `id` int(11) NOT NULL,
-  `name` varchar(80) NOT NULL
+  `name` varchar(80) NOT NULL,
+  `clean_name` varchar(80) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

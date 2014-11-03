@@ -14,17 +14,25 @@
   }
 
   function select_budget($budget, $fields = NULL) {
-    return select_entry("budget", $budget, $fields);
+    return select_entry(
+      "budget",
+      array("id", "binet", "amount", "term", "label"),
+      $budget,
+      $fields
+    );
   }
 
   // TODO: selection by subsidied_amount, real_amount
   function select_budgets($criteria, $order_by = NULL, $ascending = true) {
-    return select_entries("budget",
-                          array("binet", "amount", "term"),
-                          array(),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "budget",
+      array("binet", "amount", "term"),
+      array(),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function update_budget($budget, $hash) {
@@ -59,4 +67,34 @@
     $req->bindParam(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch(PDO::FETCH_ASSOC)["subsidized_amount"];
+  }
+
+  function get_subsidized_amount_used_details_budget($budget) {
+    $subsidies = select_subsidies(array("budget" => $budget));
+    foreach($subsidies as $subsidy) {
+      $subsidy = select_subsidy($subsidy, array("id", "granted_amount", "wave"));
+      $subsidy["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
+      $subsidy["used_amount"] = 0;
+    }
+    function sort_by_date($s1, $s2) {
+      return strcmp($s1["expiry_date"], $s2["expiry_date"]);
+    }
+    usort($subsidies, "sort_by_date");
+    foreach(select_operations_budget($budget, "date") as $operation) {
+      $operation = select_operation($operation, array("date", "amount"))
+      $i = 0;
+      while(isset($subsidies[$i]) && $operation["amount"] < 0) {
+        if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
+          $amount = min($operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
+          $operation["amount"] -= $amount;
+          $subsidies[$i]["used_amount"] += $amount;
+        }
+        $i++;
+      }
+    }
+    return $subsidies;
+  }
+
+  function get_subsidized_amount_used_budget($budget) {
+    return sum_array(get_subsidized_amount_used_details_budget($budget), "used_amount");
   }

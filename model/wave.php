@@ -14,17 +14,25 @@
   }
 
   function select_wave($wave, $fields = NULL) {
-    return select_entry("wave", $wave, $fields);
+    return select_entry(
+      "wave",
+      array("id", "binet", "term", "submission_date", "expiry_date", "published"),
+      $wave,
+      $fields
+    );
   }
 
   // TODO: selection by : total_requested_amount, total_granted_amount, total_spent_amount
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
-    return select_entries("wave",
-                          array("binet", "term", "published"),
-                          array("submission_date", "expiry_date"),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "wave",
+      array("binet", "term", "published"),
+      array("submission_date", "expiry_date"),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function publish_wave($wave) {
@@ -35,4 +43,20 @@
     $req = Database::get()->prepare($sql);
     $req->bindParam(':wave', $wave, PDO::PARAM_INT);
     $req->execute();
+  }
+
+  function get_used_amount_wave($wave) {
+    $amount = 0;
+    foreach(select_requests(array("wave" => $wave)) as $request) {
+      $amount += get_subsidized_amount_used_request($request);
+    }
+    return $amount;
+  }
+
+  function get_granted_amount_wave($wave) {
+    $amount = 0;
+    foreach(select_requests(array("wave" => $wave)) as $request) {
+      $amount += get_granted_amount_request($request["id"]);
+    }
+    return $amount;
   }

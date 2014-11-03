@@ -1,5 +1,5 @@
 <?php
-  include "config.php";
+  include "constants.php";
   session_start();
   include "database.php";
 

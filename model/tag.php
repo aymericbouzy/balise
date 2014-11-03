@@ -2,26 +2,35 @@
 
   function create_tag($name) {
     $values["name"] = $name;
+    $values["clean_name"] = clean_string($name);
     return create_entry(
       "tag",
       array(),
-      array("name"),
+      array("name", "clean_name"),
       $values
     );
   }
 
   function select_tag($tag, $fields = NULL) {
-    return select_entry("tag", $tag, $fields);
+    return select_entry(
+      "tag",
+      array("id", "name", "clean_name"),
+      $tag,
+      $fields
+    );
   }
 
-  // TODO: selecion by : number of times used, order_by(number_of_times_used), 
+  // TODO: selecion by : number of times used, order_by(number_of_times_used),
   function select_tags($criteria = array(), $order_by = NULL, $ascending = true) {
-    return select_entries("tag",
-                          array(),
-                          array("name"),
-                          $criteria,
-                          $order_by,
-                          $ascending);
+    return select_entries(
+      "tag",
+      array(),
+      array("name", "clean_name"),
+      array(),
+      $criteria,
+      $order_by,
+      $ascending
+    );
   }
 
   function select_tags_binet($binet, $term = NULL) {
