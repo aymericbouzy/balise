@@ -11,10 +11,12 @@
   } else {
     $full_controller = $_GET["controller"];
   }
-  header_if(!in_array($full_controller, array("binet", "frankiz", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/wave")), 404);
+  header_if(!in_array($full_controller, array("binet", "frankiz", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/wave")), 400);
 
   if (!validate_input(array("student"), "session") && ($_GET["controller"] != "frankiz" || $_GET["action"] != "login") {
     redirect_to(path("login"));
+  } else {
+    $GLOBALS["current_student"] = select_student($_SESSION["student"], array("full_name"))
   }
 
   include $CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");

@@ -167,7 +167,7 @@
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet'
   */
-  function change_term_binet($binet, $term)
+  function change_term_binet($binet, $term) {
     $sql = "UPDATE binet
             SET term = :term
             WHERE id = :binet
@@ -178,4 +178,6 @@
     $req->execute();
   }
 
-  // TODO Validations
+  function count_pending_validations($binet, $term) {
+    return count(pending_validations_operations($binet, $term)) + ($binet == $KES_ID ? count(pending_validations_kes() : 0));
+  }

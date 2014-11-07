@@ -52,7 +52,7 @@
 </div>
 <div id="header-right">
   <div id="header-name">
-    <?php echo $student["name"]; ?>
+    <?php echo $current_student["name"]; ?>
   </div>
   <?php echo link_to(path("logout", "frankiz"), "<i class=\"fa-logout\" alt=\"logout\"></i>") ?>
 </div>
