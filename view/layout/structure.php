@@ -8,8 +8,6 @@
     include $LAYOUT_PATH."aside.php";
   ?>
 </aside>
-<div class="flash">
-  <?php
-    include $LAYOUT_PATH."flash.php";
-  ?>
-</div>
+<?php
+  include $LAYOUT_PATH."flash.php";
+?>

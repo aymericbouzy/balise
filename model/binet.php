@@ -76,15 +76,23 @@
 
   @return array Array containing all admins of current binet
   */
-  function get_admins($binet, $term) {
-    $sql = "SELECT *
-            FROM student
-            INNER JOIN binet_admin
-            ON student.id = binet_admin.student
-            WHERE binet_admin.binet = :binet AND binet_admin.term = :term";
+  function select_admins($binet, $term) {
+    $sql = "SELECT student AS id
+            FROM binet_admin
+            WHERE binet = :binet AND term = :term";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->bindParam(':term', $term, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
+  function select_admin_binet() {
+    $sql = "SELECT binet, term
+            FROM binet_admin
+            WHERE student = :student";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
