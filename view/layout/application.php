@@ -18,8 +18,10 @@
         include $VIEW_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/" : "").$_GET["controller"]."/".$_GET["action"].".php";
       ?>
     </div>
-    <?php
-      include $LAYOUT_PATH."footer.php";
-    ?>
+    <footer>
+      <?php
+        include $LAYOUT_PATH."footer.php";
+      ?>
+    </footer>
   </body>
 </html>

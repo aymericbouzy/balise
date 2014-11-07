@@ -110,6 +110,6 @@
     return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => NULL, "binet" => $binet, "term" => $term), "date");
   }
 
-  function pending_validations_kes($binet, $term) {
+  function pending_validations_kes() {
     return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => array("!=", NULL)), "date");
   }
