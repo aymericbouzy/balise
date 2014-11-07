@@ -48,11 +48,11 @@
   </ul>
 </div>
 <div id="header-center">
-  <?php echo link_to(path(), "<img src=\"\" alt=\"\" />") ?>
+  <?php echo link_to(path(), img("??")) ?>
 </div>
 <div id="header-right">
   <div id="header-name">
     <?php echo $student["name"]; ?>
   </div>
-  <?php echo link_to(path("logout", "frankiz"), "<i class=\"fa-logout\" alt="logout"></i>") ?>
+  <?php echo link_to(path("logout", "frankiz"), "<i class=\"fa-logout\" alt=\"logout\"></i>") ?>
 </div>

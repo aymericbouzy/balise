@@ -58,7 +58,7 @@
     }
 
     write_controller_rules($htaccess, array("controller" => "frankiz", "except" => array("index", "new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "home"), "root" => "login"));
-    write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "deactivate", "validation")));
+    write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "deactivate", "validation"), "action_on_collection" => array("admin")));
     write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
     write_controller_rules($htaccess, array("controller" => "tag", "except" => array("new", "edit", "update", "delete")));
     write_controller_rules($htaccess, array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete"));
