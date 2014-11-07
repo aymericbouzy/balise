@@ -4,7 +4,7 @@
     header_if(select_request($_GET["request"], array("sent"))["sent"], 403);
   }
 
-  before_action("check_entry", array("show", "edit", "update", "delete", "send"), array("model_name" => "request", "binet" => $_GET["binet"], "term" => $_GET["term"]));
+  before_action("check_entry", array("show", "edit", "update", "delete", "send"), array("model_name" => "request", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "create", "edit", "update", "delete", "send"));
   before_action("not_sent", array("send", "edit", "update", "delete"));
 

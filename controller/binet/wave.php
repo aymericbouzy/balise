@@ -9,7 +9,7 @@
   }
 
   subsidy_provider();
-  before_action("check_entry", array("show", "edit", "update", "publish"), array("model_name" => "wave", "binet" => $_GET["binet"], "term" => $_GET["term"]));
+  before_action("check_entry", array("show", "edit", "update", "publish"), array("model_name" => "wave", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "create", "edit", "update", "publish"));
   before_action("not_published", array("publish"));
 

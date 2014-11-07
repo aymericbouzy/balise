@@ -1,6 +1,6 @@
 <?php
 
-  before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $_GET["binet"], "term" => $_GET["term"]));
+  before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "create", "edit", "update", "delete", "validate"));
 
   switch ($_GET["action"]) {

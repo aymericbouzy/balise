@@ -12,7 +12,7 @@
     // TODO
   }
 
-  before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $_GET["binet"], "term" => $_GET["term"]));
+  before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "create", "edit", "update", "delete"));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("budget_does_not_change_sign", array("update"));
