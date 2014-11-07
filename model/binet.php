@@ -177,3 +177,5 @@
     $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
   }
+
+  // TODO Validations
