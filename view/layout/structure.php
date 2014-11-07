@@ -8,6 +8,3 @@
     include $LAYOUT_PATH."aside.php";
   ?>
 </aside>
-<?php
-  include $LAYOUT_PATH."flash.php";
-?>
