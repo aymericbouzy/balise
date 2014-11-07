@@ -101,3 +101,15 @@
     $req->bindParam(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
+
+  function count_pending_validations($binet, $term) {
+    return count(pending_validations_operations($binet, $term)) + ($binet == $KES_ID ? count(pending_validations_kes() : 0));
+  }
+
+  function pending_validations_operations($binet, $term) {
+    return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => NULL, "binet" => $binet, "term" => $term), "date");
+  }
+
+  function pending_validations_kes($binet, $term) {
+    return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => array("!=", NULL)), "date");
+  }
