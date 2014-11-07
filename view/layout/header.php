@@ -3,7 +3,7 @@
     <li>
       <?php echo link_to(path("", "binet", $binet["id"]."/".$term), $binet["name"]."<span class=\"binet-term\">".$term."</span>"); ?>
       <ul>
-        <?php foreach(binet_admin() as $binet_admin) {
+        <?php foreach(binet_admins_current_student() as $binet_admin) {
           $binet_admin["name"] = select_binet($binet_admin["binet"], array("name"))["name"];
           ?>
           <li>

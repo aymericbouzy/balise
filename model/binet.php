@@ -87,7 +87,7 @@
     return $req->fetchAll();
   }
 
-  function select_admin_binet() {
+  function binet_admins_current_student() {
     $sql = "SELECT binet, term
             FROM binet_admin
             WHERE student = :student";
