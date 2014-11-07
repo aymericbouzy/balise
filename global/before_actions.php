@@ -41,7 +41,8 @@
     header_if(!validate_input(array("binet", "term")), 400);
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(empty($binets), 404);
-    $_GET["binet"] = $binets[0]["id"];
+    $GLOBALS["binet"] = $binets[0]["id"];
+    $GLOBALS["term"] = $_GET["term"];
   }
 
   function check_entry($array) {
