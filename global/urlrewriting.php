@@ -61,6 +61,7 @@
        exit;
     }
 
+    write_path_rule($htaccess, "/", "base.php?controller=frankiz&action=login&");
     write_controller_rules($htaccess, array("controller" => "frankiz", "except" => array("index", "new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "home"), "root" => "login"));
     write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "deactivate", "validation"), "action_on_collection" => array("admin")));
     write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
