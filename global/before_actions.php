@@ -49,7 +49,7 @@
     header_if(!validate_input(array($array["model_name"])), 400);
     $criteria = $array;
     unset($criteria["model_name"]);
-    $entry = call_user_func("select_".$array["model_name"], $_GET[$array["model_name"]], array_merge(array("id"), array_keys($criteria));
+    $entry = call_user_func("select_".$array["model_name"], $_GET[$array["model_name"]], array_merge(array("id"), array_keys($criteria)));
     header_if(empty($entry), 404);
     foreach ($criteria as $column => $value) {
       header_if($value != $entry[$column], 403);

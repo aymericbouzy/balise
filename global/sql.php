@@ -1,16 +1,16 @@
 <?php
 
   function select_entries($table, $selectable_int_fields, $selectable_str_fields, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
-    $entries = select_request("id", $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by, $ascending);
+    $entries = select_with_request_string("id", $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by, $ascending);
     return filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by, $ascending);
   }
 
   function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
     if (!empty($virtual_criteria)) {
-      $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria))
+      $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria));
       foreach($entries as $entry) {
-        $virtual_entry = "select_".$table($entry["id"], array_merge($virtual_fields, array("id"));
+        $virtual_entry = "select_".$table($entry["id"], array_merge($virtual_fields, array("id")));
         $keep_entry = true;
         foreach($virtual_criteria as $column => $value) {
           if (is_array($value)) {
@@ -54,7 +54,7 @@
     }
   }
 
-  function select_request($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
+  function select_with_request_string($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
     $sql = "SELECT ".$select_string."
             FROM ".$table."
             WHERE true";
@@ -66,7 +66,7 @@
             $sql .= " AND EXISTS (SELECT *
                                   FROM budget_tag
                                   WHERE budget_tag.budget = budget.id AND budget_tag.tag = :tag".$i.")";
-          } ($table == "binet") {
+          } elseif ($table == "binet") {
             $sql .= " AND EXISTS (SELECT *
                                   FROM budget_tag
                                   INNER JOIN budget
@@ -99,7 +99,7 @@
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
       if ($column === "tags") {
-        for ($j = 0; $j < $i, $j++) {
+        for ($j = 0; $j < $i; $j++) {
           $req->bindParam(':tag'.$j, $tags[$j], PDO::PARAM_INT);
         }
       } else {
@@ -182,7 +182,7 @@
       if (is_array($value)) {
         switch ($value[0]) {
         case "date":
-          $sql2 .= $value[1],
+          $sql2 .= $value[1];
           break;
         default:
           $sql2 .= "NULL";

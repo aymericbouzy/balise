@@ -15,7 +15,7 @@
   function select_subsidy($subsidy, $fields = NULL) {
     $subsidy = select_entry(
       "subsidy",
-      array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation")
+      array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation"),
       $subsidy,
       $fields
     );

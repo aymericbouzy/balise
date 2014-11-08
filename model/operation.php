@@ -11,7 +11,7 @@
       "operation",
       array("binet", "term", "amount", "created_by", "paid_by", "type"),
       array("date", "bill", "reference", "comment"),
-      array_merge($values, $optional_values);
+      array_merge($values, $optional_values)
     );
   }
 
@@ -56,7 +56,7 @@
 
   function select_operations($criteria, $order_by = NULL, $ascending = true) {
     if (!isset($criteria["kes_validation_by"])) {
-      $criteria["kes_validation_by"] = array("!=", NULL)
+      $criteria["kes_validation_by"] = array("!=", NULL);
     }
     if (!isset($criteria["binet_validation_by"])) {
       $criteria["binet_validation_by"] = array("!=", NULL);
@@ -103,7 +103,7 @@
   }
 
   function count_pending_validations($binet, $term) {
-    return count(pending_validations_operations($binet, $term)) + ($binet == $KES_ID ? count(pending_validations_kes() : 0));
+    return count(pending_validations_operations($binet, $term)) + ($binet == $KES_ID ? count(pending_validations_kes()) : 0);
   }
 
   function pending_validations_operations($binet, $term) {
