@@ -17,6 +17,10 @@
   }
 
   function write_controller_rules($htaccess, $hash) {
+    $hash["except"] = $hash["except"] ?: array();
+    $hash["action_on_collection"] = $hash["action_on_collection"] ?: array();
+    $hash["action_on_member"] = $hash["action_on_member"] ?: array();
+
     $collection_actions = array_merge(array_diff(array("index", "new", "create"), $hash["except"]), $hash["action_on_collection"]);
     $member_actions = array_merge(array_diff(array("show", "edit", "update", "delete"), $hash["except"]), $hash["action_on_member"]);
     if (!isset($hash["root"])) {
@@ -24,27 +28,27 @@
     }
     write_path_rule(
       $htaccess,
-      path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)/" : ""),
+      path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
       "base.php?controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet" : "")."&action=".$hash["root"].($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&"
     );
     foreach ($collection_actions as $action) {
       write_path_rule(
         $htaccess,
-        path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)/" : ""),
+        path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
         "base.php?controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet" : "")."&action=".$action.($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&"
       );
     }
     foreach ($member_actions as $action) {
       write_path_rule(
         $htaccess,
-        path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)/" : ""),
-        "base.php?controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet" : "")."&action=".$action.($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&".$$hash["controller"]."=$".($hash["binet_prefix"] ? "3" : "1")."&"
+        path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
+        "base.php?controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet" : "")."&action=".$action.($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&".$hash["controller"]."=$".($hash["binet_prefix"] ? "3" : "1")."&"
       );
     }
   }
 
   function urlrewrite() {
-    $htaccess = fopen("../.htaccess", "w");
+    $htaccess = fopen("./.htaccess", "w");
   	if (!$htaccess) {
   		echo ".htaccess could not be opened for urlrewriting.";
   		exit;
@@ -69,5 +73,5 @@
     write_controller_rules($htaccess, array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send")));
     write_controller_rules($htaccess, array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
 
-    fclose();
+    fclose($htaccess);
   }
