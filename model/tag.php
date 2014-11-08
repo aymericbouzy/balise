@@ -113,6 +113,16 @@
     return $req->fetchAll();
   }
 
+  function select_tags_budget($budget) {
+    $sql = "SELECT tag
+            FROM budget_tag
+            WHERE budget = :budget";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
   function get_occurrences_tag($tag) {
     $sql = "SELECT COUNT(1) as occurrences
             FROM budget_tag
