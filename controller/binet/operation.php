@@ -13,6 +13,7 @@
 
   case "create":
     $_SESSION["notice"] = "L'opération a été créée avec succès.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    redirect_to(array("action" => "show"));
     break;
 
   case "show":
@@ -23,14 +24,17 @@
 
   case "update":
     $_SESSION["notice"] = "L'opération a été mise à jour avec succès.";
+    redirect_to(array("action" => "show"));
     break;
 
   case "delete":
     $_SESSION["notice"] = "L'opération a été supprimée avec succès.";
+    redirect_to(array("action" => "index"));
     break;
 
   case "validate":
-    $_SESSION["notice"] = "L'opération a été acceptée.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : ""):
+    $_SESSION["notice"] = "L'opération a été acceptée.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    redirect_to(array("action" => "show"));
     break;
 
   default:

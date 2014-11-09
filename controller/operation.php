@@ -20,6 +20,7 @@
 
   case "create":
     $_SESSION["notice"] = "L'opération a été créée avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
+    redirect_to(array("action" => "show"));
     break;
 
   case "show":
@@ -30,14 +31,17 @@
 
   case "update":
     $_SESSION["notice"] = "L'opération a été mise à jour avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
+    redirect_to(array("action" => "show"));
     break;
 
   case "validate":
     $_SESSION["notice"] = "L'opération a été validée avec succès.";
+    redirect_to(array("action" => "show"));
     break;
 
   case "reject":
     $_SESSION["notice"] = "Tu as refusé l'opération. Elle apparaitra à nouveau dans les validations des administrateurs du binet.";
+    redirect_to(array("action" => "show"));
     break;
 
   default:

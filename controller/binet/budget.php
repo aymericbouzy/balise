@@ -28,6 +28,7 @@
 
   case "create":
     $_SESSION["notice"] = "La ligne de budget a été créée avec succès.";
+    redirect_to(array("action" => "show"));
     break;
 
   case "show":
@@ -38,9 +39,11 @@
 
   case "update":
     $_SESSION["notice"] = "La ligne de budget a été mise à jour avec succès.";
+    redirect_to(array("action" => "show"));
     break;
 
   case "delete":
+    redirect_to(array("action" => "index"));
     break;
 
   default:
