@@ -33,12 +33,12 @@
         <?php if ($operation["amount"] > 0) {
           $sum_revenue += $operation["amount"];
           ?><td></td><td>
-            <?php print_amount($operation["amount"]); ?>
+            <?php echo pretty_amount($operation["amount"]); ?>
           </td><?php
         } else {
           $sum_expenses += $operation["amount"];
           ?><td>
-            <?php print_amount($operation["amount"]); ?>
+            <?php echo pretty_amount($operation["amount"]); ?>
           </td><td></td><?php
         } ?>
       </tr>
@@ -51,10 +51,10 @@
     </td>
     <td></td>
     <td>
-      <?php echo print_amount($sum_expenses); ?>
+      <?php echo pretty_amount($sum_expenses); ?>
     </td>
     <td>
-      <?php echo print_amount($sum_revenue); ?>
+      <?php echo pretty_amount($sum_revenue); ?>
     </td>
   </tr>
   <tr>
@@ -63,7 +63,7 @@
     </td>
     <td></td>
     <td>
-      <?php echo print_amount($sum_expenses + $sum_revenue); ?>
+      <?php echo pretty_amount($sum_expenses + $sum_revenue); ?>
     </td>
   </tr>
 </table>
