@@ -2,8 +2,9 @@
 
   include "../global/initialisation.php";
 
-  header_if(!validate_input(array("action")), 400);
-  header_if(!validate_input(array("controller")), 400);
+
+
+  header_if(!validate_input(array("action", "controller"), array("tags")), 400);
   if (isset($_GET["prefix"])) {
     header_if(!validate_input(array("prefix")), 400);
     header_if(!in_array($_GET["prefix"], array("binet")));
@@ -12,6 +13,8 @@
     $full_controller = $_GET["controller"];
   }
   header_if(!in_array($full_controller, array("binet", "frankiz", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/wave")), 400);
+
+  $query_array = compute_query_array();
 
   if (!validate_input(array("student"), "session") && ($_GET["controller"] != "frankiz" || $_GET["action"] != "login") {
     redirect_to(path("login"));

@@ -91,6 +91,15 @@
           case "action":
             $valid = $valid && preg_match("[a-z_]+", $value);
             break;
+          case "controller":
+            $valid = $valid && preg_match("[a-z_]+", $value);
+            break;
+          case "prefix":
+            $valid = $valid && in_array($value, array("binet"));
+            break;
+          case "tags":
+            $valid = $valid && preg_match("([a-z_]+)(\+[a-z_]+)*", $value);
+            break;
           case "binet":
             $valid = $valid && preg_match("[a-z0-9-]+", $value);
             break;
@@ -142,4 +151,16 @@
     $req->bindParma(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return !empty($req->fetch());
+  }
+
+  function compute_query_array() {
+    $query_array = array_intersect_key($_GET, array_flip("tags"));
+    if (!empty($query_array("tags"))) {
+      $tags_clean_names = explode($query_array["tags"], "+");
+      $query_array["tags"] = array();
+      foreach ($tags_clean_names as $clean_name) {
+        $query_array["tags"][] = select_tags(array("clean_name" => $clean_name))[0]["id"];
+      }
+    }
+    return $query_array;
   }
