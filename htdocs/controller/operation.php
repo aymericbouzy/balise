@@ -18,6 +18,12 @@
   case "new":
     break;
 
+  case "new_expense":
+    break;
+
+  case "new_income":
+    break;
+
   case "create":
     $_SESSION["notice"] = "L'opération a été créée avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
     redirect_to(array("action" => "show"));

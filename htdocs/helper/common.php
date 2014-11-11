@@ -4,4 +4,6 @@
     return "<a href=\"".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
   }
 
-  //TODO img
+  function img($src, $alt = "") {
+    return "<img src=\"image/".$src."\" alt = \"".$alt."\"\>";
+  }

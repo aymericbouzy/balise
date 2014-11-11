@@ -13,7 +13,7 @@
   }
 
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet["id"], "term" => $term));
-  before_action("member_binet_term", array("new", "create", "edit", "update", "delete"));
+  before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("budget_does_not_change_sign", array("update"));
   before_action("budget_amount_not_null", array("create"));
@@ -24,6 +24,12 @@
     break;
 
   case "new":
+    break;
+
+  case "new_expense":
+    break;
+
+  case "new_income":
     break;
 
   case "create":

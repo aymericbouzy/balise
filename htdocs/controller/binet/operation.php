@@ -1,14 +1,24 @@
 <?php
 
   before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $binet["id"], "term" => $term));
-  before_action("member_binet_term", array("new", "create", "edit", "update", "delete", "validate"));
+  before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete", "validate"));
 
   switch ($_GET["action"]) {
 
   case "index":
+    $operations = array();
+    foreach (select_operations(array_merge($query_array, array("binet" => $binet["id"])), "date") as $operation) {
+      $operations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type"))
+    }
     break;
 
   case "new":
+    break;
+
+  case "new_expense":
+    break;
+
+  case "new_income":
     break;
 
   case "create":

@@ -81,13 +81,13 @@
     write_path_rule($htaccess, "/", "base.php?controller=frankiz&action=login&");
     write_controller_rules($htaccess, array("controller" => "frankiz", "except" => array("index", "new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "home"), "root" => "login"));
     write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "deactivate", "validation"), "action_on_collection" => array("admin")));
-    write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
+    write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject"), "action_on_collection" => array("new_expense", "new_income")));
     write_controller_rules($htaccess, array("controller" => "tag", "except" => array("new", "edit", "update", "delete")));
     write_controller_rules($htaccess, array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete")));
 
     write_controller_rules($htaccess, array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
-    write_controller_rules($htaccess, array("controller" => "budget", "binet_prefix" => true));
-    write_controller_rules($htaccess, array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate")));
+    write_controller_rules($htaccess, array("controller" => "budget", "binet_prefix" => true, "action_on_collection" => array("new_expense", "new_income")));
+    write_controller_rules($htaccess, array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate"), "action_on_collection" => array("new_expense", "new_income")));
     write_controller_rules($htaccess, array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send")));
     write_controller_rules($htaccess, array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
 
