@@ -5,7 +5,7 @@
     return $string;
   }
 
-  function path($action = "", $model_name = "", $model_id = "", $prefix = "") {
+  function path($action = "", $model_name = "", $model_id = "", $prefix = "", $query_array = array()) {
     return $prefix.(empty($model_name) ? "" : "/".$model_name).(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action);
   }
 
@@ -48,7 +48,7 @@
   }
 
   function urlrewrite() {
-    $htaccess = fopen("./.htaccess", "w");
+    $htaccess = fopen("../.htaccess", "w");
   	if (!$htaccess) {
   		echo ".htaccess could not be opened for urlrewriting.";
   		exit;
