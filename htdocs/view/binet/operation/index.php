@@ -21,11 +21,10 @@
     ?>
       <tr>
         <td>
-          <?php echo $operation["comment"];
-          foreach (select_tags_operation($operation["id"]) as $tag) {
-            $tag = select_tag($tag, array("name", "id"));
-            ?><span class="label"><?php echo $tag["name"]?></span><?php
-          } ?>
+          <?php
+          echo $operation["comment"];
+          echo pretty_tags(select_tags_operation($operation["id"]), true);
+          ?>
         </td>
         <td>
           <?php echo $operation["date"]; ?>

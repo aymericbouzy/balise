@@ -21,14 +21,13 @@
     ?>
       <tr>
         <td>
-          <?php echo $budget["label"];
-          foreach (select_tags_budget($budget["id"]) as $tag) {
-            $tag = select_tag($tag, array("name", "id"));
-            ?><span class="label"><?php echo $tag["name"]?></span><?php
-          }?>
+          <?php
+          echo $budget["label"];
+          echo pretty_tags(select_tags_budget($budget["id"]), true);
+          ?>
         </td>
         <td>
-          
+
         </td>
       </tr>
     <?php
