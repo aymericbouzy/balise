@@ -31,19 +31,15 @@
       $binet,
       $fields
     );
-    if (in_array("balance", $fields)) {
-      $binet["balance"] = balance_binet($binet["id"]);
-    }
     return $binet;
   }
 
-  // TODO: selection by : balance, subsidised_amount, amount_subsidy_requested, spent_amount, earned_amount, subsidy_used
   function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries(
       "binet",
       array("subsidy_provider", "current_term"),
       array("name", "clean_name"),
-      array("balance"),
+      array(),
       $criteria,
       $order_by,
       $ascending
@@ -113,14 +109,16 @@
 
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
-  function status_admin_binet($binet, $term) {
+  function status_admin_binet($binet, $term = NULL) {
     $sql = "SELECT *
             FROM binet_admin
-            WHERE binet = :binet AND term = :term AND student = :student
+            WHERE binet = :binet ".(empty($term) ? "" : "AND term = :term ")."AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':term', $term, PDO::PARAM_INT);
+    if (!empty($term)) {
+      $req->bindParam(':term', $term, PDO::PARAM_INT);
+    }
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     if ($row = $req->fetch()) {
@@ -170,14 +168,4 @@
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
     $req->bindParam(':term', $term, PDO::PARAM_INT);
     $req->execute();
-  }
-
-  function balance_binet($binet, $term) {
-    $balance = 0;
-    foreach (select_budgets(array("binet" => $binet, "term" => $term)) as $budget) {
-      $real_amount = get_real_amount_budget($budget["id"]);
-      $balance += $real_amount;
-      $balance += get_subsidized_amount_used_budget($budget["id"]);
-    }
-    return $balance;
   }
