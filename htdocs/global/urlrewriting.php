@@ -6,7 +6,24 @@
   }
 
   function path($action = "", $model_name = "", $model_id = "", $prefix = "", $query_array = array()) {
-    return $prefix.(empty($model_name) ? "" : "/".$model_name).(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action);
+    $query_string = "";
+    $first = true;
+    foreach ($query_array as $key => $value) {
+      if (!empty($value)) {
+        if ($first) {
+          $query_string .= "?";
+          $first = false;
+        } else {
+          $query_string .= "&";
+        }
+        if ($key == "tags") {
+          $query_string .= "tags=".implode("+", $value);
+        } else {
+          $query_string .= $key."=".$value;
+        }
+      }
+    }
+    return $prefix.(empty($model_name) ? "" : "/".$model_name).(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
   }
 
   function write_path_rule($htaccess, $path, $url) {
