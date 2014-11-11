@@ -7,3 +7,10 @@
   function img($src, $alt = "") {
     return "<img src=\"image/".$src."\" alt = \"".$alt."\"\>";
   }
+
+  function form_group_text($label, $field, $object) {
+    return "<div class=\"form-group\">
+              <label for=\"".$field."\">".$label."</label>
+              <input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">
+            </div>";
+  }

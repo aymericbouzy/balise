@@ -1,0 +1,7 @@
+<form role="form" id="budget" action="<?php echo path($form_action, "budget", "", "binet/".$binet["id"]."/".$term); ?>" method="post">
+  <input type="hidden" name="sign" value="<?php echo $form_budget_sign ?>">
+  <?php echo form_group_text("Nom :", "comment", $budget); ?>
+  <?php echo form_group_text("Tags (séparés par des ';') :", "tags_string", $budget); ?>
+  <?php echo form_group_text("Montant prévisionnel :", "amount_string", $budget); ?>
+  <div type="submit">Créer</div>
+</form>
