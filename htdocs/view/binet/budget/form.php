@@ -2,6 +2,6 @@
   <input type="hidden" name="sign" value="<?php echo $form_budget_sign ?>">
   <?php echo form_group_text("Nom :", "comment", $budget); ?>
   <?php echo form_group_text("Tags (séparés par des ';') :", "tags_string", $budget); ?>
-  <?php echo form_group_text("Montant prévisionnel :", "amount_string", $budget); ?>
+  <?php echo form_group_text("Montant prévisionnel :", "amount", $budget); ?>
   <div type="submit">Créer</div>
 </form>

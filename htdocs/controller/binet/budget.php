@@ -27,12 +27,18 @@
     break;
 
   case "new_expense":
+    $budget = initialise_for_form(array("comment", "tags_string", "amount"), $_SESSION["budget"]);
     break;
 
   case "new_income":
+    $budget = initialise_for_form(array("comment", "tags_string", "amount"), $_SESSION["budget"]);
     break;
 
   case "create":
+    $budget = create_budget($binet["id"], $term, $_POST["amount"], $_POST["label"]);
+    foreach ($tags as $tag) {
+      add_tag_budget($tag, $budget);
+    }
     $_SESSION["notice"] = "La ligne de budget a été créée avec succès.";
     redirect_to(array("action" => "show"));
     break;

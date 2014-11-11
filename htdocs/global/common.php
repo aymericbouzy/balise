@@ -7,3 +7,11 @@
     header("Location: ".$SCHEME."://".$HOST."/".$hash["path"]);
     exit;
   }
+
+  function initialise_for_form($fields, $array) {
+    $object = array();
+    foreach ($fields as $field) {
+      $object[$field] = isset($array[$field]) ? $array[$field] : "";
+    }
+    return $object;
+  }
