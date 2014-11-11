@@ -16,7 +16,7 @@
   if (!validate_input(array("student"), "session") && ($_GET["controller"] != "frankiz" || $_GET["action"] != "login") {
     redirect_to(path("login"));
   } else {
-    $GLOBALS["current_student"] = select_student($_SESSION["student"], array("full_name"))
+    $current_student = select_student($_SESSION["student"], array("full_name"))
   }
 
   include $CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");

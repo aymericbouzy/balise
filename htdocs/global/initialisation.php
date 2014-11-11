@@ -16,3 +16,7 @@
   include $MODEL_PATH."request.php"; // depends on subsidy.php
   include $MODEL_PATH."binet.php"; // depends on budget.php
   include $MODEL_PATH."wave.php";
+
+  include $HELPER_PATH."common.php";
+  include $HELPER_PATH."pretty_print.php";
+  include $HELPER_PATH."tag.php";
