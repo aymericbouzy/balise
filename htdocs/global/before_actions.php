@@ -88,9 +88,26 @@
       }
     }
 
+    if ($array["tags_string"] && !empty($_POST["tags_string"])) {
+      foreach (explode($_POST["tags_string"], ";") as $tag_name) {
+        $tag = select_tags(array("clean_name" => clean_string($tag_name)));
+        if (empty($tag)) {
+          $_SESSION["tag_to_create"] = remove_exterior_spaces($tag_name);
+        } else {
+          $GLOBALS["tags"][] = $tag[0]["id"];
+        }
+      }
+    }
+
     if (!empty($_SESSION[$array["model_name"]]["errors"])) {
       redirect_to($array["redirect_to"]);
     }
+
+    if (!empty($_SESSION["tag_to_create"])) {
+      redirect_to(array("path" => path("new", "tag")));
+    }
+
+    unset($_SESSION[$array["model_name"]]);
   }
 
   function kessier() {

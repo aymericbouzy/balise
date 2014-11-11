@@ -16,8 +16,9 @@
   before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "budget",
-    "str_fields" => array(array(label, 100)),
+    "str_fields" => array(array(label, 100), array("tags_string", $MAX_TAG_STRING_LENGTH)),
     "amount_fields" => array(array("amount", $MAX_AMOUNT)),
+    "tags_string" => true,
     "redirect_to" => path("create", "budget", "", "binet/".$binet["id"]."/".$term)
   ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
