@@ -14,9 +14,16 @@
 
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
+  before_action("check_form_input", array("create", "update"), array(
+    "model_name" => "budget",
+    "str_fields" => array(array(label, 100)),
+    "amount_fields" => array(array("amount", $MAX_AMOUNT)),
+    "redirect_to" => path("create", "budget", "", "binet/".$binet["id"]."/".$term)
+  ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("budget_does_not_change_sign", array("update"));
   before_action("budget_amount_not_null", array("create"));
+  before_action("budget_sign_is_one_or_minus_one", array("create", "update"));
 
   switch ($_GET["action"]) {
 
@@ -27,15 +34,15 @@
     break;
 
   case "new_expense":
-    $budget = initialise_for_form(array("comment", "tags_string", "amount"), $_SESSION["budget"]);
+    $budget = initialise_for_form(array("lebel", "tags_string", "amount"), $_SESSION["budget"]);
     break;
 
   case "new_income":
-    $budget = initialise_for_form(array("comment", "tags_string", "amount"), $_SESSION["budget"]);
+    $budget = initialise_for_form(array("label", "tags_string", "amount"), $_SESSION["budget"]);
     break;
 
   case "create":
-    $budget = create_budget($binet["id"], $term, $_POST["amount"], $_POST["label"]);
+    $budget = create_budget($binet["id"], $term, $_POST["sign"]*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget);
     }

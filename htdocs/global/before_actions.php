@@ -56,6 +56,43 @@
     }
   }
 
+  function check_form_input($array) {
+    $_SESSION[$array["model_name"]] = $_POST;
+    $array["str_fields"] = $array["str_fields"] ?: array();
+    $array["int_fields"] = $array["int_fields"] ?: array();
+    $array["amount_fields"] = $array["ammount_fields"] ?: array();
+
+    foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"]) as $field) {
+      if (!isset($_POST[$field[0]])) {
+        if (!isset($array["optional"]) || !in_array($field[0], $array["optionnal"])) {
+          $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+        } else {
+          unset($array["str_fields"][$field[0]]);
+          unset($array["int_fields"][$field[0]]);
+          unset($array["amount_fields"][$field[0]]);
+        }
+      }
+    }
+
+    foreach ($array["str_fields"] as $field) {
+      $_POST[$field[0]] = substr(htmlspecialchars($_POST[$fields[0]]), 0, $field[1]);
+    }
+
+    foreach ($array["amount_fields"] as $field) {
+      $_POST[$field[0]] = floor($_POST[$field[0]] * 100);
+    }
+
+    foreach (array_merge($array["amount_fields"], $array["int_fields"]) as $field) {
+      if (!is_numeric($_POST[$field[0]]) || $_POST[$field[0]] < 0 || $_POST[$field[0]] > $field[1]) {
+        $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+      }
+    }
+
+    if (!empty($_SESSION[$array["model_name"]]["errors"])) {
+      redirect_to($array["redirect_to"]);
+    }
+  }
+
   function kessier() {
     header_if(!status_binet_admin($KES_ID), 401);
   }
