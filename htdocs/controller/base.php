@@ -2,8 +2,6 @@
 
   include "../global/initialisation.php";
 
-
-
   header_if(!validate_input(array("action", "controller"), array("tags")), 400);
   if (isset($_GET["prefix"])) {
     header_if(!validate_input(array("prefix")), 400);
