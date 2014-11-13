@@ -1,0 +1,1 @@
+Site créé par <a href="mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>">Nathan</a>, <a href="mailto:Victor Nicolet <victor.nicolet@polytechnique.edu>">Little</a> et <a href="mailto:Aymeric Bouzy <aymeric.bouzy@polytechnique.edu>">Zouby</a>.
