@@ -1,7 +1,7 @@
 <?php
 
   before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation");
-  before_action("kessier", array("validate", "reject"));
+  before_action("current_kessier", array("validate", "reject"));
 
   function creator_operation_or_kessier() {
     $operation = select_operation($_GET["operation"], array("created_by", "binet_validation_by", "kes_validation_by"));
