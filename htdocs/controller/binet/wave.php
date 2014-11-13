@@ -24,7 +24,7 @@
 
   case "create":
     $_SESSION["notice"] = "Une nouvelle vague de subvention a été ouverte.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "show":
@@ -35,12 +35,12 @@
 
   case "update":
     $_SESSION["notice"] = "La vague de subventions a été mise à jour avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "publish":
     $_SESSION["notice"] = "Les attributions de la vague de subvention ont été publiées avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   default:

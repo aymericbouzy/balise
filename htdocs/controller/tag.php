@@ -25,7 +25,7 @@
     $_SESSION["notice"] = "Le tag \"".$_SESSION["tag_to_create"]."\" a été créé avec succès.";
     $return_to = $_SESSION["return_to"];
     unset($_SESSION["return_to"]);
-    redirect_to(array("path" => $return_to));
+    redirect_to_path($return_to);
     break;
 
   case "show":

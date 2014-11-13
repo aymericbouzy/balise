@@ -105,12 +105,12 @@
     }
 
     if (!empty($_SESSION[$array["model_name"]]["errors"])) {
-      redirect_to($array["redirect_to"]);
+      redirect_to_path($array["redirect_to"]);
     }
 
     if (!empty($_SESSION["tag_to_create"])) {
       $_SESSION["return_to"] = $_SERVER["??"];
-      redirect_to(array("path" => path("new", "tag")));
+      redirect_to_path(path("new", "tag"));
     }
 
     unset($_SESSION[$array["model_name"]]);

@@ -48,7 +48,7 @@
       add_tag_budget($tag, $budget);
     }
     $_SESSION["notice"] = "La ligne de budget a été créée avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "show":
@@ -59,11 +59,11 @@
 
   case "update":
     $_SESSION["notice"] = "La ligne de budget a été mise à jour avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "delete":
-    redirect_to(array("action" => "index"));
+    redirect_to_action("index");
     break;
 
   default:

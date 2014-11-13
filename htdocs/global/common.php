@@ -8,12 +8,13 @@
     return "binet/".binet_term_id($binet, $term);
   }
 
-  function redirect_to($hash) {
-    if (isset($hash["action"])) {
-      //TODO change $binet["id"] to $binet["clean_name"]
-      $hash["path"] = path($hash["action"], $_GET["controller"], ($GLOBALS[$_GET["controller"]]["id"] ?: ""), ($_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"]["id"], $GLOBALS["term"]) : ""));
-    }
-    header("Location: ".$SCHEME."://".$HOST."/".$hash["path"]);
+  function redirect_to_action($action) {
+    $path = path($action, $_GET["controller"], ($GLOBALS[$_GET["controller"]]["id"] ?: ""), ($_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"]["id"], $GLOBALS["term"]) : ""));
+    redirect_to_path($path);
+  }
+
+  function redirect_to_path($path) {
+    header("Location: ".$SCHEME."://".$HOST."/".$path);
     exit;
   }
 

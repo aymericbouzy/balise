@@ -13,12 +13,12 @@
 
   case "create":
     $_SESSION["notice"] = $admin["full_name"]." est à présent administrateur du binet ".$binet["name"]." pour le mandat ".$term.".";
-    redirect_to(array("action" => ""));
+    redirect_to_action("");
     break;
 
   case "delete":
     $_SESSION["notice"] = "Les droits d'administration de ".$admin["full_name"]." pour le mandat ".$term." du binet ".$binet["name"]." ont été révoqués.";
-    redirect_to(array("action" => ""));
+    redirect_to_action("");
     break;
 
   default:

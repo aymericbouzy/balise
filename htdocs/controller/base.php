@@ -15,7 +15,7 @@
   $query_array = compute_query_array();
 
   if (!validate_input(array("student"), "session") && ($_GET["controller"] != "frankiz" || $_GET["action"] != "login") {
-    redirect_to(path("login"));
+    redirect_to_path(path("login"));
   } else {
     $current_student = select_student($_SESSION["student"], array("full_name"))
   }
