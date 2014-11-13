@@ -54,6 +54,7 @@
     foreach ($criteria as $column => $value) {
       header_if($value != $entry[$column], 403);
     }
+    $GLOBALS[$array["model_name"]] = $entry;
   }
 
   function check_form_input($array) {

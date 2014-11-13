@@ -41,13 +41,15 @@
     break;
 
   case "validate":
+    kes_validate_operation($operation["id"]);
     $_SESSION["notice"] = "L'opération a été validée avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to(array("path" => path("validation", "binet", binet_term_id($KES_ID, select_binet($KES_ID, array("current_term"))["current_term"]))));
     break;
 
   case "reject":
-    $_SESSION["notice"] = "Tu as refusé l'opération. Elle apparaitra à nouveau dans les validations des administrateurs du binet.";
-    redirect_to(array("action" => "show"));
+    kes_reject_operation($operation["id"]);
+    $_SESSION["notice"] = "Tu as refusé l'opération. Elle apparaitra à nouveau dans les validations des administrateurs du binet. Tu peux leur envoyer un mail pour expliquer la raison du refus.";
+    redirect_to(array("path" => path("validation", "binet", binet_term_id($KES_ID, select_binet($KES_ID, array("current_term"))["current_term"]))));
     break;
 
   default:

@@ -1,13 +1,13 @@
 <div id="header-left">
   <ul>
     <li>
-      <?php echo link_to(path("", "binet", $binet["id"]."/".$term), $binet["name"]."<span class=\"binet-term\">".$term."</span>"); ?>
+      <?php echo link_to(path("", "binet", binet_term_id($binet["id"], $term)), $binet["name"]."<span class=\"binet-term\">".$term."</span>"); ?>
       <ul>
         <?php foreach(binet_admins_current_student() as $binet_admin) {
           $binet_admin["name"] = select_binet($binet_admin["binet"], array("name"))["name"];
           ?>
           <li>
-            <?php echo link_to(path("", "binet", $binet_admin["binet"]."/".$binet_admin["term"]), $binet_admin["name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
+            <?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
           </li>
           <?php
         }
@@ -18,19 +18,19 @@
       <i class="fa-plus"></i>
       <ul>
         <li>
-          <?php echo link_to(path("new", "budget", "", "binet/".$binet["id"]."/".$term), "Ligne budgétaire"); ?>
+          <?php echo link_to(path("new", "budget", "", binet_prefix($binet["id"], $term)), "Ligne budgétaire"); ?>
         </li>
         <li>
-          <?php echo link_to(path("new", "operation", "", "binet/".$binet["id"]."/".$term), "Opération"); ?>
+          <?php echo link_to(path("new", "operation", "", binet_prefix($binet["id"], $term)), "Opération"); ?>
         </li>
         <li>
-          <?php echo link_to(path("new", "request", "", "binet/".$binet["id"]."/".$term), "Demande de subvention"); ?>
+          <?php echo link_to(path("new", "request", "", binet_prefix($binet["id"], $term)), "Demande de subvention"); ?>
         </li>
         <?php if (select_binet($binet["id"], array("subsidy_provider"))["subsidy_provider"] == 1) {
           ?>
           <li class = "seperator"></li>
           <li>
-            <?php echo link_to(path("new", "wave", "", "binet/".$binet["id"]."/".$term), "Vague de subvention"); ?>
+            <?php echo link_to(path("new", "wave", "", binet_prefix($binet["id"], $term)), "Vague de subvention"); ?>
           </li>
           <?php
         }

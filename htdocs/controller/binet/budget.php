@@ -19,7 +19,7 @@
     "str_fields" => array(array(label, 100), array("tags_string", $MAX_TAG_STRING_LENGTH)),
     "amount_fields" => array(array("amount", $MAX_AMOUNT)),
     "tags_string" => true,
-    "redirect_to" => path("create", "budget", "", "binet/".$binet["id"]."/".$term)
+    "redirect_to" => path($_GET["action"], "budget", "", binet_prefix($binet["id"], $term));
   ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("budget_does_not_change_sign", array("update"));

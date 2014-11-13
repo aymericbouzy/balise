@@ -35,13 +35,23 @@
     $req->execute();
   }
 
-  function validate_kes_operation($operation) {
+  function kes_validate_operation($operation) {
     $sql = "UPDATE operation
             SET kes_validation_by = :student
             WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function kes_reject_operation($operation) {
+    $sql = "UPDATE operation
+            SET binet_validation_by = NULL
+            WHERE id = :operation
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
     $req->bindParam(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
@@ -103,13 +113,13 @@
   }
 
   function count_pending_validations($binet, $term) {
-    return count(pending_validations_operations($binet, $term)) + ($binet == $KES_ID ? count(pending_validations_kes()) : 0);
+    return count(pending_validations_operations($binet, $term)) + ($binet == $KES_ID ? count(kes_pending_validations_operations()) : 0);
   }
 
   function pending_validations_operations($binet, $term) {
     return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => NULL, "binet" => $binet, "term" => $term), "date");
   }
 
-  function pending_validations_operations_kes() {
+  function kes_pending_validations_operations() {
     return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => array("!=", NULL)), "date");
   }
