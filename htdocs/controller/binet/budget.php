@@ -37,6 +37,10 @@
   switch ($_GET["action"]) {
 
   case "index":
+    $budgets = array();
+    foreach (select_budgets(array_merge($query_array, array("binet" => $binet["id"], "term" => $term)), "date") as $budget) {
+      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+    }
     break;
 
   case "new":
