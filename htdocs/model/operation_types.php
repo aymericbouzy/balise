@@ -5,5 +5,21 @@
   }
 
   function select_operation_type($operation_type, $fields = array()) {
-    return false;
+    return select_entry(
+      "operation_type",
+      array("id", "name"),
+      $operation_type,
+      $fields
+    );
+  }
+
+  function select_operation_types() {
+    return select_entries(
+      "operation_types",
+      array("id"),
+      array(),
+      array(),
+      array(),
+      "id"
+    );
   }
