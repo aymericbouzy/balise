@@ -62,8 +62,9 @@
     $array["str_fields"] = $array["str_fields"] ?: array();
     $array["int_fields"] = $array["int_fields"] ?: array();
     $array["amount_fields"] = $array["ammount_fields"] ?: array();
+    $array["other_fields"] = $array["other_fields"] ?: array();
 
-    foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"]) as $field) {
+    foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"], $array["other_fields"]) as $field) {
       if (!isset($_POST[$field[0]])) {
         if (!isset($array["optional"]) || !in_array($field[0], $array["optionnal"])) {
           $_SESSION[$array["model_name"]]["errors"][] = $field[0];
@@ -85,6 +86,12 @@
 
     foreach (array_merge($array["amount_fields"], $array["int_fields"]) as $field) {
       if (!is_numeric($_POST[$field[0]]) || $_POST[$field[0]] < 0 || $_POST[$field[0]] > $field[1]) {
+        $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+      }
+    }
+
+    foreach ($array["other_fields"] as $field) {
+      if (!call_user_func($field[1], $_POST[$field[0]])) {
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
     }
