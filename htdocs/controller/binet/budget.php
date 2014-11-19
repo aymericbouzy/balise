@@ -31,7 +31,7 @@
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("budget_sign_is_one_or_minus_one", array("create", "update"));
   before_action("budget_does_not_change_sign", array("update"));
-  before_action("budget_amount_not_null", array("create"));
+  before_action("budget_amount_not_null", array("create", "update"));
 
 
   switch ($_GET["action"]) {
