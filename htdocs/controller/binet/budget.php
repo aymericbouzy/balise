@@ -4,10 +4,6 @@
     header_if(!empty(select_operations_budget($_GET["budget"])) || !empty(select_subsidies_budget($_GET["subsidy"])), 403);
   }
 
-  function budget_sign_is_one_or_minus_one() {
-    header_if(!isset($_POST["sign"]) || !is_numeric($_POST["sign"]) || !in_array($_POST["sign"], array(1, -1)), 400);
-  }
-
   function budget_does_not_change_sign() {
     header_if($_POST["sign"] * select_budget($budget["id"], array("amount"))["amount"] < 0, 403);
   }
@@ -29,7 +25,7 @@
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet["id"], $term))
   ), $_GET["action"] == "update" ? array("optionnal" => array("label", "amount")) : array()));
   before_action("budget_is_alone", array("edit", "update", "delete"));
-  before_action("budget_sign_is_one_or_minus_one", array("create", "update"));
+  before_action("sign_is_one_or_minus_one", array("create", "update"));
   before_action("budget_does_not_change_sign", array("update"));
   before_action("budget_amount_not_null", array("create", "update"));
 
@@ -47,7 +43,7 @@
     break;
 
   case "new_expense":
-    $budget = initialise_for_form(array("lebel", "tags_string", "amount"), $_SESSION["budget"]);
+    $budget = initialise_for_form(array("label", "tags_string", "amount"), $_SESSION["budget"]);
     break;
 
   case "new_income":

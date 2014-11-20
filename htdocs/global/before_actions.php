@@ -235,3 +235,7 @@
     }
     return $query_array;
   }
+
+  function sign_is_one_or_minus_one() {
+    header_if(!validate_input(array("sign"), array(), "post"), 400);
+  }

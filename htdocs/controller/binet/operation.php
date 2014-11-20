@@ -14,7 +14,7 @@
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet["id"], $term)),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
-  before_action("validate_input", array("create", "update"), array("requested" => array("sign"), "method" => "post"));
+  before_action("sign_is_one_or_minus_one", array("create", "update"));
   before_action("operation_does_not_change_sign", array("update"));
 
 
