@@ -48,17 +48,36 @@
           include $LAYOUT_PATH."structure.php";
         }
       ?>
-      <div id="main">
+      <div id="page_wraper">
         <?php
           include $LAYOUT_PATH."flash.php";
           include $VIEW_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/" : "").$_GET["controller"]."/".$_GET["action"].".php";
         ?>
       </div>
+      <?php if ($_GET["controller"] == "home" && $_GET["action"] == "welcome") {
+        ?>
+          <div id="footer">
+          <div class="container">
+              <p class="text-muted">Page créée avec <a href="http://www.bootstrap.com">bootstrap</a></p>
+          </div>
+          </div>
+
+          <ul class="nav pull-right scroll-top">
+              <li><a href="#" title="Scroll to top"><i class="glyphicon glyphicon-chevron-up"></i></a></li>
+          </ul>
+          <!-- Page script -->
+          <script src="assets/js/login_page.js"></script>
+        <?php
+      } ?>
       <footer>
         <?php
           include $LAYOUT_PATH."footer.php";
         ?>
       </footer>
     </div>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
   </body>
 </html>
