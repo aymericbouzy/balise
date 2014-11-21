@@ -7,22 +7,22 @@
     <meta name="author" content="">
     <title>Balise Trézo</title>
     <link rel="shortcut icon" href="">
-    <link rel="stylesheet" href="../dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../dist/css/bootstrap.css">
+    <link rel="stylesheet" href="<?php echo $ASSET_PATH; ?>dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php echo $ASSET_PATH; ?>dist/css/bootstrap.css">
     <!--Switch CSS-->
-    <link rel="stylesheet" href="../css/bootstrap-switch.css">
+    <link rel="stylesheet" href="<?php echo $ASSET_PATH; ?>css/bootstrap-switch.css">
     <!-- Custom CSS -->
-    <link href="../css/user-home.css" rel="stylesheet">
+    <link href="<?php echo $ASSET_PATH; ?>css/user-home.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="../font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<?php echo $ASSET_PATH; ?>font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!--Switch JS-->
-    <script src="../assets/js/bootstrap-switch.js"></script>
+    <script src="<?php echo $ASSET_PATH; ?>js/bootstrap-switch.js"></script>
     <!--Core Bootstrap JS-->
-    <script src="../dist/js/bootstrap.min.js"></script>
+    <script src="<?php echo $ASSET_PATH; ?>dist/js/bootstrap.min.js"></script>
     <!-- jQuery -->
-    <script src="../assets/js/jquery.js"></script>
+    <script src="<?php echo $ASSET_PATH; ?>js/jquery.js"></script>
     <!--[if IE]>
       <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
