@@ -54,5 +54,5 @@
   <div id="header-name">
     <?php echo $current_student["name"]; ?>
   </div>
-  <?php echo link_to(path("logout", "frankiz"), "<i class=\"fa-logout\" alt=\"logout\"></i>") ?>
+  <?php echo link_to(path("logout", "home"), "<i class=\"fa-logout\" alt=\"logout\"></i>") ?>
 </div>

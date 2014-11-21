@@ -31,7 +31,7 @@
   <body>
     <?php
       switch ($_GET["controller"]) {
-      case "frankiz":
+      case "home":
         break;
       default:
         include $LAYOUT_PATH."structure.php";

@@ -9,10 +9,13 @@
 
   case "logout":
     $_SESSION["notice"] = "Tu t'es déconnecté avec succès.";
-    redirect_to_action("");
+    redirect_to_action("welcome");
     break;
 
   case "index":
+    break;
+
+  case "welcome":
     break;
 
   default:
