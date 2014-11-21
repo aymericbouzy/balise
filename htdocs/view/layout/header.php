@@ -1,3 +1,57 @@
+<div class="navbar-header">
+  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+  </button>
+  <?php echo link_to(path("", "home"), "Balise", "navbar-brand"); ?>
+</div>
+
+<ul class="nav navbar-left top-nav">
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
+    <ul class="dropdown-menu" role="menu">
+      <li><a href="#">Binet massage</a></li>
+      <li><a href="#">X-Circus</a></li>
+      <li><a href="#">JTX</a></li>
+    </ul>
+  </li>
+</ul>
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-plus-circle green-plus" id="operation-plus"></i> <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li class="add-operation">
+                                <a href="#"><i class="fa fa-fw fa-calculator"></i> Opération</a>
+                            </li>
+                            <li>
+                                <a class="add-operation" href="#"><i class="fa fa-fw fa-bar-chart"></i> Ligne budgétaire</a>
+                            </li >
+                            <li class="add-operation">
+                                <a class="add-operation" href="#"><i class="fa fa-fw fa-money"></i> Demande de subvention</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li class="add-operation">
+                                <a class="add-operation" href="#"><i class="fa fa-fw fa-group"></i> Binet</a>
+                            </li>
+                        </ul>
+
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> Robert Blanquette <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Autorisations</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
 <div id="header-left">
   <ul>
     <li>
