@@ -1,5 +1,9 @@
 <?php
 
+  function operation_does_not_change_sign() {
+    header_if($_POST["sign"] * select_operation($operation["id"], array("amount"))["amount"] < 0, 403);
+  }
+
   before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete", "validate"));
   before_action("check_form_input", array("create", "update"), array(
@@ -10,6 +14,8 @@
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet["id"], $term)),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
+  before_action("sign_is_one_or_minus_one", array("create", "update"));
+  before_action("operation_does_not_change_sign", array("update"));
 
 
   switch ($_GET["action"]) {
@@ -31,6 +37,7 @@
     break;
 
   case "create":
+    $operation = create_operation($binet["id"], $term, $_POST["sign"]*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"] = "L'opération a été créée avec succès.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;
