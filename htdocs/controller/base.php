@@ -2,8 +2,6 @@
 
   include "../global/initialisation.php";
 
-
-
   header_if(!validate_input(array("action", "controller"), array("tags")), 400);
   if (isset($_GET["prefix"])) {
     header_if(!validate_input(array("prefix")), 400);
@@ -17,7 +15,7 @@
   $query_array = compute_query_array();
 
   if (!validate_input(array("student"), "session") && ($_GET["controller"] != "frankiz" || $_GET["action"] != "login") {
-    redirect_to(path("login"));
+    redirect_to_path(path("login"));
   } else {
     $current_student = select_student($_SESSION["student"], array("full_name"))
   }

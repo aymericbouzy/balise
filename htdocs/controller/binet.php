@@ -14,7 +14,7 @@
 
   case "create":
     $_SESSION["notice"] = "Le binet ".$binet["name"]." a été créé avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "edit":
@@ -22,12 +22,12 @@
 
   case "update":
     $_SESSION["notice"] = "Le binet ".$binet["name"]." a été mis à jour avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "set_subsidy_provider":
     $_SESSION["notice"] = "Le binet ".$binet["name"]." est devenu un binet subventionneur.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "show":
@@ -35,15 +35,19 @@
 
   case "change_term":
     $_SESSION["notice"] = "Le mandat actuel du binet ".$binet["name"]." a été mis à jour.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "deactivate":
     $_SESSION["notice"] = "Le binet ".$binet["name"]." a été désactivé avec succès.";
-    redirect_to(array("action" => "show"));
+    redirect_to_action("show");
     break;
 
   case "validation":
+    $pending_validations_operations = pending_validations_operations($binet["id"], $term);
+    if ($binet["id"] == $KES_ID) {
+      $pending_validations_operations_kes = pending_validations_operations_kes();
+    }
     break;
 
   case "admin":

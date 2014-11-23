@@ -54,10 +54,81 @@
     foreach ($criteria as $column => $value) {
       header_if($value != $entry[$column], 403);
     }
+    $GLOBALS[$array["model_name"]] = $entry;
+  }
+
+  function check_form_input($array) {
+    $_SESSION[$array["model_name"]] = $_POST;
+    $array["str_fields"] = $array["str_fields"] ?: array();
+    $array["int_fields"] = $array["int_fields"] ?: array();
+    $array["amount_fields"] = $array["ammount_fields"] ?: array();
+    $array["other_fields"] = $array["other_fields"] ?: array();
+
+    foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"], $array["other_fields"]) as $field) {
+      if (!isset($_POST[$field[0]])) {
+        if (!isset($array["optional"]) || !in_array($field[0], $array["optionnal"])) {
+          $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+        } else {
+          unset($array["str_fields"][$field[0]]);
+          unset($array["int_fields"][$field[0]]);
+          unset($array["amount_fields"][$field[0]]);
+        }
+      }
+    }
+
+    foreach ($array["str_fields"] as $field) {
+      $_POST[$field[0]] = substr(htmlspecialchars($_POST[$fields[0]]), 0, $field[1]);
+    }
+
+    foreach ($array["amount_fields"] as $field) {
+      $_POST[$field[0]] = floor($_POST[$field[0]] * 100);
+    }
+
+    foreach (array_merge($array["amount_fields"], $array["int_fields"]) as $field) {
+      if (!is_numeric($_POST[$field[0]]) || $_POST[$field[0]] < 0 || $_POST[$field[0]] > $field[1]) {
+        $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+      }
+    }
+
+    foreach ($array["other_fields"] as $field) {
+      if (!call_user_func($field[1], $_POST[$field[0]])) {
+        $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+      }
+    }
+
+    if ($array["tags_string"]) {
+      if (!empty($_POST["tags_string"])) {
+        foreach (explode($_POST["tags_string"], ";") as $tag_name) {
+          $tag = select_tags(array("clean_name" => clean_string($tag_name)));
+          if (empty($tag)) {
+            $_SESSION["tag_to_create"] = remove_exterior_spaces($tag_name);
+          } else {
+            $GLOBALS["tags"][] = $tag[0]["id"];
+          }
+        }
+      } else {
+        $GLOBALS["tags"] = array();
+      }
+    }
+
+    if (!empty($_SESSION[$array["model_name"]]["errors"])) {
+      redirect_to_path($array["redirect_to"]);
+    }
+
+    if (!empty($_SESSION["tag_to_create"])) {
+      $_SESSION["return_to"] = $_SERVER["??"];
+      redirect_to_path(path("new", "tag"));
+    }
+
+    unset($_SESSION[$array["model_name"]]);
   }
 
   function kessier() {
     header_if(!status_binet_admin($KES_ID), 401);
+  }
+
+  function current_kessier() {
+    header_if(!status_binet_admin($KES_ID, select_binet($KES_ID, array("current_term"))["current_term"]), 401);
   }
 
   function member_binet_term() {
@@ -65,7 +136,7 @@
   }
 
   function watcher_binet_term() {
-    header_if(!status_binet_admin($_GET["binet"], $_GET["term"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
+    header_if(!status_binet_admin($_GET["binet"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
   }
 
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {

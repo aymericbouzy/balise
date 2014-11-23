@@ -11,6 +11,24 @@
     );
   }
 
+  function add_tag_budget($tag, $budget) {
+    $sql = "INSERT INTO budget_tag(budget, tag)
+            VALUES(:budget, :tag)";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function remove_tags_budget($budget) {
+    $sql = "DELETE
+            FROM budget_tag
+            WHERE budget = :budget";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->execute();
+  }
+
   function select_tag($tag, $fields = NULL) {
     $tag = select_entry(
       "tag",
