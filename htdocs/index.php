@@ -1,4 +1,5 @@
 <?php
 
   include "global/initialisation.php";
-  urlrewrite();
+  // urlrewrite();
+  include "controller/base.php";

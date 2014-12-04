@@ -25,3 +25,7 @@
     }
     return $object;
   }
+
+  function preg_does_match($regex, $string) {
+    return preg_match($regex, $string) === 1;
+  }

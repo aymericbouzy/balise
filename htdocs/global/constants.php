@@ -2,7 +2,7 @@
 
   $GLOBAL_PATH = "global/";
   $MODEL_PATH = "model/";
-  $HELPER_PATH = "helper/"
+  $HELPER_PATH = "helper/";
   $CONTROLLER_PATH = "controller/";
   $VIEW_PATH = "view/";
   $ASSET_PATH = "asset/";

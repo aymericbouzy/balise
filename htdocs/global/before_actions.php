@@ -160,19 +160,19 @@
         if (in_array($parameter, array_merge($required_parameters, $optionnal_parameters))) {
           switch ($parameter) {
           case "action":
-            $valid = $valid && preg_match("[a-z_]+", $value);
+            $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
             break;
           case "controller":
-            $valid = $valid && preg_match("[a-z_]+", $value);
+            $valid = $valid && preg_match("/^[a-z_]+$/", $value);
             break;
           case "prefix":
             $valid = $valid && in_array($value, array("binet"));
             break;
           case "tags":
-            $valid = $valid && preg_match("([a-z_]+)(\+[a-z_]+)*", $value);
+            $valid = $valid && preg_does_match("/^([a-z_]+)(\+[a-z_]+)*$/", $value);
             break;
           case "binet":
-            $valid = $valid && preg_match("[a-z0-9-]+", $value);
+            $valid = $valid && preg_does_match("/^([a-z0-9-])+$/", $value);
             break;
           case "term":
             $valid = $valid && is_numeric($value);
