@@ -32,7 +32,7 @@
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
-      include $LAYOUT_PATH."application.php";
+      include $GLOBALS["LAYOUT_PATH"]."application.php";
       exit;
     }
   }
@@ -163,7 +163,7 @@
             $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
             break;
           case "controller":
-            $valid = $valid && preg_match("/^[a-z_]+$/", $value);
+            $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
             break;
           case "prefix":
             $valid = $valid && in_array($value, array("binet"));
@@ -225,8 +225,8 @@
   }
 
   function compute_query_array() {
-    $query_array = array_intersect_key($_GET, array_flip("tags"));
-    if (!empty($query_array("tags"))) {
+    $query_array = array_intersect_key($_GET, array_flip(array("tags")));
+    if (!empty($query_array["tags"])) {
       $tags_clean_names = explode($query_array["tags"], "+");
       $query_array["tags"] = array();
       foreach ($tags_clean_names as $clean_name) {
