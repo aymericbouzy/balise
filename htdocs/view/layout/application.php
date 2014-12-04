@@ -42,7 +42,7 @@
   <body>
     <div id="wrap">
       <?php
-        if ($_GET["controller"] == "home" && $_GET["action"] == "welcome") {
+        if ($_GET["controller"] == "error" || ($_GET["controller"] == "home" && $_GET["action"] == "welcome")) {
 
         } else {
           include $LAYOUT_PATH."structure.php";

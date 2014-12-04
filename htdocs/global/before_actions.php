@@ -32,6 +32,7 @@
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
+      $VIEW_PATH = $GLOBALS["VIEW_PATH"];
       include $GLOBALS["LAYOUT_PATH"]."application.php";
       exit;
     }
