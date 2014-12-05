@@ -12,3 +12,5 @@
   $HOST = "localhost:3000";
   $SCHEME = "http";
   $KES_ID = 0;
+
+  $STATE = "development";

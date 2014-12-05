@@ -5,7 +5,7 @@
     return $string;
   }
 
-  function path($action = "", $model_name = "", $model_id = "", $prefix = "", $query_array = array()) {
+  function path($action, $model_name, $model_id = "", $prefix = "", $query_array = array()) {
     $query_string = "";
     $first = true;
     foreach ($query_array as $key => $value) {
@@ -23,11 +23,22 @@
         }
       }
     }
-    return $prefix.(empty($model_name) ? "" : "/".$model_name).(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
+    if ($GLOBALS["STATE"] == "development") {
+      if (empty($prefix)) {
+        $prefix_string = "";
+      } else {
+        $prefix_elements = explode("/", $prefix);
+        $prefix_string = "&prefix=".$prefix_elements[0]."&binet=".$prefix_elements[1]."&term=".$prefix_elements[2];
+      }
+
+      $action = empty($action) ? "index" : $action;
+      return "index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string.$query_string;
+    }
+    return (empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
   }
 
   function write_path_rule($htaccess, $path, $url) {
-    if (fwrite($htaccess, "RewriteRule ".$path." ./controller/base.php?".$url."%{QUERY_STRING} [L]
+    if (fwrite($htaccess, "RewriteRule ".$path." ./index.php?".$url."%{QUERY_STRING} [L]
     ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
     }

@@ -7,7 +7,6 @@
       } else {
         call_user_func($function, $argument);
       }
-
     }
   }
 
@@ -28,6 +27,15 @@
         break;
       }
       header("HTTP/1.1 ".$header);
+
+      if ($GLOBALS["STATE"] == "development") {
+        echo "\$_GET : ";
+        var_dump($_GET);
+        echo "\$_SESSION : ";
+        var_dump($_SESSION);
+        echo "\$_POST : ";
+        var_dump($_POST);
+      }
 
       $_GET["controller"] = "error";
       $_GET["action"] = $status;

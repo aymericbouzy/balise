@@ -12,10 +12,12 @@
 
   $query_array = compute_query_array();
 
-  if (!validate_input(array("student"), array(), "session") && ($_GET["controller"] != "home" || ($_GET["action"] != "login" && $_GET["action"] != "welcome"))) {
-    redirect_to_path(path("welcome", "home"));
-  } else {
-    $current_student = select_student($_SESSION["student"], array("full_name"));
+  if ($_GET["controller"] != "home" || ($_GET["action"] != "login" && $_GET["action"] != "welcome")) {
+    if (!validate_input(array("student"), array(), "session")) {
+      redirect_to_path(path("welcome", "home"));
+    } else {
+      $current_student = select_student($_SESSION["student"], array("full_name"));
+    }
   }
 
   include $CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");

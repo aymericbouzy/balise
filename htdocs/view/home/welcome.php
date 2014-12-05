@@ -7,7 +7,7 @@
       </div>
       <div class="col-sm-6">
         <div class="pull-right  hidden-xs">
-          <a href="binet/user-home-budget.html" class="btn"><h3>Connexion via Frankiz</h3></a>
+          <a href="#" class="btn"><h3>Connexion via Frankiz</h3></a>
         </div>
       </div>
     </div>
