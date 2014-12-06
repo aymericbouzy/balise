@@ -5,9 +5,12 @@
     return $string;
   }
 
-  function path($action, $model_name, $model_id = "", $prefix = "", $query_array = array()) {
+  function path($action, $model_name, $model_id = "", $prefix = "", $query_array = array(), $include_csrf = false) {
     $query_string = "";
-    $first = true;
+    $first = $GLOBALS["STATE"] != "development";
+    if ($include_csrf) {
+      $query_array[] = $_SESSION["csrf_token"];
+    }
     foreach ($query_array as $key => $value) {
       if (!empty($value)) {
         if ($first) {

@@ -248,3 +248,11 @@
   function sign_is_one_or_minus_one() {
     header_if(!validate_input(array("sign"), array(), "post"), 400);
   }
+
+  function check_csrf_post() {
+    header_if(!valid_csrf_token($_POST["csrf_token"]), 401);
+  }
+
+  function check_csrf_get() {
+    header_if(!valid_csrf_token($_GE["csrf_token"]), 401);
+  }
