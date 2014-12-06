@@ -15,6 +15,8 @@
     }
   }
 
+  before_action("check_csrf_post", array("update", "create"));
+  before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
   before_action("check_form_input", array("create", "update"), array_merge(array(
@@ -28,7 +30,7 @@
   before_action("sign_is_one_or_minus_one", array("create", "update"));
   before_action("budget_does_not_change_sign", array("update"));
   before_action("budget_amount_not_null", array("create", "update"));
-
+  before_action("generate_csrf_token", array("new", "edit", "show"));
 
   switch ($_GET["action"]) {
 
