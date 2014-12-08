@@ -7,7 +7,6 @@
       } else {
         call_user_func($function, $argument);
       }
-
     }
   }
 
@@ -29,10 +28,20 @@
       }
       header("HTTP/1.1 ".$header);
 
+      if ($GLOBALS["STATE"] == "development") {
+        echo "\$_GET : ";
+        var_dump($_GET);
+        echo "\$_SESSION : ";
+        var_dump($_SESSION);
+        echo "\$_POST : ";
+        var_dump($_POST);
+      }
+
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
-      include $LAYOUT_PATH."application.php";
+      $VIEW_PATH = $GLOBALS["VIEW_PATH"];
+      include $GLOBALS["LAYOUT_PATH"]."application.php";
       exit;
     }
   }
@@ -160,19 +169,19 @@
         if (in_array($parameter, array_merge($required_parameters, $optionnal_parameters))) {
           switch ($parameter) {
           case "action":
-            $valid = $valid && preg_match("[a-z_]+", $value);
+            $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
             break;
           case "controller":
-            $valid = $valid && preg_match("[a-z_]+", $value);
+            $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
             break;
           case "prefix":
             $valid = $valid && in_array($value, array("binet"));
             break;
           case "tags":
-            $valid = $valid && preg_match("([a-z_]+)(\+[a-z_]+)*", $value);
+            $valid = $valid && preg_does_match("/^([a-z_]+)(\+[a-z_]+)*$/", $value);
             break;
           case "binet":
-            $valid = $valid && preg_match("[a-z0-9-]+", $value);
+            $valid = $valid && preg_does_match("/^([a-z0-9-])+$/", $value);
             break;
           case "term":
             $valid = $valid && is_numeric($value);
@@ -225,8 +234,8 @@
   }
 
   function compute_query_array() {
-    $query_array = array_intersect_key($_GET, array_flip("tags"));
-    if (!empty($query_array("tags"))) {
+    $query_array = array_intersect_key($_GET, array_flip(array("tags")));
+    if (!empty($query_array["tags"])) {
       $tags_clean_names = explode($query_array["tags"], "+");
       $query_array["tags"] = array();
       foreach ($tags_clean_names as $clean_name) {
@@ -238,4 +247,12 @@
 
   function sign_is_one_or_minus_one() {
     header_if(!validate_input(array("sign"), array(), "post"), 400);
+  }
+
+  function check_csrf_post() {
+    header_if(!valid_csrf_token($_POST["csrf_token"]), 401);
+  }
+
+  function check_csrf_get() {
+    header_if(!valid_csrf_token($_GE["csrf_token"]), 401);
   }

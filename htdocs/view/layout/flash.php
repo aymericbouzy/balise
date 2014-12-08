@@ -1,14 +1,16 @@
 <?php
 
   function print_flash($class) {
-    foreach ($_SESSION[$class] as $flash) {
-      ?>
+    if (!empty($_SESSION[$class])) {
+      foreach ($_SESSION[$class] as $flash) {
+        ?>
 
-      <?php echo $flash; ?>
+        <?php echo $flash; ?>
 
-      <?php
+        <?php
+      }
+      unset($_SESSION[$class]);
     }
-    unset($_SESSION[$class]);
   }
 
   print_flash("notice");

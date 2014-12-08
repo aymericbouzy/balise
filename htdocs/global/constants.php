@@ -2,7 +2,7 @@
 
   $GLOBAL_PATH = "global/";
   $MODEL_PATH = "model/";
-  $HELPER_PATH = "helper/"
+  $HELPER_PATH = "helper/";
   $CONTROLLER_PATH = "controller/";
   $VIEW_PATH = "view/";
   $ASSET_PATH = "asset/";
@@ -12,3 +12,5 @@
   $HOST = "localhost:3000";
   $SCHEME = "http";
   $KES_ID = 0;
+
+  $STATE = "development";

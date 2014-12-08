@@ -53,7 +53,7 @@
         ?>
         <li class = "divider"></li>
         <li>
-          <?php echo link_to(path("new", "binet"), "<i class="fa fa-fw fa-group"></i> Binet", "add-operation"); ?>
+          <?php echo link_to(path("new", "binet"), "<i class=\"fa fa-fw fa-group\"></i> Binet", "add-operation"); ?>
         </li>
         <?php
       }

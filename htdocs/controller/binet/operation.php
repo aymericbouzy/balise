@@ -4,6 +4,8 @@
     header_if($_POST["sign"] * select_operation($operation["id"], array("amount"))["amount"] < 0, 403);
   }
 
+  before_action("check_csrf_post", array("update", "create"));
+  before_action("check_csrf_get", array("delete", "validate"));
   before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete", "validate"));
   before_action("check_form_input", array("create", "update"), array(
@@ -16,6 +18,7 @@
   ));
   before_action("sign_is_one_or_minus_one", array("create", "update"));
   before_action("operation_does_not_change_sign", array("update"));
+  before_action("generate_csrf_token", array("new", "edit", "show"));
 
 
   switch ($_GET["action"]) {

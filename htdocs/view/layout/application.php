@@ -42,7 +42,7 @@
   <body>
     <div id="wrap">
       <?php
-        if ($_GET["controller"] == "home" && $_GET["action"] == "welcome") {
+        if ($_GET["controller"] == "error" || ($_GET["controller"] == "home" && $_GET["action"] == "welcome")) {
 
         } else {
           include $LAYOUT_PATH."structure.php";
@@ -66,7 +66,7 @@
               <li><a href="#" title="Scroll to top"><i class="glyphicon glyphicon-chevron-up"></i></a></li>
           </ul>
           <!-- Page script -->
-          <script src="assets/js/login_page.js"></script>
+          <script src="asset/js/login_page.js"></script>
         <?php
       } ?>
       <footer>
