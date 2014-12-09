@@ -21,8 +21,8 @@
   before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
   before_action("check_form_input", array("create", "update"), array_merge(array(
     "model_name" => "budget",
-    "str_fields" => array(array("label", 100), array("tags_string", $MAX_TAG_STRING_LENGTH)),
-    "amount_fields" => array(array("amount", $MAX_AMOUNT)),
+    "str_fields" => array(array("label", 100), array("tags_string", MAX_TAG_STRING_LENGTH)),
+    "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "tags_string" => true,
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet["id"], $term))
   ), $_GET["action"] == "update" ? array("optionnal" => array("label", "amount")) : array()));
