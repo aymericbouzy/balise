@@ -51,6 +51,10 @@
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(empty($binets), 404);
     $GLOBALS["binet"] = $binets[0]["id"];
+    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $_GET["term"]));
+    if (empty($binet_terms)) {
+      $_SESSION["errors"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet."
+    }
     $GLOBALS["term"] = $_GET["term"];
   }
 

@@ -12,7 +12,7 @@
   before_action("check_form_input", array("create"), array(
     "model_name" => "binet",
     "str_fields" => array(array("name", 30), array("description", 10000)),
-    "int_fields" => array(array("current_term", 10000)),
+    "int_fields" => array(array("current_term", MAX_TERM)),
     "redirect_to" => path("new", "binet", "", binet_prefix($binet["id"], $term))
   ));
   before_action("check_form_input", array("update"), array(
@@ -23,7 +23,7 @@
   ));
   before_action("check_form_input", array("set_term"), array(
     "model_name" => "binet",
-    "str_fields" => array(array("current_term", 10000)),
+    "str_fields" => array(array("current_term", MAX_TERM)),
     "redirect_to" => path("change_term", "binet", $binet["id"], binet_prefix($binet["id"], $term))
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term"));
