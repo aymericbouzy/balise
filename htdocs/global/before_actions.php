@@ -144,6 +144,10 @@
     header_if(!status_binet_admin($_GET["binet"], $_GET["term"]), 401);
   }
 
+  function member_binet_current_term() {
+    header_if(!status_binet_admin($_GET["binet"], select_binet($_GET["binet"], array("current_term"))["current_term"]), 401);
+  }
+
   function watcher_binet_term() {
     header_if(!status_binet_admin($_GET["binet"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
   }

@@ -1,8 +1,32 @@
 <?php
 
-  before_action("check_binet_term", array("edit", "update", "set_subsidy_provider", "show", "change_term", "deactivate"));
-  before_action("kessier", array("new", "create", "change_term", "deactivate", "set_subsidy_provider", "admin"));
-  before_action("member_binet_term", array("edit", "update", "validation"));
+  before_action("check_csrf_post", array("update", "create", "set_term"));
+  before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate"));
+  before_action(
+    "check_entry",
+    array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate"),
+    array("model_name" => "binet", "id" => $binet["id"], "term" => $term)
+  );
+  before_action("kessier", array("new", "create", "set_term", "change_term", "deactivate", "set_subsidy_provider", "admin"));
+  before_action("member_binet_current_term", array("edit", "update", "validation"));
+  before_action("check_form_input", array("create"), array(
+    "model_name" => "binet",
+    "str_fields" => array(array("name", 30), array("description", 10000)),
+    "int_fields" => array(array("current_term", 10000)),
+    "redirect_to" => path("new", "binet", "", binet_prefix($binet["id"], $term))
+  ));
+  before_action("check_form_input", array("update"), array(
+    "model_name" => "binet",
+    "str_fields" => array(array("description", 10000), array("subsidy_steps", 50000)),
+    "redirect_to" => path("edit", "binet", $binet["id"], binet_prefix($binet["id"], $term)),
+    "optionnal" => array("description", "subsidy_steps")
+  ));
+  before_action("check_form_input", array("set_term"), array(
+    "model_name" => "binet",
+    "str_fields" => array(array("current_term", 10000)),
+    "redirect_to" => path("change_term", "binet", $binet["id"], binet_prefix($binet["id"], $term))
+  ));
+  before_action("generate_csrf_token", array("new", "edit", "change_term"));
 
   switch ($_GET["action"]) {
 
@@ -34,6 +58,9 @@
     break;
 
   case "change_term":
+    break;
+
+  case "set_term":
     $_SESSION["notice"][] = "Le mandat actuel du binet ".$binet["name"]." a été mis à jour.";
     redirect_to_action("show");
     break;

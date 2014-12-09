@@ -16,7 +16,7 @@
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "wave",
     "str_fields" => array(array("submission_date", MAX_DATE_LENGTH), array("expiry_date", MAX_DATE_LENGTH)),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet["id"], $term))
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $wave["id"] : "", binet_prefix($binet["id"], $term))
   ));
   before_action("not_published", array("publish"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
