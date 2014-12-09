@@ -1,16 +1,24 @@
 <?php
 
   function check_tag_is_set() {
-    header_if(!isset($_SESSION["tag_to_create"]), 400);
+    header_if(!isset($_SESSION["tag_to_create"]), 403);
   }
 
   function check_return_to_is_set() {
-    header_if(!isset($_SESSION["return_to"]), 400);
+    header_if(!isset($_SESSION["return_to"]), 403);
   }
 
+  function check_unique_clean_name() {
+    $tags = select_tags(array("clean_name" => clean_string($_SESSION["tag_to_create"])));
+    header_if(empty($tags), 403);
+  }
+
+  before_action("check_csrf_get", array("create"));
   before_action("check_entry", array("show"), array("model_name" => "tag"));
   before_action("check_tag_is_set", array("new", "create"));
   before_action("check_return_to_is_set", array("new", "create"));
+  before_action("check_unique_clean_name", array("new", "create"));
+  before_action("generate_csrf_token", array("new"));
 
   switch ($_GET["action"]) {
 

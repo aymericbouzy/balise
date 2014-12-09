@@ -1,5 +1,13 @@
 <?php
 
+  function check_unique_clean_name() {
+    $binets = select_tags(array("clean_name" => clean_string($_POST["name"])));
+    if (!empty($binets)) {
+      $_SESSION["binet"]["errors"][] = "name";
+      $_SESSION["error"][] = "Ce nom de binet (ou un très proche) est déjà utilisé. Veuillez en choisir un autre.";
+    }
+  }
+
   before_action("check_csrf_post", array("update", "create", "set_term"));
   before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate"));
   before_action(
@@ -12,6 +20,7 @@
   before_action("check_form_input", array("create"), array(
     "model_name" => "binet",
     "str_fields" => array(array("name", 30), array("description", 10000)),
+    "other_fields" => array(array("name", "check_unique_clean_name")),
     "int_fields" => array(array("current_term", MAX_TERM)),
     "redirect_to" => path("new", "binet", "", binet_prefix($binet["id"], $term))
   ));
