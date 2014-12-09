@@ -27,8 +27,7 @@
     "str_fields" => array(array("answer", 100000)),
     "amount_fields" => array_map("adds_max_amount", subsidy_amount_requested_array()),
     "other_fields" => array(array("wave", "exists_wave"), array("paid_by", "exists_student")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet["id"], $term)),
-    "optionnal" => array()
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet["id"], $term))
   ));
   before_action("not_sent", array("send", "edit", "update", "delete"));
   before_action("generate_csrf_token", array("new", "edit", "show"));

@@ -16,3 +16,4 @@
   $STATE = "development";
   define("MAX_AMOUNT", 10000000);
   define("MAX_TAG_STRING_LENGTH", 1000);
+  define("MAX_DATE_LENGTH", 10);
