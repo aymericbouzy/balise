@@ -13,7 +13,7 @@
     break;
 
   case "create":
-    $_SESSION["notice"] = "Le binet ".$binet["name"]." a été créé avec succès.";
+    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été créé avec succès.";
     redirect_to_action("show");
     break;
 
@@ -21,12 +21,12 @@
     break;
 
   case "update":
-    $_SESSION["notice"] = "Le binet ".$binet["name"]." a été mis à jour avec succès.";
+    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été mis à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "set_subsidy_provider":
-    $_SESSION["notice"] = "Le binet ".$binet["name"]." est devenu un binet subventionneur.";
+    $_SESSION["notice"][] = "Le binet ".$binet["name"]." est devenu un binet subventionneur.";
     redirect_to_action("show");
     break;
 
@@ -34,12 +34,12 @@
     break;
 
   case "change_term":
-    $_SESSION["notice"] = "Le mandat actuel du binet ".$binet["name"]." a été mis à jour.";
+    $_SESSION["notice"][] = "Le mandat actuel du binet ".$binet["name"]." a été mis à jour.";
     redirect_to_action("show");
     break;
 
   case "deactivate":
-    $_SESSION["notice"] = "Le binet ".$binet["name"]." a été désactivé avec succès.";
+    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été désactivé avec succès.";
     redirect_to_action("show");
     break;
 

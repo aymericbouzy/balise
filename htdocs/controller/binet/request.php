@@ -41,7 +41,7 @@
     break;
 
   case "create":
-    $_SESSION["notice"] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
     redirect_to_action("show");
     break;
 
@@ -52,17 +52,17 @@
     break;
 
   case "update":
-    $_SESSION["notice"] = "Ta demande de subvention a été mise à jour avec succès.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "delete":
-    $_SESSION["notice"] = "Ta demande de subvention a été supprimée de tes brouillons.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été supprimée de tes brouillons.";
     redirect_to_action("index");
     break;
 
   case "send":
-    $_SESSION["notice"] = "Ta demande de subvention a été envoyée avec succès.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été envoyée avec succès.";
     redirect_to_action("show");
     break;
 

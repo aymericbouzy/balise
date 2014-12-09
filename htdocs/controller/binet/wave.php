@@ -30,7 +30,7 @@
     break;
 
   case "create":
-    $_SESSION["notice"] = "Une nouvelle vague de subvention a été ouverte.";
+    $_SESSION["notice"][] = "Une nouvelle vague de subvention a été ouverte.";
     redirect_to_action("show");
     break;
 
@@ -41,12 +41,12 @@
     break;
 
   case "update":
-    $_SESSION["notice"] = "La vague de subventions a été mise à jour avec succès.";
+    $_SESSION["notice"][] = "La vague de subventions a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "publish":
-    $_SESSION["notice"] = "Les attributions de la vague de subvention ont été publiées avec succès.";
+    $_SESSION["notice"][] = "Les attributions de la vague de subvention ont été publiées avec succès.";
     redirect_to_action("show");
     break;
 
