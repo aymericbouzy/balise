@@ -7,7 +7,7 @@
   function select_student($student, $fields = array()) {
     $binet = select_entry(
       "student",
-      array("id", "name", "mail", "hruid"),
+      array("id", "name", "email", "hruid"),
       $student,
       $fields
     );
@@ -18,7 +18,7 @@
     return select_entries(
       "student",
       array(),
-      array("name", "mail", "hruid"),
+      array("name", "email", "hruid"),
       array(),
       $criteria,
       $order_by,
@@ -29,11 +29,11 @@
   function create_student($hruid, $name, $mail) {
     $values["name"] = $name;
     $values["hruid"] = $hruid;
-    $values["mail"] = $mail;
+    $values["email"] = $mail;
     return create_entry(
       "student",
       array(),
-      array("hruid", "name", "mail"),
+      array("hruid", "name", "email"),
       $values
     );
   }
