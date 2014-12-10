@@ -87,6 +87,7 @@
 		if (fwrite($htaccess, "ErrorDocument  404  ./index.php?controller=error&action=404
 	                         AddDefaultCharset iso-8859-1
 	                         RewriteEngine ".($GLOBALS["URL_REWRITE"] ? "on" : "off")."
+                           RewriteCond %{REQUEST_URI} ^asset
                            RewriteRule ^(.*[^/])$ $1/
 	                        ") === FALSE) {
        echo ".htaccess could not be written for urlrewriting.";

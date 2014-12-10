@@ -1,6 +1,7 @@
 ErrorDocument  404  ./index.php?controller=error&action=404
 	                         AddDefaultCharset iso-8859-1
 	                         RewriteEngine on
+                           RewriteCond %{REQUEST_URI} ^asset
                            RewriteRule ^(.*[^/])$ $1/
 	                        RewriteRule ^$ ./index.php?controller=home&action=welcome&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^home/$ ./index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
