@@ -26,7 +26,7 @@
         }
       }
     }
-    if (false && $GLOBALS["STATE"] == "development") {
+    if (!$GLOBALS["URL_REWRITE"]) {
       if (empty($prefix)) {
         $prefix_string = "";
       } else {
@@ -41,7 +41,7 @@
   }
 
   function write_path_rule($htaccess, $path, $url) {
-    if (fwrite($htaccess, "RewriteRule ".$path." ./index.php?".$url."%{QUERY_STRING} [L,NC,QSA]
+    if (fwrite($htaccess, "RewriteRule ^".$path."$ ./index.php?".$url."%{QUERY_STRING} [L,NC,QSA]
     ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
     }
@@ -86,7 +86,7 @@
   	}
 		if (fwrite($htaccess, "ErrorDocument  404  ./index.php?controller=error&action=404
 	                         AddDefaultCharset iso-8859-1
-	                         RewriteEngine on
+	                         RewriteEngine ".($GLOBALS["URL_REWRITE"] ? "on" : "off")."
 	                        ") === FALSE) {
        echo ".htaccess could not be written for urlrewriting.";
        exit;

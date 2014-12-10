@@ -4,6 +4,7 @@
     redirect_to_path(path("welcome", "home"));
   }
   header_if(!validate_input(array("action", "controller"), array("tags")), 400);
+
   if (isset($_GET["prefix"])) {
     header_if(!validate_input(array("prefix")), 400);
     header_if(!in_array($_GET["prefix"], array("binet")));
@@ -15,7 +16,7 @@
 
   $query_array = compute_query_array();
 
-  if ($_GET["controller"] != "error" || $_GET["controller"] != "home" || ($_GET["action"] != "login" && $_GET["action"] != "welcome")) {
+  if (!($_GET["controller"] == "error" || ($_GET["controller"] == "home" && ($_GET["action"] == "login" || $_GET["action"] == "welcome")))) {
     if (!validate_input(array("student"), array(), "session")) {
       redirect_to_path(path("welcome", "home"));
     } else {
