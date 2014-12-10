@@ -7,15 +7,15 @@
 
   function path($action, $model_name, $model_id = "", $prefix = "", $query_array = array(), $include_csrf = false) {
     $query_string = "";
-    $first = $GLOBALS["STATE"] != "development";
+    $include_start_char = $GLOBALS["URL_REWRITE"];
     if ($include_csrf) {
       $query_array[] = $_SESSION["csrf_token"];
     }
     foreach ($query_array as $key => $value) {
       if (!empty($value)) {
-        if ($first) {
+        if ($include_start_char) {
           $query_string .= "?";
-          $first = false;
+          $include_start_char = false;
         } else {
           $query_string .= "&";
         }

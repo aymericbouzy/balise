@@ -22,3 +22,5 @@
 
   define("WEBMASTER_MAIL", "aymeric.bouzy@polytechnique.edu");
   $URL_REWRITE = true; // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
+
+  define("DATABASE_PASSWORD", "root"); 

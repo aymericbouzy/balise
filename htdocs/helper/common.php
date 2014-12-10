@@ -1,7 +1,7 @@
 <?php
 
   function link_to($path, $caption, $class = "") {
-    return "<a href=\"".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
+    return "<a href=\"/".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
   }
 
   function img($src, $alt = "") {
