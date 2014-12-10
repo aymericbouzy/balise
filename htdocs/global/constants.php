@@ -6,7 +6,7 @@
   $CONTROLLER_PATH = "controller/";
   $LIB_PATH = "lib/";
   $VIEW_PATH = "view/";
-  $ASSET_PATH = "asset/";
+  $ASSET_PATH = "/asset/";
   $IMG_PATH = $ASSET_PATH."img/";
   $LAYOUT_PATH = $VIEW_PATH."layout/";
 
