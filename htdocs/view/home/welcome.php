@@ -7,7 +7,7 @@
       </div>
       <div class="col-sm-6">
         <div class="pull-right  hidden-xs">
-          <a href="#" class="btn"><h3>Connexion via Frankiz</h3></a>
+          <?php echo link_to(path("login", "home"), "<h3>Connexion via Frankiz</h3>", "btn"); ?>
         </div>
       </div>
     </div>

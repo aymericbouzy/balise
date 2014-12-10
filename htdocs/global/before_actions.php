@@ -51,6 +51,10 @@
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(empty($binets), 404);
     $GLOBALS["binet"] = $binets[0]["id"];
+    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $_GET["term"]));
+    if (empty($binet_terms)) {
+      $_SESSION["errors"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
+    }
     $GLOBALS["term"] = $_GET["term"];
   }
 
@@ -142,6 +146,10 @@
 
   function member_binet_term() {
     header_if(!status_binet_admin($_GET["binet"], $_GET["term"]), 401);
+  }
+
+  function member_binet_current_term() {
+    header_if(!status_binet_admin($_GET["binet"], select_binet($_GET["binet"], array("current_term"))["current_term"]), 401);
   }
 
   function watcher_binet_term() {

@@ -11,9 +11,9 @@
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
-    "amount_fields" => array(array("amount", $MAX_AMOUNT)),
+    "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet["id"], $term)),
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet["id"], $term)),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("sign_is_one_or_minus_one", array("create", "update"));
@@ -41,7 +41,7 @@
 
   case "create":
     $operation = create_operation($binet["id"], $term, $_POST["sign"]*$_POST["amount"], $_POST["type"], $_POST);
-    $_SESSION["notice"] = "L'opération a été créée avec succès.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    $_SESSION["notice"][] = "L'opération a été créée avec succès.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;
 
@@ -52,17 +52,17 @@
     break;
 
   case "update":
-    $_SESSION["notice"] = "L'opération a été mise à jour avec succès.";
+    $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "delete":
-    $_SESSION["notice"] = "L'opération a été supprimée avec succès.";
+    $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
     redirect_to_action("index");
     break;
 
   case "validate":
-    $_SESSION["notice"] = "L'opération a été acceptée.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    $_SESSION["notice"][] = "L'opération a été acceptée.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;
 

@@ -139,6 +139,7 @@ CREATE TABLE IF NOT EXISTS `request` (
 
 CREATE TABLE IF NOT EXISTS `student` (
 `id` int(11) NOT NULL,
+  `hruid` varchar(100) NOT NULL,
   `name` varchar(80) NOT NULL,
   `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

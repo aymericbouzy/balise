@@ -4,9 +4,17 @@
     public static function get() {
       static $instance = null;
       if (null === $instance) {
-        $instance = new PDO('mysql:host=localhost;dbname=Balise', 'root', '');
+        try {
+          try {
+            $instance = new PDO('mysql:host=localhost;port=8889;dbname=Balise', 'root', DATABASE_PASSWORD);
+          } catch (PDOException $e) {
+            $instance = new PDO('mysql:host=localhost:8889;dbname=Balise', 'root', DATABASE_PASSWORD);
+          }
+        } catch (PDOException $e) {
+          print "Error : " . $e->getMessage() . "<br/>";
+          die();
+        }
       }
-
       return $instance;
     }
 

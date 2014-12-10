@@ -19,13 +19,14 @@
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet["id"], "term" => $term));
   before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
-  before_action("check_form_input", array("create", "update"), array_merge(array(
+  before_action("check_form_input", array("create", "update"), array(
     "model_name" => "budget",
-    "str_fields" => array(array("label", 100), array("tags_string", $MAX_TAG_STRING_LENGTH)),
-    "amount_fields" => array(array("amount", $MAX_AMOUNT)),
+    "str_fields" => array(array("label", 100), array("tags_string", MAX_TAG_STRING_LENGTH)),
+    "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "tags_string" => true,
-    "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet["id"], $term))
-  ), $_GET["action"] == "update" ? array("optionnal" => array("label", "amount")) : array()));
+    "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet["id"], $term)),
+    "optionnal" => ($_GET["action"] == "update" ? array("label", "amount") : array())
+  ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("sign_is_one_or_minus_one", array("create", "update"));
   before_action("budget_does_not_change_sign", array("update"));
@@ -57,7 +58,7 @@
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget);
     }
-    $_SESSION["notice"] = "La ligne de budget a été créée avec succès.";
+    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
     redirect_to_action("show");
     break;
 
@@ -73,7 +74,7 @@
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget);
     }
-    $_SESSION["notice"] = "La ligne de budget a été mise à jour avec succès.";
+    $_SESSION["notice"][] = "La ligne de budget a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
 
