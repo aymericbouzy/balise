@@ -2,6 +2,7 @@
 
   include "constants.php";
   session_start();
+
   include $GLOBAL_PATH."database.php";
   include $GLOBAL_PATH."agregation.php";
   include $GLOBAL_PATH."sql.php";

@@ -26,7 +26,7 @@
         }
       }
     }
-    if ($GLOBALS["STATE"] == "development") {
+    if (false && $GLOBALS["STATE"] == "development") {
       if (empty($prefix)) {
         $prefix_string = "";
       } else {
@@ -37,11 +37,11 @@
       $action = empty($action) ? "index" : $action;
       return "index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string.$query_string;
     }
-    return (empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
+    return (empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action)."/".$query_string;
   }
 
   function write_path_rule($htaccess, $path, $url) {
-    if (fwrite($htaccess, "RewriteRule ".$path." ./index.php?".$url."%{QUERY_STRING} [L]
+    if (fwrite($htaccess, "RewriteRule ".$path." ./index.php?".$url."%{QUERY_STRING} [L,NC,QSA]
     ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
     }
@@ -79,12 +79,12 @@
   }
 
   function urlrewrite() {
-    $htaccess = fopen("../.htaccess", "w");
+    $htaccess = fopen("./.htaccess", "w");
   	if (!$htaccess) {
   		echo ".htaccess could not be opened for urlrewriting.";
   		exit;
   	}
-		if (fwrite($htaccess, "ErrorDocument  404  ./?id=404
+		if (fwrite($htaccess, "ErrorDocument  404  ./index.php?controller=error&action=404
 	                         AddDefaultCharset iso-8859-1
 	                         RewriteEngine on
 	                        ") === FALSE) {
@@ -92,18 +92,18 @@
        exit;
     }
 
-    write_path_rule($htaccess, "/", "controller=home&action=welcome&");
+    write_path_rule($htaccess, "", "controller=home&action=welcome&");
     write_controller_rules($htaccess, array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
-    write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate", "validation"), "action_on_collection" => array("admin")));
-    write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject"), "action_on_collection" => array("new_expense", "new_income")));
-    write_controller_rules($htaccess, array("controller" => "tag", "except" => array("edit", "update", "delete")));
-    write_controller_rules($htaccess, array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete")));
-
-    write_controller_rules($htaccess, array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
-    write_controller_rules($htaccess, array("controller" => "budget", "binet_prefix" => true, "action_on_collection" => array("new_expense", "new_income")));
-    write_controller_rules($htaccess, array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate"), "action_on_collection" => array("new_expense", "new_income")));
-    write_controller_rules($htaccess, array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send")));
-    write_controller_rules($htaccess, array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
+    // write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate", "validation"), "action_on_collection" => array("admin")));
+    // write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject"), "action_on_collection" => array("new_expense", "new_income")));
+    // write_controller_rules($htaccess, array("controller" => "tag", "except" => array("edit", "update", "delete")));
+    // write_controller_rules($htaccess, array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete")));
+    //
+    // write_controller_rules($htaccess, array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
+    // write_controller_rules($htaccess, array("controller" => "budget", "binet_prefix" => true, "action_on_collection" => array("new_expense", "new_income")));
+    // write_controller_rules($htaccess, array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate"), "action_on_collection" => array("new_expense", "new_income")));
+    // write_controller_rules($htaccess, array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send")));
+    // write_controller_rules($htaccess, array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
 
     fclose($htaccess);
   }

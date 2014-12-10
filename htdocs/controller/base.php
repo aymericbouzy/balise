@@ -11,11 +11,11 @@
   } else {
     $full_controller = $_GET["controller"];
   }
-  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/wave")), 400);
+  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/wave", "error")), 400);
 
   $query_array = compute_query_array();
 
-  if ($_GET["controller"] != "home" || ($_GET["action"] != "login" && $_GET["action"] != "welcome")) {
+  if ($_GET["controller"] != "error" || $_GET["controller"] != "home" || ($_GET["action"] != "login" && $_GET["action"] != "welcome")) {
     if (!validate_input(array("student"), array(), "session")) {
       redirect_to_path(path("welcome", "home"));
     } else {
@@ -23,6 +23,8 @@
     }
   }
 
-  include $CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
+  if ($_GET["controller"] != "error") {
+    include $CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
+  }
 
   include $LAYOUT_PATH."application.php";
