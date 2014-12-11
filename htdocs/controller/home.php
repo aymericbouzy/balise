@@ -4,7 +4,6 @@
 
   function no_useless_connection() {
     if (connected_student()) {
-      echo "redirecting";
       redirect_to_action("");
     }
   }

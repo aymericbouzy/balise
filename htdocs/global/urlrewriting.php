@@ -63,20 +63,20 @@
     write_path_rule(
       $htaccess,
       path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-      true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2")
+      true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
     );
     foreach ($collection_actions as $action) {
       write_path_rule(
         $htaccess,
         path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-        true_path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2")
+        true_path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
     }
     foreach ($member_actions as $action) {
       write_path_rule(
         $htaccess,
         path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-        true_path($action, $hash["controller"], ($hash["binet_prefix"] ? "3" : "1"), $hash["binet_prefix"] ? "binet/$1/$2")
+        true_path($action, $hash["controller"], ($hash["binet_prefix"] ? "3" : "1"), $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
     }
   }
@@ -96,7 +96,9 @@
     }
 
     write_path_rule($htaccess, ROOT_PATH, true_path("welcome", "home"));
-    write_path_rule($htaccess, "home/login", path("login", "home"), "[NC, QSA]");
+    if (!URL_REWRITE || !empty(ROOT_PATH)) {
+      write_path_rule($htaccess, "home/login", path("login", "home"), "[NC,QSA]");
+    }
     write_controller_rules($htaccess, array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
     write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate", "validation"), "action_on_collection" => array("admin")));
     write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject"), "action_on_collection" => array("new_expense", "new_income")));
