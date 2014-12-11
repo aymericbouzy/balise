@@ -40,10 +40,13 @@
       $prefix_string = "&prefix=".$prefix_elements[0]."&binet=".$prefix_elements[1]."&term=".$prefix_elements[2];
     }
     $action = empty($action) ? "index" : $action;
-    return "./".(empty(ROOT_PATH) ? "" : ROOT_PATH."/")."index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
+    return "./index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
   }
 
   function write_path_rule($htaccess, $path, $url, $options = "[L,NC,QSA]") {
+    if (!empty(ROOT_PATH)) {
+      $path = substr($path, strlen(ROOT_PATH) + 1);
+    }
     if (fwrite($htaccess, "RewriteRule ^".$path."/?$ ".$url."%{QUERY_STRING} ".$options."
     ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
@@ -76,7 +79,7 @@
       write_path_rule(
         $htaccess,
         path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-        true_path($action, $hash["controller"], ($hash["binet_prefix"] ? "3" : "1"), $hash["binet_prefix"] ? "binet/$1/$2" : "")
+        true_path($action, $hash["controller"], "$".($hash["binet_prefix"] ? "3" : "1"), $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
     }
   }
@@ -87,12 +90,15 @@
   		echo ".htaccess could not be opened for urlrewriting.";
   		exit;
   	}
-		if (fwrite($htaccess, "ErrorDocument  404  ./index.php?controller=error&action=404
-	                         AddDefaultCharset iso-8859-1
-	                         RewriteEngine ".(URL_REWRITE ? "on" : "off")."
-	                        ") === FALSE) {
-       echo ".htaccess could not be written for urlrewriting.";
-       exit;
+		if (fwrite(
+      $htaccess,
+      "
+      ErrorDocument  404  ".true_path("404", "error")."
+	    AddDefaultCharset iso-8859-1
+	    RewriteEngine ".(URL_REWRITE ? "on" : "off")."
+	    ") === FALSE) {
+      echo ".htaccess could not be written for urlrewriting.";
+      exit;
     }
 
     write_path_rule($htaccess, ROOT_PATH, true_path("", "home"));

@@ -40,7 +40,7 @@
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
-      include $GLOBALS["LAYOUT_PATH"]."application.php";
+      include LAYOUT_PATH."application.php";
       exit;
     }
   }
