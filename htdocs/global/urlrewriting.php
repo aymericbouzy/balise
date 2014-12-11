@@ -7,7 +7,7 @@
 
   function path($action, $model_name, $model_id = "", $prefix = "", $query_array = array(), $include_csrf = false) {
     $query_string = "";
-    $include_start_char = $GLOBALS["URL_REWRITE"];
+    $include_start_char = URL_REWRITE;
     if ($include_csrf) {
       $query_array[] = $_SESSION["csrf_token"];
     }
@@ -26,7 +26,7 @@
         }
       }
     }
-    if (!$GLOBALS["URL_REWRITE"]) {
+    if (!URL_REWRITE) {
       if (empty($prefix)) {
         $prefix_string = "";
       } else {
@@ -86,7 +86,7 @@
   	}
 		if (fwrite($htaccess, "ErrorDocument  404  ./index.php?controller=error&action=404
 	                         AddDefaultCharset iso-8859-1
-	                         RewriteEngine ".($GLOBALS["URL_REWRITE"] ? "on" : "off")."
+	                         RewriteEngine ".(URL_REWRITE ? "on" : "off")."
                            RewriteCond %{REQUEST_URI} ^asset
                            RewriteRule ^(.*[^/])$ $1/
 	                        ") === FALSE) {

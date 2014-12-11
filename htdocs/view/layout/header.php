@@ -49,7 +49,7 @@
         </li>
         <?php
       }
-      if ($binet["id"] == $KES_ID) {
+      if ($binet["id"] == KES_ID) {
         ?>
         <li class = "divider"></li>
         <li>

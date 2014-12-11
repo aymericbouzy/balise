@@ -28,7 +28,7 @@
       }
       header("HTTP/1.1 ".$header);
 
-      if ($GLOBALS["STATE"] == "development") {
+      if (STATE == "development") {
         echo "\$_GET : ";
         var_dump($_GET);
         echo "\$_SESSION : ";
@@ -40,7 +40,6 @@
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
-      $VIEW_PATH = $GLOBALS["VIEW_PATH"];
       include $GLOBALS["LAYOUT_PATH"]."application.php";
       exit;
     }
@@ -137,11 +136,11 @@
   }
 
   function kessier() {
-    header_if(!status_binet_admin($KES_ID), 401);
+    header_if(!status_binet_admin(KES_ID), 401);
   }
 
   function current_kessier() {
-    header_if(!status_binet_admin($KES_ID, select_binet($KES_ID, array("current_term"))["current_term"]), 401);
+    header_if(!status_binet_admin(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"]), 401);
   }
 
   function member_binet_term() {
@@ -153,7 +152,7 @@
   }
 
   function watcher_binet_term() {
-    header_if(!status_binet_admin($_GET["binet"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
+    header_if(!status_binet_admin($_GET["binet"]) && !status_binet_admin(KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
   }
 
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {

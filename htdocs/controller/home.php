@@ -1,6 +1,6 @@
 <?php
 
-  include $LIB_PATH."fkz_fake_auth.php";
+  include LIB_PATH."fkz_fake_auth.php";
 
   switch ($_GET["action"]) {
 

@@ -81,7 +81,7 @@
 
   case "validation":
     $pending_validations_operations = pending_validations_operations($binet["id"], $term);
-    if ($binet["id"] == $KES_ID) {
+    if ($binet["id"] == KES_ID) {
       $pending_validations_operations_kes = pending_validations_operations_kes();
     }
     break;

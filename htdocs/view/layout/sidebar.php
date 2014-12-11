@@ -18,7 +18,7 @@
     </li>
     <?php
   }
-  if ($binet["id"] == $KES_ID) {
+  if ($binet["id"] == KES_ID) {
     ?>
     <li class = "seperator"></li>
     <li>
@@ -57,7 +57,7 @@
           $_GET["controller"] == "wave"
         );
       }
-      if ($binet["id"] == $KES_ID) {
+      if ($binet["id"] == KES_ID) {
         ?>
         <li class="divider"></li>
         <?php

@@ -114,4 +114,4 @@
 <?php
   $table = ob_get_clean();
 
-  include $VIEW_PATH."binet/finances.php";
+  include VIEW_PATH."binet/finances.php";

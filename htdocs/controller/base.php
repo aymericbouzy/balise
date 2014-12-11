@@ -25,7 +25,7 @@
   }
 
   if ($_GET["controller"] != "error") {
-    include $CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
+    include CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
   }
 
-  include $LAYOUT_PATH."application.php";
+  include LAYOUT_PATH."application.php";
