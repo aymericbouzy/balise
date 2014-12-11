@@ -2,10 +2,19 @@
 
   include LIB_PATH."fkz_auth.php";
 
+  function no_useless_connection() {
+    if (connected_student()) {
+      echo "redirecting";
+      redirect_to_action("");
+    }
+  }
+
+  before_action("no_useless_connection", array("login"));
+
   switch ($_GET["action"]) {
 
   case "login":
-    if (!isset($_GET['response'])) {
+    if (!isset($_GET["response"])) {
       frankiz_do_auth();
     } else {
       $auth = frankiz_get_response();

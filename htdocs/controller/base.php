@@ -17,7 +17,8 @@
   $query_array = compute_query_array();
 
   if (!($_GET["controller"] == "error" || ($_GET["controller"] == "home" && ($_GET["action"] == "login" || $_GET["action"] == "welcome")))) {
-    if (!validate_input(array("student"), array(), "session")) {
+    $student = connected_student();
+    if (!connected_student()) {
       redirect_to_path(path("welcome", "home"));
     } else {
       $current_student = select_student($_SESSION["student"], array("full_name"));

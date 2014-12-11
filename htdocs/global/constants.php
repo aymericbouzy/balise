@@ -19,7 +19,7 @@
 
   define("WEBMASTER_MAIL", "aymeric.bouzy@polytechnique.edu");
   define("STATE", "development");
-  define("URL_REWRITE", true); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
-  define("ROOT_PATH", "nicolet/");
+  define("URL_REWRITE", false); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
+  define("ROOT_PATH", "");
 
   define("DATABASE_PASSWORD", "root");

@@ -29,3 +29,10 @@
   function preg_does_match($regex, $string) {
     return preg_match($regex, $string) === 1;
   }
+
+  function connected_student() {
+    if (validate_input(array("student"), array(), "session") && exists_student($_SESSION["student"])) {
+      return $_SESSION["student"];
+    }
+    return false;
+  }

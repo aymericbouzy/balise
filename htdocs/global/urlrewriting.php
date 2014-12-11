@@ -27,21 +27,24 @@
       }
     }
     if (!URL_REWRITE) {
-      if (empty($prefix)) {
-        $prefix_string = "";
-      } else {
-        $prefix_elements = explode("/", $prefix);
-        $prefix_string = "&prefix=".$prefix_elements[0]."&binet=".$prefix_elements[1]."&term=".$prefix_elements[2];
-      }
-
-      $action = empty($action) ? "index" : $action;
-      return ROOT_PATH."index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string.$query_string;
+      return true_path($action, $model_name, $model_id, $prefix).$query_string;
     }
-    return ROOT_PATH.(empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action)."/".$query_string;
+    return (empty(ROOT_PATH) ? "" : ROOT_PATH."/").(empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
   }
 
-  function write_path_rule($htaccess, $path, $url) {
-    if (fwrite($htaccess, "RewriteRule ^".$path."$ ./index.php?".$url."%{QUERY_STRING} [L,NC,QSA]
+  function true_path($action, $model_name, $model_id = "", $prefix = "") {
+    if (empty($prefix)) {
+      $prefix_string = "";
+    } else {
+      $prefix_elements = explode("/", $prefix);
+      $prefix_string = "&prefix=".$prefix_elements[0]."&binet=".$prefix_elements[1]."&term=".$prefix_elements[2];
+    }
+    $action = empty($action) ? "index" : $action;
+    return "./".(empty(ROOT_PATH) ? "" : ROOT_PATH."/")."index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
+  }
+
+  function write_path_rule($htaccess, $path, $url, $options = "[L,NC,QSA]") {
+    if (fwrite($htaccess, "RewriteRule ^".$path."/?$ ".$url."%{QUERY_STRING} ".$options."
     ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
     }
@@ -60,20 +63,20 @@
     write_path_rule(
       $htaccess,
       path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-      "controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet" : "")."&action=".$hash["root"].($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&"
+      true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2")
     );
     foreach ($collection_actions as $action) {
       write_path_rule(
         $htaccess,
         path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-        "controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet" : "")."&action=".$action.($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&"
+        true_path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2")
       );
     }
     foreach ($member_actions as $action) {
       write_path_rule(
         $htaccess,
         path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-        "controller=".$hash["controller"].($hash["binet_prefix"] ? "&prefix=binet" : "")."&action=".$action.($hash["binet_prefix"] ? "&binet=$1&term=$2" : "")."&".$hash["controller"]."=$".($hash["binet_prefix"] ? "3" : "1")."&"
+        true_path($action, $hash["controller"], ($hash["binet_prefix"] ? "3" : "1"), $hash["binet_prefix"] ? "binet/$1/$2")
       );
     }
   }
@@ -87,14 +90,13 @@
 		if (fwrite($htaccess, "ErrorDocument  404  ./index.php?controller=error&action=404
 	                         AddDefaultCharset iso-8859-1
 	                         RewriteEngine ".(URL_REWRITE ? "on" : "off")."
-                           RewriteCond %{REQUEST_URI} ^asset
-                           RewriteRule ^(.*[^/])$ $1/
 	                        ") === FALSE) {
        echo ".htaccess could not be written for urlrewriting.";
        exit;
     }
 
-    write_path_rule($htaccess, "", "controller=home&action=welcome&");
+    write_path_rule($htaccess, ROOT_PATH, true_path("welcome", "home"));
+    write_path_rule($htaccess, "home/login", path("login", "home"), "[NC, QSA]");
     write_controller_rules($htaccess, array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
     write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate", "validation"), "action_on_collection" => array("admin")));
     write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject"), "action_on_collection" => array("new_expense", "new_income")));
