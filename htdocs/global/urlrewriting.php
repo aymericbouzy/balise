@@ -35,9 +35,9 @@
       }
 
       $action = empty($action) ? "index" : $action;
-      return "index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string.$query_string;
+      return ROOT_PATH."index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string.$query_string;
     }
-    return (empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action)."/".$query_string;
+    return ROOT_PATH.(empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action)."/".$query_string;
   }
 
   function write_path_rule($htaccess, $path, $url) {
