@@ -8,7 +8,7 @@
 * Clé secrète fournie par l'équipe frankiz lors de l'inscription du site.
 * Cette clé sert à signer les requêtes et à authentifier le site.
 */
-$FKZ_KEY = "000";
+$FKZ_KEY = "A4d!fgr6?45GF8";
 
 function frankiz_do_auth(){
   global $FKZ_KEY;
@@ -20,7 +20,7 @@ function frankiz_do_auth(){
   * url de la page de login, doit correspondre *exactement* à celle entrée dans
   * la base de données de Frankiz (définie lors de l'inscription)
   */
-  $site = 'http://monsite/home/login';
+  $site = 'http://localhost:3000/home/login';
   /**
   * Champ non utile pour l'authentification et retransmis tel quel par frankiz.
   * Il est prévu pour pouvoir mettre en place un système de redirection après
@@ -28,7 +28,7 @@ function frankiz_do_auth(){
   */
 
   // TODO : add csrf token
-  $location  = "..."
+  $location  = "...";
   /**
   * Nature de la requête.
   * Fkz renverra ici à la fois les noms de la personne mais aussi ses droits dans différents groupes.
@@ -51,9 +51,9 @@ function frankiz_get_response(){
   global $FKZ_KEY;
   // Read request
   $timestamp = (isset($_GET['timestamp']) ? $_GET['timestamp'] : 0);
-  $response  = (isset($_GET['response'])  ? urldecode($_GET['response'])  : );
-  $hash      = (isset($_GET['hash'])      ? $_GET['hash']      : );
-  $location  = (isset($_GET['location'])  ? $_GET['location']  : );
+  $response  = (isset($_GET['response'])  ? urldecode($_GET['response'])  : NULL);
+  $hash      = (isset($_GET['hash'])      ? $_GET['hash']      : NULL);
+  $location  = (isset($_GET['location'])  ? $_GET['location']  : NULL);
 
   // Frankiz security protocol
   if (abs($timestamp - time()) > 600)
@@ -70,7 +70,7 @@ function frankiz_get_response(){
   'promo', 'photo', 'location');
   foreach ($fields as $k) {
     if (!isset($response[$k]))
-    $response[$k] = ;
+    $response[$k] = NULL;
   }
   return $response;
 }
