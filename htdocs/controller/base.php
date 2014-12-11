@@ -1,8 +1,5 @@
 <?php
 
-  if (empty($_GET["controller"])) {
-    redirect_to_path(path("welcome", "home"));
-  }
   header_if(!validate_input(array("action", "controller"), array("tags")), 400);
 
   if (isset($_GET["prefix"])) {

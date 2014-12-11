@@ -95,7 +95,7 @@
        exit;
     }
 
-    write_path_rule($htaccess, ROOT_PATH, true_path("welcome", "home"));
+    write_path_rule($htaccess, ROOT_PATH, true_path("", "home"));
     if (!URL_REWRITE || !empty(ROOT_PATH)) {
       write_path_rule($htaccess, "home/login", path("login", "home"), "[NC,QSA]");
     }
