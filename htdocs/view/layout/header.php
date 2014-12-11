@@ -18,24 +18,6 @@
         <?php echo link_to(path("login", "home"), "<h3>Connexion via Frankiz</h3>", "btn btn-primary"); ?>
     </ul>
     <?php } else {?>
-	<ul class="nav navbar-left top-nav">
-  			<li class="dropdown">
-    		<a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
-   <ul class="dropdown-menu" role="menu">
-      	<?php foreach(binet_admins_current_student() as $binet_admin) {
-       	 $binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
-        	?>
-        	<li>
-          	<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
-        </li>
-        <?php
-      }
-      ?>
-    </ul>
-  </li>
-</ul>
-
-
 	<ul class="nav navbar-right top-nav">
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
