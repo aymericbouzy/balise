@@ -1,32 +1,24 @@
 <div class="navbar-header">
-  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-    <span class="sr-only">Toggle navigation</span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-    <span class="icon-bar"></span>
-  </button>
+	 <?php if ($_GET["controller"] == "home" && $_GET["action"] == "welcome") {
+	 	} else {
+        ?>
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+    			<span class="sr-only">Toggle navigation</span>
+   			<span class="icon-bar"></span>
+    			<span class="icon-bar"></span>
+    			<span class="icon-bar"></span>
+  			</button>
+  <?php } ?>
   <?php echo link_to(path("", "home"), "Balise", "navbar-brand"); ?>
 </div>
 
-<ul class="nav navbar-left top-nav">
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
-    <ul class="dropdown-menu" role="menu">
-      <?php foreach(binet_admins_current_student() as $binet_admin) {
-        $binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
+ <?php if ($_GET["controller"] == "home" && $_GET["action"] == "welcome") {
         ?>
-        <li>
-          <?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
-        </li>
-        <?php
-      }
-      ?>
+   <ul class="nav navbar-left top-nav">
+        <?php echo link_to(path("login", "home"), "<h3>Connexion via Frankiz</h3>", "btn btn-primary"); ?>
     </ul>
-  </li>
-</ul>
-
-
-<ul class="nav navbar-right top-nav">
+    <?php } else {?>
+	<ul class="nav navbar-right top-nav">
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       <i class="fa fa-plus-circle green-plus" id="operation-plus"></i> <span class="caret"></span>
@@ -74,3 +66,4 @@
     </ul>
   </li>
 </ul>
+<?php }?>
