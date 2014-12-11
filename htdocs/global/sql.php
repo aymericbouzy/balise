@@ -204,6 +204,5 @@
       }
     }
     $req->execute();
-    $entry = $req->fetch(PDO::FETCH_ASSOC);
-    return $entry["id"];
+    return Database::get()->lastInsertId("id");
   }
