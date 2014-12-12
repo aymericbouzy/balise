@@ -8,7 +8,7 @@
 * Clé secrète fournie par l'équipe frankiz lors de l'inscription du site.
 * Cette clé sert à signer les requêtes et à authentifier le site.
 */
-$FKZ_KEY = "A4d!fgr6?45GF8";
+$FKZ_KEY = FRANKIZ_AUTH_KEY;
 
 function frankiz_do_auth(){
   global $FKZ_KEY;

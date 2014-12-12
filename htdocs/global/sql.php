@@ -109,9 +109,9 @@
         if (is_null($value)) {
           $req->bindParam(':'.$column, NULL, PDO::PARAM_NULL);
         } elseif (in_array($column, $selectable_int_fields)) {
-          $req->bindParam(':'.$column, $value, PDO::PARAM_INT);
+          $req->bindParam(':'.$column, $criteria[$column], PDO::PARAM_INT);
         } elseif (in_array($column, $selectable_str_fields)) {
-          $req->bindParam(':'.$column, $value, PDO::PARAM_STR);
+          $req->bindParam(':'.$column, $criteria[$column], PDO::PARAM_STR);
         }
       }
     }
@@ -132,9 +132,9 @@
         $req = Database::get()->prepare($sql);
         $req->bindParam(':'.$table, $entry, PDO::PARAM_INT);
         if (in_array($column, $updatable_int_fields)) {
-          $req->bindParam(':'.$value, $value, PDO::PARAM_INT);
+          $req->bindParam(':'.$value, $hash[$column], PDO::PARAM_INT);
         } elseif (in_array($column, $updatable_str_fields)) {
-          $req->bindParam(':'.$value, $value, PDO::PARAM_STR);
+          $req->bindParam(':'.$value, $hash[$column], PDO::PARAM_STR);
         }
         $req->bindParam(':'.$column, $column, PDO::PARAM_STR);
         $req->execute();

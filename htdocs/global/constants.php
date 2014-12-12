@@ -1,11 +1,12 @@
 <?php
 
-  define("WEBMASTER_MAIL", "aymeric.bouzy@polytechnique.edu");
-  define("STATE", "development");
-  define("URL_REWRITE", true); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
-  define("ROOT_PATH", "");
+  define("WEBMASTER_EMAIL", empty($_ENV["webmaster_email"]) ? "aymeric.bouzy@polytechnique.edu" : $_ENV["webmaster_email"]);
+  define("STATE", empty($_ENV["state"]) ? "development" : $_ENV["state"]);
+  define("URL_REWRITE", empty($_ENV["url_rewrite"]) ? true : $_ENV["url_rewrite"]); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
+  define("ROOT_PATH", isset($_ENV["root_path"]) ? $_ENV["root_path"] : "");
 
-  define("DATABASE_PASSWORD", "root");
+  define("DATABASE_PASSWORD", $_ENV["database_password"]);
+  define("FRANKIZ_AUTH_KEY", $_ENV["frankiz_auth_key"]);
 
   define("GLOBAL_PATH", "global/");
   define("MODEL_PATH", "model/");
