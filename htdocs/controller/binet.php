@@ -13,7 +13,7 @@
   before_action(
     "check_entry",
     array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate"),
-    array("model_name" => "binet", "id" => $binet["id"], "term" => $term)
+    array("model_name" => "binet", "id" => $binet, "term" => $term)
   );
   before_action("kessier", array("new", "create", "set_term", "change_term", "deactivate", "set_subsidy_provider", "admin"));
   before_action("member_binet_current_term", array("edit", "update", "validation"));
@@ -22,18 +22,18 @@
     "str_fields" => array(array("name", 30), array("description", 10000)),
     "other_fields" => array(array("name", "check_unique_clean_name")),
     "int_fields" => array(array("current_term", MAX_TERM)),
-    "redirect_to" => path("new", "binet", "", binet_prefix($binet["id"], $term))
+    "redirect_to" => path("new", "binet", "", binet_prefix($binet, $term))
   ));
   before_action("check_form_input", array("update"), array(
     "model_name" => "binet",
     "str_fields" => array(array("description", 10000), array("subsidy_steps", 50000)),
-    "redirect_to" => path("edit", "binet", $binet["id"], binet_prefix($binet["id"], $term)),
+    "redirect_to" => path("edit", "binet", $binet, binet_prefix($binet, $term)),
     "optionnal" => array("description", "subsidy_steps")
   ));
   before_action("check_form_input", array("set_term"), array(
     "model_name" => "binet",
     "str_fields" => array(array("current_term", MAX_TERM)),
-    "redirect_to" => path("change_term", "binet", $binet["id"], binet_prefix($binet["id"], $term))
+    "redirect_to" => path("change_term", "binet", $binet, binet_prefix($binet, $term))
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term"));
 
@@ -80,8 +80,8 @@
     break;
 
   case "validation":
-    $pending_validations_operations = pending_validations_operations($binet["id"], $term);
-    if ($binet["id"] == KES_ID) {
+    $pending_validations_operations = pending_validations_operations($binet, $term);
+    if ($binet == KES_ID) {
       $pending_validations_operations_kes = pending_validations_operations_kes();
     }
     break;

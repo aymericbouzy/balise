@@ -107,7 +107,8 @@
           $value = $value[1];
         }
         if (is_null($value)) {
-          $req->bindParam(':'.$column, NULL, PDO::PARAM_NULL);
+          // TODO: understand why this is useful
+          $req->bindParam(':'.$column, $value, PDO::PARAM_NULL);
         } elseif (in_array($column, $selectable_int_fields)) {
           $req->bindParam(':'.$column, $criteria[$column], PDO::PARAM_INT);
         } elseif (in_array($column, $selectable_str_fields)) {

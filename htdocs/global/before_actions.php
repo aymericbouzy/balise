@@ -144,15 +144,15 @@
   }
 
   function member_binet_term() {
-    header_if(!status_admin_binet($_GET["binet"], $_GET["term"]), 401);
+    header_if(!status_admin_binet($GLOBALS["binet"], $GLOBALS["term"]), 401);
   }
 
   function member_binet_current_term() {
-    header_if(!status_admin_binet($_GET["binet"], select_binet($_GET["binet"], array("current_term"))["current_term"]), 401);
+    header_if(!status_admin_binet($GLOBALS["binet"], select_binet($GLOBALS["binet"], array("current_term"))["current_term"]), 401);
   }
 
   function watcher_binet_term() {
-    header_if(!status_admin_binet($_GET["binet"]) && !status_admin_binet(KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
+    header_if(!status_admin_binet($GLOBALS["binet"]) && !status_admin_binet(KES_ID) && !watching_subsidy_requester($GLOBALS["binet"]), 401);
   }
 
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {

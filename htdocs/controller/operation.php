@@ -25,7 +25,7 @@
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => array(array("term", MAX_TERM)),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student"), array("binet", "exists_binet"), array("binet_term", "exists_binet_term")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet["id"], $term)),
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("generate_csrf_token", array("new", "edit", "show"));
