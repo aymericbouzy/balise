@@ -2,7 +2,7 @@
 
   define("WEBMASTER_EMAIL", empty($_ENV["webmaster_email"]) ? "aymeric.bouzy@polytechnique.edu" : $_ENV["webmaster_email"]);
   define("STATE", empty($_ENV["state"]) ? "development" : $_ENV["state"]);
-  define("URL_REWRITE", empty($_ENV["url_rewrite"]) ? true : $_ENV["url_rewrite"]); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
+  define("URL_REWRITE", empty($_ENV["url_rewrite"]) || !in_array($_ENV["url_rewrite"], array("false", "0", 0, false)) ? true : $_ENV["url_rewrite"]); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
   define("ROOT_PATH", isset($_ENV["root_path"]) ? $_ENV["root_path"] : "");
 
   define("DATABASE_PASSWORD", $_ENV["database_password"]);

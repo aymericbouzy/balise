@@ -8,7 +8,7 @@
   <?php echo link_to(path("", "home"), "Balise", "navbar-brand"); ?>
 </div>
 
-<ul class="nav navbar-left top-nav">
+<!-- <ul class="nav navbar-left top-nav">
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
     <ul class="dropdown-menu" role="menu">
@@ -23,7 +23,7 @@
       ?>
     </ul>
   </li>
-</ul>
+</ul> -->
 
 
 <ul class="nav navbar-right top-nav">
