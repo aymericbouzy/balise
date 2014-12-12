@@ -1,7 +1,13 @@
 <?php
 
-  // TODO: implement function
   function clean_string($string) {
+    $string = str_replace(
+      str_split("àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ"),
+      str_split("aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY"),
+      $string
+    );
+    $string = strtolower($string);
+    $string = preg_replace("/[^a-z0-9]/", "-", $string);
     return $string;
   }
 
