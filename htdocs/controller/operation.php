@@ -10,7 +10,7 @@
 
   function creator_operation_or_kessier() {
     $operation = select_operation($_GET["operation"], array("created_by", "binet_validation_by", "kes_validation_by"));
-    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_binet_admin(KES_ID) || !empty($operation["kes_validation_by"])), 401);
+    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_admin_binet(KES_ID) || !empty($operation["kes_validation_by"])), 401);
   }
 
   before_action("check_csrf_post", array("update", "create"));

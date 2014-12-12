@@ -18,6 +18,7 @@
   include MODEL_PATH."student.php";
   include MODEL_PATH."binet.php";
   include MODEL_PATH."wave.php";
+  include MODEL_PATH."term.php";
 
   include HELPER_PATH."common.php";
   include HELPER_PATH."pretty_print.php";

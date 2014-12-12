@@ -15,7 +15,7 @@
     return $request;
   }
 
-  function select_request($request, $fields = NULL) {
+  function select_request($request, $fields = array()) {
     $request = select_entry(
       "request",
       array("id", "wave", "answer", "sent"),

@@ -1,10 +1,6 @@
 <?php
   include "global/initialisation.php";
 
-  echo clean_string("coucou");
-  echo "<br/>";
-  echo clean_string("CoucOu");
-  echo "<br/>";
-  echo clean_string("coùcõu");
-  echo "<br/>";
-  echo clean_string("cou@ou");
+  $binet_rock = select_binets(array("name" => "Rock"))[0]["id"];
+  $student = connected_student();
+  add_admin_binet($student, $binet_rock, 2012);

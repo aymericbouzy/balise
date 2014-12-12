@@ -136,23 +136,23 @@
   }
 
   function kessier() {
-    header_if(!status_binet_admin(KES_ID), 401);
+    header_if(!status_admin_binet(KES_ID), 401);
   }
 
   function current_kessier() {
-    header_if(!status_binet_admin(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"]), 401);
+    header_if(!status_admin_binet(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"]), 401);
   }
 
   function member_binet_term() {
-    header_if(!status_binet_admin($_GET["binet"], $_GET["term"]), 401);
+    header_if(!status_admin_binet($_GET["binet"], $_GET["term"]), 401);
   }
 
   function member_binet_current_term() {
-    header_if(!status_binet_admin($_GET["binet"], select_binet($_GET["binet"], array("current_term"))["current_term"]), 401);
+    header_if(!status_admin_binet($_GET["binet"], select_binet($_GET["binet"], array("current_term"))["current_term"]), 401);
   }
 
   function watcher_binet_term() {
-    header_if(!status_binet_admin($_GET["binet"]) && !status_binet_admin(KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
+    header_if(!status_admin_binet($_GET["binet"]) && !status_admin_binet(KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
   }
 
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
@@ -235,7 +235,7 @@
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParma(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return !empty($req->fetch());
   }

@@ -45,7 +45,7 @@
         $_GET["controller"] == "binet" && $_GET["action"] == "validation"
       );
       echo li_link(
-        link_to(path("", "request", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-money\"></i> Subventions",
+        link_to(path("", "request", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-money\"></i> Subventions"),
         $_GET["controller"] == "request"
       );
       if (select_binet($binet["id"], array("subsidy_provider"))["subsidy_provider"] == 1) {

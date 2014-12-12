@@ -4,12 +4,12 @@
 
   if (isset($_GET["prefix"])) {
     header_if(!validate_input(array("prefix")), 400);
-    header_if(!in_array($_GET["prefix"], array("binet")));
+    header_if(!in_array($_GET["prefix"], array("binet")), 404);
     $full_controller = $_GET["prefix"]."/".$_GET["controller"];
   } else {
     $full_controller = $_GET["controller"];
   }
-  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/wave", "error")), 400);
+  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/wave", "error")), 404);
 
   $query_array = compute_query_array();
 
