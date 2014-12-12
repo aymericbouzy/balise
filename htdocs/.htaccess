@@ -3,7 +3,6 @@
 	    AddDefaultCharset iso-8859-1
 	    RewriteEngine on
 	    RewriteRule ^/?$ ./index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
-    RewriteRule ^in/?$ nicolet/home/login%{QUERY_STRING} [NC,QSA]
     RewriteRule ^home/?$ ./index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^home/index/?$ ./index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^home/login/?$ ./index.php?controller=home&action=login&%{QUERY_STRING} [L,NC,QSA]

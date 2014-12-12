@@ -26,10 +26,10 @@
     );
   }
 
-  function create_student($hruid, $name, $mail) {
+  function create_student($hruid, $name, $email) {
     $values["name"] = $name;
     $values["hruid"] = $hruid;
-    $values["email"] = $mail;
+    $values["email"] = $email;
     return create_entry(
       "student",
       array(),

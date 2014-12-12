@@ -168,8 +168,8 @@
 
   function create_entry($table, $creatable_int_fields, $creatable_str_fields, $values) {
     $values = array_intersect_key($values, array_flip(array_merge($creatable_int_fields, $creatable_str_fields)));
-    $sql1 = "INSERT INTO ".$table."(";
-    $sql2 = "VALUES(";
+    $sql1 = "INSERT INTO ".$table."(id, ";
+    $sql2 = "VALUES(NULL, ";
     $initial = true;
     foreach($values as $column => $value) {
       if ($initial) {
@@ -197,9 +197,9 @@
         if (is_null($value)) {
           $req->bindParam(':'.$column, NULL, PDO::PARAM_NULL);
         } elseif (in_array($column, $creatable_int_fields)) {
-          $req->bindParam(':'.$column, $value, PDO::PARAM_INT);
+          $req->bindParam(':'.$column, $values[$column], PDO::PARAM_INT);
         } elseif (in_array($column, $creatable_str_fields)) {
-          $req->bindParam(':'.$column, $value, PDO::PARAM_STR);
+          $req->bindParam(':'.$column, $values[$column], PDO::PARAM_STR);
         }
       }
     }
