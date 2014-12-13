@@ -1,23 +1,22 @@
 
 <div class="collapse navbar-collapse navbar-ex1-collapse">
   <ul class="nav navbar-nav side-nav">
-  			<li class="dropdown">  
-  	
-  	<!-- For all binets -->
+  		<li class="dropdown">  
+  		<!-- For all binets -->
     		<a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
    			<ul class="dropdown-menu" role="menu">
       		<?php foreach(binet_admins_current_student() as $binet_admin) {
-       	 	$binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
+       	 		$binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
         		?>
         		<li>
-          	<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
+          		<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
         		</li>
         <?php
       }
       ?>
     		</ul>
   		</li>
-    <?php
+    		<?php
       echo li_link(
         link_to(path("", "budget", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-home\"></i> Accueil"),
         $_GET["controller"] == "budget" || $_GET["controller"] == "operation"
@@ -31,24 +30,24 @@
         $_GET["controller"] == "binet" && $_GET["action"] == "validation"
       );
       echo li_link(
-        link_to(path("", "request", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-money\"></i> Subventions",
+        link_to(path("", "request", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-money\"></i> Subventions"),
         $_GET["controller"] == "request"
       );
+      //If subsidy_provider
       if (select_binet($binet["id"], array("subsidy_provider"))["subsidy_provider"] == 1) {
         ?>
-        <li class="divider"></li>
-        <!--For subsidy_provider binets-->
-        <?php
+      <li class="divider"></li>
+        	<?php
         echo li_link(
           link_to(path("", "wave", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-star\"></i> Vague de subventions"),
           $_GET["controller"] == "wave"
         );
       }
+      //If Kes
       if ($binet["id"] == $KES_ID) {
         ?>
-        <li class="divider"></li>
-        <!-- For Kes -->
-        <?php
+      <li class="divider"></li>
+        	<?php
         echo li_link(
           link_to(path("admin", "binet"), "<i class=\"fa fa-fw fa-desktop\"></i> Administration"),
           $_GET["controller"] == "admin"
