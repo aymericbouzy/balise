@@ -15,7 +15,7 @@
 </style>
             
   
-  <!-- Page wrapper content : simple button to login using Frankiz-->
+  <!-- page-wrapper content : simple button to login using Frankiz-->
   <!-- TODO : update to show a nicer homepage -->          
  <div class="container">
     <div class="signin">

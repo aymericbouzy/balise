@@ -1,6 +1,7 @@
 
 <div class="collapse navbar-collapse navbar-ex1-collapse">
   <ul class="nav navbar-nav side-nav">
+  		<!-- Choose binet using dropdown menu -->
   		<li class="dropdown">  
   		<!-- For all binets -->
     		<a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
@@ -15,6 +16,7 @@
       }
       ?>
     		</ul>
+    	<!-- Accueil : links to budget/operations page -->
   		</li>
     		<?php
       echo li_link(
