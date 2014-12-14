@@ -39,7 +39,7 @@
       $number_pending_validations = count_pending_validations($binet, $term);
       echo li_link(
         link_to(
-          path("validations", "binet", binet_term_id($binet, $term)),
+          path("validation", "binet", $binet),
           "<i class=\"fa fa-fw fa-check\"></i> Validations".($number_pending_validations > 0 ? " <span class=\"counter\">".$number_pending_validations."</span>" : "")
         ),
         $_GET["controller"] == "binet" && $_GET["action"] == "validation"

@@ -12,8 +12,8 @@
   before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate"));
   before_action(
     "check_entry",
-    array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate"),
-    array("model_name" => "binet", "id" => $binet, "term" => $term)
+    array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate", "validation"),
+    array("model_name" => "binet")
   );
   before_action("kessier", array("new", "create", "set_term", "change_term", "deactivate", "set_subsidy_provider", "admin"));
   before_action("member_binet_current_term", array("edit", "update", "validation"));

@@ -148,7 +148,8 @@
   }
 
   function member_binet_current_term() {
-    header_if(!status_admin_binet($GLOBALS["binet"], select_binet($GLOBALS["binet"], array("current_term"))["current_term"]), 401);
+    $binet = $GLOBALS["binet"]["id"];
+    header_if(!status_admin_binet($binet, select_binet($binet, array("current_term"))["current_term"]), 401);
   }
 
   function watcher_binet_term() {

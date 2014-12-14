@@ -27,7 +27,7 @@
   function select_binet($binet, $fields = array()) {
     $binet = select_entry(
       "binet",
-      array("id", "name", "clean_name", "description", "term", "subsidy_provider", "subsidy_steps"),
+      array("id", "name", "clean_name", "description", "current_term", "subsidy_provider", "subsidy_steps"),
       $binet,
       $fields
     );
@@ -129,11 +129,7 @@
     }
     $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    if ($row = $req->fetch()) {
-      return true;
-    } else {
-      return false;
-    }
+    return !empty($req->fetchAll());
   }
 
   /*
@@ -169,7 +165,7 @@
   */
   function change_term_binet($binet, $term) {
     $sql = "UPDATE binet
-            SET term = :term
+            SET current_term = :term
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
