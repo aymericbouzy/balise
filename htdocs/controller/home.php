@@ -25,6 +25,11 @@
       }
       $_SESSION["student"] = $student;
       $_SESSION["notice"][] = "Tu t'es connecté avec succès.";
+      if (isset($_SESSION["redirect_to_after_connection"])) {
+        $redirect_to_after_connection = $_SESSION["redirect_to_after_connection"];
+        unset($_SESSION["redirect_to_after_connection"]);
+        redirect_to_path($redirect_to_after_connection);
+      }
       redirect_to_action("");
     }
     break;
