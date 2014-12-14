@@ -144,7 +144,7 @@
   }
 
   function select_entry($table, $selectable_fields, $id, $fields = array()) {
-    $fields = array_intersect_key($fields, array_flip($selectable_fields));
+    $fields = array_intersect($fields, $selectable_fields);
     if (empty($fields)) {
       $fields = $selectable_fields;
     }

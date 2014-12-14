@@ -1,6 +1,6 @@
 <?php
 
-  include LIB_PATH."fkz_auth.php";
+  include LIB_PATH."fkz_fake_auth.php";
 
   function no_useless_connection() {
     if (connected_student()) {
