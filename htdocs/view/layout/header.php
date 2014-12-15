@@ -8,7 +8,7 @@
   <?php echo link_to(path("", "home"), "Balise", "navbar-brand"); ?>
 </div>
 
-<ul class="nav navbar-left top-nav">
+<!-- <ul class="nav navbar-left top-nav">
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
     <ul class="dropdown-menu" role="menu">
@@ -23,7 +23,7 @@
       ?>
     </ul>
   </li>
-</ul>
+</ul> -->
 
 
 <ul class="nav navbar-right top-nav">
@@ -33,23 +33,23 @@
     </a>
     <ul class="dropdown-menu" role="menu">
       <li class="add-operation">
-        <?php echo link_to(path("new", "operation", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", "add-operation"); ?>
+        <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", "add-operation"); ?>
       </li>
       <li>
-        <?php echo link_to(path("new", "budget", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", "add-operation"); ?>
+        <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", "add-operation"); ?>
       </li >
       <li class="add-operation">
-        <?php echo link_to(path("new", "request", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-money\"></i> Demande de subvention", "add-operation"); ?>
+        <?php echo link_to(path("new", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Demande de subvention", "add-operation"); ?>
       </li>
-      <?php if (select_binet($binet["id"], array("subsidy_provider"))["subsidy_provider"] == 1) {
+      <?php if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
         ?>
         <li class = "divider"></li>
         <li>
-          <?php echo link_to(path("new", "wave", "", binet_prefix($binet["id"], $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", "add-operation"); ?>
+          <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", "add-operation"); ?>
         </li>
         <?php
       }
-      if ($binet["id"] == $KES_ID) {
+      if ($binet == KES_ID) {
         ?>
         <li class = "divider"></li>
         <li>
@@ -61,7 +61,7 @@
     </ul>
   </li>
   <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $current_student["name"]; ?>e <b class="caret"></b></a>
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $current_student["name"]; ?> <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li>
         <!--TODO-->

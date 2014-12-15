@@ -22,9 +22,9 @@
             $operation_class = $active;
           }
         ?>
-        <?php echo link_to(path("index", "budget", "", binet_prefix($binet["id"], $term)), "Budget", $budget_class); ?>
+        <?php echo link_to(path("index", "budget", "", binet_prefix($binet, $term)), "Budget", $budget_class); ?>
         <label class="bootstrap-switch-label">&nbsp;</label>
-        <?php echo link_to(path("index", "operation", "", binet_prefix($binet["id"], $term)), "Opérations", $operation_class); ?>
+        <?php echo link_to(path("index", "operation", "", binet_prefix($binet, $term)), "Opérations", $operation_class); ?>
 
         <!-- C'est quoi ça ? -->
         <input id="switch-state" type="checkbox" checked data-on-text="Budget" data-off-text="Opérations">

@@ -10,7 +10,7 @@
 
   function creator_operation_or_kessier() {
     $operation = select_operation($_GET["operation"], array("created_by", "binet_validation_by", "kes_validation_by"));
-    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_binet_admin($KES_ID) || !empty($operation["kes_validation_by"])), 401);
+    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_admin_binet(KES_ID) || !empty($operation["kes_validation_by"])), 401);
   }
 
   before_action("check_csrf_post", array("update", "create"));
@@ -25,7 +25,7 @@
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => array(array("term", MAX_TERM)),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student"), array("binet", "exists_binet"), array("binet_term", "exists_binet_term")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet["id"], $term)),
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("generate_csrf_token", array("new", "edit", "show"));
@@ -64,7 +64,7 @@
   case "validate":
     kes_validate_operation($operation["id"]);
     $_SESSION["notice"][] = "L'opération a été validée avec succès.";
-    redirect_to_path(path("validation", "binet", binet_term_id($KES_ID, select_binet($KES_ID, array("current_term"))["current_term"])));
+    redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
     break;
 
   case "reject":
