@@ -36,7 +36,7 @@
 
         ?>
           <tr>
-            <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet["id"], $term)), $budget["label"]); ?></td>
+            <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
             <td><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
@@ -76,7 +76,7 @@
 
         ?>
           <tr>
-            <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet["id"], $term)), $budget["label"]); ?></td>
+            <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
             <td><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
@@ -114,4 +114,4 @@
 <?php
   $table = ob_get_clean();
 
-  include $VIEW_PATH."binet/finances.php";
+  include VIEW_PATH."binet/finances.php";

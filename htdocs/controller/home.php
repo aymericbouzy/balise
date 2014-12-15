@@ -1,17 +1,25 @@
 <?php
 
-  include $LIB_PATH."fkz_fake_auth.php";
+  include LIB_PATH."fkz_auth.php";
+
+  function no_useless_connection() {
+    if (connected_student()) {
+      redirect_to_action("");
+    }
+  }
+
+  before_action("no_useless_connection", array("login"));
 
   switch ($_GET["action"]) {
 
   case "login":
-    if (!isset($_GET['response'])) {
+    if (!isset($_GET["response"])) {
       frankiz_do_auth();
     } else {
       $auth = frankiz_get_response();
       $students = select_students(array("hruid" => $auth["hruid"]));
       if (empty($students)) {
-        $student = create_student($auth["hruid"], $auth["first_name"]." ".$auth["last_name"], $auth["email"]);
+        $student = create_student($auth["hruid"], $auth["firstname"]." ".$auth["lastname"], $auth["email"]);
       } else {
         $student = $students[0]["id"];
       }

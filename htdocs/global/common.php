@@ -9,7 +9,7 @@
   }
 
   function redirect_to_action($action) {
-    $path = path($action, $_GET["controller"], ($GLOBALS[$_GET["controller"]]["id"] ?: ""), ($_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"]["id"], $GLOBALS["term"]) : ""));
+    $path = path($action, $_GET["controller"], ($GLOBALS[$_GET["controller"]]["id"] ?: ""), ($_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
     redirect_to_path($path);
   }
 
@@ -28,4 +28,11 @@
 
   function preg_does_match($regex, $string) {
     return preg_match($regex, $string) === 1;
+  }
+
+  function connected_student() {
+    if (validate_input(array("student"), array(), "session") && exists_student($_SESSION["student"])) {
+      return $_SESSION["student"];
+    }
+    return false;
   }

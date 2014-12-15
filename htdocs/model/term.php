@@ -36,7 +36,7 @@
   }
 
   function select_terms($criteria = array(), $order_by = NULL, $ascending = true) {
-    $terms = select_request(
+    $terms = select_with_request_string(
       "CONCAT(binet, '/', term) as id",
       "binet_admin",
       array("binet", "term"),

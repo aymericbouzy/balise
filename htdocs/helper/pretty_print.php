@@ -19,6 +19,6 @@
 
   function pretty_binet($binet) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
-    $content = $binet["id"] == $KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
+    $content = $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
     return link_to(path("show", "binet", $binet["id"]), $content);
   }
