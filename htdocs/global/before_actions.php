@@ -135,6 +135,17 @@
     unset($_SESSION[$array["model_name"]]);
   }
 
+  function has_viewing_rights($binet, $term) {
+    return status_admin_current_binet(KES_ID) ||
+      has_editing_rights($binet, $term) ||
+      watching_subsidy_requester($binet);
+  }
+
+  function has_editing_rights($binet, $term) {
+    $max_admin_term = term_admin_binet($binet)
+    return is_numeric($max_admin_term) && $max_admin_term >= current_term($binet) && $max_admin_term <= $term
+  }
+
   function kessier() {
     header_if(!status_admin_binet(KES_ID), 401);
   }
