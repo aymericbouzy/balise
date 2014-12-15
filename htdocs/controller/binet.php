@@ -12,11 +12,11 @@
   before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate"));
   before_action(
     "check_entry",
-    array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate", "validation"),
+    array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate"),
     array("model_name" => "binet")
   );
   before_action("kessier", array("new", "create", "set_term", "change_term", "deactivate", "set_subsidy_provider", "admin"));
-  before_action("member_binet_current_term", array("edit", "update", "validation"));
+  before_action("member_binet_current_term", array("edit", "update"));
   before_action("check_form_input", array("create"), array(
     "model_name" => "binet",
     "str_fields" => array(array("name", 30), array("description", 10000)),
@@ -77,13 +77,6 @@
   case "deactivate":
     $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été désactivé avec succès.";
     redirect_to_action("show");
-    break;
-
-  case "validation":
-    $pending_validations_operations = pending_validations_operations($binet, $term);
-    if ($binet == KES_ID) {
-      $pending_validations_operations_kes = pending_validations_operations_kes();
-    }
     break;
 
   case "admin":
