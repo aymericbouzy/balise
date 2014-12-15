@@ -146,6 +146,9 @@
     return !empty($req->fetchAll());
   }
 
+  function current_term($binet) {
+    return select_binet($binet, array("current_term"))["current_term"];
+  }
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet_admin'
     @param int $student if of the student, int(11) NOT NULL in table 'binet_admin'

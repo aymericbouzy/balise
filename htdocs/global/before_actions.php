@@ -166,7 +166,7 @@
   }
 
   function current_kessier() {
-    header_if(!status_admin_binet(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"]), 401);
+    header_if(!status_admin_current_binet(KES_ID)), 401);
   }
 
   function member_binet_term() {
@@ -175,7 +175,7 @@
 
   function member_binet_current_term() {
     $binet = $GLOBALS["binet"]["id"];
-    header_if(!status_admin_binet($binet, select_binet($binet, array("current_term"))["current_term"]), 401);
+    header_if(!status_admin_current_binet($binet), 401);
   }
 
   function watcher_binet_term() {

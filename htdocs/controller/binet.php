@@ -15,8 +15,8 @@
     array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate"),
     array("model_name" => "binet")
   );
-  before_action("kessier", array("new", "create", "set_term", "change_term", "deactivate", "set_subsidy_provider", "admin"));
-  before_action("member_binet_current_term", array("edit", "update"));
+  before_action("current_kessier", array("new", "create", "set_term", "change_term", "deactivate", "set_subsidy_provider", "admin"));
+  before_action("check_editing_rights", array("edit", "update"));
   before_action("check_form_input", array("create"), array(
     "model_name" => "binet",
     "str_fields" => array(array("name", 30), array("description", 10000)),

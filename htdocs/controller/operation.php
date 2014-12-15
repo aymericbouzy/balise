@@ -1,6 +1,6 @@
 <?php
 
-  function create_post_binet_term() {
+  function create_post_binet_term_for_check_form() {
     if (!empty($_POST["binet"]) && !empty($_POST["term"])) {
       $binet = select_binet($_POST["binet"], array("clean_name"))["clean_name"];
       $term = $_POST["term"];
@@ -18,7 +18,7 @@
   before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation");
   before_action("current_kessier", array("validate", "reject"));
   before_action("creator_operation_or_kessier", array("show", "edit", "update"));
-  before_action("create_post_binet_term", array("create", "update"));
+  before_action("create_post_binet_term_for_check_form", array("create", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
