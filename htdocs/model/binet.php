@@ -132,6 +132,20 @@
     return !empty($req->fetchAll());
   }
 
+  function status_admin_current_binet($binet) {
+    $sql = "SELECT *
+    FROM binet_admin
+    INNER JOIN binet
+    ON binet_admin.binet = binet.id AND binet_admin.term = binet.current_term
+    WHERE binet_admin.binet = :binet AND binet_admin.student = :student
+    LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->execute();
+    return !empty($req->fetchAll());
+  }
+
   /*
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet_admin'
     @param int $student if of the student, int(11) NOT NULL in table 'binet_admin'

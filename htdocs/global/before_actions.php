@@ -110,7 +110,7 @@
 
     if ($array["tags_string"]) {
       if (!empty($_POST["tags_string"])) {
-        foreach (explode($_POST["tags_string"], ";") as $tag_name) {
+        foreach (explode(";", $_POST["tags_string"]) as $tag_name) {
           $tag = select_tags(array("clean_name" => clean_string($tag_name)));
           if (empty($tag)) {
             $_SESSION["tag_to_create"] = remove_exterior_spaces($tag_name);
@@ -142,8 +142,23 @@
   }
 
   function has_editing_rights($binet, $term) {
-    $max_admin_term = term_admin_binet($binet)
-    return is_numeric($max_admin_term) && $max_admin_term >= current_term($binet) && $max_admin_term <= $term
+    $current_term = current_term($binet);
+    $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => $_SESSION["student"]), "term");
+    if (empty($terms_admin)) {
+      return false;
+    }
+    $term_admin = explode("/", $terms_admin[0])[1];
+    return is_numeric($term_admin) &&
+      $term_admin >= $current_term &&
+      $term_admin <= $term;
+  }
+
+  function check_viewing_rights() {
+    header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+  }
+
+  function check_editing_rights() {
+    header_if(!has_editing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
   }
 
   function kessier() {
@@ -255,7 +270,7 @@
   function compute_query_array() {
     $query_array = array_intersect_key($_GET, array_flip(array("tags")));
     if (!empty($query_array["tags"])) {
-      $tags_clean_names = explode($query_array["tags"], "+");
+      $tags_clean_names = explode("+", $query_array["tags"]);
       $query_array["tags"] = array();
       foreach ($tags_clean_names as $clean_name) {
         $query_array["tags"][] = select_tags(array("clean_name" => $clean_name))[0]["id"];
