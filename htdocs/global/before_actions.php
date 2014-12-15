@@ -147,7 +147,7 @@
     if (empty($terms_admin)) {
       return false;
     }
-    $term_admin = explode("/", $terms_admin[0])[1];
+    $term_admin = explode("/", $terms_admin[0]["id"])[1];
     return is_numeric($term_admin) &&
       $term_admin >= $current_term &&
       $term_admin <= $term;
