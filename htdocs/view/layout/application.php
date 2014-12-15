@@ -9,18 +9,18 @@
 
     	<!-- CSS -->
     	<!--Minified Bootstrap CSS-->
-    	<link rel="stylesheet" href="<?php echo $ASSET_PATH; ?>dist/css/bootstrap.min.css">
+    	<link rel="stylesheet" href="<?php echo ASSET_PATH; ?>dist/css/bootstrap.min.css">
      	<!-- Custom CSS -->
-     	<link rel="stylesheet" href="<?php echo $ASSET_PATH; ?>css/user-home.css">
+     	<link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/user-home.css">
 
      	<!-- Custom Fonts -->
-     	<link href="<?php echo $ASSET_PATH; ?>font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+     	<link href="<?php echo ASSET_PATH; ?>font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
 		<!-- JavaScript -->
 		<!-- jQuery -->
-     	<script src="<?php echo $ASSET_PATH; ?>js/jquery.js"></script>
+     	<script src="<?php echo ASSET_PATH; ?>js/jquery.js"></script>
      	<!--Core Bootstrap JS-->
-     	<script src="<?php echo $ASSET_PATH; ?>dist/js/bootstrap.min.js"></script>
+     	<script src="<?php echo ASSET_PATH; ?>dist/js/bootstrap.min.js"></script>
 
    	<!--[if IE]>
       	<script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
