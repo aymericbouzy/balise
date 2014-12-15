@@ -7,7 +7,7 @@
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("delete", "validate"));
   before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
-  before_action("member_binet_term", array("new", "new_expense", "new_income", "create", "edit", "update", "delete", "validate"));
+  before_action("check_editing_rights", array("new", "new_expense", "new_income", "create", "edit", "update", "delete", "validate"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
