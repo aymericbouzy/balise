@@ -121,6 +121,7 @@
     write_controller_rules($htaccess, array("controller" => "budget", "binet_prefix" => true, "action_on_collection" => array("new_expense", "new_income")));
     write_controller_rules($htaccess, array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate"), "action_on_collection" => array("new_expense", "new_income")));
     write_controller_rules($htaccess, array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send")));
+    write_controller_rules($htaccess, array("controller" => "validation", "binet_prefix" => true, "except" => array("show", "edit", "update", "new", "create", "delete")));
     write_controller_rules($htaccess, array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
 
     fclose($htaccess);
