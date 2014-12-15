@@ -64,7 +64,7 @@
             WHERE id = :request
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':request', $request, PDO::PARAM_INT);
+    $req->bindValue(':request', $request, PDO::PARAM_INT);
     $req->execute();
   }
 

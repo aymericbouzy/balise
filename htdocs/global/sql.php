@@ -93,31 +93,29 @@
         $sql .= " :".$column;
       }
     }
-    if ($order_by && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields))) {
+    $ordered = !empty($order_by) && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields));
+    if ($ordered) {
       $sql .= " ORDER BY :order_by".($ascending ? " ASC" : " DESC");
     }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
+      $real_value = is_array($value) ? $value[1] : $value;
       if ($column === "tags") {
         for ($j = 0; $j < $i; $j++) {
-          $req->bindParam(':tag'.$j, $tags[$j], PDO::PARAM_INT);
+          $req->bindValue(':tag'.$j, $tags[$j], PDO::PARAM_INT);
         }
       } else {
-        if (is_array($value)) {
-          $value = $value[1];
-        }
-        if (is_null($value)) {
-          // TODO: understand why this is useful
-          $req->bindParam(':'.$column, $value, PDO::PARAM_NULL);
+        if (!isset($real_value)) {
+          $req->bindValue(':'.$column, NULL, PDO::PARAM_NULL);
         } elseif (in_array($column, $selectable_int_fields)) {
-          $req->bindParam(':'.$column, $criteria[$column], PDO::PARAM_INT);
+          $req->bindValue(':'.$column, $real_value, PDO::PARAM_INT);
         } elseif (in_array($column, $selectable_str_fields)) {
-          $req->bindParam(':'.$column, $criteria[$column], PDO::PARAM_STR);
+          $req->bindValue(':'.$column, $real_value, PDO::PARAM_STR);
         }
       }
     }
-    if ($order_by) {
-      $req->bindParam(':order_by', $order_by, PDO::PARAM_STR);
+    if ($ordered) {
+      $req->bindValue(':order_by', $order_by, PDO::PARAM_STR);
     }
     $req->execute();
     return $req->fetchAll();
@@ -131,13 +129,13 @@
                 WHERE id = :".$table."
                 LIMIT 1";
         $req = Database::get()->prepare($sql);
-        $req->bindParam(':'.$table, $entry, PDO::PARAM_INT);
+        $req->bindValue(':'.$table, $entry, PDO::PARAM_INT);
         if (in_array($column, $updatable_int_fields)) {
-          $req->bindParam(':'.$value, $hash[$column], PDO::PARAM_INT);
+          $req->bindValue(':'.$value, $value, PDO::PARAM_INT);
         } elseif (in_array($column, $updatable_str_fields)) {
-          $req->bindParam(':'.$value, $hash[$column], PDO::PARAM_STR);
+          $req->bindValue(':'.$value, $value, PDO::PARAM_STR);
         }
-        $req->bindParam(':'.$column, $column, PDO::PARAM_STR);
+        $req->bindValue(':'.$column, $column, PDO::PARAM_STR);
         $req->execute();
       }
     }
@@ -162,7 +160,7 @@
             WHERE id = :id
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':id', $id, PDO::PARAM_INT);
+    $req->bindValue(':id', $id, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch(PDO::FETCH_ASSOC);
   }
@@ -196,11 +194,11 @@
     foreach ($values as $column => $value) {
       if (!is_array($value)) {
         if (is_null($value)) {
-          $req->bindParam(':'.$column, NULL, PDO::PARAM_NULL);
+          $req->bindValue(':'.$column, NULL, PDO::PARAM_NULL);
         } elseif (in_array($column, $creatable_int_fields)) {
-          $req->bindParam(':'.$column, $values[$column], PDO::PARAM_INT);
+          $req->bindValue(':'.$column, $value, PDO::PARAM_INT);
         } elseif (in_array($column, $creatable_str_fields)) {
-          $req->bindParam(':'.$column, $values[$column], PDO::PARAM_STR);
+          $req->bindValue(':'.$column, $value, PDO::PARAM_STR);
         }
       }
     }

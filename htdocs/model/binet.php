@@ -67,7 +67,7 @@
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->execute(array(':subsidy_steps' => $subsidy_steps));
   }
 
@@ -81,8 +81,8 @@
             FROM binet_admin
             WHERE binet = :binet AND term = :term";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':term', $term, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':term', $term, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -92,7 +92,7 @@
             FROM binet_admin
             WHERE student = :student";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -106,9 +106,9 @@
     $sql = "INSERT INTO binet_admin(student, binet, term)
             VALUES(:student, :binet, :term)";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':student', $student, PDO::PARAM_INT);
-    $req->bindParam(':term', $term, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':student', $student, PDO::PARAM_INT);
+    $req->bindValue(':term', $term, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -125,11 +125,11 @@
             WHERE binet = :binet ".(empty($term) ? "" : "AND term = :term ")."AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     if (!empty($term)) {
-      $req->bindParam(':term', $term, PDO::PARAM_INT);
+      $req->bindValue(':term', $term, PDO::PARAM_INT);
     }
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return !empty($req->fetchAll());
   }
@@ -142,8 +142,8 @@
     WHERE binet_admin.binet = :binet AND binet_admin.student = :student
     LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return !empty($req->fetchAll());
   }
@@ -161,9 +161,9 @@
             WHERE binet = :binet AND term = :term AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':term', $term, PDO::PARAM_INT);
-    $req->bindParam(':student', $student, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':term', $term, PDO::PARAM_INT);
+    $req->bindValue(':student', $student, PDO::PARAM_INT);
     $req->execute();
   }
   /*
@@ -175,7 +175,7 @@
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -188,7 +188,7 @@
             WHERE id = :binet
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':term', $term, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':term', $term, PDO::PARAM_INT);
     $req->execute();
   }

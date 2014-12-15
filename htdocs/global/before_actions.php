@@ -137,7 +137,7 @@
 
   function has_viewing_rights($binet, $term) {
     return status_admin_current_binet(KES_ID) ||
-      has_editing_rights($binet, $term) ||
+      !empty(select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]))) ||
       received_subsidy_request_from($binet);
   }
 
@@ -167,7 +167,7 @@
   }
 
   function current_kessier() {
-    header_if(!status_admin_current_binet(KES_ID)), 401);
+    header_if(!status_admin_current_binet(KES_ID), 401);
   }
 
   // useless
@@ -258,8 +258,8 @@
             WHERE budget.binet = :binet AND binet_admin.student = :student AND request.sent = 1 AND wave.published = 0
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return !empty($req->fetch());
   }

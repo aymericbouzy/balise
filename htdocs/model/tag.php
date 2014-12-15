@@ -15,8 +15,8 @@
     $sql = "INSERT INTO budget_tag(budget, tag)
             VALUES(:budget, :tag)";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
-    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
+    $req->bindValue(':tag', $tag, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -25,7 +25,7 @@
             FROM budget_tag
             WHERE budget = :budget";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -69,9 +69,9 @@
       $sql .= " AND budget.term = :term";
     }
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     if ($term) {
-      $req->bindParam(':term', $term, PDO::PARAM_INT);
+      $req->bindValue(':term', $term, PDO::PARAM_INT);
     }
     $req->execute();
     return $req->fetchAll();
@@ -85,7 +85,7 @@
             WHERE operation_budget.operation = :operation
             GROUP BY budget_tag.tag";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -98,7 +98,7 @@
             WHERE subsidy.id = :subsidy
             GROUP BY budget_tag.tag";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':subsidy', $subsidy, PDO::PARAM_INT);
+    $req->bindValue(':subsidy', $subsidy, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -111,7 +111,7 @@
             WHERE subsidy.request = :request
             GROUP BY budget_tag.tag";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':request', $request, PDO::PARAM_INT);
+    $req->bindValue(':request', $request, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -126,7 +126,7 @@
             WHERE request.wave = :wave
             GROUP BY budget_tag.tag";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':request', $request, PDO::PARAM_INT);
+    $req->bindValue(':request', $request, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -136,7 +136,7 @@
             FROM budget_tag
             WHERE budget = :budget";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -146,7 +146,7 @@
             FROM budget_tag
             WHERE budget_tag.tag = :tag";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':tag', $tag, PDO::PARAM_INT);
+    $req->bindValue(':tag', $tag, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch()["occurrences"];
   }
