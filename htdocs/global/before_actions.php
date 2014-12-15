@@ -138,7 +138,7 @@
   function has_viewing_rights($binet, $term) {
     return status_admin_current_binet(KES_ID) ||
       has_editing_rights($binet, $term) ||
-      watching_subsidy_requester($binet);
+      received_subsidy_request_from($binet);
   }
 
   function has_editing_rights($binet, $term) {
@@ -161,6 +161,7 @@
     header_if(!has_editing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
   }
 
+  // useless
   function kessier() {
     header_if(!status_admin_binet(KES_ID), 401);
   }
@@ -169,17 +170,13 @@
     header_if(!status_admin_current_binet(KES_ID)), 401);
   }
 
+  // useless
   function member_binet_term() {
     header_if(!status_admin_binet($GLOBALS["binet"], $GLOBALS["term"]), 401);
   }
 
   function member_binet_current_term() {
-    $binet = $GLOBALS["binet"]["id"];
-    header_if(!status_admin_current_binet($binet), 401);
-  }
-
-  function watcher_binet_term() {
-    header_if(!status_admin_binet($GLOBALS["binet"]) && !status_admin_binet(KES_ID) && !watching_subsidy_requester($GLOBALS["binet"]), 401);
+    header_if(!status_admin_current_binet($GLOBALS["binet"]), 401);
   }
 
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
@@ -247,7 +244,7 @@
     }
   }
 
-  function watching_subsidy_requester($binet) {
+  function received_subsidy_request_from($binet) {
     $sql = "SELECT request.id
             FROM request
             INNER JOIN wave
