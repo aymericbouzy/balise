@@ -30,6 +30,8 @@
   ));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
+  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign", "binet", "term");
+
   switch ($_GET["action"]) {
 
   case "index":
@@ -37,6 +39,7 @@
     break;
 
   case "new":
+    $operation = initialise_for_form($form_fields, $_SESSION["operation"]);
     break;
 
   case "create":
@@ -48,6 +51,12 @@
     break;
 
   case "edit":
+    $operation = select_operation($operation, array_merge($form_fields, array("id"));
+    $operation["sign"] = $operation["amount"] > 0 ? true : false;
+    $operation["amount"] *= $operation["sign"] ? 1 : -1;
+    $id = $operation["id"];
+    $operation = initialise_for_form($form_fields, $operation);
+    $operation["id"] = $id;
     break;
 
   case "update":
