@@ -5,8 +5,8 @@
   define("URL_REWRITE", empty($_ENV["url_rewrite"]) || !in_array($_ENV["url_rewrite"], array("false", "0", 0, false)) ? true : $_ENV["url_rewrite"]); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
   define("ROOT_PATH", isset($_ENV["root_path"]) ? $_ENV["root_path"] : "");
 
-  define("DATABASE_PASSWORD", "root");
-  define("FRANKIZ_AUTH_KEY", "A4d!fgr6?45GF8");
+  define("DATABASE_PASSWORD",$_ENV["database_password"]);
+  define("FRANKIZ_AUTH_KEY",$_ENV["frankiz_auth_key"]);
 
   define("GLOBAL_PATH", "global/");
   define("MODEL_PATH", "model/");
