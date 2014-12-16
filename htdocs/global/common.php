@@ -18,7 +18,7 @@
     exit;
   }
 
-  function initialise_for_form($fields, $array) {
+  function initialise_for_form($fields, $array = array()) {
     $object = array();
     foreach ($fields as $field) {
       $object[$field] = isset($array[$field]) ? $array[$field] : "";

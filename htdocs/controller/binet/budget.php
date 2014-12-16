@@ -33,6 +33,8 @@
   before_action("budget_amount_not_null", array("create", "update"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
+  $form_fields = array("label", "tags_string", "amount");
+
   switch ($_GET["action"]) {
 
   case "index":
@@ -43,7 +45,7 @@
     break;
 
   case "new":
-    $budget = initialise_for_form(array("label", "tags_string", "amount"), $_SESSION["budget"]);
+    $budget = initialise_for_form($form_fields, $_SESSION["budget"]);
     break;
 
   case "create":
@@ -59,6 +61,21 @@
     break;
 
   case "edit":
+    $budget = select_budget($budget, array_merge($form_fields, array("id")));
+    $budget["sign"] = $budget["amount"] > 0 ? true : false;
+    $budget["amount"] *= $budget["sign"] ? 1 : -1;
+    $id = $budget["id"];
+    $budget = initialise_for_form($form_fields, $budget);
+    $first = true;
+    foreach (select_tags_budget($id) as $tag) {
+      if ($first) {
+        $first = false;
+      } else {
+        $budget["tags_string"] .= ";";
+      }
+      $budget["tags_string"] .= select_tag($tag["id"], array("name"))["name"]; 
+    }
+    $budget["id"] = $id;
     break;
 
   case "update":
