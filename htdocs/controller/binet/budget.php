@@ -61,19 +61,23 @@
     break;
 
   case "edit":
-    $budget = select_budget($budget, array_merge($form_fields, array("id")));
-    $budget["sign"] = $budget["amount"] > 0 ? true : false;
-    $budget["amount"] *= $budget["sign"] ? 1 : -1;
-    $id = $budget["id"];
-    $budget = initialise_for_form($form_fields, $budget);
-    $first = true;
-    foreach (select_tags_budget($id) as $tag) {
-      if ($first) {
-        $first = false;
-      } else {
-        $budget["tags_string"] .= ";";
+    $id = $budget;
+    if (isset($_SESSION["budget"])) {
+      $budget = initialise_for_form($form_fields, $_SESSION["budget"]);
+    } else {
+      $budget = select_budget($budget, $form_fields);
+      $budget["sign"] = $budget["amount"] > 0 ? true : false;
+      $budget["amount"] *= $budget["sign"] ? 1 : -1;
+      $budget = initialise_for_form($form_fields, $budget);
+      $first = true;
+      foreach (select_tags_budget($id) as $tag) {
+        if ($first) {
+          $first = false;
+        } else {
+          $budget["tags_string"] .= ";";
+        }
+        $budget["tags_string"] .= select_tag($tag["id"], array("name"))["name"];
       }
-      $budget["tags_string"] .= select_tag($tag["id"], array("name"))["name"]; 
     }
     $budget["id"] = $id;
     break;
@@ -84,6 +88,7 @@
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget);
     }
+    unset($_SESSION["budget"]);
     $_SESSION["notice"][] = "La ligne de budget a été mise à jour avec succès.";
     redirect_to_action("show");
     break;

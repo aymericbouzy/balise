@@ -51,15 +51,20 @@
     break;
 
   case "edit":
-    $operation = select_operation($operation, array_merge($form_fields, array("id"));
-    $operation["sign"] = $operation["amount"] > 0 ? true : false;
-    $operation["amount"] *= $operation["sign"] ? 1 : -1;
-    $id = $operation["id"];
-    $operation = initialise_for_form($form_fields, $operation);
+    $id = $operation;
+    if (isset($_SESSION["operation"])) {
+      $operation = initialise_for_form($form_fields, $_SESSION["operation"]);
+    } else {
+      $operation = select_operation($operation, $form_fields);
+      $operation["sign"] = $operation["amount"] > 0 ? true : false;
+      $operation["amount"] *= $operation["sign"] ? 1 : -1;
+      $operation = initialise_for_form($form_fields, $operation);
+    }
     $operation["id"] = $id;
     break;
 
   case "update":
+    unset($_SESSION["operation"]);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
     redirect_to_action("show");
     break;
