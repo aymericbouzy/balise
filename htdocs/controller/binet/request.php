@@ -21,7 +21,7 @@
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("delete", "send"));
   before_action("check_entry", array("show", "edit", "update", "delete", "send"), array("model_name" => "request", "binet" => $binet, "term" => $term));
-  before_action("member_binet_term", array("new", "create", "edit", "update", "delete", "send"));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "request",
     "str_fields" => array(array("answer", 100000)),

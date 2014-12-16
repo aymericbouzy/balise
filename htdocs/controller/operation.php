@@ -1,6 +1,6 @@
 <?php
 
-  function create_post_binet_term() {
+  function create_post_binet_term_for_check_form() {
     if (!empty($_POST["binet"]) && !empty($_POST["term"])) {
       $binet = select_binet($_POST["binet"], array("clean_name"))["clean_name"];
       $term = $_POST["term"];
@@ -10,22 +10,22 @@
 
   function creator_operation_or_kessier() {
     $operation = select_operation($_GET["operation"], array("created_by", "binet_validation_by", "kes_validation_by"));
-    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_admin_binet(KES_ID) || !empty($operation["kes_validation_by"])), 401);
+    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_admin_current_binet(KES_ID) || !empty($operation["kes_validation_by"])), 401);
   }
 
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("validate", "reject"));
-  before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation");
+  before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation"));
   before_action("current_kessier", array("validate", "reject"));
   before_action("creator_operation_or_kessier", array("show", "edit", "update"));
-  before_action("create_post_binet_term", array("create", "update"));
+  before_action("create_post_binet_term_for_check_form", array("create", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => array(array("term", MAX_TERM)),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student"), array("binet", "exists_binet"), array("binet_term", "exists_binet_term")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : ""),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("generate_csrf_token", array("new", "edit", "show"));

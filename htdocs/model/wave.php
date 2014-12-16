@@ -57,7 +57,7 @@
             WHERE id = :wave
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':wave', $wave, PDO::PARAM_INT);
+    $req->bindValue(':wave', $wave, PDO::PARAM_INT);
     $req->execute();
   }
 

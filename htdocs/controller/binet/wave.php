@@ -12,7 +12,7 @@
   before_action("check_csrf_get", array("publish"));
   subsidy_provider();
   before_action("check_entry", array("show", "edit", "update", "publish"), array("model_name" => "wave", "binet" => $binet, "term" => $term));
-  before_action("member_binet_term", array("new", "create", "edit", "update", "publish"));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "publish"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "wave",
     "str_fields" => array(array("submission_date", MAX_DATE_LENGTH), array("expiry_date", MAX_DATE_LENGTH)),
