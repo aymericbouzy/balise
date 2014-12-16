@@ -18,7 +18,7 @@
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet, "term" => $term));
-  before_action("check_editing_rights", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "budget",
     "str_fields" => array(array("label", 100), array("tags_string", MAX_TAG_STRING_LENGTH)),
@@ -43,13 +43,6 @@
     break;
 
   case "new":
-    break;
-
-  case "new_expense":
-    $budget = initialise_for_form(array("label", "tags_string", "amount"), $_SESSION["budget"]);
-    break;
-
-  case "new_income":
     $budget = initialise_for_form(array("label", "tags_string", "amount"), $_SESSION["budget"]);
     break;
 
