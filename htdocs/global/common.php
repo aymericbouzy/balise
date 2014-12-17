@@ -36,3 +36,15 @@
     }
     return false;
   }
+
+  function set_editable_entry_for_form($table, $id, $form_fields) {
+    if (isset($_SESSION[$table])) {
+      $object = initialise_for_form($form_fields, $_SESSION[$table]);
+    } else {
+      $object = call_user_func("select_".$table, $id, $form_fields);
+      $object = call_user_func($table."_to_form_fields", $object);
+      $object = initialise_for_form($form_fields, $object);
+    }
+    $object["id"] = $id;
+    return $object;
+  }

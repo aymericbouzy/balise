@@ -61,14 +61,9 @@
     break;
 
   case "edit":
-    $id = $budget;
-    if (isset($_SESSION["budget"])) {
-      $budget = initialise_for_form($form_fields, $_SESSION["budget"]);
-    } else {
-      $budget = select_budget($budget, $form_fields);
+    function budget_to_form_fields($budget) {
       $budget["sign"] = $budget["amount"] > 0 ? true : false;
       $budget["amount"] *= $budget["sign"] ? 1 : -1;
-      $budget = initialise_for_form($form_fields, $budget);
       $first = true;
       foreach (select_tags_budget($id) as $tag) {
         if ($first) {
@@ -78,8 +73,9 @@
         }
         $budget["tags_string"] .= select_tag($tag["id"], array("name"))["name"];
       }
+      return $budget;
     }
-    $budget["id"] = $id;
+    $budget = set_editable_entry_for_form("budget", $budget, $form_fields);
     break;
 
   case "update":

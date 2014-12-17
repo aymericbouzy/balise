@@ -51,16 +51,12 @@
     break;
 
   case "edit":
-    $id = $operation;
-    if (isset($_SESSION["operation"])) {
-      $operation = initialise_for_form($form_fields, $_SESSION["operation"]);
-    } else {
-      $operation = select_operation($operation, $form_fields);
+    function operation_to_form_fields($operation) {
       $operation["sign"] = $operation["amount"] > 0 ? true : false;
       $operation["amount"] *= $operation["sign"] ? 1 : -1;
-      $operation = initialise_for_form($form_fields, $operation);
+      return $operation;
     }
-    $operation["id"] = $id;
+    $operation = set_editable_entry_for_form("operation", $operation, $form_fields);
     break;
 
   case "update":

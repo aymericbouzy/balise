@@ -110,7 +110,6 @@
       </tr>
   </tbody>
 
-
 <?php
   $table = ob_get_clean();
 
