@@ -96,18 +96,18 @@
     break;
 
   case "create":
-    // $request = create_request();
-    // foreach ($_POST as $field => $value) {
-    //   $field_elements = explode("_", $field);
-    //   if ($field_elements[0]."_" == amount_prefix && $value > 0) {
-    //     create_subsidy(
-    //       $field_elements[1],
-    //       $request,
-    //       $value,
-    //       array("purpose" => $_POST[adds_purpose_prefix(array("id" => $field_elements[1]))])
-    //     );
-    //   }
-    // }
+    $subsidies = array();
+    foreach ($_POST as $field => $value) {
+      $field_elements = explode("_", $field);
+      if ($field_elements[0]."_" == amount_prefix && $value > 0) {
+        $subsidy = array();
+        $subsidy["budget"] = $field_elements[1];
+        $subsidy["granted_amount"] = $value;
+        $subsidy["optionnal_values"] = array("purpose" => $_POST[purpose_prefix.$field_elements[1]]);
+        $subsidies[] = $subsidy;
+      }
+    }
+    create_request($_POST["wave"], $subsidies, $_POST["answer"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
     redirect_to_action("show");
     break;
@@ -134,6 +134,25 @@
     break;
 
   case "update":
+    update_request($request["id"], array("answer" => $_POST["answer"]));
+    foreach (subsidies_involved() as $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("id", "budget"));
+      $form_field = amount_prefix.$subsidy["budget"];
+      if (empty($_POST[$form_field]) || $_POST[$form_field] == 0) {
+        delete_subsidy($subsidy["id"]);
+      }
+    }
+    foreach ($_POST as $field => $value) {
+      $field_elements = explode("_", $field);
+      if ($field_elements[0]."_" == amount_prefix && $value > 0) {
+        $subsidies = select_subsidies(array("budget" => $field_elements[1], "request" => $request["id"]));
+        if (empty($subsidies)) {
+          create_subsidy($field_elements[1], $request["id"], $value, array("purpose" => $_POST[purpose_prefix.$field_elements[1]]));
+        } else {
+          update_subsidy($subsidies[0]["id"], array("requested_amount" => $value, "purpose" => $_POST[purpose_prefix.$field_elements[1]]));
+        }
+      }
+    }
     $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
