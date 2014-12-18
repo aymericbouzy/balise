@@ -9,7 +9,7 @@
 </div>
 <ul class="nav navbar-right top-nav">
   <li class="dropdown">
-  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       <i class="fa fa-plus-circle green-plus" id="operation-plus"></i> <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu">
@@ -50,8 +50,8 @@
         <?php echo link_to(path("", "home"), "<i class=\"fa fa-fw fa-user\"></i> Autorisations"); ?>
     	</li>
       <li>
-      	<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\"></i> Déconnexion") ?>
-    	</li>
+        <?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\"></i> Déconnexion") ?>
+      </li>
     </ul>
-	</li>
+  </li>
 </ul>
