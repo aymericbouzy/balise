@@ -7,25 +7,6 @@
   </button>
   <?php echo link_to(path("", "home"), "Balise", "navbar-brand"); ?>
 </div>
-
-<!-- <ul class="nav navbar-left top-nav">
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
-    <ul class="dropdown-menu" role="menu">
-      <?php foreach(binet_admins_current_student() as $binet_admin) {
-        $binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
-        ?>
-        <li>
-          <?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
-        </li>
-        <?php
-      }
-      ?>
-    </ul>
-  </li>
-</ul> -->
-
-
 <ul class="nav navbar-right top-nav">
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -69,14 +50,14 @@
       ?>
     </ul>
   </li>
+
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $current_student["name"]; ?> <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li>
-        <!--TODO-->
-        <a href="#"><i class="fa fa-fw fa-user"></i> Autorisations</a>
-      </li>
-      <li class="divider"></li>
+        <!-- TODO : change path to real one -->
+        <?php echo link_to(path("", "home"), "<i class=\"fa fa-fw fa-user\"></i> Autorisations"); ?>
+    	</li>
       <li>
         <?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\"></i> Déconnexion") ?>
       </li>

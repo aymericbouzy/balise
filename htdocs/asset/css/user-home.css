@@ -17,9 +17,7 @@ body {
     }
 }
 
-#wrapper {
-    padding-left: 0;
-}
+
 
 #page-wrapper {
     width: 100%;
@@ -304,7 +302,36 @@ a.tag-red {
 
 /*Search form*/
 .form input {
-	width:75%;
+	width:85%;
 }
 
 
+
+
+
+
+
+.amount-input {
+      display: block;
+        width:100%;
+      height: 30px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #444;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+           -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+              transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+#login-container {
+    display: block;
+    position:absolute;
+    margin: auto;
+}
