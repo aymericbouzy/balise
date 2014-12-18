@@ -1,9 +1,9 @@
 <div class="navbar-header">
   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-  <span class="sr-only">Toggle navigation</span>
-  <span class="icon-bar"></span>
-  <span class="icon-bar"></span>
-  <span class="icon-bar"></span>
+    <span class="sr-only">Toggle navigation</span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
   </button>
   <?php echo link_to(path("", "home"), "Balise", "navbar-brand"); ?>
 </div>
@@ -46,12 +46,12 @@
     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $current_student["name"]; ?> <b class="caret"></b></a>
     <ul class="dropdown-menu">
       <li>
-        	<!--TODO-->
-        	<a href="#"><i class="fa fa-fw fa-user"></i> Autorisations</a>
-      	</li>
+        <!-- TODO : change path to real one -->
+        <?php echo link_to(path("", "home"), "<i class=\"fa fa-fw fa-user\"></i> Autorisations"); ?>
+    	</li>
       <li>
-        	<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\"></i> Déconnexion") ?>
-      	</li>
+      	<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\"></i> Déconnexion") ?>
+    	</li>
     </ul>
-  	</li>
-  </ul>
+	</li>
+</ul>
