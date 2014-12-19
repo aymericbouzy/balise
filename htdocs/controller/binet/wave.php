@@ -21,15 +21,19 @@
   before_action("not_published", array("publish"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
+  $form_fields = array("submission_date", "expiry_date");
+
   switch ($_GET["action"]) {
 
   case "index":
     break;
 
   case "new":
+    $wave = initialise_for_form($form_fields, $_SESSION["wave"]);
     break;
 
   case "create":
+    create_wave($binet, $term, $submission_date, $expiry_date);
     $_SESSION["notice"][] = "Une nouvelle vague de subvention a été ouverte.";
     redirect_to_action("show");
     break;
