@@ -128,7 +128,7 @@
     }
 
     if (!empty($_SESSION["tag_to_create"])) {
-      $_SESSION["return_to"] = $_SERVER["??"];
+      $_SESSION["return_to"] = $_SERVER["REDIRECT_URL"];
       redirect_to_path(path("new", "tag"));
     }
 

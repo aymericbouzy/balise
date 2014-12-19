@@ -155,7 +155,7 @@
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet_admin'
     @param int $student if of the student, int(11) NOT NULL in table 'binet_admin'
   */
-  function remove_admin_binet($binet, $term, $student) {
+  function remove_admin_binet($student, $binet, $term) {
     $sql = "DELETE
             FROM binet_admin
             WHERE binet = :binet AND term = :term AND student = :student
