@@ -28,7 +28,7 @@
       }
       header("HTTP/1.1 ".$header);
 
-      if ($GLOBALS["STATE"] == "development") {
+      if (STATE == "development") {
         echo "\$_GET : ";
         var_dump($_GET);
         echo "\$_SESSION : ";
@@ -40,8 +40,7 @@
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
-      $VIEW_PATH = $GLOBALS["VIEW_PATH"];
-      include $GLOBALS["LAYOUT_PATH"]."application.php";
+      include LAYOUT_PATH."application.php";
       exit;
     }
   }
@@ -111,7 +110,7 @@
 
     if ($array["tags_string"]) {
       if (!empty($_POST["tags_string"])) {
-        foreach (explode($_POST["tags_string"], ";") as $tag_name) {
+        foreach (explode(";", $_POST["tags_string"]) as $tag_name) {
           $tag = select_tags(array("clean_name" => clean_string($tag_name)));
           if (empty($tag)) {
             $_SESSION["tag_to_create"] = remove_exterior_spaces($tag_name);
@@ -136,24 +135,48 @@
     unset($_SESSION[$array["model_name"]]);
   }
 
+  function has_viewing_rights($binet, $term) {
+    return status_admin_current_binet(KES_ID) ||
+      !empty(select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]))) ||
+      received_subsidy_request_from($binet);
+  }
+
+  function has_editing_rights($binet, $term) {
+    $current_term = current_term($binet);
+    $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => $_SESSION["student"]), "term");
+    if (empty($terms_admin)) {
+      return false;
+    }
+    $term_admin = explode("/", $terms_admin[0]["id"])[1];
+    return is_numeric($term_admin) &&
+      $term_admin >= $current_term &&
+      $term_admin <= $term;
+  }
+
+  function check_viewing_rights() {
+    header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+  }
+
+  function check_editing_rights() {
+    header_if(!has_editing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+  }
+
+  // useless
   function kessier() {
-    header_if(!status_binet_admin($KES_ID), 401);
+    header_if(!status_admin_binet(KES_ID), 401);
   }
 
   function current_kessier() {
-    header_if(!status_binet_admin($KES_ID, select_binet($KES_ID, array("current_term"))["current_term"]), 401);
+    header_if(!status_admin_current_binet(KES_ID), 401);
   }
 
+  // useless
   function member_binet_term() {
-    header_if(!status_binet_admin($_GET["binet"], $_GET["term"]), 401);
+    header_if(!status_admin_binet($GLOBALS["binet"], $GLOBALS["term"]), 401);
   }
 
   function member_binet_current_term() {
-    header_if(!status_binet_admin($_GET["binet"], select_binet($_GET["binet"], array("current_term"))["current_term"]), 401);
-  }
-
-  function watcher_binet_term() {
-    header_if(!status_binet_admin($_GET["binet"]) && !status_binet_admin($KES_ID) && !watching_subsidy_requester($_GET["binet"]), 401);
+    header_if(!status_admin_current_binet($GLOBALS["binet"]), 401);
   }
 
   function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
@@ -221,7 +244,7 @@
     }
   }
 
-  function watching_subsidy_requester($binet) {
+  function received_subsidy_request_from($binet) {
     $sql = "SELECT request.id
             FROM request
             INNER JOIN wave
@@ -235,8 +258,8 @@
             WHERE budget.binet = :binet AND binet_admin.student = :student AND request.sent = 1 AND wave.published = 0
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':binet', $binet, PDO::PARAM_INT);
-    $req->bindParma(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return !empty($req->fetch());
   }
@@ -244,7 +267,7 @@
   function compute_query_array() {
     $query_array = array_intersect_key($_GET, array_flip(array("tags")));
     if (!empty($query_array["tags"])) {
-      $tags_clean_names = explode($query_array["tags"], "+");
+      $tags_clean_names = explode("+", $query_array["tags"]);
       $query_array["tags"] = array();
       foreach ($tags_clean_names as $clean_name) {
         $query_array["tags"][] = select_tags(array("clean_name" => $clean_name))[0]["id"];

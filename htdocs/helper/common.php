@@ -5,7 +5,7 @@
   }
 
   function img($src, $alt = "") {
-    return "<img src=\"".$IMG_PATH.$src."\" alt = \"".$alt."\"\>";
+    return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
   }
 
   function form_group_text($label, $field, $object) {

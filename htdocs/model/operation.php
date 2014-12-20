@@ -30,8 +30,8 @@
             WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -41,8 +41,8 @@
             WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -52,7 +52,7 @@
             WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -87,7 +87,7 @@
             FROM operation_budget
             WHERE budget = :budget";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
   }
 
@@ -96,9 +96,9 @@
       $sql = "INSERT INTO operation_budget(operation, budget, amount)
               VALUES(:operation, :budget, :amount)";
       $req = Database::get()->prepare($sql);
-      $req->bindParam(':operation', $operation, PDO::PARAM_INT);
-      $req->bindParam(':budget', $budget, PDO::PARAM_INT);
-      $req->bindParam(':amount', $amount, PDO::PARAM_INT);
+      $req->bindValue(':operation', $operation, PDO::PARAM_INT);
+      $req->bindValue(':budget', $budget, PDO::PARAM_INT);
+      $req->bindValue(':amount', $amount, PDO::PARAM_INT);
       $req->execute();
     }
   }
@@ -108,12 +108,12 @@
             FROM operation_budget
             WHERE operation = :operation";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }
 
   function count_pending_validations($binet, $term) {
-    return count(pending_validations_operations($binet, $term)) + ($binet == $KES_ID ? count(kes_pending_validations_operations()) : 0);
+    return count(pending_validations_operations($binet, $term)) + ($binet == KES_ID ? count(kes_pending_validations_operations()) : 0);
   }
 
   function pending_validations_operations($binet, $term) {

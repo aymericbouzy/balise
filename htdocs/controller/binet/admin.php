@@ -2,12 +2,12 @@
 
   before_action("check_csrf_post", array("create"));
   before_action("check_csrf_get", array("delete"));
-  before_action("check_entry", array("delete"), array("model_name" => "admin", "binet" => $binet["id"], "term" => $term));
-  before_action("kessier", array("new", "create", "delete"));
+  before_action("check_entry", array("delete"), array("model_name" => "admin", "binet" => $binet, "term" => $term));
+  before_action("current_kessier", array("new", "create", "delete"));
   before_action("check_form_input", array("create"), array(
     "model_name" => "admin",
     "other_fields" => array(array("student", "exists_student")),
-    "redirect_to" => path("new", "request", "", binet_prefix($binet["id"], $term))
+    "redirect_to" => path("new", "request", "", binet_prefix($binet, $term))
   ));
   before_action("generate_csrf_token", array("new", "index"));
 

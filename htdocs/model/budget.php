@@ -65,7 +65,7 @@
             ON operation.id = operation_budget.operation
             WHERE operation_budget.budget = :budget AND operation.kes_validation_by != NULL";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch(PDO::FETCH_ASSOC)["real_amount"];
   }
@@ -79,7 +79,7 @@
             ON wave.id = request.wave
             WHERE wave.published = 1 AND subsidy.budget = :budget";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch(PDO::FETCH_ASSOC)["subsidized_amount"];
   }
@@ -93,7 +93,7 @@
             ON wave.id = request.wave
             WHERE wave.published = 1 AND subsidy.budget = :budget";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':budget', $budget, PDO::PARAM_INT);
+    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
     return $req->fetch(PDO::FETCH_ASSOC)["subsidized_amount"];
   }
@@ -133,6 +133,6 @@
             FROM operation_budget
             WHERE operation = :operation";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':operation', $operation, PDO::PARAM_INT);
+    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
   }

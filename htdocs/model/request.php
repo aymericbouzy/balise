@@ -15,7 +15,7 @@
     return $request;
   }
 
-  function select_request($request, $fields = NULL) {
+  function select_request($request, $fields = array()) {
     $request = select_entry(
       "request",
       array("id", "wave", "answer", "sent"),
@@ -64,7 +64,7 @@
             WHERE id = :request
             LIMIT 1";
     $req = Database::get()->prepare($sql);
-    $req->bindParam(':request', $request, PDO::PARAM_INT);
+    $req->bindValue(':request', $request, PDO::PARAM_INT);
     $req->execute();
   }
 
