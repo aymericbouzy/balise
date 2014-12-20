@@ -1,26 +1,13 @@
 <?php
 
-function line_clickable($date,$title,$amount,$origin,$id){
-	/* TODO : put link in goto */
-	return
-	"<tr onclick=\"goto('---LINK HERE USING $id-----')\">
-                                       <td>".$date."</td>
-													<td>".$title."</td>
-													<td>".$origin."</td>
-													<td>".$amount."</td>
-                                    </tr>";
-		
-}
+function validatable_operation_line($operation, $clickable){
+	$operation = select_operation($operation["id"], array("id", "date", "comment", "created_by", "amount", "binet", "term"));
 
-function line_noclickable($date,$title,$amount,$origin,){
-	/* TODO : put link in goto */
-	return
-	"<tr>
-      <td>".$date."</td>
-		<td>".$title."</td>
-		<td>".$origin."</td>
-		<td>".$amount."</td>
-      </tr>";
-		
-}
+	return "<tr ".($clickable ? "onclick=\"goto('".path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"]))."')\"" : "").">
+            <td>".pretty_date($operation["date"])."</td>
+						<td>".$operation["comment"]."</td>
+						<td>".pretty_student($operation["created_by"])."</td>
+						<td>".pretty_amount(-$operation["amount"])."</td>
+          </tr>";
 
+}
