@@ -49,20 +49,18 @@
             <td colspan="7"></td>
           </tr>
         </thead>
-      <tbody>
-        <tr class="total">
-          <td colspan="2">Total</td>
-          <td>1000</td>
-          <td>5000</td>
-          <td>10000</td>
-          <?php
+        <?php
           if ($operation["binet_validation_by"] == NULL) {
             ?>
-            <td id="sum">0</td>
+              <tbody>
+                <tr class="total">
+                  <td colspan="5">Total</td>
+                  <td id="sum">0</td>
+                </tr>
+              </tbody>
             <?php
           }
-          ?>
-        </tr>
+        ?>
         <script>
           function total() {
             var inputs=document.getElementsByTagName('input');
