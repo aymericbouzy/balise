@@ -46,6 +46,8 @@
     break;
 
   case "show":
+    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by"));
+    $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
 
   case "edit":
