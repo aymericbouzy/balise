@@ -11,3 +11,7 @@
     }
     return $csrf_token == $_SESSION["csrf_token"];
   }
+
+  function get_csrf_token() {
+    return $_SESSION["csrf_token"];
+  }

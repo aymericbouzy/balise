@@ -14,3 +14,7 @@
               <input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">
             </div>";
   }
+
+  function form_csrf_token() {
+    return "<input type=\"hidden\" name=\"csrf_token\" value=\"".get_csrf_token()."\">";
+  }

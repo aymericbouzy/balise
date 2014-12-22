@@ -15,7 +15,7 @@
     $query_string = "";
     $include_start_char = URL_REWRITE;
     if ($include_csrf) {
-      $query_array[] = $_SESSION["csrf_token"];
+      $query_array[] = get_csrf_token();
     }
     foreach ($query_array as $key => $value) {
       if (!empty($value)) {

@@ -285,5 +285,5 @@
   }
 
   function check_csrf_get() {
-    header_if(!valid_csrf_token($_GE["csrf_token"]), 401);
+    header_if(!valid_csrf_token($_GET["csrf_token"]), 401);
   }
