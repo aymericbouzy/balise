@@ -11,6 +11,7 @@
     return purpose_prefix.$object["id"];
   }
 
+  // TODO : transform function in constant
   function budgets_involved() {
     return select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
   }
