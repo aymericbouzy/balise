@@ -4,5 +4,5 @@
   <?php echo form_group_text("Tags (séparés par des ';') :", "tags_string", $budget); ?>
   <?php echo form_group_text("Montant prévisionnel :", "amount", $budget); ?>
   <?php echo form_csrf_token(); ?>
-  <div type="submit">Créer</div>
+  <div type="submit"><?php echo $submit_label; ?></div>
 </form>
