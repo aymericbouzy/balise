@@ -49,17 +49,17 @@
     return "./index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
   }
 
-  function write_path_rule($htaccess, $path, $url, $options = "[L,NC,QSA]") {
+  function write_path_rule($path, $url, $options = "[L,NC,QSA]") {
     if (!empty(ROOT_PATH)) {
       $path = substr($path, strlen(ROOT_PATH) + 1);
     }
-    if (fwrite($htaccess, "RewriteRule ^".$path."/?$ ".$url."%{QUERY_STRING} ".$options."
+    if (fwrite($GLOBALS["htaccess"], "RewriteRule ^".$path."/?$ ".$url."%{QUERY_STRING} ".$options."
     ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
     }
   }
 
-  function write_controller_rules($htaccess, $hash) {
+  function write_controller_rules($hash) {
     $hash["except"] = $hash["except"] ?: array();
     $hash["action_on_collection"] = $hash["action_on_collection"] ?: array();
     $hash["action_on_member"] = $hash["action_on_member"] ?: array();
@@ -70,20 +70,17 @@
       $hash["root"] = "index";
     }
     write_path_rule(
-      $htaccess,
       path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
       true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
     );
     foreach ($collection_actions as $action) {
       write_path_rule(
-        $htaccess,
         path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
         true_path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
     }
     foreach ($member_actions as $action) {
       write_path_rule(
-        $htaccess,
         path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
         true_path($action, $hash["controller"], "$".($hash["binet_prefix"] ? "3" : "1"), $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
@@ -107,22 +104,25 @@
       exit;
     }
 
-    write_path_rule($htaccess, ROOT_PATH, true_path("", "home"));
-    if (!URL_REWRITE || !empty(ROOT_PATH)) {
-      write_path_rule($htaccess, "home/login", path("login", "home"), "[NC,QSA]");
-    }
-    write_controller_rules($htaccess, array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
-    write_controller_rules($htaccess, array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate"), "action_on_collection" => array("admin")));
-    write_controller_rules($htaccess, array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
-    write_controller_rules($htaccess, array("controller" => "tag", "except" => array("edit", "update", "delete")));
-    write_controller_rules($htaccess, array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete")));
+    $GLOBALS["htaccess"] = $htaccess;
 
-    write_controller_rules($htaccess, array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
-    write_controller_rules($htaccess, array("controller" => "budget", "binet_prefix" => true));
-    write_controller_rules($htaccess, array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate")));
-    write_controller_rules($htaccess, array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant")));
-    write_controller_rules($htaccess, array("controller" => "validation", "binet_prefix" => true, "except" => array("show", "edit", "update", "new", "create", "delete")));
-    write_controller_rules($htaccess, array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
+    write_path_rule(ROOT_PATH, true_path("", "home"));
+    if (!URL_REWRITE || !empty(ROOT_PATH)) {
+      write_path_rule("home/login", path("login", "home"), "[NC,QSA]");
+    }
+    write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
+    write_controller_rules(array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate"), "action_on_collection" => array("admin")));
+    write_controller_rules(array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
+    write_controller_rules(array("controller" => "tag", "except" => array("edit", "update", "delete")));
+    write_controller_rules(array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete")));
+
+    write_path_rule(path("", "binet", "([a-z-]+)/([0-9]+)"), true_path("", "budget", "", "binet/$1/$2"));
+    write_controller_rules(array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
+    write_controller_rules(array("controller" => "budget", "binet_prefix" => true));
+    write_controller_rules(array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate")));
+    write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant")));
+    write_controller_rules(array("controller" => "validation", "binet_prefix" => true, "except" => array("show", "edit", "update", "new", "create", "delete")));
+    write_controller_rules(array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
 
     fclose($htaccess);
   }

@@ -37,6 +37,8 @@
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term"));
 
+  $binet_form_fields = array()
+
   switch ($_GET["action"]) {
 
   case "index":
