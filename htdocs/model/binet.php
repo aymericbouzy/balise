@@ -183,12 +183,11 @@
     @param int $binet id of the binet ,int(11) NOT NULL in table 'binet'
   */
   function change_term_binet($binet, $term) {
-    $sql = "UPDATE binet
-            SET current_term = :term
-            WHERE id = :binet
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
-    $req->bindValue(':term', $term, PDO::PARAM_INT);
-    $req->execute();
+    update_entry(
+    "binet",
+    array("current_term"),
+    array(),
+    $binet,
+    array("current_term" => $term);
+  );
   }

@@ -32,14 +32,14 @@
   ));
   before_action("check_form_input", array("set_term"), array(
     "model_name" => "binet",
-    "str_fields" => array(array("current_term", MAX_TERM)),
+    "str_fields" => array(array("term", MAX_TERM)),
     "redirect_to" => path("change_term", "binet", $binet, binet_prefix($binet, $term))
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term"));
 
   $binet_form_fields = array("name", "term");
-  $description_form_fields = array();
-  $term_form_fields = array();
+  $description_form_fields = array("name", "description", "subsidy_steps");
+  $term_form_fields = array("term");
 
   switch ($_GET["action"]) {
 
@@ -57,9 +57,14 @@
     break;
 
   case "edit":
+    function binet_to_form_fields($binet) {
+      return $binet;
+    }
+    $binet = set_editable_entry_for_form("binet", $binet, $description_form_fields);
     break;
 
   case "update":
+    update_binet($binet["id"], $_POST);
     $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." a été mis à jour avec succès.";
     redirect_to_action("show");
     break;
@@ -73,14 +78,21 @@
     break;
 
   case "change_term":
+    function binet_to_form_fields($binet) {
+      $binet["term"] = $binet["current_term"];
+      return $binet;
+    }
+    $binet = set_editable_entry_for_form("binet", $binet, $term_form_fields);
     break;
 
   case "set_term":
+    change_term_binet($binet["id"], $_POST["term"]);
     $_SESSION["notice"][] = "Le mandat actuel du binet ".pretty_binet($binet["id"])." a été mis à jour.";
     redirect_to_action("show");
     break;
 
   case "deactivate":
+    deactivate_binet($binet["id"]);
     $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." a été désactivé avec succès.";
     redirect_to_action("show");
     break;
