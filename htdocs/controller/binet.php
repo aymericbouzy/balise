@@ -4,7 +4,7 @@
     $binets = select_tags(array("clean_name" => clean_string($_POST["name"])));
     if (!empty($binets)) {
       $_SESSION["binet"]["errors"][] = "name";
-      $_SESSION["error"][] = "Ce nom de binet (ou un très proche) est déjà utilisé. Veuillez en choisir un autre.";
+      $_SESSION["error"][] = "Ce nom de binet est déjà utilisé par le binet ".pretty_binet($binets[0]["id"]).". Veuillez en choisir un autre.";
     }
   }
 
@@ -37,7 +37,9 @@
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term"));
 
-  $binet_form_fields = array()
+  $binet_form_fields = array("name", "term");
+  $description_form_fields = array();
+  $term_form_fields = array();
 
   switch ($_GET["action"]) {
 
@@ -45,10 +47,12 @@
     break;
 
   case "new":
+    $binet = initialise_for_form($binet_form_fields, $_SESSION["binet"]);
     break;
 
   case "create":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été créé avec succès.";
+    $binet = create_binet($_POST["name"], $_POST["term"]);
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet)." a été créé avec succès.";
     redirect_to_action("show");
     break;
 
@@ -56,12 +60,12 @@
     break;
 
   case "update":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été mis à jour avec succès.";
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." a été mis à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "set_subsidy_provider":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." est devenu un binet subventionneur.";
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." est devenu un binet subventionneur.";
     redirect_to_action("show");
     break;
 
@@ -72,12 +76,12 @@
     break;
 
   case "set_term":
-    $_SESSION["notice"][] = "Le mandat actuel du binet ".$binet["name"]." a été mis à jour.";
+    $_SESSION["notice"][] = "Le mandat actuel du binet ".pretty_binet($binet["id"])." a été mis à jour.";
     redirect_to_action("show");
     break;
 
   case "deactivate":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été désactivé avec succès.";
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." a été désactivé avec succès.";
     redirect_to_action("show");
     break;
 

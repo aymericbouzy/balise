@@ -48,11 +48,11 @@
 
   function update_binet($binet, $hash) {
     if (isset($hash["name"])) {
-      $hash["clean_name"] = clean_string($values["name"]);
+      $hash["clean_name"] = clean_string($hash["name"]);
     }
     update_entry("binet",
-                  array("name", "clean_name"),
-                  array("description"),
+                  array(),
+                  array("description", "name", "clean_name", "subsidy_steps"),
                   $binet,
                   $hash);
   }
@@ -61,14 +61,14 @@
   @param int $binet sets binet to be subsidy_provider if not 0 , tinyint(1) NOT NULL DEFAULT '0' in table 'binet'
   @param string $subsidy_steps text information about how to use/get subsidy, text in table 'binet'
   */
-  function set_subsidy_provider($binet, $subsidy_steps) {
-    $sql = "UPDATE binet
-            SET subsidy_provider = 1, subsidy_steps = :subsidy_steps
-            WHERE id = :binet
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
-    $req->execute(array(':subsidy_steps' => $subsidy_steps));
+  function set_subsidy_provider($binet) {
+    update_entry(
+      "binet",
+      array("subsidy_provider"),
+      array(),
+      $binet,
+      array("subsidy_provider" => 1)
+    );
   }
 
   /*
