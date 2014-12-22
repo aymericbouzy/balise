@@ -184,10 +184,10 @@
   */
   function change_term_binet($binet, $term) {
     update_entry(
-    "binet",
-    array("current_term"),
-    array(),
-    $binet,
-    array("current_term" => $term);
-  );
+      "binet",
+      array("current_term"),
+      array(),
+      $binet,
+      array("current_term" => $term)
+    );
   }

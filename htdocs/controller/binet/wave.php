@@ -42,14 +42,20 @@
     break;
 
   case "edit":
+    function wave_to_form_fields($wave) {
+      return $wave;
+    }
+    $wave = set_editable_entry_for_form("wave", $wave["id"], $form_fields);
     break;
 
   case "update":
+    update_wave($wave["id"], $_POST);
     $_SESSION["notice"][] = "La vague de subventions a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "publish":
+    publish_wave($wave["id"]);
     $_SESSION["notice"][] = "Les attributions de la vague de subvention ont été publiées avec succès.";
     redirect_to_action("show");
     break;
