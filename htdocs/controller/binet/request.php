@@ -65,7 +65,8 @@
     "str_fields" => array_merge(array(array("answer", 100000)), array_map("adds_max_length_purpose", $purpose_array)),
     "amount_fields" => array_map("adds_max_amount", $requested_amount_array),
     "other_fields" => array(array("wave", "exists_wave")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet, $term))
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet, $term)),
+    "optionnal" => array_merge($requested_amount_array, $purpose_array)
   ));
   $granted_amount_array = array_map("adds_amount_prefix", subsidies_involved());
   $explanation_array = array_map("adds_purpose_prefix", subsidies_involved());
