@@ -29,7 +29,7 @@
     break;
 
   case "new":
-    $wave = initialise_for_form($form_fields, $_SESSION["wave"]);
+    $wave = initialise_for_form_from_session($form_fields, "wave");
     break;
 
   case "create":

@@ -8,5 +8,5 @@
   <?php echo form_group_text($question, "answer", $request); ?>
   <?php echo form_group_hidden("wave", $request); ?>
   <?php echo form_csrf_token(); ?>
-  <div type="submit"><?php echo $submit_label; ?></div>
+  <?php echo form_submit_button($submit_label); ?>
 </form>

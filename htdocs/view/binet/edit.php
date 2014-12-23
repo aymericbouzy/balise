@@ -8,5 +8,5 @@
     }
   ?>
   <?php echo form_csrf_token(); ?>
-  <div type="submit">Enregistrer</div>
+  <?php echo form_submit_button("Enregistrer"); ?>
 </form>

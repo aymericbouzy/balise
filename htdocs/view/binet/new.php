@@ -3,5 +3,5 @@
   <?php echo form_group_text("Nom :", "name", $binet); ?>
   <?php echo form_group_text("Promotion du mandat courant :", "term", $binet); ?>
   <?php echo form_csrf_token(); ?>
-  <div type="submit">Créer</div>
+  <?php echo form_submit_button("Créer"); ?>
 </form>

@@ -2,5 +2,5 @@
   <?php echo form_group_text("Les binets peuvent soumettre leur demande de subvention jusqu'au :", "submission_date", $wave); ?>
   <?php echo form_group_text("Les subventions seront valables jusqu'au :", "expiry_date", $wave); ?>
   <?php echo form_csrf_token(); ?>
-  <div type="submit"><?php echo $submit_label; ?></div>
+  <?php echo form_submit_button($submit_label); ?>
 </form>

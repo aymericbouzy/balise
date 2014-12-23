@@ -9,5 +9,5 @@
   <?php echo form_group_text("Type de transaction :", "type", $operation); ?>
   <?php echo form_group_text("Payé par :", "paid_by", $operation); ?>
   <?php echo form_csrf_token(); ?>
-  <div type="submit"><?php echo $submit_label; ?></div>
+  <?php echo form_submit_button($submit_label); ?>
 </form>

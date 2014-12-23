@@ -47,7 +47,7 @@
     break;
 
   case "new":
-    $binet = initialise_for_form($binet_form_fields, $_SESSION["binet"]);
+    $binet = initialise_for_form_from_session($binet_form_fields, "binet");
     break;
 
   case "create":

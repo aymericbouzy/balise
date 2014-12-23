@@ -45,7 +45,7 @@
     break;
 
   case "new":
-    $budget = initialise_for_form($form_fields, $_SESSION["budget"]);
+    $budget = initialise_for_form_from_session($form_fields, "budget");
     break;
 
   case "create":

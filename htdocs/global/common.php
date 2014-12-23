@@ -18,6 +18,10 @@
     exit;
   }
 
+  function initialise_for_form_from_session($fields, $form_name) {
+    return initialise_for_form($fields, isset($_SESSION[$form_name]) ? $_SESSION[$form_name] : array());
+  }
+
   function initialise_for_form($fields, $array = array()) {
     $object = array();
     foreach ($fields as $field) {
@@ -39,7 +43,7 @@
 
   function set_editable_entry_for_form($table, $id, $form_fields) {
     if (isset($_SESSION[$table])) {
-      $object = initialise_for_form($form_fields, $_SESSION[$table]);
+      $object = initialise_for_form_from_session($form_fields, $table);
     } else {
       $object = call_user_func("select_".$table, $id, $form_fields);
       $object = call_user_func($table."_to_form_fields", $object);

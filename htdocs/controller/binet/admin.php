@@ -26,7 +26,7 @@
     break;
 
   case "new":
-    $admin = initialise_for_form($form_fields, $_SESSION["admin"]);
+    $admin = initialise_for_form_from_session($form_fields, "admin");
     break;
 
   case "create":

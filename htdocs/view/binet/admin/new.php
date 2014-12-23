@@ -3,5 +3,5 @@
   <?php echo form_group_text("Administrateur :", "student", $admin); ?>
   <?php echo form_group_text("Mandat :", "term", $admin); ?>
   <?php echo form_csrf_token(); ?>
-  <div type="submit">Créer</div>
+  <?php echo form_submit_button("Créer"); ?>
 </form>

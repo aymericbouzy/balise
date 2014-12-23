@@ -72,7 +72,7 @@
     break;
 
   case "new":
-    $operation = initialise_for_form($form_fields, $_SESSION["operation"]);
+    $operation = initialise_for_form_from_session($form_fields, "operation");
     break;
 
   case "create":
@@ -83,7 +83,7 @@
 
   case "show":
     if (!empty(select_operation($operation["id"], array("binet_validation_by"))["binet_validation_by"])) {
-      $operation = initialise_for_form($amount_array, $_SESSION["operation"]);
+      $operation = initialise_for_form_from_session($amount_array, "operation");
     }
     break;
 
