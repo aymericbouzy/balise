@@ -109,8 +109,8 @@
       return strcmp($s1["expiry_date"], $s2["expiry_date"]);
     }
     usort($subsidies, "sort_by_date");
-    foreach(select_operations_budget($budget, "date") as $operation) {
-      $operation = select_operation($operation, array("date", "amount"));
+    foreach(select_operations_budget($budget) as $operation) {
+      $operation = select_operation($operation["id"], array("date", "amount"));
       $i = 0;
       while(isset($subsidies[$i]) && $operation["amount"] < 0) {
         if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {

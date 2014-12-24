@@ -29,5 +29,5 @@
   }
 
   function form_submit_button($label) {
-    return "<div type=\"submit\" class=\"btn btn-default\">".$label."</div>";
+    return "<input type=\"submit\" class=\"btn btn-default\" value=\"".$label."\">";
   }

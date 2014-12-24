@@ -1,6 +1,6 @@
-<form role="form" id="request" action="<?php echo path($form_action, "request", $form_action == "create" ? "" : $request["id"], binet_prefix($binet, $term)); ?>" method="post">
+<form role="form" id="request" action="/<?php echo path($form_action, "request", $form_action == "create" ? "" : $request["id"], binet_prefix($binet, $term)); ?>" method="post">
   <?php
-    foreach (budgets_involved() as $budget) {
+    foreach ($budgets_involved as $budget) {
       echo form_group_text(pretty_budget("Montant pour le budget ".$budget["id"])." :", adds_amount_prefix($budget), $request);
       echo form_group_text(pretty_budget("Raison de la demande pour le budget ".$budget["id"])." :", adds_purpose_prefix($budget), $request);
     }

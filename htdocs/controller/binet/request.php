@@ -11,13 +11,18 @@
     return purpose_prefix.$object["id"];
   }
 
-  // TODO : transform function in constant
-  function budgets_involved() {
-    return select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
+  function setup_for_editing() {
+    $GLOBALS["budgets_involved"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array(">", 0)));
+    $GLOBALS["requested_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["budgets_involved"]);
+    $GLOBALS["purpose_array"] = array_map("adds_purpose_prefix", $GLOBALS["budgets_involved"]);
+    $GLOBALS["edit_form_fields"] = array_merge(array("answer", "wave"), $GLOBALS["requested_amount_array"], $GLOBALS["purpose_array"]);
   }
 
-  function subsidies_involved() {
-    return select_subsidies(array("request" => $GLOBALS["request"]));
+  function setup_for_review() {
+    $GLOBALS["subsidies_involved"] = select_subsidies(array("request" => $GLOBALS["request"]));
+    $GLOBALS["granted_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["subsidies_involved"]);
+    $GLOBALS["explanation_array"] = array_map("adds_purpose_prefix", $GLOBALS["subsidies_involved"]);
+    $GLOBALS["review_form_fields"] = array_merge($GLOBALS["granted_amount_array"], $GLOBALS["explanation_array"]);
   }
 
   function adds_max_amount($amount) {
@@ -58,8 +63,7 @@
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant"), array("model_name" => "request", "binet" => $binet, "term" => $term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant"));
-  $requested_amount_array = array_map("adds_amount_prefix", budgets_involved());
-  $purpose_array = array_map("adds_purpose_prefix", budgets_involved());
+  before_action("setup_for_editing", array("create", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "request",
     "str_fields" => array_merge(array(array("answer", 100000)), array_map("adds_max_length_purpose", $purpose_array)),
@@ -68,8 +72,7 @@
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet, $term)),
     "optionnal" => array_merge($requested_amount_array, $purpose_array)
   ));
-  $granted_amount_array = array_map("adds_amount_prefix", subsidies_involved());
-  $explanation_array = array_map("adds_purpose_prefix", subsidies_involved());
+  before_action("setup_for_review", array("grant"));
   before_action("check_form_input", array("grant"), array(
     "model_name" => "request",
     "str_fields" => $explanation_array,
@@ -80,16 +83,13 @@
   before_action("sent_and_not_published", array("review", "grant"));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
-  $edit_form_fields = array_merge(array("answer", "wave"), $requested_amount_array, $purpose_array);
-  $review_form_fields = array_merge($granted_amount_array, $explanation_array);
-
   switch ($_GET["action"]) {
 
   case "index":
     break;
 
   case "new":
-    foreach (budgets_involved() as $budget) {
+    foreach ($budgets_involved as $budget) {
       $request["budget"][$budget["id"]] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used"));
       foreach (select_tags(array("budget" => $budget["id"])) as $tag) {
         $request["budget"][$budget["id"]]["tags"][] = select_tag($tag["id"], array("id", "name"));
@@ -119,7 +119,7 @@
 
   case "edit":
     function request_to_form_fields($request) {
-      foreach (budgets_involved() as $budget) {
+      foreach ($budgets_involved as $budget) {
         $subsidies = select_subsidies(array("budget" => $budget["id"]));
         if (empty($subsidies)) {
           $request[add_amount_prefix($budget)] = 0;

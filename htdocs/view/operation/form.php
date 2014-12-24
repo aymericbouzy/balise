@@ -1,4 +1,4 @@
-<form role="form" id="operation" action="<?php echo path($form_action, "operation", $form_action == "create" ? "" : $operation["id"]); ?>" method="post">
+<form role="form" id="operation" action="/<?php echo path($form_action, "operation", $form_action == "create" ? "" : $operation["id"]); ?>" method="post">
   <?php echo form_group_text("Binet :", "binet", $operation); ?>
   <?php echo form_group_text("Mandat :", "term", $operation); ?>
   <?php echo form_group_text("Description :", "comment", $operation); ?>

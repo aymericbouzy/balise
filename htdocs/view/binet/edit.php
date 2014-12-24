@@ -1,5 +1,5 @@
 <h1>Modifier les informations du binet</h1>
-<form role="form" id="binet" action="<?php echo path("update", "binet", $binet["id"]); ?>" method="post">
+<form role="form" id="binet" action="/<?php echo path("update", "binet", $binet["id"]); ?>" method="post">
   <?php echo form_group_text("Nom :", "name", $binet); ?>
   <?php echo form_group_text("Description :", "description", $binet); ?>
   <?php

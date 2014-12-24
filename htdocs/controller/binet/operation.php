@@ -55,7 +55,7 @@
     "other_fields" => array(array("amounts_sum", "equals_operation_amount")),
     "redirect_to" => path("show", "operation", $operation["id"], binet_prefix($binet, $term)),
     "optionnal" => $amount_array
-  )):
+  ));
   before_action("sign_is_one_or_minus_one", array("create", "update"));
   before_action("operation_does_not_change_sign", array("update"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
@@ -77,7 +77,7 @@
 
   case "create":
     $operation = create_operation($binet, $term, $_POST["sign"]*$_POST["amount"], $_POST["type"], $_POST);
-    $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.");
+    $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("show");
     break;
 

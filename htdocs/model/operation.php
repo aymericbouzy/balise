@@ -89,6 +89,7 @@
     $req = Database::get()->prepare($sql);
     $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
+    return $req->fetchAll();
   }
 
   function add_budgets_operation($operation, $amounts) {
