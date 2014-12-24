@@ -22,6 +22,7 @@
   function form_group_checkbox($label, $field, $object) {
     return "<div class=\"checkbox\">
               <label>
+                <input type=\"hidden\" name=\"".$field."\" value=\"0\">
                 <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"true\"".(empty($object[$field]) ? "" : " checked").">
                 ".$label."
               </label>

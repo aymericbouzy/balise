@@ -52,3 +52,7 @@
     $object["id"] = $id;
     return $object;
   }
+
+  function remove_exterior_spaces($string) {
+    return preg_replace("/^\s*(\S(.*\S)?)\s*$/", "$1", $string);
+  }
