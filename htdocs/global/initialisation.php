@@ -14,6 +14,7 @@
   include MODEL_PATH."budget.php";
   include MODEL_PATH."tag.php";
   include MODEL_PATH."operation.php";
+  include MODEL_PATH."operation_types.php";
   include MODEL_PATH."subsidy.php";
   include MODEL_PATH."request.php";
   include MODEL_PATH."student.php";

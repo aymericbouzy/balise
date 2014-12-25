@@ -7,7 +7,7 @@
     $values["type"] = $type;
     $values["created_by"] = $_SESSION["student"];
     $values["date"] = array("date", "CURDATE()");
-    return create_operation(
+    return create_entry(
       "operation",
       array("binet", "term", "amount", "created_by", "paid_by", "type"),
       array("date", "bill", "reference", "comment"),

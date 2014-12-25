@@ -8,8 +8,8 @@
     return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
   }
 
-  function form_group_text($label, $field, $object) {
-    return "<div class=\"form-group\">
+  function form_group_text($label, $field, $object, $object_name) {
+    return "<div class=\"form-group".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
               <label for=\"".$field."\">".$label."</label>
               <input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">
             </div>";
@@ -19,11 +19,11 @@
     return "<input type=\"hidden\" name=\"csrf_token\" value=\"".get_csrf_token()."\">";
   }
 
-  function form_group_checkbox($label, $field, $object) {
-    return "<div class=\"checkbox\">
+  function form_group_checkbox($label, $field, $object, $object_name) {
+    return "<div class=\"checkbox".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
               <label>
                 <input type=\"hidden\" name=\"".$field."\" value=\"0\">
-                <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"true\"".(empty($object[$field]) ? "" : " checked").">
+                <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(empty($object[$field]) ? "" : " checked").">
                 ".$label."
               </label>
             </div>";

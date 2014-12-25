@@ -52,7 +52,7 @@
     ON request.wave = wave.id
     WHERE request.id = :request AND binet_admin.student = :student";
     $req = Database::get()->prepare($sql);
-    $req->bindValue(':request', $GLOBALS["request"], PDO::PARAM_INT);
+    $req->bindValue(':request', $GLOBALS["request"]["id"], PDO::PARAM_INT);
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
     return !empty($req->fetch());

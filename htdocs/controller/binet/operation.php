@@ -14,6 +14,8 @@
     return array($amount, MAX_AMOUNT);
   }
 
+  $amount_array = array();
+
   function setup_for_validation() {
     $total_amount = select_operation($GLOBALS["operation"]["id"], array("amount"))["amount"];
     $GLOBALS["binet_budgets"] = select_budgets(array("binet" => $binet, "term" => $term, "amount" => array($total_amount > 0 ? ">" : "<", 0)));
@@ -44,6 +46,7 @@
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
+    "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
@@ -53,14 +56,16 @@
     "model_name" => "operation",
     "amount_fields" => array_map("adds_max_amount", $amount_array),
     "other_fields" => array(array("amounts_sum", "equals_operation_amount")),
-    "redirect_to" => path("show", "operation", $operation["id"], binet_prefix($binet, $term)),
+    "redirect_to" => path("show", "operation", $_GET["action"] == "validate" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optionnal" => $amount_array
   ));
-  before_action("sign_is_one_or_minus_one", array("create", "update"));
   before_action("operation_does_not_change_sign", array("update"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
-  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign");
+  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by");
+  if ($_GET["action"] == "new") {
+    $form_fields[] = "sign";
+  }
 
   switch ($_GET["action"]) {
 
@@ -76,7 +81,7 @@
     break;
 
   case "create":
-    $operation = create_operation($binet, $term, $_POST["sign"]*$_POST["amount"], $_POST["type"], $_POST);
+    $operation["id"] = create_operation($binet, $term, ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("show");
     break;
@@ -89,7 +94,7 @@
 
   case "edit":
     function operation_to_form_fields($operation) {
-      $operation["sign"] = $operation["amount"] > 0 ? true : false;
+      $operation["sign"] = $operation["amount"] > 0 ? 1 : 0;
       $operation["amount"] *= $operation["sign"] ? 1 : -1;
       return $operation;
     }
