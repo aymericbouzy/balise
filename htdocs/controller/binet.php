@@ -22,18 +22,18 @@
     "str_fields" => array(array("name", 30), array("description", 10000)),
     "other_fields" => array(array("name", "check_unique_clean_name")),
     "int_fields" => array(array("current_term", MAX_TERM)),
-    "redirect_to" => path("new", "binet", "", binet_prefix($binet, $term))
+    "redirect_to" => path("new", "binet", "")
   ));
   before_action("check_form_input", array("update"), array(
     "model_name" => "binet",
     "str_fields" => array(array("description", 10000), array("subsidy_steps", 50000)),
-    "redirect_to" => path("edit", "binet", $binet, binet_prefix($binet, $term)),
+    "redirect_to" => path("edit", "binet", $binet),
     "optionnal" => array("description", "subsidy_steps")
   ));
   before_action("check_form_input", array("set_term"), array(
     "model_name" => "binet",
     "str_fields" => array(array("term", MAX_TERM)),
-    "redirect_to" => path("change_term", "binet", $binet, binet_prefix($binet, $term))
+    "redirect_to" => path("change_term", "binet", $binet)
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term"));
 
