@@ -73,7 +73,7 @@
     $_SESSION[$array["model_name"]] = $_POST;
     $array["str_fields"] = isset($array["str_fields"]) ? $array["str_fields"] : array();
     $array["int_fields"] = isset($array["int_fields"]) ? $array["int_fields"] : array();
-    $array["amount_fields"] = isset($array["ammount_fields"]) ? $array["ammount_fields"] : array();
+    $array["amount_fields"] = isset($array["amount_fields"]) ? $array["amount_fields"] : array();
     $array["other_fields"] = isset($array["other_fields"]) ? $array["other_fields"] : array();
 
     foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"], $array["other_fields"]) as $index => $field) {
@@ -92,14 +92,14 @@
       $_POST[$field[0]] = substr(htmlspecialchars($_POST[$field[0]]), 0, $field[1]);
     }
 
-    foreach ($array["amount_fields"] as $field) {
-      $_POST[$field[0]] = floor($_POST[$field[0]] * 100);
-    }
-
     foreach (array_merge($array["amount_fields"], $array["int_fields"]) as $field) {
       if (!is_numeric($_POST[$field[0]]) || $_POST[$field[0]] < 0 || $_POST[$field[0]] > $field[1]) {
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
+    }
+
+    foreach ($array["amount_fields"] as $field) {
+      $_POST[$field[0]] = floor($_POST[$field[0]] * 100);
     }
 
     foreach ($array["other_fields"] as $field) {

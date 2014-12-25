@@ -39,11 +39,11 @@
     break;
 
   case "create":
-    $budget = create_budget($binet, $term, $_POST["sign"]*$_POST["amount"], $_POST["label"]);
+    $budget["id"] = create_budget($binet, $term, ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
-      add_tag_budget($tag, $budget);
+      add_tag_budget($tag, $budget["id"]);
     }
-    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
+    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.".$_POST["sign"]." ".$_POST["amount"]." ".(($_POST["sign"]*2 - 1)*$_POST["amount"]);
     redirect_to_action("show");
     break;
 
