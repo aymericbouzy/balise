@@ -111,11 +111,12 @@
     if ($array["tags_string"]) {
       if (!empty($_POST["tags_string"])) {
         foreach (explode(";", $_POST["tags_string"]) as $tag_name) {
-          $tag = select_tags(array("clean_name" => clean_string($tag_name)));
-          if (empty($tag)) {
-            $_SESSION["tag_to_create"] = remove_exterior_spaces($tag_name);
+          $tag_name = remove_exterior_spaces($tag_name);
+          $tags = select_tags(array("clean_name" => clean_string($tag_name)));
+          if (empty($tags)) {
+            $_SESSION["tag_to_create"] = $tag_name;
           } else {
-            $GLOBALS["tags"][] = $tag[0]["id"];
+            $GLOBALS["tags"][] = $tags[0]["id"];
           }
         }
       } else {
@@ -128,7 +129,7 @@
     }
 
     if (!empty($_SESSION["tag_to_create"])) {
-      $_SESSION["return_to"] = $_SERVER["REDIRECT_URL"];
+      $_SESSION["return_to"] = binet_prefix($GLOBALS["binet"], $GLOBALS["term"]);
       redirect_to_path(path("new", "tag"));
     }
 
@@ -276,14 +277,10 @@
     return $query_array;
   }
 
-  function sign_is_one_or_minus_one() {
-    header_if(!validate_input(array("sign"), array(), "post"), 400);
-  }
-
   function check_csrf_post() {
-    header_if(!valid_csrf_token($_POST["csrf_token"]), 401);
+    header_if(!isset($_POST["csrf_token"]) || !valid_csrf_token($_POST["csrf_token"]), 401);
   }
 
   function check_csrf_get() {
-    header_if(!valid_csrf_token($_GET["csrf_token"]), 401);
+    header_if(!isset($_GET["csrf_token"]) || !valid_csrf_token($_GET["csrf_token"]), 401);
   }

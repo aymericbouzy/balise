@@ -9,7 +9,7 @@
   }
 
   function redirect_to_action($action) {
-    $path = path($action, $_GET["controller"], ($GLOBALS[$_GET["controller"]]["id"] ?: ""), ($_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
+    $path = path($action, $_GET["controller"], (isset($GLOBALS[$_GET["controller"]]["id"]) ? $GLOBALS[$_GET["controller"]]["id"] : ""), ($_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
     redirect_to_path($path);
   }
 
@@ -55,4 +55,9 @@
 
   function remove_exterior_spaces($string) {
     return preg_replace("/^\s*(\S(.*\S)?)\s*$/", "$1", $string);
+  }
+
+  function tag_is_selected($tag, $query_array) {
+    // TODO
+    return false;
   }

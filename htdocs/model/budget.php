@@ -13,7 +13,7 @@
     );
   }
 
-  function select_budget($budget, $fields = NULL) {
+  function select_budget($budget, $fields = array()) {
     $budget = select_entry(
       "budget",
       array("id", "binet", "amount", "term", "label"),
@@ -36,6 +36,7 @@
         break;
       }
     }
+    return $budget;
   }
 
   function select_budgets($criteria, $order_by = NULL, $ascending = true) {
