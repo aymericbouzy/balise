@@ -1,0 +1,110 @@
+/* Show CSS */
+/* Operation */
+/* Theme colors :
+#2e2e2e Dark grey
+#ea8939 Orange
+#87cefa Light blue
+*/
+.show-container {
+  position: relative;
+  width:auto;
+  margin: auto;
+}
+
+.sh-op-title {
+  height: 130px;
+  margin: 5px;
+  background-color:#87cefa;
+}
+
+.sh-op-title>.logo {
+  display: inline-block;
+  width:130px;
+  padding: 30px;
+}
+.sh-op-title>.text {
+  display: inline-block;
+}
+.sh-op-title>.text>.binet-name {
+  font-size: 40px;
+  display: block;
+  padding: 5px;
+  /*Limit size*/
+  overflow: hidden;
+  max-width: 240px;
+  max-height: 70px;
+}
+.sh-op-title>.text>.binet-year {
+  display: block;
+  padding: 5px;
+  overflow: hidden;
+  max-width:240px;
+  max-height: 40px;
+}
+
+.sh-op-amount {
+  margin:5px;
+  height:100px;
+  padding : 20px;
+  background-color: #ea8939;
+  /* Text properties */
+  font-size: 40px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.sh-op-refs {
+  margin: 5px;
+  height: 100px;
+  padding: 25px;
+  background-color: #2e2e2e;
+  /* Text properties */
+  text-align: center;
+  font-size: 15px;
+  color:#87cefa;
+  overflow: hidden;
+}
+
+.sh-op-info {
+  height: auto;
+  margin: 5px;
+  margin-top: 0px;
+  padding: 20px;
+  background-color: #87cefa;
+}
+
+.sh-op-payer {
+  height: 100px;
+  margin: 5px;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #ea8939 ;
+  text-align: center;
+  font-size: 50px;
+}
+
+@media( min-width:543px){
+  .show-container {
+    position: relative;
+    width:543px;
+    margin: auto;
+  }
+  .sh-op-title>.text>.binet-name {
+    max-width: 384px;
+    max-height: 70px;
+  }
+  .sh-op-title>.text>.binet-year {
+    max-width: 384px;
+    max-height: 50px;
+  }
+
+  .sh-op-amount {
+    display:inline-block;
+    width:289px;
+  }
+
+  .sh-op-refs {
+    display: inline-block;
+    width:230px;
+  }
+}
