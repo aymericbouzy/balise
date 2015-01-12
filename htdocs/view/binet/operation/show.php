@@ -1,4 +1,4 @@
-<link href="../css/user-home.css" rel="stylesheet">
+<link href="<?php echo ASSET_PATH; ?>/css/show-operation.css" rel="stylesheet">
 <div class="show-container">
   <div class="sh-op-title">
     <div class="logo">

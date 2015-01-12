@@ -21,6 +21,7 @@
   display: inline-block;
   width:130px;
   padding: 30px;
+  vertical-align: text-bottom;
 }
 .sh-op-title>.text {
   display: inline-block;

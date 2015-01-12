@@ -1,0 +1,44 @@
+<link href="<?php echo ASSET_PATH; ?>/css/show-wave.css" rel="stylesheet">
+<div class="show-container">
+  <div class="sh-wa-title">
+    <div class="logo">
+      <i class="fa fa-5x fa-star"></i>
+    </div>
+    <div class="text">
+      <p class="binet-name">
+        <!-- TODO Nom du binet subventionneur : Forum etc. -->
+      </p>
+      <p class="wave-time">
+        <!-- TODO mois de la vague : ex Juin 2014 -->
+      </p>
+    </div>
+  </div>
+  <div class="sh-wa-dates">
+    <span class="submission-date">
+      Demandes avant le :
+      <!-- TODO date limite de soumission des demandes sous la forme dd/mm/yyyy -->
+    </span>
+    <span class="validity-date">
+      Limite de validité :
+      <!-- TODO date limite de validités des subvnetions sous la forme dd/mm/yyyy -->
+    </span>
+  </div>
+  <!-- TODO pour la vague, toutes les requêtes associées -->
+  <div class="sh-wa-request" onclick="window.location.href='index.html'">
+    <p class="icon">
+      <!-- TODO check SI le dmeande a été accordéee
+      times sinon -->
+      <i class="fa fa-3x fa-check"></i>
+      <i class="fa fa-3x fa-times"></i>
+    </p>
+    <p class="binet">
+      <!-- TODO nom du binet demandeur-->
+    </p>
+    <p class="amount">
+      <!-- TODO montant--> <i class="fa fa-euro"></i>
+    </p>
+  </div>
+  <div class="sh-wa-request">
+
+  </div>
+</div>
