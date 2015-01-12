@@ -1,16 +1,3 @@
-/* Show CSS */
-/* Operation */
-/* Theme colors :
-#2e2e2e Dark grey
-#ea8939 Orange
-#87cefa Light blue
-*/
-.show-container {
-  position: relative;
-  width:auto;
-  margin: auto;
-}
-
 .sh-op-title {
   height: 130px;
   margin: 5px;
@@ -85,11 +72,6 @@
 }
 
 @media( min-width:543px){
-  .show-container {
-    position: relative;
-    width:543px;
-    margin: auto;
-  }
   .sh-op-title>.text>.binet-name {
     max-width: 384px;
     max-height: 70px;
