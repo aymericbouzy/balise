@@ -1,0 +1,26 @@
+.sh-bu-ratio {
+  display: table;
+  height: 50px;
+  font-size: 20px;
+  width: 98%;
+  margin: 5px;
+  background-color:#87cefa;
+}
+
+.sh-bu-ratio>.header {
+  text-indent: 15px;
+  background-color: #2e2e2e;
+  color: #87cefa;
+}
+
+.sh-bu-ratio>div>.used {
+  display: inline-block ;
+  text-align: center;
+  background-color: #ea8939;
+}
+.sh-bu-tags {
+  margin: 5px;
+  padding: 10px;
+  min-height: 30px;
+  background-color: #87cefa ;
+}
