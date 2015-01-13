@@ -1,15 +1,15 @@
 <link href="<?php echo ASSET_PATH; ?>/css/show.css" rel="stylesheet">
 <link href="<?php echo ASSET_PATH; ?>/css/show-request.css" rel="stylesheet">
 <div class="show-container">
-  <div class="sh-req-title">
+  <div class="sh-title">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
     </div>
     <div class="text">
-      <p class="binet-name">
+      <p class="main">
         <!-- TODO nom du binet-->
       </p>
-      <p class="wave-name">
+      <p class="sub">
         <!-- TODO nom conventionnel de la vague-->
       </p>
     </div>

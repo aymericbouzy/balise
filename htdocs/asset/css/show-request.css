@@ -1,37 +1,3 @@
-.sh-req-title {
-  height: 130px;
-  margin: 5px;
-  background-color: #87cefa;
-}
-
-.sh-req-title>.logo {
-  padding: 30px;
-  display: inline-block;
-  width:130px;
-  vertical-align: text-bottom;
-}
-
-.sh-req-title>.text {
-  display: inline-block;
-}
-
-.sh-req-title>.text>.binet-name {
-  font-size: 40px;
-  display: block;
-  padding: 5px;
-  /*Limit size*/
-  overflow: hidden;
-  max-width: 240px;
-  max-height: 70px;
-}
-.sh-req-title>.text>.wave-name {
-  display: block;
-  padding: 5px;
-  overflow: hidden;
-  max-width:240px;
-  max-height: 40px;
-}
-
 .sh-req-dates {
   height: auto;
   margin: 5px;

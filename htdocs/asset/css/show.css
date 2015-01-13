@@ -12,10 +12,54 @@
   color: #2e2e2e;
 }
 
+.sh-title {
+  height: 130px;
+  margin: 5px;
+  background-color: #87cefa;
+}
+
+.sh-title>.logo {
+  padding: 30px;
+  display: inline-block;
+  width:130px;
+  vertical-align: text-bottom;
+}
+
+.sh-title>.text {
+  display: inline-block;
+}
+
+.sh-title>.text>.main {
+  font-size: 30px;
+  display: block;
+  padding: 5px;
+  /*Limit size*/
+  overflow: hidden;
+  max-width: 240px;
+  max-height: 70px;
+}
+.sh-title>.text>.sub {
+  display: block;
+  padding: 5px;
+  overflow: hidden;
+  max-width:240px;
+  max-height: 40px;
+}
+
+
 @media(min-width:543px){
   .show-container {
     position: relative;
     width:543px;
     margin: auto;
+  }
+
+  .sh-title>.text>.main {
+    max-width: 384px;
+    max-height: 70px;
+  }
+  .sh-title>.text>.sub {
+    max-width: 384px;
+    max-height: 30px;
   }
 }

@@ -1,15 +1,15 @@
 <link href="<?php echo ASSET_PATH; ?>/css/show.css" rel="stylesheet">
 <link href="<?php echo ASSET_PATH; ?>/css/show-wave.css" rel="stylesheet">
 <div class="show-container">
-  <div class="sh-wa-title">
+  <div class="sh-title">
     <div class="logo">
       <i class="fa fa-5x fa-star"></i>
     </div>
     <div class="text">
-      <p class="binet-name">
+      <p class="main">
         <!-- TODO Nom du binet subventionneur : Forum etc. -->
       </p>
-      <p class="wave-time">
+      <p class="sub">
         <!-- TODO mois de la vague : ex Juin 2014 -->
       </p>
     </div>

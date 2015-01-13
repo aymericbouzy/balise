@@ -1,15 +1,15 @@
 <link href="<?php echo ASSET_PATH; ?>/css/show.css" rel="stylesheet">
 <link href="<?php echo ASSET_PATH; ?>/css/show-operation.css" rel="stylesheet">
 <div class="show-container">
-  <div class="sh-op-title">
+  <div class="sh-title">
     <div class="logo">
       <i class="fa fa-calculator fa-5x"></i>
     </div>
     <div class="text">
-      <div class="binet-name">
+      <div class="main">
         <!-- Nom du binet -->
       </div>
-      <div class="binet-year">
+      <div class="sub">
         Mandat <!-- Année de mandat du binet-->
       </div>
     </div>
