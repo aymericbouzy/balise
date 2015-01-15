@@ -1,9 +1,8 @@
 /* Show CSS */
-/* Operation */
 /* Theme colors :
 #2e2e2e Dark grey
-#ea8939 Orange
-#87cefa Light blue
+#3399FF Blue
+#cbddff Light blue
 */
 .show-container {
   position: relative;
@@ -15,7 +14,7 @@
 .sh-title {
   height: 130px;
   margin: 5px;
-  background-color: #87cefa;
+  background-color: #cbddff;
 }
 
 .sh-title>.logo {

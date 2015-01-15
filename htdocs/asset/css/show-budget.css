@@ -4,23 +4,23 @@
   font-size: 20px;
   width: 98%;
   margin: 5px;
-  background-color:#87cefa;
+  background-color:#cbddff;
 }
 
 .sh-bu-ratio>.header {
   text-indent: 15px;
   background-color: #2e2e2e;
-  color: #87cefa;
+  color: #cbddff;
 }
 
 .sh-bu-ratio>div>.used {
   display: inline-block ;
   text-align: center;
-  background-color: #ea8939;
+  background-color: #3399FF;
 }
 .sh-bu-tags {
   margin: 5px;
   padding: 10px;
   min-height: 30px;
-  background-color: #87cefa ;
+  background-color: #cbddff ;
 }

@@ -11,12 +11,12 @@
   font-size: 20px;
   width: 98%;
   margin: 5px;
-  background-color:#87cefa;
+  background-color:#cbddff;
 }
 
 .sh-req-budget>.header {
   background-color: #2e2e2e;
-  color: #87cefa;
+  color: #cbddff;
 }
 
 
@@ -38,7 +38,7 @@
 .sh-req-budget>.content>.amount {
   width:100%;
   text-indent: 10px;
-  background-color: #ea8939;
+  background-color: #3399FF;
 }
 
 
@@ -60,13 +60,13 @@
 
   .sh-req-budget>.header {
     background-color: #2e2e2e;
-    color: #87cefa;
+    color: #cbddff;
     height:30px;
     -webkit-transition: color 0.2s, background-color 0.2s;
     transition: color 0.2s , background-color 0.2s;
   }
   .sh-req-budget>.header:hover {
-    color: #ea8939;
+    color: #3399FF;
     background-color: #3e3e3e;
   }
 }
