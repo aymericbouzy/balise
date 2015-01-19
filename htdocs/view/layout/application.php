@@ -32,7 +32,7 @@
   <body>
     <div id="wrapper">
       <?php
-        if ($_GET["controller"] == "error" ){
+        if ($_GET["controller"] == "error" ) {
           <link href="<?php echo ASSET_PATH; ?>css/error.css" rel="stylesheet" type="text/css">
         }
         else if ($_GET["controller"] == "home" && $_GET["action"] == "welcome") {
