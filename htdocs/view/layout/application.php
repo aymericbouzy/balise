@@ -27,6 +27,14 @@
       	<script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
 
+      <?php
+        $css_file_for_action = ASSET_PATH."css/action/".$_GET["action"].".css";
+        if (file_exists($css_file_for_action)) {
+      ?>
+        <script src="<?php echo $css_file_for_action; ?>"></script>
+      <?php
+        }
+      ?>
 
   </head>
   <body>
