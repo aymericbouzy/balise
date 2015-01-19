@@ -47,3 +47,13 @@
       $object_name
     );
   }
+
+  function option_array($entries, $key_field, $value_field, $model_name) {
+    $return_array = array();
+    foreach ($entries as $entry) {
+      $entry = call_user_func("select_".$model_name, $entry["id"], array($key_field, $value_field));
+      $return_array[$entry[$key_field]] = $entry[$value_field];
+    }
+    return $return_array;
+  }
+  
