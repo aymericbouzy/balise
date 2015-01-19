@@ -35,6 +35,10 @@
     return $request;
   }
 
+  function exists_request($request) {
+    return select_request($request) ? true : false;
+  }
+
   function update_request($request, $hash) {
     update_entry("request",
                   array(),

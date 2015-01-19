@@ -37,7 +37,7 @@
   function form_group_select($label, $field, $options, $object, $object_name) {
     $select_tag = "<select class=\"form-control\">";
     foreach ($options as $value => $option_label) {
-      $select_tag .= "<option value=\"".$value."\"".($object[$field] == $value ? " selected=\"selected\"").">".$option_label."</option>";
+      $select_tag .= "<option value=\"".$value."\"".($object[$field] == $value ? " selected=\"selected\"" : "").">".$option_label."</option>";
     }
     $select_tag .= "</select>";
     return form_group(
@@ -56,4 +56,3 @@
     }
     return $return_array;
   }
-  

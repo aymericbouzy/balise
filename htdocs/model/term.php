@@ -35,6 +35,11 @@
     return $term_binet;
   }
 
+  function exists_term_binet($term) {
+    return select_term_binet($term) ? true : false;
+  }
+
+
   function select_terms($criteria = array(), $order_by = NULL, $ascending = true) {
     $terms = select_with_request_string(
       "CONCAT(binet, '/', term) as id",

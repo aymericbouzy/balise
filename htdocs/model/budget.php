@@ -39,6 +39,11 @@
     return $budget;
   }
 
+  function exists_budget($budget) {
+    return select_budget($budget) ? true : false;
+  }
+
+
   function select_budgets($criteria, $order_by = NULL, $ascending = true) {
     return select_entries(
       "budget",

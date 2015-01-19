@@ -24,6 +24,10 @@
     );
   }
 
+  function exists_operation($operation) {
+    return select_operation($operation) ? true : false;
+  }
+
   function validate_operation($operation) {
     $sql = "UPDATE operation
             SET binet_validation_by = :student
