@@ -1,18 +1,19 @@
 <?php
 
-  function link_to($path, $caption, $class = "") {
-    return "<a href=\"/".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
-  }
-
-  function img($src, $alt = "") {
-    return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
+  function form_group($label, $field, $content, $object_name) {
+    return "<div class=\"form-group".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
+              <label for=\"".$field."\">".$label."</label>
+              ".$content."
+            </div>";
   }
 
   function form_group_text($label, $field, $object, $object_name) {
-    return "<div class=\"form-group".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
-              <label for=\"".$field."\">".$label."</label>
-              <input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">
-            </div>";
+    return form_group(
+      $label,
+      $field,
+      "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">",
+      $object_name
+    );
   }
 
   function form_csrf_token() {
@@ -31,4 +32,18 @@
 
   function form_submit_button($label) {
     return "<input type=\"submit\" class=\"btn btn-default\" value=\"".$label."\">";
+  }
+
+  function form_group_select($label, $field, $options, $object, $object_name) {
+    $select_tag = "<select class=\"form-control\">";
+    foreach ($options as $value => $option_label) {
+      $select_tag .= "<option value=\"".$value."\"".($object[$field] == $value ? " selected=\"selected\"").">".$option_label."</option>";
+    }
+    $select_tag .= "</select>";
+    return form_group(
+      $label,
+      $field,
+      $select_tag,
+      $object_name
+    );
   }
