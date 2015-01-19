@@ -28,10 +28,10 @@
     	<![endif]-->
 
       <?php
-        $css_file_for_action = ASSET_PATH."css/action/".$_GET["action"].".css";
+        $css_file_for_action = "asset/css/action/".$_GET["action"].".css";
         if (file_exists($css_file_for_action)) {
       ?>
-        <script src="<?php echo $css_file_for_action; ?>"></script>
+        <link rel="stylesheet" href="/<?php echo $css_file_for_action; ?>">
       <?php
         }
       ?>
