@@ -2,9 +2,7 @@
 
   function create_post_binet_term_for_check_form() {
     if (!empty($_POST["binet"]) && !empty($_POST["term"])) {
-      $binet = select_binet($_POST["binet"], array("clean_name"))["clean_name"];
-      $term = $_POST["term"];
-      $_POST["binet_term"] = $binet."/".$term;
+      $_POST["binet_term"] = $_POST["binet"]."/".$_POST["term"];
     }
   }
 

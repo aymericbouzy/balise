@@ -1,42 +1,49 @@
 <?php
 
   function select_term_binet($term_binet, $fields = array()) {
+    if (exists_term_binet($term_binet)) {
+      $id = explode($term_binet, "/");
+      $binet = $id[0];
+      $term = $id[1];
+      $term_binet = array();
+      foreach ($fields as $field) {
+        switch ($field) {
+          case "id":
+          $term_binet["binet"] = $binet;
+          $term_binet["term"] = $term;
+          $term_binet["id"] = $binet."/".$term;
+          break;
+          case "balance":
+          $term_binet[$field] = get_balance_term_binet($binet, $term);
+          break;
+          case "subsidized_amount_requested":
+          $term_binet[$field] = get_subzidized_amount_requested_term_binet($binet, $term);
+          break;
+          case "subsidized_amount_granted":
+          $term_binet[$field] = get_subzidized_amount_granted_term_binet($binet, $term);
+          break;
+          case "subsidized_amount_used":
+          $term_binet[$field] = get_subzidized_amount_used_term_binet($binet, $term);
+          break;
+          case "spent_amount":
+          $term_binet[$field] = get_spent_amount_term_binet($binet, $term);
+          break;
+          case "earned_amount":
+          $term_binet[$field] = get_earned_amount_term_binet($binet, $term);
+          break;
+        }
+      }
+      return $term_binet;
+    } else {
+      return false;
+    }
+  }
+
+  function exists_term_binet($term_binet) {
     $id = explode($term_binet, "/");
     $binet = $id[0];
     $term = $id[1];
-    $term_binet = array();
-    foreach ($fields as $field) {
-      switch ($field) {
-      case "id":
-        $term_binet["binet"] = $binet;
-        $term_binet["term"] = $term;
-        $term_binet["id"] = $binet."/".$term;
-        break;
-      case "balance":
-        $term_binet[$field] = get_balance_term_binet($binet, $term);
-        break;
-      case "subsidized_amount_requested":
-        $term_binet[$field] = get_subzidized_amount_requested_term_binet($binet, $term);
-        break;
-      case "subsidized_amount_granted":
-        $term_binet[$field] = get_subzidized_amount_granted_term_binet($binet, $term);
-        break;
-      case "subsidized_amount_used":
-        $term_binet[$field] = get_subzidized_amount_used_term_binet($binet, $term);
-        break;
-      case "spent_amount":
-        $term_binet[$field] = get_spent_amount_term_binet($binet, $term);
-        break;
-      case "earned_amount":
-        $term_binet[$field] = get_earned_amount_term_binet($binet, $term);
-        break;
-      }
-    }
-    return $term_binet;
-  }
-
-  function exists_term_binet($term) {
-    return select_term_binet($term) ? true : false;
+    return !empty(select_terms(array("binet" => $binet, "term" => $term)));
   }
 
 

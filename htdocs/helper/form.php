@@ -56,3 +56,26 @@
     }
     return $return_array;
   }
+
+  function translate_form_field($form_field) {
+    switch ($form_field) {
+      case "binet":
+      return "binet";
+      case "term":
+      return "mandat";
+      case "comment":
+      return "description";
+      case "bill":
+      return "référence de paiement";
+      case "amount":
+      return "montant";
+      case "sign":
+      return "dépense";
+      case "type":
+      return "type de transaction";
+      case "paid_by":
+      return "payé par";
+      case "binet_term":
+      return "mandat";
+    }
+  }
