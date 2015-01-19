@@ -35,7 +35,7 @@
   }
 
   function form_group_select($label, $field, $options, $object, $object_name) {
-    $select_tag = "<select class=\"form-control\">";
+    $select_tag = "<select class=\"form-control\" id=\"".$field."\" name=\"".$field."\">";
     foreach ($options as $value => $option_label) {
       $select_tag .= "<option value=\"".$value."\"".($object[$field] == $value ? " selected=\"selected\"" : "").">".$option_label."</option>";
     }

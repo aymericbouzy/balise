@@ -24,7 +24,7 @@
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => array(array("term", MAX_TERM)),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student"), array("binet", "exists_binet"), array("binet_term", "exists_binet_term")),
+    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student"), array("binet", "exists_binet"), array("binet_term", "exists_term_binet")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : ""),
     "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));

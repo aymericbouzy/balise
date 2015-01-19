@@ -90,7 +90,7 @@
     }
 
     if (!empty($_SESSION[$array["model_name"]]["errors"])) {
-      $_SESSION["error"][] = "Vous n'avez pas rempli tous les champs obligatoires.";
+      $_SESSION["error"][] = "Vous n'avez pas rempli tous les champs obligatoires. Il manque en particulier le champ ".$_SESSION[$array["model_name"]]["errors"][0].".";
     }
 
     foreach ($array["str_fields"] as $field) {
