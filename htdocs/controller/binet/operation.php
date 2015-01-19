@@ -2,10 +2,6 @@
 
   define("amount_prefix", "amount_");
 
-  function operation_does_not_change_sign() {
-    header_if($_POST["sign"] * select_operation($operation["id"], array("amount"))["amount"] < 0, 403);
-  }
-
   function adds_amount_prefix($object) {
     return amount_prefix.$object["id"];
   }
@@ -56,11 +52,10 @@
     "model_name" => "operation",
     "amount_fields" => array_map("adds_max_amount", $amount_array),
     "other_fields" => array(array("amounts_sum", "equals_operation_amount")),
-    "redirect_to" => path("show", "operation", $_GET["action"] == "validate" ? $operation["id"] : "", binet_prefix($binet, $term)),
+    "redirect_to" => path("review", "operation", $_GET["action"] == "validate" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optionnal" => $amount_array
   ));
-  before_action("operation_does_not_change_sign", array("update"));
-  before_action("generate_csrf_token", array("new", "edit", "show"));
+  before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
   $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by");
   if ($_GET["action"] == "new") {
@@ -87,9 +82,6 @@
     break;
 
   case "show":
-    if (!empty(select_operation($operation["id"], array("binet_validation_by"))["binet_validation_by"])) {
-      $operation = initialise_for_form_from_session($amount_array, "operation");
-    }
     break;
 
   case "edit":
@@ -110,6 +102,13 @@
   case "delete":
     $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
     redirect_to_action("index");
+    break;
+
+  case "review":
+    function operation_to_form_fields($operation) {
+      return $operation;
+    }
+    $operation = set_editable_entry_for_form("operation", $operation, $form_fields);
     break;
 
   case "validate":

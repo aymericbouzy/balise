@@ -39,7 +39,7 @@
     break;
 
   case "create":
-    $budget["id"] = create_budget($binet, $term, ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["label"]);
+    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
@@ -52,8 +52,8 @@
 
   case "edit":
     function budget_to_form_fields($budget) {
-      $budget["sign"] = $budget["amount"] > 0 ? true : false;
-      $budget["amount"] *= $budget["sign"] ? 1 : -1;
+      $budget["sign"] = $budget["amount"] < 0 ? true : false;
+      $budget["amount"] *= $budget["sign"] ? -1 : 1;
       $first = true;
       foreach (select_tags_budget($id) as $tag) {
         if ($first) {
