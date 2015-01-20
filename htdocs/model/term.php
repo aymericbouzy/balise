@@ -2,7 +2,7 @@
 
   function select_term_binet($term_binet, $fields = array()) {
     if (exists_term_binet($term_binet)) {
-      $id = explode($term_binet, "/");
+      $id = explode("/", $term_binet);
       $binet = $id[0];
       $term = $id[1];
       $term_binet = array();
@@ -40,7 +40,7 @@
   }
 
   function exists_term_binet($term_binet) {
-    $id = explode($term_binet, "/");
+    $id = explode("/", $term_binet);
     $binet = $id[0];
     $term = $id[1];
     return !empty(select_terms(array("binet" => $binet, "term" => $term)));

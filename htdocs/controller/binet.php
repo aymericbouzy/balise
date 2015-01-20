@@ -28,7 +28,7 @@
     "model_name" => "binet",
     "str_fields" => array(array("description", 10000), array("subsidy_steps", 50000)),
     "redirect_to" => path("edit", "binet", $binet),
-    "optionnal" => array("description", "subsidy_steps")
+    "optional" => array("description", "subsidy_steps")
   ));
   before_action("check_form_input", array("set_term"), array(
     "model_name" => "binet",

@@ -1,15 +1,14 @@
 <?php
 
-  function form_group($label, $field, $content, $object_name) {
+  function form_group($field, $content, $object_name) {
     return "<div class=\"form-group".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
-              <label for=\"".$field."\">".$label."</label>
+              <label for=\"".$field."\">".ucfirst(translate_form_field($field))." :</label>
               ".$content."
             </div>";
   }
 
-  function form_group_text($label, $field, $object, $object_name) {
+  function form_group_text($field, $object, $object_name) {
     return form_group(
-      $label,
       $field,
       "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">",
       $object_name
@@ -20,12 +19,12 @@
     return "<input type=\"hidden\" name=\"csrf_token\" value=\"".get_csrf_token()."\">";
   }
 
-  function form_group_checkbox($label, $field, $object, $object_name) {
+  function form_group_checkbox($field, $object, $object_name) {
     return "<div class=\"checkbox".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
               <label>
                 <input type=\"hidden\" name=\"".$field."\" value=\"0\">
                 <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(empty($object[$field]) ? "" : " checked").">
-                ".$label."
+                ".ucfirst(translate_form_field($field))."
               </label>
             </div>";
   }
@@ -34,14 +33,13 @@
     return "<input type=\"submit\" class=\"btn btn-default\" value=\"".$label."\">";
   }
 
-  function form_group_select($label, $field, $options, $object, $object_name) {
+  function form_group_select($field, $options, $object, $object_name) {
     $select_tag = "<select class=\"form-control\" id=\"".$field."\" name=\"".$field."\">";
     foreach ($options as $value => $option_label) {
       $select_tag .= "<option value=\"".$value."\"".($object[$field] == $value ? " selected=\"selected\"" : "").">".$option_label."</option>";
     }
     $select_tag .= "</select>";
     return form_group(
-      $label,
       $field,
       $select_tag,
       $object_name
@@ -66,6 +64,8 @@
       case "comment":
       return "description";
       case "bill":
+      return "référence de facture";
+      case "reference":
       return "référence de paiement";
       case "amount":
       return "montant";

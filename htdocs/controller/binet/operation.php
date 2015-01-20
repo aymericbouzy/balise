@@ -45,7 +45,7 @@
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
-    "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
+    "optional" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("setup_for_validation", array("validate"));
   before_action("check_form_input", array("validate"), array(
@@ -53,7 +53,7 @@
     "amount_fields" => array_map("adds_max_amount", $amount_array),
     "other_fields" => array(array("amounts_sum", "equals_operation_amount")),
     "redirect_to" => path("review", "operation", $_GET["action"] == "validate" ? $operation["id"] : "", binet_prefix($binet, $term)),
-    "optionnal" => $amount_array
+    "optional" => $amount_array
   ));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 

@@ -70,7 +70,7 @@
     "amount_fields" => array_map("adds_max_amount", $requested_amount_array),
     "other_fields" => array(array("wave", "exists_wave")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet, $term)),
-    "optionnal" => array_merge($requested_amount_array, $purpose_array)
+    "optional" => array_merge($requested_amount_array, $purpose_array)
   ));
   before_action("setup_for_review", array("grant"));
   before_action("check_form_input", array("grant"), array(
@@ -105,7 +105,7 @@
         $subsidy = array();
         $subsidy["budget"] = $field_elements[1];
         $subsidy["granted_amount"] = $value;
-        $subsidy["optionnal_values"] = array("purpose" => $_POST[purpose_prefix.$field_elements[1]]);
+        $subsidy["optional_values"] = array("purpose" => $_POST[purpose_prefix.$field_elements[1]]);
         $subsidies[] = $subsidy;
       }
     }

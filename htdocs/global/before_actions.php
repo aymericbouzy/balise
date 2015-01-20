@@ -78,8 +78,8 @@
     $array["other_fields"] = isset($array["other_fields"]) ? $array["other_fields"] : array();
 
     foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"], $array["other_fields"]) as $index => $field) {
-      if (!isset($_POST[$field[0]])) {
-        if (!isset($array["optional"]) || !in_array($field[0], $array["optionnal"])) {
+      if (!isset($_POST[$field[0]]) || empty($_POST[$field[0]])) {
+        if (!isset($array["optional"]) || !in_array($field[0], $array["optional"])) {
           $_SESSION[$array["model_name"]]["errors"][] = $field[0];
         } else {
           unset($array["str_fields"][$index]);
@@ -90,7 +90,23 @@
     }
 
     if (!empty($_SESSION[$array["model_name"]]["errors"])) {
-      $_SESSION["error"][] = "Vous n'avez pas rempli tous les champs obligatoires. Il manque en particulier le champ ".$_SESSION[$array["model_name"]]["errors"][0].".";
+      $string_error = "Vous n'avez pas rempli tous les champs obligatoires. Il manque ";
+      $string_error .= count($_SESSION[$array["model_name"]]["errors"]) > 1 ? "les champs suivants" : "le champ suivant";
+      $string_error .= " : ";
+      foreach ($_SESSION[$array["model_name"]]["errors"] as $index => $field) {
+        $string_error .= translate_form_field($field);
+        switch (count($_SESSION[$array["model_name"]]["errors"]) - $index) {
+          case 1 :
+          $string_error .= ".";
+          break;
+          case 2 :
+          $string_error .= " et ";
+          break;
+          default :
+          $string_error .= ", ";
+        }
+      }
+      $_SESSION["error"][] = $string_error;
     }
 
     foreach ($array["str_fields"] as $field) {
@@ -105,14 +121,14 @@
 
     foreach (array_merge($array["amount_fields"], $array["int_fields"]) as $field) {
       if (!is_numeric($_POST[$field[0]]) || $_POST[$field[0]] < 0 || $_POST[$field[0]] > $field[1]) {
-        $_SESSION["error"][] = "La valeur entrée n'est pas valide.";
+        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
     }
 
     foreach ($array["other_fields"] as $field) {
       if (!call_user_func($field[1], $_POST[$field[0]])) {
-        $_SESSION["error"][] = "La valeur entrée n'est pas valide.";
+        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
     }
@@ -189,7 +205,7 @@
     header_if(!status_admin_current_binet($GLOBALS["binet"]), 401);
   }
 
-  function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
+  function validate_input($required_parameters, $optional_parameters = array(), $method = "get") {
     switch ($method) {
     case "get":
       $input_parameters = $_GET;
@@ -207,7 +223,7 @@
     }
     if ($valid) {
       foreach ($input_parameters as $parameter => $value) {
-        if (in_array($parameter, array_merge($required_parameters, $optionnal_parameters))) {
+        if (in_array($parameter, array_merge($required_parameters, $optional_parameters))) {
           switch ($parameter) {
           case "action":
             $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
