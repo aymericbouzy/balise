@@ -45,7 +45,7 @@
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
-    "optional" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
+    "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("setup_for_validation", array("validate"));
   before_action("check_form_input", array("validate"), array(
