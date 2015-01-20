@@ -36,6 +36,15 @@
         }
       ?>
 
+      <?php
+      $css_file_for_controller = "asset/css/controller/".$_GET["controller"].".css";
+      if (file_exists($css_file_for_controller)) {
+        ?>
+        <link rel="stylesheet" href="/<?php echo $css_file_for_controller; ?>">
+        <?php
+      }
+      ?>
+
   </head>
   <body>
     <div id="wrapper">
