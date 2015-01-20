@@ -1,9 +1,6 @@
-<div id="error-wrapper">
-  <div id="centering">
-    <div class="error-container">
-      <p id="art"><i class="fa fa-fw fa-ambulance"></i></p>
-      <p id="errorcode">400</p>
-      <p id="message">Bad request</p>
-    </div>
-  </div>
-</div>
+<?php
+
+  $error_icon = "fa-ambulance";
+  $error_message = "Bad request";
+
+  include VIEW_PATH."error/base.php";
