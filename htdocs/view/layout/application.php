@@ -27,10 +27,6 @@
       	<script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
 
-      <!-- Error css -->
-      if ($_GET["controller"] == "error"){
-        <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/error.css" type="text/css">
-      }
 
   </head>
   <body>
