@@ -1,4 +1,4 @@
 <?php
   include "global/initialisation.php";
 
-  var_dump(exists_term_binet("1/2012"));
+  var_dump(file_exists("/global/common.php"));
