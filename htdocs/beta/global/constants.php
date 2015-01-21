@@ -3,7 +3,7 @@
   define("WEBMASTER_EMAIL", empty($_ENV["webmaster_email"]) ? "aymeric.bouzy@polytechnique.edu" : $_ENV["webmaster_email"]);
   define("STATE", empty($_ENV["state"]) ? "development" : $_ENV["state"]);
   define("URL_REWRITE", empty($_ENV["url_rewrite"]) || !in_array($_ENV["url_rewrite"], array("false", "0", 0, false)) ? true : $_ENV["url_rewrite"]); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file
-  define("ROOT_PATH", isset($_ENV["root_path"]) ? $_ENV["root_path"] : "");
+  define("ROOT_PATH", isset($_ENV["root_path"]) ? $_ENV["root_path"]."/" : "");
 
   define("DATABASE_PASSWORD", $_ENV["database_password"]);
   define("FRANKIZ_AUTH_KEY", $_ENV["frankiz_auth_key"]);
@@ -14,7 +14,7 @@
   define("CONTROLLER_PATH", "controller/");
   define("LIB_PATH", "lib/");
   define("VIEW_PATH", "view/");
-  define("ASSET_PATH", (empty(ROOT_PATH) ? "" : "/".ROOT_PATH)."/asset/");
+  define("ASSET_PATH", "/".ROOT_PATH."asset/");
   define("IMG_PATH", ASSET_PATH."img/");
   define("LAYOUT_PATH", VIEW_PATH."layout/");
 

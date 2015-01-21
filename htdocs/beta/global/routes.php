@@ -35,7 +35,7 @@
     if (!URL_REWRITE) {
       return true_path($action, $model_name, $model_id, $prefix).$query_string;
     }
-    return (empty(ROOT_PATH) ? "" : ROOT_PATH."/").(empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
+    return ROOT_PATH.(empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
   }
 
   function true_path($action, $model_name, $model_id = "", $prefix = "") {
@@ -46,13 +46,10 @@
       $prefix_string = "&prefix=".$prefix_elements[0]."&binet=".$prefix_elements[1]."&term=".$prefix_elements[2];
     }
     $action = empty($action) ? "index" : $action;
-    return "./index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
+    return "./".ROOT_PATH."index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
   }
 
   function write_path_rule($path, $url, $options = "[L,NC,QSA]") {
-    if (!empty(ROOT_PATH)) {
-      $path = substr($path, strlen(ROOT_PATH) + 1);
-    }
     if (fwrite($GLOBALS["htaccess"], "RewriteRule ^".$path."/?$ ".$url."%{QUERY_STRING} ".$options."
     ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
@@ -88,7 +85,7 @@
   }
 
   function urlrewrite() {
-    $htaccess = fopen("./.htaccess", "w");
+    $htaccess = fopen((empty(ROOT_PATH) ? "" : ".")."./.htaccess", "w");
   	if (!$htaccess) {
   		echo ".htaccess could not be opened for urlrewriting.";
   		exit;
@@ -106,9 +103,9 @@
 
     $GLOBALS["htaccess"] = $htaccess;
 
-    write_path_rule(ROOT_PATH, true_path("", "home"));
+    write_path_rule(substr(ROOT_PATH, 0, strlen(ROOT_PATH) -1), true_path("", "home"));
     if (!URL_REWRITE || !empty(ROOT_PATH)) {
-      write_path_rule("home/login", path("login", "home"), "[NC,QSA]");
+      write_path_rule("home/login", true_path("login", "home"), "[NC,QSA]");
     }
     write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
     write_controller_rules(array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate"), "action_on_collection" => array("admin")));

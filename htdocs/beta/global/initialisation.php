@@ -6,7 +6,7 @@
   include GLOBAL_PATH."database.php";
   include GLOBAL_PATH."agregation.php";
   include GLOBAL_PATH."sql.php";
-  include GLOBAL_PATH."urlrewriting.php";
+  include GLOBAL_PATH."routes.php";
   include GLOBAL_PATH."before_actions.php";
   include GLOBAL_PATH."common.php";
   include GLOBAL_PATH."csrf.php";
