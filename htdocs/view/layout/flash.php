@@ -4,14 +4,22 @@
     if (!empty($_SESSION[$class])) {
       foreach ($_SESSION[$class] as $flash) {
         ?>
-
-        <?php echo $flash; ?>
-
+          <div class="flashcard <?php echo $flash ?> alert alert-dismissible fade in">
+            <button class="close" data-dismiss="alert">
+              <i class="fa fa-fw fa-close"></i>
+            </button>
+            <?php echo $flash; ?>
+          </div>
         <?php
       }
       unset($_SESSION[$class]);
     }
   }
+?>
 
-  print_flash("notice");
-  print_flash("error");
+  <div class="flash-container">
+    <?php
+      print_flash("notice");
+      print_flash("error");
+    ?>
+  </div>

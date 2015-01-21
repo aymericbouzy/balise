@@ -1,3 +1,6 @@
-<p>
-  Error 403 : Forbidden
-</p>
+<?php
+
+  $error_icon = "fa-ban";
+  $error_message = "Forbidden";
+
+  include VIEW_PATH."error/base.php";
