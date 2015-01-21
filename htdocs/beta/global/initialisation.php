@@ -1,5 +1,6 @@
 <?php
 
+  include "private_information.php"; // this file defines variables that are used in constants.php
   include "constants.php";
   session_start();
 
