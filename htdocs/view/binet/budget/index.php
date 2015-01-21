@@ -28,7 +28,7 @@
       $sum_subsidized_amount_used_exp = 0;
 
       foreach ($budgets as $budget) {
-        if ($budgets["amount"] < 0) {
+        if ($budget["amount"] < 0) {
           $sum_amount_exp += $budget["amount"];
           $sum_real_amount_exp += $budget["real_amount"];
           $sum_subsidized_amount_granted_exp += $budget["subsidized_amount_granted"];
@@ -68,7 +68,7 @@
       $sum_subsidized_amount_used_inc = 0;
 
       foreach ($budgets as $budget) {
-        if ($budgets["amount"] > 0) {
+        if ($budget["amount"] > 0) {
           $sum_amount_inc += $budget["amount"];
           $sum_real_amount_inc += $budget["real_amount"];
           $sum_subsidized_amount_granted_inc += $budget["subsidized_amount_granted"];
@@ -109,7 +109,6 @@
           <td><?php echo pretty_amount($sum_subsidized_amount_used_inc + $sum_subsidized_amount_used_exp); ?></td>
       </tr>
   </tbody>
-
 
 <?php
   $table = ob_get_clean();

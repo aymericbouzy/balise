@@ -1,3 +1,8 @@
-<h1>Nouvelle ligne budgétaire</h1>
-<?php echo link_to(path("new_income", "budget", "", binet_prefix($binet, $term)), "Recette"); ?>
-<?php echo link_to(path("new_expense", "budget", "", binet_prefix($binet, $term)), "Dépense"); ?>
+<div class="form-container">
+  <h1><i class="fa fa-fw fa-plus-square"></i> Nouvelle ligne budgétaire</h1>
+  <?php
+    $form_action = "create";
+    $submit_label = "Créer";
+    include "form.php";
+  ?>
+</div>

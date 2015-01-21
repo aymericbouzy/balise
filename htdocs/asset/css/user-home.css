@@ -309,7 +309,22 @@ a.tag-red {
 .form input {
 	width:85%;
 }
+.form-container {
+  position: relative;
+  width: 100%;
+  margin: auto;
+  padding: 10px;
+  background-color: #EEEEEE; ;
+}
 
+@media (min-width:768px){
+  .form-container {
+    /* 768 - (side menu width : 225 px ) = 543 */
+    width:543px;
+    margin-top: 20px;
+    box-shadow: 5px 5px 2px #888888;
+  }
+}
 
 .amount-input {
       display: block;

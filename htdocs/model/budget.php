@@ -7,13 +7,13 @@
     $values["label"] = $label;
     return create_entry(
       "budget",
-      array("binet", "term", "amout"),
+      array("binet", "term", "amount"),
       array("label"),
       $values
     );
   }
 
-  function select_budget($budget, $fields = NULL) {
+  function select_budget($budget, $fields = array()) {
     $budget = select_entry(
       "budget",
       array("id", "binet", "amount", "term", "label"),
@@ -36,7 +36,13 @@
         break;
       }
     }
+    return $budget;
   }
+
+  function exists_budget($budget) {
+    return select_budget($budget) ? true : false;
+  }
+
 
   function select_budgets($criteria, $order_by = NULL, $ascending = true) {
     return select_entries(
@@ -98,6 +104,11 @@
     return $req->fetch(PDO::FETCH_ASSOC)["subsidized_amount"];
   }
 
+  // To order subsidies in get_subsidized_amount_used_details_budget
+  function sort_by_date($s1, $s2) {
+    return strcmp($s1["expiry_date"], $s2["expiry_date"]);
+  }
+
   function get_subsidized_amount_used_details_budget($budget) {
     $subsidies = select_subsidies(array("budget" => $budget));
     foreach($subsidies as $subsidy) {
@@ -105,12 +116,9 @@
       $subsidy["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
       $subsidy["used_amount"] = 0;
     }
-    function sort_by_date($s1, $s2) {
-      return strcmp($s1["expiry_date"], $s2["expiry_date"]);
-    }
     usort($subsidies, "sort_by_date");
-    foreach(select_operations_budget($budget, "date") as $operation) {
-      $operation = select_operation($operation, array("date", "amount"));
+    foreach(select_operations_budget($budget) as $operation) {
+      $operation = select_operation($operation["id"], array("date", "amount"));
       $i = 0;
       while(isset($subsidies[$i]) && $operation["amount"] < 0) {
         if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {

@@ -4,34 +4,26 @@
     header_if(!empty(select_operations_budget($_GET["budget"])) || !empty(select_subsidies_budget($_GET["subsidy"])), 403);
   }
 
-  function budget_does_not_change_sign() {
-    header_if($_POST["sign"] * select_budget($budget["id"], array("amount"))["amount"] < 0, 403);
-  }
-
-  function budget_amount_not_null() {
-    if (isset($_POST["amount"]) && $_POST["amount"] == 0) {
-      $_SESSION["budget"]["errors"][] = "amount";
-      redirect_to_action("edit");
-    }
-  }
-
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet, "term" => $term));
-  before_action("check_editing_rights", array("new", "new_expense", "new_income", "create", "edit", "update", "delete"));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "budget",
     "str_fields" => array(array("label", 100), array("tags_string", MAX_TAG_STRING_LENGTH)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
+    "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "tags_string" => true,
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
-    "optionnal" => ($_GET["action"] == "update" ? array("label", "amount") : array())
+    "optional" => ($_GET["action"] == "update" ? array("label", "amount") : array())
   ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
-  before_action("sign_is_one_or_minus_one", array("create", "update"));
-  before_action("budget_does_not_change_sign", array("update"));
-  before_action("budget_amount_not_null", array("create", "update"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
+
+  $form_fields = array("label", "tags_string", "amount");
+  if ($_GET["action"] == "new") {
+    $form_fields[] = "sign";
+  }
 
   switch ($_GET["action"]) {
 
@@ -43,22 +35,15 @@
     break;
 
   case "new":
-    break;
-
-  case "new_expense":
-    $budget = initialise_for_form(array("label", "tags_string", "amount"), $_SESSION["budget"]);
-    break;
-
-  case "new_income":
-    $budget = initialise_for_form(array("label", "tags_string", "amount"), $_SESSION["budget"]);
+    $budget = initialise_for_form_from_session($form_fields, "budget");
     break;
 
   case "create":
-    $budget = create_budget($binet, $term, $_POST["sign"]*$_POST["amount"], $_POST["label"]);
+    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
-      add_tag_budget($tag, $budget);
+      add_tag_budget($tag, $budget["id"]);
     }
-    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
+    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.".$_POST["sign"]." ".$_POST["amount"]." ".(($_POST["sign"]*2 - 1)*$_POST["amount"]);
     redirect_to_action("show");
     break;
 
@@ -66,6 +51,21 @@
     break;
 
   case "edit":
+    function budget_to_form_fields($budget) {
+      $budget["sign"] = $budget["amount"] < 0 ? true : false;
+      $budget["amount"] *= $budget["sign"] ? -1 : 1;
+      $first = true;
+      foreach (select_tags_budget($id) as $tag) {
+        if ($first) {
+          $first = false;
+        } else {
+          $budget["tags_string"] .= ";";
+        }
+        $budget["tags_string"] .= select_tag($tag["id"], array("name"))["name"];
+      }
+      return $budget;
+    }
+    $budget = set_editable_entry_for_form("budget", $budget, $form_fields);
     break;
 
   case "update":
@@ -74,6 +74,7 @@
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget);
     }
+    unset($_SESSION["budget"]);
     $_SESSION["notice"][] = "La ligne de budget a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
