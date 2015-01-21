@@ -1,13 +1,13 @@
 <?php
 
-  define("WEBMASTER_EMAIL", $private_information_webmaster_email);
-  define("STATE", $private_information_state);
+  define("WEBMASTER_EMAIL", $webmaster_email);
+  define("STATE", $state);
   define("URL_REWRITE", true); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file. set to false if you don't want pretty urls.
   define("ROOT_PATH", "beta/"); // set to "" to remove root_path
 
-  define("DATABASE_USERNAME", $private_information_database_username);
-  define("DATABASE_PASSWORD", $private_information_database_password);
-  define("FRANKIZ_AUTH_KEY", $private_information_frankiz_auth_key);
+  define("DATABASE_USERNAME", $database_username);
+  define("DATABASE_PASSWORD", $database_password);
+  define("FRANKIZ_AUTH_KEY", $frankiz_auth_key);
 
   define("GLOBAL_PATH", "global/");
   define("MODEL_PATH", "model/");

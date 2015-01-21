@@ -1,6 +1,11 @@
 <?php
 
-  include "private_information.php"; // this file defines variables that are used in constants.php
+  if (isset($_ENV["state"]) && $_ENV["state"] == "development") {
+    include "config/development.php";
+  } else {
+    include "config/production.php";
+  }
+
   include "constants.php";
   session_start();
 
