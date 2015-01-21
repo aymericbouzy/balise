@@ -38,6 +38,10 @@
     return (empty(ROOT_PATH) ? "" : ROOT_PATH."/").(empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
   }
 
+  function full_path($path) {
+    return "http".(empty($_SERVER["HTTPS"]) ? "" : "s")."://".$_SERVER["HTTP_HOST"]."/".$path;
+  }
+
   function true_path($action, $model_name, $model_id = "", $prefix = "") {
     if (empty($prefix)) {
       $prefix_string = "";

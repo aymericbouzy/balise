@@ -14,7 +14,7 @@
   }
 
   function redirect_to_path($path) {
-    header("Location: http".(empty($_SERVER["HTTPS"]) ? "" : "s")."://".$_SERVER["HTTP_HOST"]."/".$path);
+    header("Location: ".full_path($path));
     exit;
   }
 
