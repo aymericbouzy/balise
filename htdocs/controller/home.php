@@ -20,6 +20,11 @@
       $students = select_students(array("hruid" => $auth["hruid"]));
       if (empty($students)) {
         $student = create_student($auth["hruid"], $auth["firstname"]." ".$auth["lastname"], $auth["email"]);
+        $_SESSION["notice"][] =
+          "Bienvenu sur le site balise ! Tu trouveras ici toutes les informations pour gérer la trésorerie de tes binets,
+          des outils pour tenir ta trésorerie et faire des analyses ; tu pourras y faire tes demandes de subventions et y
+          retrouver toutes les informations publiques sur la trésorerie des binets, comme par exemple les subventions qui
+          leur ont été attribuées.";
       } else {
         $student = $students[0]["id"];
       }

@@ -46,6 +46,11 @@
     return $tag;
   }
 
+  function exists_tag($tag) {
+    return select_tag($tag) ? true : false;
+  }
+
+
   function select_tags($criteria = array(), $order_by = NULL, $ascending = true) {
     return select_entries(
       "tag",

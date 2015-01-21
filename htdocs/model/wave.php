@@ -13,7 +13,10 @@
     );
   }
 
-  function select_wave($wave, $fields = NULL) {
+  function select_wave($wave, $fields = array()) {
+    if (in_array("open", $fields) && !in_array("submission_date", $fields)) {
+      $fields[] = "submission_date";
+    }
     $wave = select_entry(
       "wave",
       array("id", "binet", "term", "submission_date", "expiry_date", "published"),
@@ -31,9 +34,15 @@
       case "used_amount":
         $wave[$field] = get_used_amount_wave($wave);
         break;
+      case "open":
+        $wave[$field] = $wave["submission_date"] > date("Ymd");
       }
     }
     return $wave;
+  }
+
+  function exists_wave($wave) {
+    return select_wave($wave) ? true : false;
   }
 
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
