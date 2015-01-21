@@ -38,6 +38,11 @@ body {
     #page-wrapper {
         padding: 10px;
     }
+
+    #error {
+      margin-left: -225px;
+      padding-right: -225px;
+    }
 }
 
 /* Top Navigation */
@@ -321,7 +326,6 @@ a.tag-red {
   }
 }
 
-
 .amount-input {
       display: block;
         width:100%;
@@ -345,4 +349,44 @@ a.tag-red {
     display: block;
     position:absolute;
     margin: auto;
+}
+
+/*-------------------------------------------------------------------*/
+/* Flash-cards */
+.alert {
+  border-radius: 0px;
+}
+
+/* Warning */
+/* Clear previous CSS "close" properties from boostrap */
+.close {
+  all : none ;
+}
+
+.flash-container{
+  position: fixed;
+  right: 5px;
+}
+
+.flashcard {
+  position:relative;
+  width: 250px;
+  overflow: hidden;
+  padding: 10px;
+  z-index: 100;
+  box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+}
+
+.flashcard> button {
+  margin-right: 20px;
+  display: block;
+  position: relative;
+}
+.notice {
+  background-color: rgba(50, 173, 39, 0.7);
+  color : #000;
+}
+.error {
+  background-color: rgba(173, 50, 39, 0.7);
+  color : #000;
 }
