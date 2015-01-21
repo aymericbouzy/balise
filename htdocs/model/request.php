@@ -10,7 +10,7 @@
       $values
     );
     foreach($subsidies as $subsidy) {
-      create_subsidy($subsidy["budget"], $request, $subsidy["amount"], $subsidy["optionnal_values"]);
+      create_subsidy($subsidy["budget"], $request, $subsidy["amount"], $subsidy["optional_values"]);
     }
     return $request;
   }
@@ -33,6 +33,10 @@
       }
     }
     return $request;
+  }
+
+  function exists_request($request) {
+    return select_request($request) ? true : false;
   }
 
   function update_request($request, $hash) {

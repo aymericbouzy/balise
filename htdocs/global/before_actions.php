@@ -52,7 +52,7 @@
     $GLOBALS["binet"] = $binets[0]["id"];
     $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $_GET["term"]));
     if (empty($binet_terms)) {
-      $_SESSION["errors"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
+      $_SESSION["error"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
     }
     $GLOBALS["term"] = $_GET["term"];
   }
@@ -70,52 +70,78 @@
   }
 
   function check_form_input($array) {
+    $_SESSION[$array["model_name"]]["errors"] = array();
     $_SESSION[$array["model_name"]] = $_POST;
-    $array["str_fields"] = $array["str_fields"] ?: array();
-    $array["int_fields"] = $array["int_fields"] ?: array();
-    $array["amount_fields"] = $array["ammount_fields"] ?: array();
-    $array["other_fields"] = $array["other_fields"] ?: array();
+    $array["str_fields"] = isset($array["str_fields"]) ? $array["str_fields"] : array();
+    $array["int_fields"] = isset($array["int_fields"]) ? $array["int_fields"] : array();
+    $array["amount_fields"] = isset($array["amount_fields"]) ? $array["amount_fields"] : array();
+    $array["other_fields"] = isset($array["other_fields"]) ? $array["other_fields"] : array();
 
-    foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"], $array["other_fields"]) as $field) {
-      if (!isset($_POST[$field[0]])) {
-        if (!isset($array["optional"]) || !in_array($field[0], $array["optionnal"])) {
+    foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"], $array["other_fields"]) as $index => $field) {
+      if (!isset($_POST[$field[0]]) || empty($_POST[$field[0]])) {
+        if (!isset($array["optional"]) || !in_array($field[0], $array["optional"])) {
           $_SESSION[$array["model_name"]]["errors"][] = $field[0];
         } else {
-          unset($array["str_fields"][$field[0]]);
-          unset($array["int_fields"][$field[0]]);
-          unset($array["amount_fields"][$field[0]]);
+          unset($array["str_fields"][$index]);
+          unset($array["int_fields"][$index]);
+          unset($array["amount_fields"][$index]);
         }
       }
     }
 
+    if (!empty($_SESSION[$array["model_name"]]["errors"])) {
+      $string_error = "Vous n'avez pas rempli tous les champs obligatoires. Il manque ";
+      $string_error .= count($_SESSION[$array["model_name"]]["errors"]) > 1 ? "les champs suivants" : "le champ suivant";
+      $string_error .= " : ";
+      foreach ($_SESSION[$array["model_name"]]["errors"] as $index => $field) {
+        $string_error .= translate_form_field($field);
+        switch (count($_SESSION[$array["model_name"]]["errors"]) - $index) {
+          case 1 :
+          $string_error .= ".";
+          break;
+          case 2 :
+          $string_error .= " et ";
+          break;
+          default :
+          $string_error .= ", ";
+        }
+      }
+      $_SESSION["error"][] = $string_error;
+    }
+
     foreach ($array["str_fields"] as $field) {
-      $_POST[$field[0]] = substr(htmlspecialchars($_POST[$fields[0]]), 0, $field[1]);
+      $_POST[$field[0]] = substr(htmlspecialchars($_POST[$field[0]]), 0, $field[1]);
     }
 
     foreach ($array["amount_fields"] as $field) {
-      $_POST[$field[0]] = floor($_POST[$field[0]] * 100);
+      if (is_numeric($_POST[$field[0]])) {
+        $_POST[$field[0]] = floor($_POST[$field[0]] * 100);
+      }
     }
 
     foreach (array_merge($array["amount_fields"], $array["int_fields"]) as $field) {
       if (!is_numeric($_POST[$field[0]]) || $_POST[$field[0]] < 0 || $_POST[$field[0]] > $field[1]) {
+        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
     }
 
     foreach ($array["other_fields"] as $field) {
       if (!call_user_func($field[1], $_POST[$field[0]])) {
+        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
     }
 
-    if ($array["tags_string"]) {
+    if (isset($array["tags_string"]) && $array["tags_string"]) {
       if (!empty($_POST["tags_string"])) {
         foreach (explode(";", $_POST["tags_string"]) as $tag_name) {
-          $tag = select_tags(array("clean_name" => clean_string($tag_name)));
-          if (empty($tag)) {
-            $_SESSION["tag_to_create"] = remove_exterior_spaces($tag_name);
+          $tag_name = remove_exterior_spaces($tag_name);
+          $tags = select_tags(array("clean_name" => clean_string($tag_name)));
+          if (empty($tags)) {
+            $_SESSION["tag_to_create"] = $tag_name;
           } else {
-            $GLOBALS["tags"][] = $tag[0]["id"];
+            $GLOBALS["tags"][] = $tags[0]["id"];
           }
         }
       } else {
@@ -128,7 +154,7 @@
     }
 
     if (!empty($_SESSION["tag_to_create"])) {
-      $_SESSION["return_to"] = $_SERVER["??"];
+      $_SESSION["return_to"] = binet_prefix($GLOBALS["binet"], $GLOBALS["term"]);
       redirect_to_path(path("new", "tag"));
     }
 
@@ -179,7 +205,7 @@
     header_if(!status_admin_current_binet($GLOBALS["binet"]), 401);
   }
 
-  function validate_input($required_parameters, $optionnal_parameters = array(), $method = "get") {
+  function validate_input($required_parameters, $optional_parameters = array(), $method = "get") {
     switch ($method) {
     case "get":
       $input_parameters = $_GET;
@@ -197,7 +223,7 @@
     }
     if ($valid) {
       foreach ($input_parameters as $parameter => $value) {
-        if (in_array($parameter, array_merge($required_parameters, $optionnal_parameters))) {
+        if (in_array($parameter, array_merge($required_parameters, $optional_parameters))) {
           switch ($parameter) {
           case "action":
             $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
@@ -276,14 +302,10 @@
     return $query_array;
   }
 
-  function sign_is_one_or_minus_one() {
-    header_if(!validate_input(array("sign"), array(), "post"), 400);
-  }
-
   function check_csrf_post() {
-    header_if(!valid_csrf_token($_POST["csrf_token"]), 401);
+    header_if(!isset($_POST["csrf_token"]) || !valid_csrf_token($_POST["csrf_token"]), 401);
   }
 
   function check_csrf_get() {
-    header_if(!valid_csrf_token($_GE["csrf_token"]), 401);
+    header_if(!isset($_GET["csrf_token"]) || !valid_csrf_token($_GET["csrf_token"]), 401);
   }

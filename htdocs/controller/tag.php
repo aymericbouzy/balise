@@ -10,7 +10,7 @@
 
   function check_unique_clean_name() {
     $tags = select_tags(array("clean_name" => clean_string($_SESSION["tag_to_create"])));
-    header_if(empty($tags), 403);
+    header_if(!empty($tags), 403);
   }
 
   before_action("check_csrf_get", array("create"));
@@ -18,7 +18,6 @@
   before_action("check_tag_is_set", array("new", "create"));
   before_action("check_return_to_is_set", array("new", "create"));
   before_action("check_unique_clean_name", array("new", "create"));
-  before_action("generate_csrf_token", array("new"));
 
   switch ($_GET["action"]) {
 
@@ -33,7 +32,8 @@
     $_SESSION["notice"][] = "Le tag \"".$_SESSION["tag_to_create"]."\" a été créé avec succès.";
     $return_to = $_SESSION["return_to"];
     unset($_SESSION["return_to"]);
-    redirect_to_path($return_to);
+    unset($_SESSION["tag_to_create"]);
+    redirect_to_path(path("new", "budget", "", $return_to));
     break;
 
   case "show":

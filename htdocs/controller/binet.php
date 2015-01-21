@@ -4,7 +4,7 @@
     $binets = select_tags(array("clean_name" => clean_string($_POST["name"])));
     if (!empty($binets)) {
       $_SESSION["binet"]["errors"][] = "name";
-      $_SESSION["error"][] = "Ce nom de binet (ou un très proche) est déjà utilisé. Veuillez en choisir un autre.";
+      $_SESSION["error"][] = "Ce nom de binet est déjà utilisé par le binet ".pretty_binet($binets[0]["id"]).". Veuillez en choisir un autre.";
     }
   }
 
@@ -22,20 +22,24 @@
     "str_fields" => array(array("name", 30), array("description", 10000)),
     "other_fields" => array(array("name", "check_unique_clean_name")),
     "int_fields" => array(array("current_term", MAX_TERM)),
-    "redirect_to" => path("new", "binet", "", binet_prefix($binet, $term))
+    "redirect_to" => path("new", "binet", "")
   ));
   before_action("check_form_input", array("update"), array(
     "model_name" => "binet",
     "str_fields" => array(array("description", 10000), array("subsidy_steps", 50000)),
-    "redirect_to" => path("edit", "binet", $binet, binet_prefix($binet, $term)),
-    "optionnal" => array("description", "subsidy_steps")
+    "redirect_to" => path("edit", "binet", $binet),
+    "optional" => array("description", "subsidy_steps")
   ));
   before_action("check_form_input", array("set_term"), array(
     "model_name" => "binet",
-    "str_fields" => array(array("current_term", MAX_TERM)),
-    "redirect_to" => path("change_term", "binet", $binet, binet_prefix($binet, $term))
+    "str_fields" => array(array("term", MAX_TERM)),
+    "redirect_to" => path("change_term", "binet", $binet)
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term"));
+
+  $binet_form_fields = array("name", "term");
+  $description_form_fields = array("name", "description", "subsidy_steps");
+  $term_form_fields = array("term");
 
   switch ($_GET["action"]) {
 
@@ -43,23 +47,30 @@
     break;
 
   case "new":
+    $binet = initialise_for_form_from_session($binet_form_fields, "binet");
     break;
 
   case "create":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été créé avec succès.";
+    $binet = create_binet($_POST["name"], $_POST["term"]);
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet)." a été créé avec succès.";
     redirect_to_action("show");
     break;
 
   case "edit":
+    function binet_to_form_fields($binet) {
+      return $binet;
+    }
+    $binet = set_editable_entry_for_form("binet", $binet, $description_form_fields);
     break;
 
   case "update":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été mis à jour avec succès.";
+    update_binet($binet["id"], $_POST);
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." a été mis à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "set_subsidy_provider":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." est devenu un binet subventionneur.";
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." est devenu un binet subventionneur.";
     redirect_to_action("show");
     break;
 
@@ -67,15 +78,22 @@
     break;
 
   case "change_term":
+    function binet_to_form_fields($binet) {
+      $binet["term"] = $binet["current_term"];
+      return $binet;
+    }
+    $binet = set_editable_entry_for_form("binet", $binet, $term_form_fields);
     break;
 
   case "set_term":
-    $_SESSION["notice"][] = "Le mandat actuel du binet ".$binet["name"]." a été mis à jour.";
+    change_term_binet($binet["id"], $_POST["term"]);
+    $_SESSION["notice"][] = "Le mandat actuel du binet ".pretty_binet($binet["id"])." a été mis à jour.";
     redirect_to_action("show");
     break;
 
   case "deactivate":
-    $_SESSION["notice"][] = "Le binet ".$binet["name"]." a été désactivé avec succès.";
+    deactivate_binet($binet["id"]);
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." a été désactivé avec succès.";
     redirect_to_action("show");
     break;
 
