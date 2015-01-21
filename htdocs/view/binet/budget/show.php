@@ -1,5 +1,3 @@
-<link href = "<?php echo ASSET_PATH; ?>/css/show.css" rel="stylesheet">
-<link href = "<?php echo ASSET_PATH; ?>/css/show-budget.css" rel="stylesheet">
 <script src = "<?php echo ASSET_PATH; ?>/js/show-budget.js"></script>
 <div class="show-container">
   <div class="sh-title">

@@ -1,5 +1,3 @@
-<link href="<?php echo ASSET_PATH; ?>/css/show.css" rel="stylesheet">
-<link href="<?php echo ASSET_PATH; ?>/css/show-wave.css" rel="stylesheet">
 <div class="show-container">
   <div class="sh-title">
     <div class="logo">
