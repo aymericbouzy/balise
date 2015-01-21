@@ -103,7 +103,7 @@
 
     $GLOBALS["htaccess"] = $htaccess;
 
-    write_path_rule(substr(ROOT_PATH, 0, strlen(ROOT_PATH) -1), true_path("", "home"));
+    write_path_rule(substr(ROOT_PATH, 0, strlen(ROOT_PATH) -1), true_path("welcome", "home"));
     if (!URL_REWRITE || !empty(ROOT_PATH)) {
       write_path_rule("home/login", true_path("login", "home"), "[NC,QSA]");
     }

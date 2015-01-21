@@ -2,7 +2,7 @@
       ErrorDocument  404  ./beta/index.php?controller=error&action=404&
 	    AddDefaultCharset UTF-8
 	    RewriteEngine on
-	    RewriteRule ^beta/?$ ./beta/index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
+	    RewriteRule ^beta/?$ ./beta/index.php?controller=home&action=welcome&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^home/login/?$ ./beta/index.php?controller=home&action=login&%{QUERY_STRING} [NC,QSA]
     RewriteRule ^beta/home/?$ ./beta/index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/home/index/?$ ./beta/index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
