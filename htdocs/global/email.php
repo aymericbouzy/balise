@@ -20,10 +20,10 @@
       <meta name="description" content="">
       <meta name="author" content="">
       <title>Balise trézo</title>
-      <link rel="shortcut icon" type="image/png" href="balise1.png">
-      <link rel="stylesheet" href="dist/css/bootstrap.min.css">
-      <link rel="stylesheet" href="dist/css/bootstrap-theme.min.css">
-      <link rel="stylesheet" type="text/css" href="dist/css/forme.css">
+      <link rel="shortcut icon" type="image/png" href="<?php echo full_path(IMG_PATH."balise.png"); ?>">
+      <link rel="stylesheet" href="<?php echo full_path(ASSET_PATH."dist/css/bootstrap.min.css"); ?>">
+      <link rel="stylesheet" href="<?php echo full_path(ASSET_PATH."dist/css/bootstrap-theme.min.css"); ?>">
+      <link rel="stylesheet" type="text/css" href="<?php echo full_path(ASSET_PATH."dist/css/forme.css"); ?>">
 
       <!--[if IE]>
       <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -34,7 +34,7 @@
     <body>
       <!-- Wrap tout le contenu de la page -->
       <div id="wrap">
-        <img id="entete" alt="balise" src="image/balise1.png">
+        <img id="entete" alt="balise" src="<?php echo full_path(IMG_PATH."balise.png"); ?>">
         <!-- Création d'un header -->
         <header class="masthead">
           <div class="container">
@@ -47,13 +47,9 @@
           </div> <!-- Fermeture container -->
         </header> <!-- Fermeture du header -->
 
-
+        <?php echo $message; ?>
 
       </div> <!-- Fermeture du wrap -->
-
-      <!-- Page script -->
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> <!--dans mon fichier css-->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> <!-- dans mon fichier css-->
     </body>
 
     </html>

@@ -10,6 +10,7 @@
   include GLOBAL_PATH."before_actions.php";
   include GLOBAL_PATH."common.php";
   include GLOBAL_PATH."csrf.php";
+  include GLOBAL_PATH."email.php";
 
   include MODEL_PATH."budget.php";
   include MODEL_PATH."tag.php";
