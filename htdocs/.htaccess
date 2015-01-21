@@ -1,6 +1,6 @@
 
       ErrorDocument  404  ./beta/index.php?controller=error&action=404&
-	    AddDefaultCharset iso-8859-1
+	    AddDefaultCharset UTF-8
 	    RewriteEngine on
 	    RewriteRule ^beta/?$ ./beta/index.php?controller=home&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^home/login/?$ ./beta/index.php?controller=home&action=login&%{QUERY_STRING} [NC,QSA]

@@ -94,7 +94,7 @@
       $htaccess,
       "
       ErrorDocument  404  ".true_path("404", "error")."
-	    AddDefaultCharset iso-8859-1
+	    AddDefaultCharset UTF-8
 	    RewriteEngine ".(URL_REWRITE ? "on" : "off")."
 	    ") === FALSE) {
       echo ".htaccess could not be written for urlrewriting.";
