@@ -154,6 +154,14 @@
   font-size: 50px;
 }
 
+.sh-op-budgets {
+  margin: 5px;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #cbddff ;
+  font-size: 50px;
+}
+
 @media( min-width:543px){
   .sh-op-title>.text>.binet-name {
     max-width: 384px;
