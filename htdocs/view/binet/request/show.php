@@ -5,27 +5,33 @@
     </div>
     <div class="text">
       <p class="main">
-        <!-- TODO nom du binet-->
+        <?php echo pretty_binet_term($request["binet"]."/".$request["term"]); ?>
       </p>
       <p class="sub">
-        <!-- TODO nom conventionnel de la vague-->
+        <?php echo pretty_wave($request["wave"], false); ?>
       </p>
     </div>
   </div>
-  <!-- TODO itérer pour chaque budget-->
-  <!-- DEBUT -->
-  <div class="sh-req-budget" onclick=""> <!-- TODO : show le budget en question -->
-    <div class="header">
-      <span class="name"><!-- TODO nom du budget--></span>
-    </div>
-    <div class="content">
-      <p class="amount">
-        <!--TODO montant de la demande--> <i class="fa fa-fw fa-euro"></i>
-      </p>
-      <p class="text">
-        <!-- TODO justification de la demande -->
-      </p>
-    </div>
-  </div>
-  <!-- FIN -->
+  <?php
+    foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
+      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term"));
+      echo link_to(
+        path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
+        "<div class=\"sh-req-budget\">
+          <div class=\"header\">
+            <span class=\"name\">".$budget["label"]."</span>
+          </div>
+          <div class=\"content\">
+            <p class=\"amount\">
+              ".pretty_amount($subsidy["requested_amount"])." <i class=\"fa fa-fw fa-euro\"></i>
+            </p>
+            <p class=\"text\">
+              ".$subsidy["purpose"]."
+            </p>
+          </div>
+        </div>"
+      );
+    }
+  ?>
 </div>
