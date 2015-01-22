@@ -23,5 +23,5 @@ Site créé par <a href="mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>"
   $body = urlencode($body);
   $body = str_replace(array("+"), array(" "), $body);
 
-  echo "<a href=\"mailto:bug_report@gmail.com?subject=[bug #".$reference."]&body=".$body."\" class=\"btn btn-primary\">Rapport de bug</a>";
+  echo "<a href=\"mailto:Projet Balise <balise.bugreport@gmail.com>?subject=[bug #".$reference."]&body=".$body."\" class=\"btn btn-primary\">Rapport de bug</a>";
 ?>
