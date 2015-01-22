@@ -1,4 +1,3 @@
-<script src = "<?php echo ASSET_PATH; ?>js/show-budget.js"></script>
 <div class="show-container">
   <div class="sh-title opanel">
     <div class="logo">

@@ -67,5 +67,7 @@
         ?>
       </footer>
     </div>
+
+    <script src = "<?php echo ASSET_PATH; ?>js/common.js"></script>
   </body>
 </html>
