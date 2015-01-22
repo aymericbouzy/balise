@@ -5,39 +5,40 @@
     </div>
     <div class="text">
       <p class="main">
-        <!-- TODO Nom du binet subventionneur : Forum etc. -->
+        <?php echo pretty_binet($wave["binet"]); ?>
       </p>
       <p class="sub">
-        <!-- TODO mois de la vague : ex Juin 2014 -->
+        <?php echo pretty_wave($wave["id"], false); ?>
       </p>
     </div>
   </div>
   <div class="sh-wa-dates">
     <span class="submission-date">
       Demandes avant le :
-      <!-- TODO date limite de soumission des demandes sous la forme dd/mm/yyyy -->
+      <?php echo pretty_date($wave["submission_date"]); ?>
     </span>
     <span class="validity-date">
       Limite de validité :
-      <!-- TODO date limite de validités des subvnetions sous la forme dd/mm/yyyy -->
+      <?php echo pretty_date($wave["expiry_date"]); ?>
     </span>
   </div>
-  <!-- TODO pour la vague, toutes les requêtes associées -->
-  <div class="sh-wa-request" onclick="window.location.href='index.html'">
-    <p class="icon">
-      <!-- TODO check SI le dmeande a été accordéee
-      times sinon -->
-      <i class="fa fa-3x fa-check"></i>
-      <i class="fa fa-3x fa-times"></i>
-    </p>
-    <p class="binet">
-      <!-- TODO nom du binet demandeur-->
-    </p>
-    <p class="amount">
-      <!-- TODO montant--> <i class="fa fa-euro"></i>
-    </p>
-  </div>
-  <div class="sh-wa-request">
-
-  </div>
+  <?php
+    foreach ($select_requests(array("wave" => $wave["id"])) as $request) {
+      $request = select_request($request["id"], array("id", "granted", "binet", "term", "requested_amount"));
+      echo link_to(
+        path("review", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+        "<div class=\"sh-wa-request\">
+          <p class="icon">
+            ".($request["granted"] ? "<i class=\"fa fa-3x fa-check\"></i>" : "<i class=\"fa fa-3x fa-times\"></i>")."
+          </p>
+          <p class=\"binet\">
+            ".pretty_binet_term($request["binet"]."/".$request["term"])."
+          </p>
+          <p class=\"amount\">
+            ".pretty_amount($request["requested_amount"])." <i class=\"fa fa-euro\"></i>
+          </p>
+        </div>"
+      );
+    }
+  ?>
 </div>

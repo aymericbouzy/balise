@@ -39,6 +39,7 @@
     break;
 
   case "show":
+    $wave = select_wave($wave, array("id", "submission_date", "expiry_date", "published", "binet", "term"));
     break;
 
   case "edit":
