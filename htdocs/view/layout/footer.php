@@ -1,4 +1,6 @@
-Site créé par <a href="mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>">Nathan</a>, <a href="mailto:Victor Nicolet <victor.nicolet@polytechnique.edu>">Little</a> et <a href="mailto:Aymeric Bouzy <aymeric.bouzy@polytechnique.edu>">Zouby</a>.
+Site créé par <?php echo link_to("mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>", "Nathan"); ?>,
+<?php echo link_to("mailto:Victor Nicolet <victor.nicolet@polytechnique.edu>", "Little"); ?> et
+<?php echo link_to("mailto:Aymeric Bouzy <aymeric.bouzy@polytechnique.edu>", "Zouby"); ?>.
 <?php
 
   function array_to_string($array) {
@@ -23,5 +25,5 @@ Site créé par <a href="mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>"
   $body = urlencode($body);
   $body = str_replace(array("+"), array(" "), $body);
 
-  echo "<a href=\"mailto:bug_report@gmail.com?subject=[bug #".$reference."]&body=".$body."\" class=\"btn btn-primary\">Rapport de bug</a>";
+  echo link_to("mailto:bug_report@gmail.com?subject=[bug #".$reference."]&body=".$body, "Rapport de bug", "btn btn-primary");
 ?>

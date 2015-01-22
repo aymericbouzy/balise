@@ -48,6 +48,7 @@
     break;
 
   case "show":
+    $budget = select_budget($budget, array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     break;
 
   case "edit":

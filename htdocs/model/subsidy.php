@@ -44,7 +44,7 @@
   function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
     return select_entries(
       "subsidy",
-      array("binet", "request", "requested_amount", "granted_amount"),
+      array("budget", "request", "requested_amount", "granted_amount"),
       array(),
       array("used_amount"),
       $criteria,
