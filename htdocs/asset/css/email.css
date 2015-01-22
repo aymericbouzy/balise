@@ -32,22 +32,9 @@ html, body {
   padding: 0 0 0px;
 }
 
-/* Set the fixed height of the footer here */
-#footer {
-  height: 60px;
-  background-color: #f5f5f5;
-  margin-top:50px;
-  padding-top:20px;
-  padding-bottom:20px;
-}
-
 body	{
 	background: radial-gradient(#e7a049,#ed7129);
 	color: #FFFFFF;
-}
-
-#corps	{
-	margin-top: 50px;
 }
 
 header	{
@@ -65,73 +52,8 @@ header	{
 	max-width: 100%;
 }
 
-
-/* Barre de navigation */
-#nav {
-  width: 100%;
-  position: absolute;
-  top: 101px;
-  margin-left: 0px;
-  max-width: 100%;
-}
-
-/* Position du menu : de gauche à droite */
-@media (min-width: 767px) {
-  .navbar-nav.nav-justified > li{
-      float:none;
-      }
-}
-
-/*Augmente la taille de la barre de navigation (rajout d'une marge) */
-.navbar-nav {
-  margin: 1px 1px;
-}
-
-/* Style de la barre de navigation */
-.navbar-custom {
-    background-color: #2e2e2e; /* couleur de fond*/
-	font-weight: 700; /* taille de la police*/
-    text-transform: uppercase; /* lettres majuscules */
-    border-width: 0; /* largeur de la bordure ? */
-}
-
-/* Couleur du menu */
-.navbar-custom  .navbar-nav>li>a {
-	color: #ddd;
-}
-
-/* Couleur de la page active */
-#pagecourante {
-	color: #ea8939;
-}
-
-/* Apparition d'un fond au menu lorsqu'on le survole */
-.navbar-custom  .navbar-nav li>a:hover, .navbar-nav li .open, .navbar-custom .navbar-nav .active a  {
-	background-color: #000;
-}
-
-/* Qu'est ce que ça fait ? */
-.navbar-collapse.in { /*3.0.2 bug workaround*/
-    overflow-y: visible;
-}
-
-.jumbotron {
-	background: #87CEFA;
-	color: #2e2e2e;
-	margin-top: 0px;
-	padding-top: 1%;
-	padding-bottom: 25px;
-	height: auto;
-	max-width: 100%;
-}
-
-.presentation {
-	margin: auto;
-	width: 81%;
-}
-
-#alignement	{
-	margin: auto;
+#message {
+  padding: 1em 1em 1em 1em;
 }
 
 a {
@@ -158,33 +80,6 @@ p	{
 
 .centre	{
 	text-align: center;
-}
-
-#footer {
-  background-color:#414141;
-  max-width: 100%;
-}
-
-.nonjustifie	{
-	text-align: center;
-}
-
-#hautdepage {
-   background-color: #87CEFA;
-   color: #2e2e2e;
-   position: fixed;
-   bottom: 0;
-   right: 47%;
-   font-size: 24px;
-   border-top-left-radius: 3px;
-   border-top-right-radius: 3px;
-}
-
-#hautdepage:hover	{
-	background-color: #22427C;
-	color: #FFFFFF;
-	border-top-left-radius:3px;
-	border-top-right-radius:3px;
 }
 
 #text	{
