@@ -41,6 +41,10 @@
     return $wave;
   }
 
+  function exists_wave($wave) {
+    return select_wave($wave) ? true : false;
+  }
+
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
     if (!isset($criteria["published"])) {
       $criteria["published"] = 1;

@@ -29,6 +29,10 @@
     return $subsidy;
   }
 
+  function exists_subsidy($subsidy) {
+    return select_subsidy($subsidy) ? true : false;
+  }
+
   function update_subsidy($subsidy, $hash) {
     update_entry("subsidy",
                   array("requested_amount", "granted_amount"),

@@ -2,10 +2,6 @@
 
   define("amount_prefix", "amount_");
 
-  function operation_does_not_change_sign() {
-    header_if($_POST["sign"] * select_operation($operation["id"], array("amount"))["amount"] < 0, 403);
-  }
-
   function adds_amount_prefix($object) {
     return amount_prefix.$object["id"];
   }
@@ -13,6 +9,8 @@
   function adds_max_amount($amount) {
     return array($amount, MAX_AMOUNT);
   }
+
+  $amount_array = array();
 
   function setup_for_validation() {
     $total_amount = select_operation($GLOBALS["operation"]["id"], array("amount"))["amount"];
@@ -44,23 +42,25 @@
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
+    "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
-    "optionnal" => array_merge(array("paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
+    "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("setup_for_validation", array("validate"));
   before_action("check_form_input", array("validate"), array(
     "model_name" => "operation",
     "amount_fields" => array_map("adds_max_amount", $amount_array),
     "other_fields" => array(array("amounts_sum", "equals_operation_amount")),
-    "redirect_to" => path("show", "operation", $operation["id"], binet_prefix($binet, $term)),
-    "optionnal" => $amount_array
+    "redirect_to" => path("review", "operation", $_GET["action"] == "validate" ? $operation["id"] : "", binet_prefix($binet, $term)),
+    "optional" => $amount_array
   ));
-  before_action("sign_is_one_or_minus_one", array("create", "update"));
-  before_action("operation_does_not_change_sign", array("update"));
-  before_action("generate_csrf_token", array("new", "edit", "show"));
+  before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
-  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign");
+  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by");
+  if ($_GET["action"] == "new") {
+    $form_fields[] = "sign";
+  }
 
   switch ($_GET["action"]) {
 
@@ -76,20 +76,19 @@
     break;
 
   case "create":
-    $operation = create_operation($binet, $term, $_POST["sign"]*$_POST["amount"], $_POST["type"], $_POST);
+    $operation["id"] = create_operation($binet, $term, ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("show");
     break;
 
   case "show":
-    if (!empty(select_operation($operation["id"], array("binet_validation_by"))["binet_validation_by"])) {
-      $operation = initialise_for_form_from_session($amount_array, "operation");
-    }
+    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by"));
+    $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
 
   case "edit":
     function operation_to_form_fields($operation) {
-      $operation["sign"] = $operation["amount"] > 0 ? true : false;
+      $operation["sign"] = $operation["amount"] > 0 ? 1 : 0;
       $operation["amount"] *= $operation["sign"] ? 1 : -1;
       return $operation;
     }
@@ -105,6 +104,13 @@
   case "delete":
     $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
     redirect_to_action("index");
+    break;
+
+  case "review":
+    function operation_to_form_fields($operation) {
+      return $operation;
+    }
+    $operation = set_editable_entry_for_form("operation", $operation, $form_fields);
     break;
 
   case "validate":

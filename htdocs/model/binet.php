@@ -34,7 +34,11 @@
     return $binet;
   }
 
-  function select_binets($criteria = array(), $order_by = NULL, $ascending = true) {
+  function exists_binet($binet) {
+    return select_binet($binet) ? true : false;
+  }
+
+  function select_binets($criteria = array(), $order_by = "", $ascending = true) {
     return select_entries(
       "binet",
       array("subsidy_provider", "current_term"),
