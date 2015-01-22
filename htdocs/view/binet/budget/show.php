@@ -1,16 +1,16 @@
-<script src = "<?php echo ASSET_PATH; ?>/js/show-budget.js"></script>
+<?php $budget = select_budget($budget, array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used")); ?>
+<script src = "<?php echo ASSET_PATH; ?>js/show-budget.js"></script>
 <div class="show-container">
   <div class="sh-title">
     <div class="logo">
-      <!-- TODO selon si c'est une dépense : fa-minus-circle ou une recette : fa-plus-circle -->
-      <i class="fa fa-5x fa-plus-circle"></i>
+      <i class="fa fa-5x <?php echo $budget["amount"] > 0 ? "fa-plus-circle" : "fa-minus-circle"; ?>"></i>
     </div>
     <div class="text">js
       <p class="main">
-        <?php echo pretty_budget($budget["id"]); ?>
+        <?php echo $budget["label"]; ?>
       </p>
       <p class="sub">
-        <!-- TODO Nom du binet + mandat ex : Binet Raid 2014 -->
+        <?php echo pretty_binet_term($budget["binet"]."/".$budget["term"]); ?>
       </p>
     </div>
   </div>
@@ -20,31 +20,21 @@
     </div>
     <div>
       <div class="used" id="real_budget">
-      <!-- Ce script permet d'afficher une barre dont la longueur est proportionnelle au ratio
-      budget réel (utilisé) / budget prévisionnel -->
-      <script>
-        ratio1 = /* TODO ratio in [0,1] PHP -->*/;
-        ratiobar( ratio1 , 'real_budget');
-      </script>
-      <!-- TODO réel / prévisionnel -->
+        <?php echo ratio_bar($budget["real_amount"], $budget["amount"]); ?>
+      </div>
     </div>
   </div>
-</div>
-<div class="sh-bu-ratio">
-  <div class="header">
-    Subventions utilisées / accordées
-  </div>
-  <div>
-    <div class="used" id="subsidies">
-    <script>
-      ratio2 = /* TODO ratio in [0,1] PHP --> */;
-      ratiobar( ratio2 , 'subsidies');
-    </script>
-    <!-- TODO utilisé / accordée ex : '549 / 1000'-->
+  <div class="sh-bu-ratio">
+    <div class="header">
+      Subventions utilisées / accordées
+    </div>
+    <div>
+      <div class="used" id="subsidies">
+        <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"]); ?>
+      </div>
     </div>
   </div>
-</div>
-<div class="sh-bu-tags">
-  <!-- TODO mettre les tags ici -->
-</div>
+  <div class="sh-bu-tags">
+    <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
+  </div>
 </div>

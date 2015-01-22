@@ -14,3 +14,12 @@
 			return $line_str;
 		}
 	}
+
+	function ratio_bar($numerator, $denominator) {
+		return "
+		<script>
+			ratio1 = ".($numerator/$denominator).";
+			ratiobar( ratio1 , 'real_budget');
+		</script>
+		".$numerator."/".$denominator;
+	}
