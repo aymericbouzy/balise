@@ -1,4 +1,8 @@
 <?php
   include "global/initialisation.php";
 
-  var_dump(file_exists("/global/common.php"));
+  $test = send_email(51, "test", "<p>
+    qmlsjdfmqlf
+  </p>");
+
+  var_dump($test);

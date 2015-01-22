@@ -23,7 +23,7 @@
       <link rel="shortcut icon" type="image/png" href="<?php echo full_path(IMG_PATH."balise.png"); ?>">
       <link rel="stylesheet" href="<?php echo full_path(ASSET_PATH."dist/css/bootstrap.min.css"); ?>">
       <link rel="stylesheet" href="<?php echo full_path(ASSET_PATH."dist/css/bootstrap-theme.min.css"); ?>">
-      <link rel="stylesheet" type="text/css" href="<?php echo full_path(ASSET_PATH."dist/css/forme.css"); ?>">
+      <link rel="stylesheet" type="text/css" href="<?php echo full_path(ASSET_PATH."css/email.css"); ?>">
 
       <!--[if IE]>
       <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -46,9 +46,11 @@
             </div> <!-- Fermeture de la ligne -->
           </div> <!-- Fermeture container -->
         </header> <!-- Fermeture du header -->
-
-        <?php echo $message; ?>
-
+        <div id="message" class="row">
+          <div class="col-md-offset-1 col-md-10">
+            <?php echo $message; ?>
+          </div>
+        </div>
       </div> <!-- Fermeture du wrap -->
     </body>
 
@@ -58,5 +60,5 @@
 
     $message = ob_get_clean();
 
-    mail($to, $subject, $message, $headers);
+    return mail($to, $subject, $message, $headers);
   }

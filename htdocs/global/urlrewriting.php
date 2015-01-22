@@ -39,7 +39,7 @@
   }
 
   function full_path($path) {
-    return "http".(empty($_SERVER["HTTPS"]) ? "" : "s")."://".$_SERVER["HTTP_HOST"]."/".$path;
+    return "http".(empty($_SERVER["HTTPS"]) ? "" : "s")."://".$_SERVER["HTTP_HOST"].$path;
   }
 
   function true_path($action, $model_name, $model_id = "", $prefix = "") {
