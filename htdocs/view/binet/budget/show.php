@@ -1,4 +1,3 @@
-<?php $budget = select_budget($budget, array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used")); ?>
 <script src = "<?php echo ASSET_PATH; ?>js/show-budget.js"></script>
 <div class="show-container">
   <div class="sh-title">

@@ -28,3 +28,8 @@
     $budget = select_budget($budget, array("id", "label"));
     return $budget["label"].pretty_tags(select_tags_budget($budget["id"]));
   }
+
+  function pretty_student($student) {
+    $student = select_student($student, array("name", "email"));
+    return link_to("mailto:".$student["name"]." <"$student["email"]">", $student["name"]);
+  }

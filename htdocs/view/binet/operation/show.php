@@ -8,26 +8,26 @@
     </div>
     <div class="text">
       <div class="main">
-        <!-- Nom du binet -->
+        <?php echo pretty_binet($operation["binet"]); ?>
       </div>
       <div class="sub">
-        Mandat <!-- Année de mandat du binet-->
+        Mandat <?php echo $operation["term"]; ?>
       </div>
     </div>
   </div>
   <div class="sh-op-amount">
-    <!--amount--> <i class="fa fa-euro"></i>
+    <?php echo pretty_amount($operation["amount"]); ?> <i class="fa fa-euro"></i>
   </div>
   <div class="sh-op-refs">
     <i class="fa fa-fw fa-folder-o"></i> </br>
-    <!--type et numéro de facture ou "Aucune facture associée"--> </br>
-    <!--type et numéro de paiement ou "Aucune paiement associée"-->
+    <?php echo $operation["bill"] ?: "Aucune facture associée"; ?> </br>
+    <?php echo pretty_operation_type($operation["type"])." ".($operation["reference"] ?: "Aucune référence de paiement associée"); ?>
   </div>
   <div class="sh-op-info">
-    <!-- description de l'opération-->
+    <?php echo $operation["comment"]; ?>
   </div>
   <div class="sh-op-payer">
-    <i class="fa fa-fw fa-user"></i> <!-- Nom de celui qui a payé -->
+    <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? pretty_student($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
 =======
 <div class="row-centered">
   <div class="row-centered">
