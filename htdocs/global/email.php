@@ -1,6 +1,6 @@
 <?php
 
-  function send_email($to, $subject, $message) {
+  function send_email($to, $subject, $file, $parameters) {
     $headers = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
     $headers .= "From: Projet Balise <balise.bugreport@gmail.com>" . "\r\n";
@@ -49,7 +49,7 @@
         </header> <!-- Fermeture du header -->
         <div id="message" class="row">
           <div class="col-md-offset-1 col-md-10">
-            <?php echo $message; ?>
+            <?php include EMAIL_PATH.$file.".php"; // $parameters are used in this file ?>
           </div>
         </div>
       </div> <!-- Fermeture du wrap -->
