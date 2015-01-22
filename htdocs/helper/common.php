@@ -1,7 +1,10 @@
 <?php
 
   function link_to($path, $caption, $class = "") {
-    return "<a href=\"/".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
+    if (substr($path, 0, 4) != "http") {
+      $path = "/".$path;
+    }
+    return "<a href=\"".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
   }
 
   function img($src, $alt = "") {

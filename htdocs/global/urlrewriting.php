@@ -39,6 +39,9 @@
   }
 
   function full_path($path) {
+    if (substr($path, 0, 1) != "/") {
+      $path = "/".$path;
+    }
     return "http".(empty($_SERVER["HTTPS"]) ? "" : "s")."://".$_SERVER["HTTP_HOST"].$path;
   }
 
