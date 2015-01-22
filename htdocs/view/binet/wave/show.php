@@ -1,5 +1,5 @@
 <div class="show-container">
-  <div class="sh-title">
+  <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-star"></i>
     </div>
@@ -12,7 +12,7 @@
       </p>
     </div>
   </div>
-  <div class="sh-wa-dates">
+  <div class="sh-wa-dates opanel">
     <span class="submission-date">
       Demandes avant le :
       <!-- TODO date limite de soumission des demandes sous la forme dd/mm/yyyy -->
@@ -23,7 +23,7 @@
     </span>
   </div>
   <!-- TODO pour la vague, toutes les requêtes associées -->
-  <div class="sh-wa-request" onclick="window.location.href='index.html'">
+  <div class="sh-wa-request opanel" onclick="window.location.href=TODO">
     <p class="icon">
       <!-- TODO check SI le dmeande a été accordéee
       times sinon -->
@@ -37,7 +37,7 @@
       <!-- TODO montant--> <i class="fa fa-euro"></i>
     </p>
   </div>
-  <div class="sh-wa-request">
+  <div class="sh-wa-request opanel">
 
   </div>
 </div>

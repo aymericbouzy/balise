@@ -2,7 +2,7 @@
 
 <<<<<<< HEAD
 <div class="show-container">
-  <div class="sh-title">
+  <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-calculator fa-5x"></i>
     </div>
@@ -15,18 +15,18 @@
       </div>
     </div>
   </div>
-  <div class="sh-op-amount">
+  <div class="sh-op-amount opanel">
     <!--amount--> <i class="fa fa-euro"></i>
   </div>
-  <div class="sh-op-refs">
+  <div class="sh-op-refs opanel">
     <i class="fa fa-fw fa-folder-o"></i> </br>
     <!--type et numéro de facture ou "Aucune facture associée"--> </br>
     <!--type et numéro de paiement ou "Aucune paiement associée"-->
   </div>
-  <div class="sh-op-info">
+  <div class="sh-op-info opanel">
     <!-- description de l'opération-->
   </div>
-  <div class="sh-op-payer">
+  <div class="sh-op-payer opanel">
     <i class="fa fa-fw fa-user"></i> <!-- Nom de celui qui a payé -->
 =======
 <div class="row-centered">

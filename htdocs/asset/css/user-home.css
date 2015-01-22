@@ -374,7 +374,7 @@ a.tag-red {
   overflow: hidden;
   padding: 10px;
   z-index: 100;
-  box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.7);
 }
 
 .flashcard> button {
@@ -389,4 +389,10 @@ a.tag-red {
 .error {
   background-color: rgba(173, 50, 39, 0.7);
   color : #000;
+}
+
+/*--------------------------------------------------------------------*/
+/* Panelswith shadows */
+.opanel{
+  box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.2);
 }

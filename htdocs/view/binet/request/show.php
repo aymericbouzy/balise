@@ -1,5 +1,5 @@
 <div class="show-container">
-  <div class="sh-title">
+  <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
     </div>
@@ -14,7 +14,7 @@
   </div>
   <!-- TODO itérer pour chaque budget-->
   <!-- DEBUT -->
-  <div class="sh-req-budget" onclick=""> <!-- TODO : show le budget en question -->
+  <div class="sh-req-budget opanel" onclick=""> <!-- TODO : show le budget en question -->
     <div class="header">
       <span class="name"><!-- TODO nom du budget--></span>
     </div>
