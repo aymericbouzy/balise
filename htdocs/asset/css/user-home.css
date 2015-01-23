@@ -308,6 +308,18 @@ a.tag-red {
 }
 
 /*-------------------------------------------------------------------*/
+/* Background coloring*/
+.green-background{
+  background-color: rgb(50, 173, 39);
+}
+.red-background {
+  background-color: rgb(50, 173, 39);
+}
+.orange-background {
+  background-color: rgb(255, 175, 36);
+}
+
+/*-------------------------------------------------------------------*/
 /*Search form*/
 
 .form input {

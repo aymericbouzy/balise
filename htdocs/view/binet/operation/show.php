@@ -1,6 +1,7 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <div class="sh-plus opanel">
+  <!-- TODO : green recette, red dépense -->
+  <div class="sh-plus green-background opanel">
     <!-- TODO : fa-plus ou fa-minus selon le signe de l'opération -->
     <i class="fa fa-fw fa-plus-circle"></i>
     <div class="text"> <!-- TODO Recette ou dépense --> </div>

@@ -1,5 +1,6 @@
 <div class="show-container">
-  <div class="sh-plus opanel">
+  <!-- TODO : orange en attente, green acceptée, red refusée -->
+  <div class="sh-plus red-background opanel">
     <!-- TODO : fa-question requête en attente
                 fa-check requête acceptée
                 fa-times requête refusée

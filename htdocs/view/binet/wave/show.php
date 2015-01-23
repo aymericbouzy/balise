@@ -1,5 +1,6 @@
 <div class="show-container">
-  <div class="sh-plus opanel">
+  <!-- TODO : red ou green selon en cours / terminé -->
+  <div class="sh-plus red-background opanel">
     <!-- TODO : fa-check vague en cours
                 fa-times demande vague terminée-->
     <i class="fa fa-fw fa-check"></i>
