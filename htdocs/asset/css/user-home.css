@@ -262,7 +262,9 @@ body {
     background-color:#D7EBFF;
 }
 
+/*-------------------------------------------------------------------*/
 /*Tags*/
+
 a.tag-red {
     color: #000;
     border-radius: 2px;
@@ -305,7 +307,9 @@ a.tag-red {
     background-color:#B2B2B2;
 }
 
+/*-------------------------------------------------------------------*/
 /*Search form*/
+
 .form input {
 	width:85%;
 }
@@ -314,7 +318,8 @@ a.tag-red {
   width: 100%;
   margin: auto;
   padding: 10px;
-  background-color: #EEEEEE; ;
+  background-color: #cbddff;
+  color :#2e2e2e ;
 }
 
 @media (min-width:768px){
@@ -322,7 +327,7 @@ a.tag-red {
     /* 768 - (side menu width : 225 px ) = 543 */
     width:543px;
     margin-top: 20px;
-    box-shadow: 5px 5px 2px #888888;
+    box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.2);
   }
 }
 
@@ -366,6 +371,7 @@ a.tag-red {
 .flash-container{
   position: fixed;
   right: 5px;
+  z-index: 100;
 }
 
 .flashcard {
@@ -373,7 +379,6 @@ a.tag-red {
   width: 250px;
   overflow: hidden;
   padding: 10px;
-  z-index: 100;
   box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.7);
 }
 
@@ -392,7 +397,7 @@ a.tag-red {
 }
 
 /*--------------------------------------------------------------------*/
-/* Panelswith shadows */
+/* Panels with shadow */
 .opanel{
   box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.2);
 }
