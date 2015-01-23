@@ -74,6 +74,42 @@
 }
 
 /*------------------------------------------------------------------------*/
+/* Display information about current show : recette, dépense, accepté, etc.. */
+.sh-plus {
+  margin: 5px;
+  height: 45px;
+  background-color: rgb(50, 173, 39);
+  padding: 5px;
+  font-size: 25px;
+}
+@media(max-width:804px){
+  .sh-plus>.text {
+    display: inline-block;
+  }
+}
+
+@media(min-width:804px){
+  .sh-plus {
+    z-index: 10;
+    float: left;
+    position: absolute;
+    left: -50px;
+    width: 45px;
+    height: 240px;
+    margin: 0px;
+  }
+  .sh-plus>.text {
+    display: block;
+    width: 240px;
+    transform: rotate(270deg);
+    transform-origin: left top 0 ;
+    position: absolute;
+    top : 240px;
+    padding: 5px;
+  }
+}
+
+/*------------------------------------------------------------------------*/
 /* Budget specific classes */
 
 .sh-bu-ratio {

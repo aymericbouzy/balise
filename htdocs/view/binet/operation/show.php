@@ -1,5 +1,10 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
+  <div class="sh-plus opanel">
+    <!-- TODO : fa-plus ou fa-minus selon le signe de l'opération -->
+    <i class="fa fa-fw fa-plus-circle"></i>
+    <div class="text"> <!-- TODO Recette ou dépense --> </div>
+  </div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-calculator fa-5x"></i>

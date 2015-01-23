@@ -1,5 +1,10 @@
 <script src = "<?php echo ASSET_PATH; ?>js/show-budget.js"></script>
 <div class="show-container">
+  <div class="sh-plus opanel">
+    <!-- TODO : fa-plus ou fa-minus selon le signe du budget -->
+    <i class="fa fa-fw fa-plus-circle"></i>
+    <div class="text"> <!-- TODO Recette ou dépense --> </div>
+  </div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x <?php echo $budget["amount"] > 0 ? "fa-plus-circle" : "fa-minus-circle"; ?>"></i>

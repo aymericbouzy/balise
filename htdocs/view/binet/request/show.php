@@ -1,4 +1,12 @@
 <div class="show-container">
+  <div class="sh-plus opanel">
+    <!-- TODO : fa-question requête en attente
+                fa-check requête acceptée
+                fa-times requête refusée
+                -->
+    <i class="fa fa-fw fa-question"></i>
+    <div class="text"> <!-- TODO Statut de la requête --> </div>
+  </div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
