@@ -23,7 +23,8 @@
       </div>
     </div>
   </div>
-  <div class="sh-bu-ratio">
+  <!-- TODO : seulement si cela a du sens !-->
+  <div class="sh-bu-ratio opanel">
     <div class="header">
       Subventions utilisées / accordées
     </div>
@@ -33,7 +34,19 @@
       </div>
     </div>
   </div>
-  <div class="sh-bu-tags">
+  <div class="sh-bu-tags opanel">
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
+  </div>
+  <div class="sh-bu-operations opanel">
+    <div class="pieID pie">
+    </div>
+    <ul class="pieID legend">
+      <li>
+        <!--TODO : pour chaque opération , ajouter : -->
+        <em>Nom del'opération</em>
+        <span>Montant de l'opération</span>
+        <!-- ------------- -- >
+      </li>
+    </ul>
   </div>
 </div>
