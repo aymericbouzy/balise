@@ -1,6 +1,3 @@
-<!-- TODO: solve conflict -->
-
-<<<<<<< HEAD
 <div class="show-container">
   <div class="sh-title opanel">
     <div class="logo">

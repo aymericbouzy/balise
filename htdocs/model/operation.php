@@ -87,7 +87,7 @@
   }
 
   function select_operations_budget($budget) {
-    $sql = "SELECT operation
+    $sql = "SELECT operation as id, amount
             FROM operation_budget
             WHERE budget = :budget";
     $req = Database::get()->prepare($sql);

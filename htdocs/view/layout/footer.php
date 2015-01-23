@@ -16,7 +16,7 @@ Site créé par <?php echo link_to("mailto:Nathan Eckert <nathan.eckert@polytech
 
   $reference = substr(md5(rand()), 0, 10);
   $url = $_SERVER["REDIRECT_URL"];
-  $email = select_student($_SESSION["student"], array("email"))["email"];
+  $email = connected_student() ? select_student($_SESSION["student"], array("email"))["email"] : "";
   $post = array_to_string($_POST);
   $session = array_to_string($_SESSION);
   $get = array_to_string($_GET);

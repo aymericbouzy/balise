@@ -14,7 +14,7 @@
 
   function setup_for_validation() {
     $total_amount = select_operation($GLOBALS["operation"]["id"], array("amount"))["amount"];
-    $GLOBALS["binet_budgets"] = select_budgets(array("binet" => $binet, "term" => $term, "amount" => array($total_amount > 0 ? ">" : "<", 0)));
+    $GLOBALS["binet_budgets"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($total_amount > 0 ? ">" : "<", 0)));
     $GLOBALS["amount_array"] = array_map("adds_amount_prefix", $GLOBALS["binet_budgets"]);
     $amounts_sum = 0;
     foreach ($GLOBALS["amount_array"] as $key) {
@@ -36,8 +36,8 @@
 
   before_action("check_csrf_post", array("update", "create", "validate"));
   before_action("check_csrf_get", array("delete"));
-  before_action("check_entry", array("show", "edit", "update", "delete", "validate"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
-  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "validate"));
+  before_action("check_entry", array("show", "edit", "update", "delete", "validate", "review"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "validate", "review"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
@@ -47,7 +47,7 @@
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
-  before_action("setup_for_validation", array("validate"));
+  before_action("setup_for_validation", array("validate", "review"));
   before_action("check_form_input", array("validate"), array(
     "model_name" => "operation",
     "amount_fields" => array_map("adds_max_amount", $amount_array),
@@ -107,10 +107,21 @@
     break;
 
   case "review":
+    if (!isset($_SESSION["operation"])) {
+      $_SESSION["operation"] = array();
+    }
     function operation_to_form_fields($operation) {
+      foreach ($GLOBALS["binet_budgets"] as $budget) {
+        $operation[adds_amount_prefix($budget)] = 0;
+      }
+      foreach (select_budgets_operation($operation["id"]) as $budget) {
+        $operation[adds_amount_prefix($budget)] = $budget["amount"];
+      }
+      var_dump($operation);
       return $operation;
     }
-    $operation = set_editable_entry_for_form("operation", $operation, $form_fields);
+    $operation = set_editable_entry_for_form("operation", $operation, array_map("adds_max_amount", $amount_array));
+    var_dump($operation);
     break;
 
   case "validate":

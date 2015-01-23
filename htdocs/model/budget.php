@@ -14,6 +14,7 @@
   }
 
   function select_budget($budget, $fields = array()) {
+    $id = $budget;
     $budget = select_entry(
       "budget",
       array("id", "binet", "amount", "term", "label"),
@@ -23,16 +24,16 @@
     foreach ($fields as $field) {
       switch ($field) {
       case "real_amount":
-        $budget[$field] = get_real_amount_budget($budget["id"]);
+        $budget[$field] = get_real_amount_budget($id);
         break;
       case "subsidized_amount_requested":
-        $budget[$field] = get_subsidized_amount_requested_budget($budget["id"]);
+        $budget[$field] = get_subsidized_amount_requested_budget($id);
         break;
       case "subsidized_amount_granted":
-        $budget[$field] = get_subsidized_amount_granted_budget($budget["id"]);
+        $budget[$field] = get_subsidized_amount_granted_budget($id);
         break;
       case "subsidized_amount_used":
-        $budget[$field] = get_subsidized_amount_used_budget($budget["id"]);
+        $budget[$field] = get_subsidized_amount_used_budget($id);
         break;
       }
     }
@@ -137,7 +138,7 @@
   }
 
   function select_budgets_operation($operation) {
-    $sql = "SELECT budget
+    $sql = "SELECT budget as id, amount
             FROM operation_budget
             WHERE operation = :operation";
     $req = Database::get()->prepare($sql);

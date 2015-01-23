@@ -15,7 +15,7 @@
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "tags_string" => true,
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
-    "optional" => ($_GET["action"] == "update" ? array("label", "amount") : array())
+    "optional" => array_merge($_GET["action"] == "update" ? array("label", "amount") : array(), array("sign"))
   ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
