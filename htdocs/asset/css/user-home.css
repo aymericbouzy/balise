@@ -464,8 +464,8 @@ a.tag-red {
   font-size: 13px;
 }
 .legend li {
-  width: 110px;
-  height: 1.25em;
+  max-width: 210px;
+  min-height: 1.25em;
   margin-bottom: 0.7em;
   padding-left: 0.5em;
   border-left: 1.25em solid black;
