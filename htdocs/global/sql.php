@@ -87,7 +87,7 @@
         $sql .= " AND ".$column;
         if (is_null($value)) {
           $sql .= " IS NULL";
-        } elseif (is_array($value) && $value[1] == NULL) {
+        } elseif (is_array($value) && $value[1] === NULL) {
           switch ($value[0]) {
             case "!=" :
             $sql .= " IS NOT NULL";

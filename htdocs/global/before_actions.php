@@ -128,7 +128,10 @@
 
     foreach ($array["other_fields"] as $field) {
       if (!call_user_func($field[1], $_POST[$field[0]])) {
-        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
+        $readable_field = translate_form_field($field[0]);
+        if (!empty($readable_field)) {
+          $_SESSION["error"][] = "La valeur entrée pour le champ \"".$readable_field."\" n'est pas valide.";
+        }
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
     }

@@ -110,6 +110,7 @@
     if (!isset($_SESSION["operation"])) {
       $_SESSION["operation"] = array();
     }
+    $id = $operation["id"];
     function operation_to_form_fields($operation) {
       foreach ($GLOBALS["binet_budgets"] as $budget) {
         $operation[adds_amount_prefix($budget)] = 0;
@@ -117,11 +118,10 @@
       foreach (select_budgets_operation($operation["id"]) as $budget) {
         $operation[adds_amount_prefix($budget)] = $budget["amount"];
       }
-      var_dump($operation);
       return $operation;
     }
-    $operation = set_editable_entry_for_form("operation", $operation, array_map("adds_max_amount", $amount_array));
-    var_dump($operation);
+    $operation = set_editable_entry_for_form("operation", $operation, $amount_array);
+    $operation = array_merge($operation, select_operation($id, array("id", "amount", "binet_validation_by")));
     break;
 
   case "validate":

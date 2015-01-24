@@ -8,9 +8,10 @@
     <h1>Ajouter l'opération au budget</h1>
     <?php
   }
-  var_dump($operation);
 ?>
-
+<p>
+  Montant total de l'opération : <?php echo $operation["amount"]; ?>
+</p>
 <form role="form" id="operation" action="/<?php echo path("validate", "operation", $operation["id"], binet_prefix($binet, $term)); ?>" method="post">
   <?php
   foreach ($binet_budgets as $budget) {
