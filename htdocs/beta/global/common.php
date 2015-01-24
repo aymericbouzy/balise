@@ -1,5 +1,11 @@
 <?php
 
+  function set_if_not_set(&$variable, $value) {
+    if(!isset($variable)) {
+      $variable = $value;
+    }
+  }
+
   function binet_term_id($binet, $term) {
     return (select_binet($binet, array("clean_name"))["clean_name"])."/".$term;
   }

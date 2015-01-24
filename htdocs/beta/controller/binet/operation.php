@@ -82,13 +82,8 @@
     break;
 
   case "show":
-<<<<<<< HEAD:htdocs/beta/controller/binet/operation.php
-    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by"));
-    $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
-=======
     $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference"));
-    $operation["budgets"] = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : array();
->>>>>>> FETCH_HEAD:htdocs/controller/binet/operation.php
+    $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
 
   case "edit":
