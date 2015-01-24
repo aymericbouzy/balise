@@ -128,7 +128,10 @@
 
     foreach ($array["other_fields"] as $field) {
       if (!call_user_func($field[1], $_POST[$field[0]])) {
-        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
+        $readable_field = translate_form_field($field[0]);
+        if (!empty($readable_field)) {
+          $_SESSION["error"][] = "La valeur entrée pour le champ \"".$readable_field."\" n'est pas valide.";
+        }
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
     }
@@ -235,7 +238,7 @@
             $valid = $valid && in_array($value, array("binet"));
             break;
           case "tags":
-            $valid = $valid && preg_does_match("/^([a-z_]+)(\+[a-z_]+)*$/", $value);
+            $valid = $valid && preg_does_match("/^([a-z_]+)( [a-z_]+)*$/", $value);
             break;
           case "binet":
             $valid = $valid && preg_does_match("/^([a-z0-9-])+$/", $value);
@@ -293,7 +296,7 @@
   function compute_query_array() {
     $query_array = array_intersect_key($_GET, array_flip(array("tags")));
     if (!empty($query_array["tags"])) {
-      $tags_clean_names = explode("+", $query_array["tags"]);
+      $tags_clean_names = explode(" ", $query_array["tags"]);
       $query_array["tags"] = array();
       foreach ($tags_clean_names as $clean_name) {
         $query_array["tags"][] = select_tags(array("clean_name" => $clean_name))[0]["id"];

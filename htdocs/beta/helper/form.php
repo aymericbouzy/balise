@@ -21,7 +21,7 @@
   }
 
   function form_group_checkbox($label, $field, $object, $object_name) {
-    return "<div class=\"checkbox".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
+    return "<div class=\"checkbox".(isset($_SESSION[$object_name]["errors"]) && in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
               <label>
                 <input type=\"hidden\" name=\"".$field."\" value=\"0\">
                 <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(empty($object[$field]) ? "" : " checked").">

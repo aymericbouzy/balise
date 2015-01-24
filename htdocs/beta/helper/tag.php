@@ -7,15 +7,18 @@
   }
 
   function is_selected_tag($tag, $query_array) {
-    return isset($query_array["select_tags"]) && in_array($tag, array($query_array["select_tags"]));
+    return isset($query_array["tags"]) && in_array($tag, $query_array["tags"]);
   }
 
   function query_array_selecting_tag($tag, $query_array) {
-    $query_array["select_tags"][] = $tag;
+    $query_array["tags"][] = $tag;
     return $query_array;
   }
 
   function query_array_unselecting_tag($tag, $query_array) {
-    $query_array["select_tags"] = array_diff($query_string["select_tags"], array($tag));
+    $query_array["tags"] = array_diff($query_array["tags"], array($tag));
+    if (empty($query_array["tags"])) {
+      unset($query_array["tags"]);
+    }
     return $query_array;
   }

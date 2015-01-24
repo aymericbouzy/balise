@@ -1,7 +1,10 @@
 <?php
 
   function link_to($path, $caption, $class = "") {
-    return "<a href=\"/".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
+    if (!in_array(substr($path, 0, 7), array("mailto:", "http://"))) {
+      $path = "/".$path;
+    }
+    return "<a href=\"".$path."\"".(empty($class) ? "" : " class=\"".$class."\"").">".$caption."</a>";
   }
 
   function img($src, $alt = "") {

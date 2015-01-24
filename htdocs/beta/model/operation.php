@@ -69,10 +69,10 @@
   }
 
   function select_operations($criteria, $order_by = NULL, $ascending = true) {
-    if (!isset($criteria["kes_validation_by"])) {
+    if (!isset($criteria["kes_validation_by"]) && !is_null($criteria["kes_validation_by"])) {
       $criteria["kes_validation_by"] = array("!=", NULL);
     }
-    if (!isset($criteria["binet_validation_by"])) {
+    if (!isset($criteria["binet_validation_by"]) && !is_null($criteria["binet_validation_by"])) {
       $criteria["binet_validation_by"] = array("!=", NULL);
     }
     return select_entries(
@@ -87,7 +87,7 @@
   }
 
   function select_operations_budget($budget) {
-    $sql = "SELECT operation
+    $sql = "SELECT operation as id, amount
             FROM operation_budget
             WHERE budget = :budget";
     $req = Database::get()->prepare($sql);

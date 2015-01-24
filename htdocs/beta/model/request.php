@@ -16,13 +16,15 @@
   }
 
   function select_request($request, $fields = array()) {
+    $id = $request;
     $request = select_entry(
       "request",
       array("id", "wave", "answer", "sent"),
       $request,
       $fields
     );
-    if (in_array("binet", $fields) || in_array("term", $fields)) {
+    if (!empty(array_intersect(array("binet", "term", "granted", "requested_amount", "granted_amount", "used_amount"), $fields))) {
+      // TODO : check no request without subsidy
       $subsidies = select_subsidies(array("request" => $request["id"]));
       $budget = select_budget($subsidies[0]["budget"]);
       if (in_array("binet", $fields)) {
@@ -31,7 +33,20 @@
       if (in_array("term", $fields)) {
         $request["term"] = $budget["term"];
       }
+      if (in_array("granted", $fields)) {
+        $request["granted"] = $subsidies[0]["explanation"] != NULL;
+      }
+      if (in_array("requested_amount", $fields)) {
+        $request["requested_amount"] = get_requested_amount_request($id);
+      }
+      if (in_array("granted_amount", $fields)) {
+        $request["granted_amount"] = get_granted_amount_request($id);
+      }
+      if (in_array("used_amount", $fields)) {
+        $request["used_amount"] = get_used_amount_request($id);
+      }
     }
+
     return $request;
   }
 
@@ -72,7 +87,7 @@
     $req->execute();
   }
 
-  function get_subsidized_amount_used_request($request) {
+  function get_used_amount_request($request) {
     $amount = 0;
     foreach(select_subsidies(array("request" => $request)) as $subsidy) {
       $amount += get_used_amount_subsidy($subsidy);

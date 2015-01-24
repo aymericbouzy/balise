@@ -1,4 +1,6 @@
-Site créé par <a href="mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>">Nathan</a>, <a href="mailto:Victor Nicolet <victor.nicolet@polytechnique.edu>">Little</a> et <a href="mailto:Aymeric Bouzy <aymeric.bouzy@polytechnique.edu>">Zouby</a>.
+Site créé par <?php echo link_to("mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>", "Nathan"); ?>,
+<?php echo link_to("mailto:Victor Nicolet <victor.nicolet@polytechnique.edu>", "Little"); ?> et
+<?php echo link_to("mailto:Aymeric Bouzy <aymeric.bouzy@polytechnique.edu>", "Zouby"); ?>.
 <?php
 
   function array_to_string($array) {
@@ -14,7 +16,7 @@ Site créé par <a href="mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>"
 
   $reference = substr(md5(rand()), 0, 10);
   $url = $_SERVER["REDIRECT_URL"];
-  $email = select_student($_SESSION["student"], array("email"))["email"];
+  $email = connected_student() ? select_student($_SESSION["student"], array("email"))["email"] : "";
   $post = array_to_string($_POST);
   $session = array_to_string($_SESSION);
   $get = array_to_string($_GET);
@@ -23,5 +25,9 @@ Site créé par <a href="mailto:Nathan Eckert <nathan.eckert@polytechnique.edu>"
   $body = urlencode($body);
   $body = str_replace(array("+"), array(" "), $body);
 
+<<<<<<< HEAD:htdocs/beta/view/layout/footer.php
   echo "<a href=\"mailto:Projet Balise <balise.bugreport@gmail.com>?subject=[bug #".$reference."]&body=".$body."\" class=\"btn btn-primary\">Rapport de bug</a>";
+=======
+  echo link_to("mailto:bug_report@gmail.com?subject=[bug #".$reference."]&body=".$body, "Rapport de bug", "btn btn-primary");
+>>>>>>> FETCH_HEAD:htdocs/view/layout/footer.php
 ?>

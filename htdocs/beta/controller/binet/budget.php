@@ -15,7 +15,7 @@
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "tags_string" => true,
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
-    "optional" => ($_GET["action"] == "update" ? array("label", "amount") : array())
+    "optional" => array_merge($_GET["action"] == "update" ? array("label", "amount") : array(), array("sign"))
   ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
@@ -43,11 +43,12 @@
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
-    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.".$_POST["sign"]." ".$_POST["amount"]." ".(($_POST["sign"]*2 - 1)*$_POST["amount"]);
+    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
     redirect_to_action("show");
     break;
 
   case "show":
+    $budget = select_budget($budget, array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     break;
 
   case "edit":
