@@ -64,7 +64,7 @@
   }
 
   function select_tags_binet($binet, $term = NULL) {
-    $sql = "SELECT budget_tag.tag, COUNT(budget_tag.tag) as frequency
+    $sql = "SELECT budget_tag.tag as id, COUNT(budget_tag.tag) as frequency
             FROM budget_tag
             INNER JOIN budget
             ON budget.id = budget_tag.budget
@@ -83,7 +83,7 @@
   }
 
   function select_tags_operation($operation) {
-    $sql = "SELECT budget_tag.tag, COUNT(budget_tag.tag) as frequency
+    $sql = "SELECT budget_tag.tag as id, COUNT(budget_tag.tag) as frequency
             FROM budget_tag
             INNER JOIN operation_budget
             ON operation_budget.budget = budget_tag.budget
@@ -96,7 +96,7 @@
   }
 
   function select_tags_subsidy($subsidy) {
-    $sql = "SELECT budget_tag.tag, COUNT(budget_tag.tag) as frequency
+    $sql = "SELECT budget_tag.tag as id, COUNT(budget_tag.tag) as frequency
             FROM budget_tag
             INNER JOIN subsidy
             ON subsidy.budget = budget_tag.budget
@@ -109,7 +109,7 @@
   }
 
   function select_tags_request($request) {
-    $sql = "SELECT budget_tag.tag, COUNT(budget_tag.tag) as frequency
+    $sql = "SELECT budget_tag.tag as id, COUNT(budget_tag.tag) as frequency
             FROM budget_tag
             INNER JOIN subsidy
             ON subsidy.budget = budget_tag.budget
@@ -122,7 +122,7 @@
   }
 
   function select_tags_wave($wave) {
-    $sql = "SELECT budget_tag.tag, COUNT(budget_tag.tag) as frequency
+    $sql = "SELECT budget_tag.tag as id, COUNT(budget_tag.tag) as frequency
             FROM budget_tag
             INNER JOIN subsidy
             ON subsidy.budget = budget_tag.budget
@@ -137,7 +137,7 @@
   }
 
   function select_tags_budget($budget) {
-    $sql = "SELECT tag
+    $sql = "SELECT tag as id
             FROM budget_tag
             WHERE budget = :budget";
     $req = Database::get()->prepare($sql);

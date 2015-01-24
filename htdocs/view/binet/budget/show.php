@@ -1,4 +1,3 @@
-<script src = "<?php echo ASSET_PATH; ?>js/show-budget.js"></script>
 <div class="show-container">
   <!-- TODO : green recette, red dépense -->
   <div class="sh-plus green-background opanel">

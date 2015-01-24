@@ -26,7 +26,7 @@
           $query_string .= "&";
         }
         if ($key == "tags") {
-          $query_string .= "tags=".implode("+", $value);
+          $query_string .= "tags=".tag_array_to_string($value);
         } else {
           $query_string .= $key."=".$value;
         }
@@ -119,7 +119,7 @@
     write_path_rule(path("", "binet", "([a-z-]+)/([0-9]+)"), true_path("", "budget", "", "binet/$1/$2"));
     write_controller_rules(array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
     write_controller_rules(array("controller" => "budget", "binet_prefix" => true));
-    write_controller_rules(array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate")));
+    write_controller_rules(array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate", "review")));
     write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant")));
     write_controller_rules(array("controller" => "validation", "binet_prefix" => true, "except" => array("show", "edit", "update", "new", "create", "delete")));
     write_controller_rules(array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
