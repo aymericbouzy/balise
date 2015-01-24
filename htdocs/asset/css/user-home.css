@@ -313,10 +313,14 @@ a.tag-red {
   background-color: rgb(50, 173, 39);
 }
 .red-background {
-  background-color: rgb(50, 173, 39);
+  background-color: rgb(173, 50, 39);
 }
 .orange-background {
   background-color: rgb(255, 175, 36);
+}
+
+.grey-background {
+	background-color: rgb(150, 150, 150);
 }
 
 /*-------------------------------------------------------------------*/

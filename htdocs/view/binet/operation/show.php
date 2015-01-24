@@ -6,6 +6,27 @@
     <i class="fa fa-fw fa-plus-circle"></i>
     <div class="text"> <!-- TODO Recette ou dépense --> </div>
   </div>
+  <!--TODO mettre des goto sur les div round-button -->
+  <div class="sh-actions">
+		<!-- TODO pour le premier bouton :
+			-		si l'opération n'est pas validée, on peut clicker sur le bouton, 
+					lui ajouter la classe anim et orange-background
+			-		si elle est validée, green-background et pas d'anim -->
+		<div class="round-button green-background opanel">
+			<i class="fa fa-fw fa-check"></i>
+			<span>Validée</span>
+		</div>
+		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur
+		bien sûr -->
+		<div class="round-button red-background opanel">
+			<i class="fa fa-fw fa-trash anim"></i>
+			<span>Supprimer</span>
+		</div>
+		<div class="round-button grey-background opanel">
+			<i class="fa fa-fw fa-edit anim"></i>
+			<span>Modifier</span>
+		</div>
+	</div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-calculator fa-5x"></i>
