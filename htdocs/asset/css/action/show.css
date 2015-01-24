@@ -179,7 +179,7 @@
 }
 
 .sh-op-payer {
-  height: 100px;
+  min-height: 100px;
   margin: 5px;
   margin-top: 10px;
   padding: 15px;
@@ -197,15 +197,6 @@
 }
 
 @media( min-width:543px){
-  .sh-op-title>.text>.binet-name {
-    max-width: 384px;
-    max-height: 70px;
-  }
-  .sh-op-title>.text>.binet-year {
-    max-width: 384px;
-    max-height: 50px;
-  }
-
   .sh-op-amount {
     display:inline-block;
     width:289px;
