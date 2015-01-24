@@ -1,7 +1,7 @@
 <?php
 
   function check_unique_clean_name() {
-    $binets = select_tags(array("clean_name" => clean_string($_POST["name"])));
+    $binets = select_binets(array("clean_name" => clean_string($_POST["name"])));
     if (!empty($binets)) {
       $_SESSION["binet"]["errors"][] = "name";
       $_SESSION["error"][] = "Ce nom de binet est déjà utilisé par le binet ".pretty_binet($binets[0]["id"]).". Veuillez en choisir un autre.";

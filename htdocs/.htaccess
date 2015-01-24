@@ -82,4 +82,3 @@
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/([0-9]+)/edit/?$ ./beta/index.php?controller=wave&action=edit&wave=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/([0-9]+)/update/?$ ./beta/index.php?controller=wave&action=update&wave=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/([0-9]+)/publish/?$ ./beta/index.php?controller=wave&action=publish&wave=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
-    

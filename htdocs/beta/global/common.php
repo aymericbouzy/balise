@@ -9,7 +9,7 @@
   }
 
   function redirect_to_action($action) {
-    $path = path($action, $_GET["controller"], (isset($GLOBALS[$_GET["controller"]]["id"]) ? $GLOBALS[$_GET["controller"]]["id"] : ""), ($_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
+    $path = path($action, $_GET["controller"], (isset($GLOBALS[$_GET["controller"]]["id"]) ? $GLOBALS[$_GET["controller"]]["id"] : ""), (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
     redirect_to_path($path);
   }
 
@@ -41,7 +41,8 @@
     return false;
   }
 
-  function set_editable_entry_for_form($table, $id, $form_fields) {
+  function set_editable_entry_for_form($table, $object, $form_fields) {
+    $id = $object["id"];
     if (isset($_SESSION[$table])) {
       $object = initialise_for_form_from_session($form_fields, $table);
     } else {
@@ -50,6 +51,9 @@
       $object = initialise_for_form($form_fields, $object);
     }
     $object["id"] = $id;
+    if (!isset($_SESSION[$table]["errors"])) {
+      $_SESSION[$table]["errors"] = array();
+    }
     return $object;
   }
 
@@ -58,6 +62,13 @@
   }
 
   function tag_is_selected($tag, $query_array) {
-    // TODO
-    return false;
+    return !empty($query_array["tags"]) && in_array(tag_to_clean_name($tag), $query_array["tags"]);
+  }
+
+  function tag_to_clean_name($tag) {
+    return select_tag($tag, array("clean_name"))["clean_name"];
+  }
+
+  function tag_array_to_string($tags) {
+    return implode("+", array_map("tag_to_clean_name", $tags));
   }

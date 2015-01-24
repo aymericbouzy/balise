@@ -85,12 +85,24 @@
       }
       if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
         $sql .= " AND ".$column;
-        if (is_array($value)) {
-          $sql .= " ".$value[0];
+        if (is_null($value)) {
+          $sql .= " IS NULL";
+        } elseif (is_array($value) && $value[1] === NULL) {
+          switch ($value[0]) {
+            case "!=" :
+            $sql .= " IS NOT NULL";
+            break;
+            default :
+            $sql .= " IS NULL";
+          }
         } else {
-          $sql .= " =";
+          if (is_array($value)) {
+            $sql .= " ".$value[0];
+          } else {
+            $sql .= " =";
+          }
+          $sql .= " :".$column;
         }
-        $sql .= " :".$column;
       }
     }
     $ordered = !empty($order_by) && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields));
@@ -99,18 +111,18 @@
     }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
-      $real_value = is_array($value) ? $value[1] : $value;
+      $real_value = is_array($value) ? (isset($value[1]) ? $value[1] : NULL) : $value;
       if ($column === "tags") {
         for ($j = 0; $j < $i; $j++) {
           $req->bindValue(':tag'.$j, $tags[$j], PDO::PARAM_INT);
         }
       } else {
-        if (!isset($real_value)) {
-          $req->bindValue(':'.$column, NULL, PDO::PARAM_NULL);
-        } elseif (in_array($column, $selectable_int_fields)) {
-          $req->bindValue(':'.$column, $real_value, PDO::PARAM_INT);
-        } elseif (in_array($column, $selectable_str_fields)) {
-          $req->bindValue(':'.$column, $real_value, PDO::PARAM_STR);
+        if (isset($real_value)) {
+          if (in_array($column, $selectable_int_fields)) {
+            $req->bindValue(':'.$column, $real_value, PDO::PARAM_INT);
+          } elseif (in_array($column, $selectable_str_fields)) {
+            $req->bindValue(':'.$column, $real_value, PDO::PARAM_STR);
+          }
         }
       }
     }

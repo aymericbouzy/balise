@@ -104,7 +104,7 @@
       <tr class="total">
           <td colspan="2">Total</td>
           <td><?php echo pretty_amount($sum_amount_inc + $sum_amount_exp); ?></td>
-          <td><?php echo pretty_amount($sum_real_amount_inc + $sum_amount_exp); ?></td>
+          <td><?php echo pretty_amount($sum_real_amount_inc + $sum_real_amount_exp); ?></td>
           <td><?php echo pretty_amount($sum_subsidized_amount_granted_inc + $sum_subsidized_amount_granted_exp); ?></td>
           <td><?php echo pretty_amount($sum_subsidized_amount_used_inc + $sum_subsidized_amount_used_exp); ?></td>
       </tr>
