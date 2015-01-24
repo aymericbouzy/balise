@@ -111,7 +111,7 @@
     }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
-      $real_value = is_array($value) ? $value[1] : $value;
+      $real_value = is_array($value) ? (isset($value[1]) ? $value[1] : NULL) : $value;
       if ($column === "tags") {
         for ($j = 0; $j < $i; $j++) {
           $req->bindValue(':tag'.$j, $tags[$j], PDO::PARAM_INT);

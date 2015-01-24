@@ -41,7 +41,7 @@
   }
 
   function exists_budget($budget) {
-    return select_budget($budget) ? true : false;
+    return select_budget($budget, array("id")) ? true : false;
   }
 
 

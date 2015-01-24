@@ -16,6 +16,9 @@
   }
 
   function query_array_unselecting_tag($tag, $query_array) {
-    $query_array["tags"] = array_diff($query_string["tags"], array($tag));
+    $query_array["tags"] = array_diff($query_array["tags"], array($tag));
+    if (empty($query_array["tags"])) {
+      unset($query_array["tags"]);
+    }
     return $query_array;
   }

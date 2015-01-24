@@ -43,7 +43,7 @@
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
-    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.".$_POST["sign"]." ".$_POST["amount"]." ".(($_POST["sign"]*2 - 1)*$_POST["amount"]);
+    $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
     redirect_to_action("show");
     break;
 

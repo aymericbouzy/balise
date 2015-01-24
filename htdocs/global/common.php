@@ -62,7 +62,7 @@
   }
 
   function tag_is_selected($tag, $query_array) {
-    return in_array(tag_to_clean_name($tag), $query_array["tags"]);
+    return !empty($query_array["tags"]) && in_array(tag_to_clean_name($tag), $query_array["tags"]);
   }
 
   function tag_to_clean_name($tag) {
