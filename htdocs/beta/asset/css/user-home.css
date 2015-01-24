@@ -408,6 +408,49 @@ a.tag-red {
   color : #000;
 }
 
+.news {
+  background-color: #cbddff;
+}
+
+.news>h1 {
+  width: 100%;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  font-size: 20px;
+}
+.news>p {
+}
+
+.news>.controls {
+  font-size: 20px;
+  height: 30px;
+  padding: 2px;
+}
+
+.news>.controls>.ctrl {
+  width: auto;
+  padding: 5px;
+  border-radius: 2px;
+  margin-right: 10px;
+}
+
+/* TODO :améliorer le comportement des boutons : mauvais fonctionnement */
+.news>.controls>.ctrl>.which-action {
+  display: inline-block;
+  visibility: hidden;
+  width: 1px;
+  transition-delay: 0.5s;
+  transition-property: width;
+  transition-timing-function: ease-in;
+}
+.news>.controls>.ctrl:hover {
+  background-color: #3399ff;
+}
+.news>.controls>.ctrl>bt:hover && .which-action {
+  visibility: visible;
+  width:auto;
+}
+
+
 /*--------------------------------------------------------------------*/
 /* Panels with shadow */
 .opanel{
