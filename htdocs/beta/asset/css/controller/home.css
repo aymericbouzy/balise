@@ -1,0 +1,51 @@
+/* COMMENT : ce code va sûrement bouger, certaines parties seront placées
+dans user-home.css quand la totalité du site aura le même "thème" */
+
+@media( min-width:543px){
+  body {
+    background: -webkit-radial-gradient(#fff,#ccc); /* Safari 5.1 to 6.0 */
+    background: -o-radial-gradient(#fff,#ccc); /* For Opera 11.6 to 12.0 */
+    background: -moz-radial-gradient(#fff,#ccc); /* For Firefox 3.6 to 15 */
+    background: radial-gradient(#fff,#ccc); /* Standard syntax */
+    background-size: cover;
+  }
+
+  .binet-container {
+    width: 543px;
+  }
+
+  #page-wrapper {
+    background-color: rgba(0,0,0,0.0);
+  }
+}
+
+.binet-container {
+  height: 90vh;
+  padding: 5px;
+  margin : auto ;
+}
+.spot {
+  width : 100px;
+  height: 100px;
+  border-radius: 50px;
+  display: inline-block;
+  margin : 37px;
+  margin-bottom: 5px;
+}
+
+.spot:hover {
+  border: 5px solid  rgba(0,0,0,0.2);
+}
+
+.spot>img{
+  max-height: 100%;
+  max-width: 100%;
+  border-radius: 50%;
+}
+
+.no-binet {
+  width: 250px;
+  padding: 25px;
+  font-size: 50px;
+  height: 100px;
+}
