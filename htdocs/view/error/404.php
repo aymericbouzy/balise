@@ -1,3 +1,0 @@
-<p>
-  Error 404 : Not Found
-</p>
