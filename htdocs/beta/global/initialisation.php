@@ -32,4 +32,5 @@
   include HELPER_PATH."pretty_print.php";
   include HELPER_PATH."tag.php";
   include HELPER_PATH."sidebar.php";
+  include HELPER_PATH."show.php";
   include HELPER_PATH."form.php";
