@@ -1,4 +1,13 @@
 <div class="show-container">
+  <!-- TODO : orange en attente, green acceptée, red refusée -->
+  <div class="sh-plus red-background opanel">
+    <!-- TODO : fa-question requête en attente
+                fa-check requête acceptée
+                fa-times requête refusée
+                -->
+    <i class="fa fa-fw fa-question"></i>
+    <div class="text"> <!-- TODO Statut de la requête --> </div>
+  </div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>

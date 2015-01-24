@@ -1,4 +1,11 @@
 <div class="show-container">
+  <!-- TODO : red ou green selon en cours / terminé -->
+  <div class="sh-plus red-background opanel">
+    <!-- TODO : fa-check vague en cours
+                fa-times demande vague terminée-->
+    <i class="fa fa-fw fa-check"></i>
+    <div class="text"> <!-- TODO Statut de la vague --> </div>
+  </div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-star"></i>

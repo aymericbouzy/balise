@@ -1,10 +1,3 @@
-/* Show CSS */
-/* Theme colors :
-#2e2e2e Dark grey
-#3399FF Blue
-#cbddff Light blue
-*/
-
 #page-wrapper {
   height: 100vh;
 }
@@ -81,6 +74,43 @@
 }
 
 /*------------------------------------------------------------------------*/
+/* Display information about current show : recette, dépense, accepté, etc.. */
+.sh-plus {
+  margin: 5px;
+  height: 45px;
+  padding: 5px;
+  font-size: 25px;
+}
+
+}
+@media(max-width:804px){
+  .sh-plus>.text {
+    display: inline-block;
+  }
+}
+
+@media(min-width:804px){
+  .sh-plus {
+    z-index: 10;
+    float: left;
+    position: absolute;
+    left: -50px;
+    width: 45px;
+    height: 240px;
+    margin: 0px;
+  }
+  .sh-plus>.text {
+    display: block;
+    width: 240px;
+    transform: rotate(270deg);
+    transform-origin: left top 0 ;
+    position: absolute;
+    top : 240px;
+    padding: 5px;
+  }
+}
+
+/*------------------------------------------------------------------------*/
 /* Budget specific classes */
 
 .sh-bu-ratio {
@@ -108,6 +138,10 @@
   padding: 10px;
   min-height: 30px;
   background-color: #cbddff ;
+}
+
+.sh-bu-operations {
+    /* Property definitions in Operations classes */
 }
 
 /*------------------------------------------------------------------------*/
@@ -151,6 +185,14 @@
   padding: 15px;
   background-color: #3399FF ;
   text-align: center;
+  font-size: 50px;
+}
+
+.sh-op-budgets , .sh-bu-operations {
+  margin: 5px;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #cbddff ;
   font-size: 50px;
 }
 

@@ -1,4 +1,11 @@
+<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
+  <!-- TODO : green recette, red dépense -->
+  <div class="sh-plus green-background opanel">
+    <!-- TODO : fa-plus ou fa-minus selon le signe de l'opération -->
+    <i class="fa fa-fw fa-plus-circle"></i>
+    <div class="text"> <!-- TODO Recette ou dépense --> </div>
+  </div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-calculator fa-5x"></i>
@@ -25,5 +32,17 @@
   </div>
   <div class="sh-op-payer opanel">
     <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? pretty_student($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
+  </div>
+  <div class="sh-op-budgets opanel">
+    <div class="pieID pie">
+    </div>
+    <ul class="pieID legend">
+      <li>
+        <!--TODO : pour chaque opération , ajouter : -->
+        <em>Nom du budget</em>
+        <span>Montant utilisé</span>
+        <!-- ------------- -- >
+      </li>
+    </ul>
   </div>
 </div>
