@@ -62,6 +62,13 @@
   }
 
   function tag_is_selected($tag, $query_array) {
-    // TODO
-    return false;
+    return in_array(tag_to_clean_name($tag), $query_array["tags"]);
+  }
+
+  function tag_to_clean_name($tag) {
+    return select_tag($tag, array("clean_name"))["clean_name"];
+  }
+
+  function tag_array_to_string($tags) {
+    return implode("+", array_map("tag_to_clean_name", $tags));
   }

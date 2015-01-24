@@ -26,7 +26,7 @@
           $query_string .= "&";
         }
         if ($key == "tags") {
-          $query_string .= "tags=".implode("+", $value);
+          $query_string .= "tags=".tag_array_to_string($value);
         } else {
           $query_string .= $key."=".$value;
         }

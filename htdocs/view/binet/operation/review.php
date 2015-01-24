@@ -10,7 +10,7 @@
   }
 ?>
 <p>
-  Montant total de l'opération : <?php echo $operation["amount"]; ?>
+  Montant total de l'opération : <?php echo pretty_amount($operation["amount"]); ?>
 </p>
 <form role="form" id="operation" action="/<?php echo path("validate", "operation", $operation["id"], binet_prefix($binet, $term)); ?>" method="post">
   <?php

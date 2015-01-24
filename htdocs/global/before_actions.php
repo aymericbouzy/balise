@@ -238,7 +238,7 @@
             $valid = $valid && in_array($value, array("binet"));
             break;
           case "tags":
-            $valid = $valid && preg_does_match("/^([a-z_]+)(\+[a-z_]+)*$/", $value);
+            $valid = $valid && preg_does_match("/^([a-z_]+)( [a-z_]+)*$/", $value);
             break;
           case "binet":
             $valid = $valid && preg_does_match("/^([a-z0-9-])+$/", $value);

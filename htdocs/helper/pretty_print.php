@@ -8,7 +8,7 @@
     $tag_string = "";
     foreach ($tags as $tag) {
       $tag = select_tag($tag["id"], array("name", "id"));
-      $label = "<span class=\"label".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>";
+      $label = "<span class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>";
       if ($link) {
         $tag_string .= link_to(search_by_tag_path($tag["id"]), $label);
       } else {
@@ -35,6 +35,11 @@
   }
 
   function pretty_date($date) {
+    // TODO
+    return $date;
+  }
+
+  function pretty_operation_type($type) {
     // TODO
     return $date;
   }

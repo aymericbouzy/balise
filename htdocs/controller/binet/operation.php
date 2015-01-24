@@ -50,7 +50,7 @@
   before_action("setup_for_validation", array("validate", "review"));
   before_action("check_form_input", array("validate"), array(
     "model_name" => "operation",
-    "amount_fields" => array_map("adds_max_amount", $amount_array),
+    "amount_fields" => array_map("adds_max_amount", array_merge($amount_array, array("amounts_sum"))),
     "other_fields" => array(array("amounts_sum", "equals_operation_amount")),
     "redirect_to" => path("review", "operation", $_GET["action"] == "validate" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optional" => $amount_array
@@ -82,7 +82,7 @@
     break;
 
   case "show":
-    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by", "binet"));
+    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference"));
     $operation["budgets"] = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : array();
     break;
 
