@@ -341,11 +341,11 @@ footer {
   position: relative;
 }
 .notice {
-  background-color: rgba(50, 173, 39, 0.7);
+  background-color: rgb(50, 173, 39);
   color : #000;
 }
 .error {
-  background-color: rgba(173, 50, 39, 0.7);
+  background-color: rgb(173, 50, 39);
   color : #000;
 }
 
