@@ -28,7 +28,7 @@
     	<![endif]-->
 
       <?php
-        $css_file_for_action = "asset/css/action/".$_GET["action"].".css";
+        $css_file_for_action = "beta/asset/css/action/".$_GET["action"].".css";
         if (file_exists($css_file_for_action)) {
 		      ?>
 		      <link rel="stylesheet" href="/<?php echo $css_file_for_action; ?>">
@@ -37,7 +37,7 @@
       ?>
 
       <?php
-	      $css_file_for_controller = "asset/css/controller/".$_GET["controller"].".css";
+	      $css_file_for_controller = "beta/asset/css/controller/".$_GET["controller"].".css";
 	      if (file_exists($css_file_for_controller)) {
 	        ?>
 	        <link rel="stylesheet" href="/<?php echo $css_file_for_controller; ?>">
