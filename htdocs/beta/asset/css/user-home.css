@@ -9,6 +9,7 @@
 body {
     margin-top: 100px;
     background-color: #fff;
+    height:100%;
 }
 
 @media(min-width:768px) {
@@ -17,20 +18,12 @@ body {
     }
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    padding: 5px;
-    background-color: #fff;
-    width: 100%;
-    text-align: right;
-}
-
 #page-wrapper {
     width: 100%;
     padding: 5px;
     background-color: #fff;
-    margin-bottom: 50px;
+    padding-bottom: 50px;
+    height:auto;
 }
 
 .huge {
@@ -45,6 +38,7 @@ footer {
 
     #page-wrapper {
         padding: 10px;
+        padding-bottom: 50px;
     }
 }
 
@@ -432,14 +426,18 @@ footer {
 
 /*------ Footer ------------*/
 footer {
-	position :absolute;
+	all:none;
+	position :fixed;
 	padding:10px;
 	height: 50px;
 	width :100%;
-	bottom:0px;
-	background-color: #e2e2e2;
+	bottom:0;
+	background-color: rgba(0,0,0,0);
 	margin-left:-225px;
-	padding-left:230px;
+}
+footer>span {
+ font-size:0.9em;
+ float:left;
 }
 footer>.btn {
 	float:right;
