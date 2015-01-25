@@ -14,10 +14,17 @@
 			-		si elle est validée, green-background et pas d'anim -->
 		<div class="round-button green-background opanel">
 			<i class="fa fa-fw fa-check"></i>
-			<span>Validée</span>
+			<span>En attente / Validée</span>
 		</div>
-		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur
-		bien sûr -->
+		<!-- SI l'opération est validée par le binet, l'opération est en attente 
+		de validation par la Kes
+		Si l'opération est validée, on n'affiche plus l'information
+		seul le bouton "Validée" précédent apparait -->
+		<div class="round-button orange-background opanel">
+			<i class="fa fa-fw fa-question"></i>
+			<span>En attente de validation par la Kes</span>
+		</div>
+		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur -->
 		<div class="round-button red-background opanel">
 			<i class="fa fa-fw fa-trash anim"></i>
 			<span>Supprimer</span>
