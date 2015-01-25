@@ -6,6 +6,18 @@
     <i class="fa fa-fw fa-check"></i>
     <div class="text"> <!-- TODO Statut de la vague --> </div>
   </div>
+  <div class="sh-actions">
+		<!-- TODO Les boutons suivants dépendent des autorisations de l'utilisateur 
+		Bouton supprimer ?-->
+		<div class="round-button red-background opanel">
+			<i class="fa fa-fw fa-trash anim"></i>
+			<span>Supprimer</span>
+		</div>
+		<div class="round-button grey-background opanel">
+			<i class="fa fa-fw fa-edit anim"></i>
+			<span>Modifier</span>
+		</div>
+	</div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-star"></i>
