@@ -5,6 +5,18 @@
     <i class="fa fa-fw fa-plus-circle"></i>
     <div class="text"> <!-- TODO Recette ou dépense --> </div>
   </div>
+  <div class="sh-actions">
+		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur 
+		Bouton supprimer ?-->
+		<div class="round-button red-background opanel">
+			<i class="fa fa-fw fa-trash anim"></i>
+			<span>Supprimer</span>
+		</div>
+		<div class="round-button grey-background opanel">
+			<i class="fa fa-fw fa-edit anim"></i>
+			<span>Modifier</span>
+		</div>
+	</div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x <?php echo $budget["amount"] > 0 ? "fa-plus-circle" : "fa-minus-circle"; ?>"></i>
