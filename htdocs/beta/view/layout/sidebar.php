@@ -1,20 +1,20 @@
 <div class="collapse navbar-collapse navbar-ex1-collapse">
   <ul class="nav navbar-nav side-nav">
     <!-- Choose binet using dropdown menu -->
-    <li class="dropdown">
+    <li>
       <!-- For all binets -->
-    	<a href="#" class="dropdown-toggle" data-toggle="dropdown">#nomDuBinet</a>
-    		<ul class="dropdown-menu" role="menu">
-    		<?php foreach(binet_admins_current_student() as $binet_admin) {
-     	 		$binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
-      		?>
-      		<li>
-        		<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
-      		</li>
-          <?php
-          }
-        ?>
-    	</ul>
+    	<a href="javascript:;" data-target="#binets" data-toggle="collapse">#nomDuBinet</a>
+				<ul id="binets" class="collapse">
+						<?php foreach(binet_admins_current_student() as $binet_admin) {
+							$binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
+							?>
+							<li>
+								<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]."<span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
+							</li>
+							<?php
+							}
+						?>
+				</ul>
     </li>
     <!-- Accueil : links to budget/operations page -->
     <?php
