@@ -57,15 +57,15 @@
   }
 
   function write_controller_rules($hash) {
-    $hash["except"] = $hash["except"] ?: array();
-    $hash["action_on_collection"] = $hash["action_on_collection"] ?: array();
-    $hash["action_on_member"] = $hash["action_on_member"] ?: array();
+    set_if_not_set($hash["except"], array());
+    set_if_not_set($hash["binet_prefix"], false);
+    set_if_not_set($hash["action_on_collection"], array());
+    set_if_not_set($hash["action_on_member"], array());
+    set_if_not_set($hash["root"], "index");
 
     $collection_actions = array_merge(array_diff(array("index", "new", "create"), $hash["except"]), $hash["action_on_collection"]);
     $member_actions = array_merge(array_diff(array("show", "edit", "update", "delete"), $hash["except"]), $hash["action_on_member"]);
-    if (!isset($hash["root"])) {
-      $hash["root"] = "index";
-    }
+  
     write_path_rule(
       path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
       true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
