@@ -38,10 +38,6 @@ body {
 
     #page-wrapper {
         padding: 10px;
-<<<<<<< HEAD
-        padding-bottom: 50px;
-=======
->>>>>>> c437e7a9bfcb95f04c043b42a58c167ffb57a0de
     }
 }
 
@@ -443,4 +439,42 @@ footer>span {
 }
 footer>.btn {
 	float:right;
+}
+
+/*----- Switch -----------*/
+/*-- Switch -- */
+.switch{
+  display: inline-block;
+  margin-top: 2px;
+  float: right;
+  width: 150px;
+  height: 28px;
+  background-color: #cbddff;
+  border-radius:0px;
+}
+.switch>.in {
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+  padding: 2px;
+  color: #3399ff;
+}
+
+.switch>.in:hover {
+  background-color: #3399ff;
+  color: #fff;
+}
+.switch>.left {
+  float: left;
+}
+.switch>.right {
+  float: right;
+}
+.switch>.active {
+  background-color: #cbddff;
+  color: #5b5b5b;
+}
+.switch>.inactive {
+  background-color: #afafaf;
+  color: #8b8b8b;
 }
