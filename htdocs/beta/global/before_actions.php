@@ -35,6 +35,8 @@
         var_dump($_SESSION);
         echo "\$_POST : ";
         var_dump($_POST);
+        echo "Appelé par : ";
+        var_dump(debug_backtrace()[1]["function"]);
       }
 
       $_GET["controller"] = "error";

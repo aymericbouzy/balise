@@ -20,6 +20,7 @@
 
   function pretty_binet($binet) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
+    // TODO : create Kès logo
     $content = $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
     return link_to(path("show", "binet", $binet["id"]), $content);
   }
@@ -29,9 +30,19 @@
     return $content = $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
   }
 
+  function pretty_binet_term($binet_term, $link = true) {
+    // TODO
+    return "binet/".$binet_term;
+  }
+
   function pretty_budget($budget) {
     $budget = select_budget($budget, array("id", "label"));
     return $budget["label"].pretty_tags(select_tags_budget($budget["id"]));
+  }
+
+  function pretty_wave($wave) {
+    // TODO
+    return $wave;
   }
 
   function pretty_student($student) {
@@ -46,5 +57,5 @@
 
   function pretty_operation_type($type) {
     // TODO
-    return $date;
+    return $type;
   }

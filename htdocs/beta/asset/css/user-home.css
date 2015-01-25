@@ -17,12 +17,20 @@ body {
     }
 }
 
-
+footer {
+    position: fixed;
+    bottom: 0;
+    padding: 5px;
+    background-color: #fff;
+    width: 100%;
+    text-align: right;
+}
 
 #page-wrapper {
     width: 100%;
     padding: 5px;
     background-color: #fff;
+    margin-bottom: 50px;
 }
 
 .huge {

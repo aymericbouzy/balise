@@ -20,7 +20,7 @@
   }
 
   function redirect_to_path($path) {
-    header("Location: http".(empty($_SERVER["HTTPS"]) ? "" : "s")."://".$_SERVER["HTTP_HOST"]."/".$path);
+    header("Location: ".full_path($path));
     exit;
   }
 
@@ -38,6 +38,14 @@
 
   function preg_does_match($regex, $string) {
     return preg_match($regex, $string) === 1;
+  }
+
+  function file_does_exist($file) {
+    $file = substr($file, strlen(ROOT_PATH));
+    if (substr($file, 0, 1) == "/") {
+      $file = substr($file, 1);
+    }
+    return file_exists($file);
   }
 
   function connected_student() {
