@@ -28,19 +28,19 @@
     	<![endif]-->
 
       <?php
-        $css_file_for_action = "asset/css/action/".$_GET["action"].".css";
-        if (file_exists($css_file_for_action)) {
+        $css_file_for_action = ASSET_PATH."css/action/".$_GET["action"].".css";
+        if (file_does_exist($css_file_for_action)) {
 		      ?>
-		      <link rel="stylesheet" href="/<?php echo $css_file_for_action; ?>">
+		      <link rel="stylesheet" href="<?php echo $css_file_for_action; ?>">
 		      <?php
         }
       ?>
 
       <?php
-	      $css_file_for_controller = "asset/css/controller/".$_GET["controller"].".css";
-	      if (file_exists($css_file_for_controller)) {
+	      $css_file_for_controller = ASSET_PATH."css/controller/".$_GET["controller"].".css";
+	      if (file_does_exist($css_file_for_controller)) {
 	        ?>
-	        <link rel="stylesheet" href="/<?php echo $css_file_for_controller; ?>">
+	        <link rel="stylesheet" href="<?php echo $css_file_for_controller; ?>">
 	        <?php
 	      }
       ?>
@@ -61,13 +61,14 @@
           include VIEW_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/" : "").$_GET["controller"]."/".$_GET["action"].".php";
         ?>
       </div>
-      <footer>
-        <?php
-          include LAYOUT_PATH."footer.php";
-        ?>
-      </footer>
     </div>
 
+    <footer>
+      <?php
+      include LAYOUT_PATH."footer.php";
+      ?>
+    </footer>
+    
     <script src = "<?php echo ASSET_PATH; ?>js/common.js"></script>
   </body>
 </html>

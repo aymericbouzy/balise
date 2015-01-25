@@ -1,7 +1,7 @@
 <?php
 
   function budget_is_alone() {
-    header_if(!empty(select_operations_budget($_GET["budget"])) || !empty(select_subsidies_budget($_GET["subsidy"])), 403);
+    header_if(!empty(select_operations_budget($_GET["budget"])) || !empty(select_subsidies_budget($_GET["budget"])), 403);
   }
 
   before_action("check_csrf_post", array("update", "create"));
@@ -15,7 +15,7 @@
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "tags_string" => true,
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
-    "optional" => array_merge($_GET["action"] == "update" ? array("label", "amount") : array(), array("sign"))
+    "optional" => array_merge($_GET["action"] == "update" ? array("label", "amount") : array(), array("sign", "tags_string"))
   ));
   before_action("budget_is_alone", array("edit", "update", "delete"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
@@ -39,7 +39,7 @@
     break;
 
   case "create":
-    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
+    $budget["id"] = create_budget($binet, $term, (2*$_POST["sign"] - 1)*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }

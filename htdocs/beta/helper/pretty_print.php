@@ -38,6 +38,7 @@
   function pretty_wave($wave) {
     // TODO
     return $wave;
+  }
 
   function pretty_student($student) {
     $student = select_student($student, array("name", "email"));
@@ -51,5 +52,5 @@
 
   function pretty_operation_type($type) {
     // TODO
-    return $date;
+    return $type;
   }

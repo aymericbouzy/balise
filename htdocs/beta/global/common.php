@@ -40,6 +40,14 @@
     return preg_match($regex, $string) === 1;
   }
 
+  function file_does_exist($file) {
+    $file = substr($file, strlen(ROOT_PATH));
+    if (substr($file, 0, 1) == "/") {
+      $file = substr($file, 1);
+    }
+    return file_exists($file);
+  }
+
   function connected_student() {
     if (validate_input(array("student"), array(), "session") && exists_student($_SESSION["student"])) {
       return $_SESSION["student"];

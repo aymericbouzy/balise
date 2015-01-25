@@ -7,7 +7,7 @@
 							<td>".pretty_date($operation["date"])."</td>
 							<td>".$operation["comment"]."</td>
 							<td>".pretty_student($operation["created_by"])."</td>
-							<td>".pretty_amount(-$operation["amount"])."</td>
+							<td>".pretty_amount($operation["amount"])."</td>
 						</tr>";
 	}
 
