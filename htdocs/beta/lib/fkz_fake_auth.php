@@ -6,6 +6,5 @@
   }
 
   function frankiz_get_response() {
-    // TODO : understand why WEBMASTER_MAIL is inserted instead of its value
-    return array("hruid" => "qmlsdfkjqmsdjq", "firstname" => "Georges", "lastname" => "Blanquette", "email" => WEBMASTER_MAIL);
+    return array("hruid" => "qmlsdfkjqmsdjq", "firstname" => "Georges", "lastname" => "Blanquette", "email" => WEBMASTER_EMAIL);
   }

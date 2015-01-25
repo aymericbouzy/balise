@@ -1,7 +1,7 @@
 <?php
 
   function form_group($label, $field, $content, $object_name) {
-    return "<div class=\"form-group".(in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
+    return "<div class=\"form-group".(isset($_SESSION[$object_name]["errors"]) && in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
               <label for=\"".$field."\">".$label."</label>
               ".$content."
             </div>";

@@ -18,6 +18,7 @@
   define("ASSET_PATH", "/".ROOT_PATH."asset/");
   define("IMG_PATH", ASSET_PATH."img/");
   define("LAYOUT_PATH", VIEW_PATH."layout/");
+  define("EMAIL_PATH", VIEW_PATH."email/");
 
   define("KES_ID", 0);
 
