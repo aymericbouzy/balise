@@ -37,16 +37,16 @@
       // If subsidy provider
       if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
         ?>
-          <li class="divider"></li>
+        <li class="divider"></li>
         <?php
         echo li_link(
-          link_to(path("", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-star\"></i> Vague de subventions"),
+        link_to(path("", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-star\"></i> Vague de subventions"),
           $_GET["controller"] == "wave"
         );
       }
       if ($binet == KES_ID) {
         ?>
-          <li class="divider"></li>
+        <li class="divider"></li>
         <?php
         echo li_link(
           link_to(path("admin", "binet"), "<i class=\"fa fa-fw fa-desktop\"></i> Administration"),
