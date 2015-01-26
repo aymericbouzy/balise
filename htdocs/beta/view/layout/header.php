@@ -60,16 +60,10 @@
     </ul>
   </li>
 
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> <?php echo $current_student["name"]; ?> <b class="caret"></b></a>
-    <ul class="dropdown-menu">
-      <li>
-        <!-- TODO : change path to real one -->
-        <?php echo link_to(path("", "home"), "<i class=\"fa fa-fw fa-user\"></i> Autorisations"); ?>
-    	</li>
-      <li>
-        <?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\"></i> Déconnexion") ?>
-      </li>
-    </ul>
+  <li>
+    <span><i class="fa fa-user"></i> <?php echo $current_student["name"]; ?></span>
+  </li>
+  <li style="padding-right:20px;">
+		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
   </li>
 </ul>
