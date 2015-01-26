@@ -9,6 +9,7 @@
 body {
     margin-top: 100px;
     background-color: #fff;
+    height:100%;
 }
 
 @media(min-width:768px) {
@@ -17,20 +18,12 @@ body {
     }
 }
 
-footer {
-    position: fixed;
-    bottom: 0;
-    padding: 5px;
-    background-color: #fff;
-    width: 100%;
-    text-align: right;
-}
-
 #page-wrapper {
     width: 100%;
     padding: 5px;
     background-color: #fff;
-    margin-bottom: 50px;
+    padding-bottom: 50px;
+    height:auto;
 }
 
 .huge {
@@ -46,11 +39,6 @@ footer {
     #page-wrapper {
         padding: 10px;
     }
-
-    #error {
-      margin-left: -225px;
-      padding-right: -225px;
-    }
 }
 
 /* Top Navigation */
@@ -62,6 +50,7 @@ footer {
 .top-nav>li {
     display:inline-block;
     float: none;
+    color:#ddd;
 }
 
 .top-nav>li>a {
@@ -85,8 +74,7 @@ footer {
     position: absolute;
     margin-top: 0;
     border: 1px solid rgba(0,0,0,.15);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+    border-radius:0px;
     background-color: #eee;
     -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
@@ -165,71 +153,9 @@ footer {
     height: 100%;
 }
 
-/*------------------------------------------------------*/
-/* Custom Colored Panels */
-
-.huge {
-    font-size: 40px;
-}
-
-.panel-green {
-    border-color: #5cb85c;
-}
-
-.panel-green .panel-heading {
-    border-color: #5cb85c;
-    color: #fff;
-    background-color: #5cb85c;
-}
-
-.panel-green a {
-    color: #5cb85c;
-}
-
-.panel-green a:hover {
-    color: #3d8b3d;
-}
-
-.panel-red {
-    border-color: #d9534f;
-}
-
-.panel-red .panel-heading {
-    border-color: #d9534f;
-    color: #fff;
-    background-color: #d9534f;
-}
-
-.panel-red a {
-    color: #d9534f;
-}
-
-.panel-red a:hover {
-    color: #b52b27;
-}
-
-.panel-yellow {
-    border-color: #f0ad4e;
-}
-
-.panel-yellow .panel-heading {
-    border-color: #f0ad4e;
-    color: #fff;
-    background-color: #f0ad4e;
-}
-
-.panel-yellow a {
-    color: #f0ad4e;
-}
-
-.panel-yellow a:hover {
-    color: #df8a13;
-}
 .add-operation:hover {
     background-color:#6CB5FF;
 }
-
-
 
 
 /*------------------------------------------------------------------*/
@@ -273,7 +199,7 @@ footer {
 /*-------------------------------------------------------------------*/
 /*Tags*/
 
-a.tag-red {
+.tag-red {
     color: #000;
     border-radius: 2px;
     padding: 2px;
@@ -408,11 +334,11 @@ a.tag-red {
   position: relative;
 }
 .notice {
-  background-color: rgba(50, 173, 39, 0.7);
+  background-color: rgb(50, 173, 39);
   color : #000;
 }
 .error {
-  background-color: rgba(173, 50, 39, 0.7);
+  background-color: rgb(173, 50, 39);
   color : #000;
 }
 
@@ -495,4 +421,60 @@ a.tag-red {
 }
 .legend span {
   float: right;
+}
+
+/*------ Footer ------------*/
+footer {
+	all:none;
+	position :fixed;
+	padding:10px;
+	height: 50px;
+	width :100%;
+	bottom:0;
+	background-color: rgba(0,0,0,0);
+}
+footer>span {
+ font-size:0.9em;
+ float:left;
+}
+footer>.btn {
+	float:right;
+}
+
+/*----- Switch -----------*/
+/*-- Switch -- */
+.switch{
+  display: inline-block;
+  margin-top: 2px;
+  float: right;
+  width: 150px;
+  height: 28px;
+  background-color: #cbddff;
+  border-radius:0px;
+}
+.switch>.component {
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+  padding: 2px;
+  color: #3399ff;
+}
+
+.switch>.component:hover {
+  background-color: #3399ff;
+  color: #fff;
+}
+.switch>.left {
+  float: left;
+}
+.switch>.right {
+  float: right;
+}
+.switch>.active {
+  background-color: #cbddff;
+  color: #5b5b5b;
+}
+.switch>.inactive {
+  background-color: #afafaf;
+  color: #8b8b8b;
 }

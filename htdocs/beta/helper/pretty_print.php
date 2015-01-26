@@ -19,10 +19,14 @@
   }
 
   function pretty_binet($binet) {
-    $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
+    $binet = select_binet($binet, array("id"));
+    return link_to(path("show", "binet", $binet["id"]), pretty_binet_no_link($binet));
+  }
+
+  function pretty_binet_no_link($binet) {
     // TODO : create Kès logo
-    $content = $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
-    return link_to(path("show", "binet", $binet["id"]), $content);
+    $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
+    return $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
   }
 
   function pretty_binet_term($binet_term, $link = true) {

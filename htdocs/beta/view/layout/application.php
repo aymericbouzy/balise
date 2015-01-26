@@ -68,7 +68,7 @@
       include LAYOUT_PATH."footer.php";
       ?>
     </footer>
-    
+
     <script src = "<?php echo ASSET_PATH; ?>js/common.js"></script>
   </body>
 </html>
