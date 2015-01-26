@@ -25,5 +25,5 @@ Site créé par <?php echo link_to("mailto:Nathan Eckert <nathan.eckert@polytech
   $body = urlencode($body);
   $body = str_replace(array("+"), array(" "), $body);
 
-  echo link_to("mailto:Projet Balise <balise.bugreport@gmail.com>?subject=[bug #".$reference."]&body=".$body, "Rapport de bug", "btn btn-primary");
+  echo link_to("mailto:Projet Balise <balise.bugreport@gmail.com>?subject=[bug #".$reference."]&body=".$body, "Rapport de bug", array("class" => "btn btn-primary"));
 ?>

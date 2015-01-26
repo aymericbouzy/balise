@@ -20,5 +20,5 @@
   ?>
   <?php echo form_csrf_token(); ?>
   <?php echo form_submit_button("Enregistrer"); ?>
-  <?php echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term)), "Supprimer l'opération", "btn btn-danger"); ?>
+  <?php echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term)), "Supprimer l'opération", array("class" => "btn btn-danger")); ?>
 </form>

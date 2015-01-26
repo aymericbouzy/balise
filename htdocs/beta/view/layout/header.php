@@ -5,7 +5,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <?php echo link_to(path("", "home"), "Balise", "navbar-brand"); ?>
+  <?php echo link_to(path("", "home"), "Balise", array("class" => "navbar-brand")); ?>
 </div>
 <ul class="nav navbar-right top-nav">
   <li class="dropdown">
@@ -17,19 +17,19 @@
           if (!empty(select_budgets(array("binet" => $binet, "term" => $term)))) {
             ?>
               <li class="add-operation">
-                <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", "add-operation"); ?>
+                <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
               </li>
             <?php
           }
         ?>
           <li class="add-operation">
-            <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", "add-operation"); ?>
+            <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
           </li >
           <?php
           if (!empty(select_budgets(array("binet" => $binet, "term" => $term))) && !empty(select_waves(array("open" => true)))) {
             ?>
               <li class="add-operation">
-                <?php echo link_to(path("new", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Demande de subvention", "add-operation"); ?>
+                <?php echo link_to(path("new", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Demande de subvention", array("class" => "add-operation")); ?>
               </li>
             <?php
           }
@@ -37,7 +37,7 @@
             ?>
             <li class = "divider"></li>
             <li>
-              <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", "add-operation"); ?>
+              <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
             </li>
             <?php
           }
@@ -45,14 +45,14 @@
             ?>
             <li class = "divider"></li>
             <li class="add-operation">
-              <?php echo link_to(path("new", "binet"), "<i class=\"fa fa-fw fa-group\"></i> Binet", "add-operation"); ?>
+              <?php echo link_to(path("new", "binet"), "<i class=\"fa fa-fw fa-group\"></i> Binet", array("class" => "add-operation")); ?>
             </li>
             <?php
           }
         } else {
           ?>
             <li class="add-operation">
-              <?php echo link_to(path("new", "operation"), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", "add-operation"); ?>
+              <?php echo link_to(path("new", "operation"), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
             </li>
           <?php
         }
