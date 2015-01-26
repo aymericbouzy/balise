@@ -17,6 +17,7 @@
   <!--TODO Pour chaque binet un 'spot' -->
   <!-- TODO si pas de binet afficher un message sympa : vous n'avez pas de binet -->
   <div class="spot opanel">
+    <!-- TODO remplir ce code-->
     <?php
       $binet_has_image=false;
       if($binet_has_image){
