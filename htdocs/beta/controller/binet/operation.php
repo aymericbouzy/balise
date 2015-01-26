@@ -76,8 +76,7 @@
     break;
 
   case "create":
-    var_dump($_POST);
-    $operation["id"] = create_operation($binet, $term, ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["type"], $_POST);
+    $operation["id"] = create_operation($binet, $term, (1 - $_POST["sign"]*2)*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("review");
     break;

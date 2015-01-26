@@ -11,7 +11,7 @@
       "operation",
       array("binet", "term", "amount", "created_by", "paid_by", "type"),
       array("date", "bill", "reference", "comment"),
-      array_merge($values, $optional_values)
+      array_merge($optional_values, $values)
     );
   }
 
