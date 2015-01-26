@@ -102,6 +102,11 @@
     break;
 
   case "delete":
+    $operation = select_operation($operation["id"], array("created_by", "binet_validation_by", "binet", "term"));
+    if (empty($operation["binet_validation_by"]) && !in_array(array("id" => current_student()), select_admins_binet($operation["binet"], $operation["term"]))) {
+      send_email(current_student(), "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
+    }
+    delete_operation($operation["id"]);
     $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
     redirect_to_action("index");
     break;
