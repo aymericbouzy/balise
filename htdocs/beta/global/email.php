@@ -11,6 +11,7 @@
     $to = $student["name"]." <".$student["email"].">";
 
     ob_start();
+    $GLOBALS["full_path_links"] = true;
 
     ?>
 
@@ -59,6 +60,7 @@
 
     <?php
 
+    unset($GLOBALS["full_path_links"]);
     $message = ob_get_clean();
 
     return mail($to, $subject, $message, $headers);

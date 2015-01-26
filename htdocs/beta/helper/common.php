@@ -9,6 +9,10 @@
       $path = "/".$path;
     }
 
+    if (isset($GLOBALS["full_path_links"]) && $GLOBALS["full_path_links"]) {
+      $path = full_path($path);
+    }
+
     $parameters = empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
     $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
 
