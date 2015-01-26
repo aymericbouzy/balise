@@ -6,7 +6,7 @@ dans user-home.css quand la totalité du site aura le même "thème" */
     padding-left:5px;
   }
 
-  #home-wrapper {
+  .home-wrapper {
     width: 543px;
   }
 
@@ -15,7 +15,7 @@ dans user-home.css quand la totalité du site aura le même "thème" */
   }
 }
 
-#home-wrapper {
+.home-wrapper {
   padding: 5px;
   margin : auto ;
 }
