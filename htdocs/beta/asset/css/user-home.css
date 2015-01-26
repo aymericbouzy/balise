@@ -452,7 +452,7 @@ footer>.btn {
   background-color: #cbddff;
   border-radius:0px;
 }
-.switch>.in {
+.switch>.component {
   display: inline-block;
   text-align: center;
   width: 50%;
@@ -460,7 +460,7 @@ footer>.btn {
   color: #3399ff;
 }
 
-.switch>.in:hover {
+.switch>.component:hover {
   background-color: #3399ff;
   color: #fff;
 }
