@@ -33,6 +33,16 @@
             case "!=":
               $keep_entry = $keep_entry && $virtual_entry[$column] != $value[1];
               break;
+            case "IS":
+              switch ($value[1]) {
+              case "NULL":
+                $keep_entry = $keep_entry && is_null($virtual_entry[$column]);
+                break;
+              case "NOT NULL":
+                $keep_entry = $keep_entry && !is_null($virtual_entry[$column]);
+                break;
+              }
+              break;
             }
           } else {
             $keep_entry = $keep_entry && $virtual_entry[$column] == $value;
@@ -85,22 +95,16 @@
       }
       if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
         $sql .= " AND ".$column;
-        if (is_null($value)) {
-          $sql .= " IS NULL";
-        } elseif (is_array($value) && $value[1] === NULL) {
-          switch ($value[0]) {
-            case "!=" :
-            $sql .= " IS NOT NULL";
-            break;
-            default :
-            $sql .= " IS NULL";
-          }
+
+        if (is_array($value)) {
+          $sql .= " ".$value[0];
         } else {
-          if (is_array($value)) {
-            $sql .= " ".$value[0];
-          } else {
-            $sql .= " =";
-          }
+          $sql .= " =";
+        }
+
+        if (is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL"))) {
+          $sql .= " ".$value[1];
+        } else {
           $sql .= " :".$column;
         }
       }
@@ -130,6 +134,7 @@
       $req->bindValue(':order_by', $order_by, PDO::PARAM_STR);
     }
     $req->execute();
+    var_dump($req);
     return $req->fetchAll();
   }
 

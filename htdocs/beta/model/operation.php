@@ -68,13 +68,10 @@
                   $hash);
   }
 
-  function select_operations($criteria, $order_by = NULL, $ascending = true) {
-    if (!isset($criteria["kes_validation_by"]) && !is_null($criteria["kes_validation_by"])) {
-      $criteria["kes_validation_by"] = array("!=", NULL);
-    }
-    if (!isset($criteria["binet_validation_by"]) && !is_null($criteria["binet_validation_by"])) {
-      $criteria["binet_validation_by"] = array("!=", NULL);
-    }
+  function select_operations($criteria = array(), $order_by = NULL, $ascending = true) {
+    set_if_not_set($criteria["kes_validation_by"], array("IS", "NOT NULL"));
+    set_if_not_set($criteria["binet_validation_by"], array("IS", "NOT NULL"));
+
     return select_entries(
       "operation",
       array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),
@@ -122,9 +119,9 @@
   }
 
   function pending_validations_operations($binet, $term) {
-    return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => NULL, "binet" => $binet, "term" => $term), "date");
+    return select_operations(array("kes_validation_by" => array("IS", "NULL"), "binet_validation_by" => array("IS", "NULL"), "binet" => $binet, "term" => $term), "date");
   }
 
   function kes_pending_validations_operations() {
-    return select_operations(array("kes_validation_by" => NULL, "binet_validation_by" => array("!=", NULL)), "date");
+    return select_operations(array("kes_validation_by" => array("IS", "NULL"), "binet_validation_by" => array("IS NOT", "NULL")), "date");
   }
