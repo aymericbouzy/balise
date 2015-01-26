@@ -75,6 +75,9 @@
   case "reject":
     kes_reject_operation($operation["id"]);
     $_SESSION["notice"][] = "Tu as refusé l'opération. Elle apparaitra à nouveau dans les validations des administrateurs du binet. Tu peux leur envoyer un mail pour expliquer la raison du refus.";
+    foreach (select_admins($binet, $term) as $student) {
+      send_email($student["id"], "Opération refusée par la Kès", "operation_rejected", array("operation" => $operation["id"], "kessier" => connected_student()));
+    }
     redirect_to_action("show");
     break;
 
