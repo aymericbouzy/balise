@@ -15,10 +15,11 @@ dans user-home.css quand la totalité du site aura le même "thème" */
   }
 }
 
-.home-wrapper {
+#home-wrapper {
   padding: 5px;
   margin : auto ;
 }
+
 .spot {
   width : 100px;
   height: 100px;
