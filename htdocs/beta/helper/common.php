@@ -9,11 +9,15 @@
       $path = "/".$path;
     }
 
+    if (isset($GLOBALS["full_path_links"]) && $GLOBALS["full_path_links"]) {
+      $path = full_path($path);
+    }
+
     $parameters = empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
     $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
 
     if ($options["goto"]) {
-      return preg_replace("/^(<[^>]*)(>)(.*)$/", $parameters."$1 onclick=\"goto('".$path."')\">$3", str_replace("\n", "", $caption));
+      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">$3", str_replace("\n", "", $caption));
     } else {
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
     }

@@ -79,14 +79,14 @@
     $array["amount_fields"] = isset($array["amount_fields"]) ? $array["amount_fields"] : array();
     $array["other_fields"] = isset($array["other_fields"]) ? $array["other_fields"] : array();
 
-    foreach (array_merge($array["str_fields"], $array["int_fields"], $array["amount_fields"], $array["other_fields"]) as $index => $field) {
-      if (!isset($_POST[$field[0]]) || empty($_POST[$field[0]])) {
-        if (!isset($array["optional"]) || !in_array($field[0], $array["optional"])) {
-          $_SESSION[$array["model_name"]]["errors"][] = $field[0];
-        } else {
-          unset($array["str_fields"][$index]);
-          unset($array["int_fields"][$index]);
-          unset($array["amount_fields"][$index]);
+    foreach (array("str_fields", "int_fields", "amount_fields", "other_fields") as $fields_range) {
+      foreach ($array[$fields_range] as $index => $field) {
+        if (!isset($_POST[$field[0]]) || empty($_POST[$field[0]])) {
+          if (!isset($array["optional"]) || !in_array($field[0], $array["optional"])) {
+            $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+          } else {
+            unset($array[$fields_range][$index]);
+          }
         }
       }
     }

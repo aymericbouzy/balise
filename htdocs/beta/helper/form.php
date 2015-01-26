@@ -79,5 +79,13 @@
       return "payé par";
       case "binet_term":
       return "mandat";
+      case "name":
+      return "nom";
+      case "description":
+      return "description";
+      case "subsidy_steps":
+      return "étapes pour la récupération des subventions";
+      case "current_term":
+      return "mandat actuel";
     }
   }

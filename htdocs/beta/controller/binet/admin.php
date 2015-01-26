@@ -31,6 +31,7 @@
 
   case "create":
     add_admin_binet($_POST["student"], $binet, $_POST["term"]);
+    send_email($_POST["student"], "Nouveau binet", "new_admin", array("binet_term" => $binet."/".$_POST["term"]));	
     $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet($binet)." pour le mandat ".$_POST["term"].".";
     redirect_to_action("");
     break;
