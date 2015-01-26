@@ -33,38 +33,4 @@
     }
     ?>
   </div>
-  <div class="spot opanel">
-    <?php
-    $binet_has_image=false;
-    /*TODO : définir comment les binets peuvent choisir une image */
-    if($binet_has_image){
-      ?>
-      <!-- TODO : metre l'image du binet : elle doit être carrée -->
-      <img src="imagedubinet-carrée">
-      <?php
-    }
-    else {
-      ?>
-      <img src="<?php echo ASSET_PATH; ?>img/binet.png">
-      <?php
-    }
-    ?>
-  </div>
-  <div class="spot opanel">
-    <?php
-    $binet_has_image=false;
-    /*TODO : définir comment les binets peuvent choisir une image */
-    if($binet_has_image){
-      ?>
-      <!-- TODO : metre l'image du binet : elle doit être carrée -->
-      <img src="imagedubinet-carrée">
-      <?php
-    }
-    else {
-      ?>
-      <img src="<?php echo ASSET_PATH; ?>img/binet.png">
-      <?php
-    }
-    ?>
-  </div>
 </div>

@@ -2,14 +2,6 @@
 dans user-home.css quand la totalité du site aura le même "thème" */
 
 @media( min-width:543px){
-  body {
-    background: -webkit-radial-gradient(#fff,#ccc); /* Safari 5.1 to 6.0 */
-    background: -o-radial-gradient(#fff,#ccc); /* For Opera 11.6 to 12.0 */
-    background: -moz-radial-gradient(#fff,#ccc); /* For Firefox 3.6 to 15 */
-    background: radial-gradient(#fff,#ccc); /* Standard syntax */
-    background-size: cover;
-  }
-
   #wrapper {
     padding-left:5px;
   }
@@ -24,7 +16,6 @@ dans user-home.css quand la totalité du site aura le même "thème" */
 }
 
 #home-wrapper {
-  height: 90vh;
   padding: 5px;
   margin : auto ;
 }
