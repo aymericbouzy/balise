@@ -1,12 +1,6 @@
 <?php
 
   function send_email($to, $subject, $file, $parameters) {
-    $headers = "MIME-Version: 1.0" . "\r\n";
-    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From: Projet Balise <balise.bugreport@gmail.com>" . "\r\n";
-
-    $subject = "[Projet balise] ".$subject;
-
     $student = select_student($to, array("email", "name"));
     $to = $student["name"]." <".$student["email"].">";
 
@@ -63,5 +57,15 @@
     unset($GLOBALS["full_path_links"]);
     $message = ob_get_clean();
 
-    return mail($to, $subject, $message, $headers);
+    return mail_with_headers($to, $subject, $message);
+  }
+
+  function mail_with_headers($to, $subject, $message) {
+    $headers = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From: Projet Balise <balise.bugreport@gmail.com>" . "\r\n";
+
+    $subject = "[Projet balise] ".$subject;
+
+    mail($to, $subject, $message, $headers);
   }
