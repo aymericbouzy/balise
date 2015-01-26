@@ -68,7 +68,7 @@
                   $hash);
   }
 
-  function select_operations($criteria = array(), $order_by = NULL, $ascending = true) {
+  function select_operations($criteria = array(), $order_by = "date", $ascending = true) {
     set_if_not_set($criteria["kes_validation_by"], array("IS", "NOT NULL"));
     set_if_not_set($criteria["binet_validation_by"], array("IS", "NOT NULL"));
 
