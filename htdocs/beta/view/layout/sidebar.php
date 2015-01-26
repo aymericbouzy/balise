@@ -3,7 +3,7 @@
     <!-- Choose binet using dropdown menu -->
     <li>
       <!-- For all binets -->
-    	<a href="javascript:;" data-target="#binets" data-toggle="collapse"><?php echo pretty_binet_nolink($binet)?> </a>
+    	<a href="javascript:;" data-target="#binets" data-toggle="collapse"><?php echo pretty_binet_no_link($binet)?> </a>
 				<ul id="binets" class="collapse">
 						<?php foreach(binet_admins_current_student() as $binet_admin) {
 							$binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];

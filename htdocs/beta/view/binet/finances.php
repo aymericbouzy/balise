@@ -21,11 +21,11 @@
         $operation_class = $active;
       }
       ?>
-      <span class="left in <?php echo $budget_class ?> ">
-        <?php echo link_to(path("index", "budget", "", binet_prefix($binet, $term)), "Budget", array("class" => "")); ?>
+      <span class="left component <?php echo $budget_class; ?> ">
+        <?php echo link_to(path("index", "budget", "", binet_prefix($binet, $term)), "Budget",array("class" => $budget_class)); ?>
       </span>
-      <span class="right in <?php echo $operation_class ?>">
-        <?php echo link_to(path("index", "operation", "", binet_prefix($binet, $term)), "Opérations", array("class" => "")); ?>
+      <span class="right component <?php echo $operation_class; ?>">
+        <?php echo link_to(path("index", "operation", "", binet_prefix($binet, $term)), "Opérations",array("class" => $operation_class)); ?>
       </span>
     </div>
   </div>
