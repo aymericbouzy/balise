@@ -72,7 +72,7 @@
 
     $collection_actions = array_merge(array_diff(array("index", "new", "create"), $hash["except"]), $hash["action_on_collection"]);
     $member_actions = array_merge(array_diff(array("show", "edit", "update", "delete"), $hash["except"]), $hash["action_on_member"]);
-  
+
     write_path_rule(
       path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
       true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
@@ -115,7 +115,7 @@
       write_path_rule("home/login", true_path("login", "home"), "[NC,QSA]");
     }
     write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
-    write_controller_rules(array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate"), "action_on_collection" => array("admin")));
+    write_controller_rules(array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate")));
     write_controller_rules(array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
     write_controller_rules(array("controller" => "tag", "except" => array("edit", "update", "delete")));
     write_controller_rules(array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete")));

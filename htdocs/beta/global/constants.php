@@ -20,7 +20,7 @@
   define("LAYOUT_PATH", VIEW_PATH."layout/");
   define("EMAIL_PATH", VIEW_PATH."email/");
 
-  define("KES_ID", 0);
+  define("KES_ID", 2);
 
   define("MAX_AMOUNT", 10000000);
   define("MAX_TAG_STRING_LENGTH", 1000);
