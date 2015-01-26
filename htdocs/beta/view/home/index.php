@@ -1,4 +1,4 @@
-<div class="home-wrapper">
+<div id="home-wrapper">
   <!-- TODO : si new, les mettre dans le flashcard news -->
   <div class="flashcard opanel news alert alert-dismissible fade in">
     <button class="close" data-dismiss="alert">
@@ -19,6 +19,7 @@
   <div class="spot opanel">
     <?php
       $binet_has_image=false;
+      /*TODO : définir comment les binets peuvent choisir une image */
       if($binet_has_image){
         ?>
         <!-- TODO : metre l'image du binet : elle doit être carrée -->
@@ -27,6 +28,40 @@
     }
     else {
     ?>
+      <img src="<?php echo ASSET_PATH; ?>img/binet.png">
+      <?php
+    }
+    ?>
+  </div>
+  <div class="spot opanel">
+    <?php
+    $binet_has_image=false;
+    /*TODO : définir comment les binets peuvent choisir une image */
+    if($binet_has_image){
+      ?>
+      <!-- TODO : metre l'image du binet : elle doit être carrée -->
+      <img src="imagedubinet-carrée">
+      <?php
+    }
+    else {
+      ?>
+      <img src="<?php echo ASSET_PATH; ?>img/binet.png">
+      <?php
+    }
+    ?>
+  </div>
+  <div class="spot opanel">
+    <?php
+    $binet_has_image=false;
+    /*TODO : définir comment les binets peuvent choisir une image */
+    if($binet_has_image){
+      ?>
+      <!-- TODO : metre l'image du binet : elle doit être carrée -->
+      <img src="imagedubinet-carrée">
+      <?php
+    }
+    else {
+      ?>
       <img src="<?php echo ASSET_PATH; ?>img/binet.png">
       <?php
     }
