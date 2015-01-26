@@ -39,6 +39,9 @@
   case "create":
     $operation["id"] = create_operation($_POST["binet"], $_POST["term"], ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
+    foreach (select_admins($_POST["binet"], $_POST["term"]) as $student) {
+      send_email($student["id"], "Nouvelle opération", "new_operation", array("operation" => $operation["id"], "student" => connected_student(), "binet" => $_POST["binet"], "term" => $_POST["term"]));
+    }
     redirect_to_action("show");
     break;
 
@@ -63,12 +66,18 @@
   case "validate":
     kes_validate_operation($operation["id"]);
     $_SESSION["notice"][] = "L'opération a été validée avec succès.";
+    foreach (select_admins($binet, $term) as $student) {
+      send_email($student["id"], "Opération validée", "operation_validated", array("operation" => $operation["id"], "binet" => $binet, "term" => $term));
+    }
     redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
     break;
 
   case "reject":
     kes_reject_operation($operation["id"]);
     $_SESSION["notice"][] = "Tu as refusé l'opération. Elle apparaitra à nouveau dans les validations des administrateurs du binet. Tu peux leur envoyer un mail pour expliquer la raison du refus.";
+    foreach (select_admins($binet, $term) as $student) {
+      send_email($student["id"], "Opération refusée par la Kès", "operation_rejected", array("operation" => $operation["id"], "kessier" => connected_student()));
+    }
     redirect_to_action("show");
     break;
 

@@ -33,8 +33,17 @@
     break;
 
   case "create":
-    create_wave($binet, $term, $submission_date, $expiry_date);
+    $wave["id"] = create_wave($binet, $term, $submission_date, $expiry_date);
     $_SESSION["notice"][] = "Une nouvelle vague de subvention a été ouverte.";
+    $binets_per_student = array();
+    foreach (select_binets() as $binet) {
+      foreach (select_current_admins($binet["id"]) as $student) {
+        $binets_per_student[$student["id"]][] = $binet["id"];
+      }
+    }
+    foreach ($binets_per_student as $student => $binets) {
+      send_email($student, "Nouvelle vague de subventions", "new_wave", array("wave" => $wave["id"], "binets" => $binets));
+    }
     redirect_to_action("show");
     break;
 
@@ -58,6 +67,16 @@
   case "publish":
     publish_wave($wave["id"]);
     $_SESSION["notice"][] = "Les attributions de la vague de subvention ont été publiées avec succès.";
+    $requests_per_student = array();
+    foreach (select_requests(array("wave" => $wave["id"])) as $request) {
+      $request = select_request($request["id"], array("binet", "term", "id"));
+      foreach (select_admins($request["binet"], $request["term"]]) as $student) {
+        $requests_per_student[$student["id"]][] = $request["id"];
+      }
+    }
+    foreach ($requests_per_student as $student => $requests) {
+      send_email($student, "Subventions accordées", "wave_published", array("wave" => $wave["id"], "requests" => $requests));
+    }
     redirect_to_action("show");
     break;
 

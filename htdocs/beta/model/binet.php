@@ -91,6 +91,18 @@
     return $req->fetchAll();
   }
 
+  function select_current_admins($binet) {
+    $sql = "SELECT binet_admin.student AS id
+    FROM binet_admin
+    INNER JOIN binet
+    WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':binet', $binet, PDO::PARAM_INT);
+    $req->bindValue(':term', $term, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
   function binet_admins_current_student() {
     $sql = "SELECT binet, term
             FROM binet_admin

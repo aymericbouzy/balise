@@ -13,7 +13,6 @@
     RewriteRule ^beta/binet/index/?$ ./beta/index.php?controller=binet&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/new/?$ ./beta/index.php?controller=binet&action=new&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/create/?$ ./beta/index.php?controller=binet&action=create&%{QUERY_STRING} [L,NC,QSA]
-    RewriteRule ^beta/binet/admin/?$ ./beta/index.php?controller=binet&action=admin&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([0-9]+)/show/?$ ./beta/index.php?controller=binet&action=show&binet=$1&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([0-9]+)/edit/?$ ./beta/index.php?controller=binet&action=edit&binet=$1&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([0-9]+)/update/?$ ./beta/index.php?controller=binet&action=update&binet=$1&%{QUERY_STRING} [L,NC,QSA]

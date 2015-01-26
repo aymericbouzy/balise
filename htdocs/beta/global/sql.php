@@ -33,6 +33,16 @@
             case "!=":
               $keep_entry = $keep_entry && $virtual_entry[$column] != $value[1];
               break;
+            case "IS":
+              switch ($value[1]) {
+              case "NULL":
+                $keep_entry = $keep_entry && is_null($virtual_entry[$column]);
+                break;
+              case "NOT NULL":
+                $keep_entry = $keep_entry && !is_null($virtual_entry[$column]);
+                break;
+              }
+              break;
             }
           } else {
             $keep_entry = $keep_entry && $virtual_entry[$column] == $value;
@@ -85,22 +95,16 @@
       }
       if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
         $sql .= " AND ".$column;
-        if (is_null($value)) {
-          $sql .= " IS NULL";
-        } elseif (is_array($value) && $value[1] === NULL) {
-          switch ($value[0]) {
-            case "!=" :
-            $sql .= " IS NOT NULL";
-            break;
-            default :
-            $sql .= " IS NULL";
-          }
+
+        if (is_array($value)) {
+          $sql .= " ".$value[0];
         } else {
-          if (is_array($value)) {
-            $sql .= " ".$value[0];
-          } else {
-            $sql .= " =";
-          }
+          $sql .= " =";
+        }
+
+        if (is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL"))) {
+          $sql .= " ".$value[1];
+        } else {
           $sql .= " :".$column;
         }
       }
@@ -111,13 +115,13 @@
     }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
-      $real_value = is_array($value) ? (isset($value[1]) ? $value[1] : NULL) : $value;
+      $real_value = is_array($value) ? $value[1] : $value;
       if ($column === "tags") {
         for ($j = 0; $j < $i; $j++) {
           $req->bindValue(':tag'.$j, $tags[$j], PDO::PARAM_INT);
         }
       } else {
-        if (isset($real_value)) {
+        if (!(is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL")))) {
           if (in_array($column, $selectable_int_fields)) {
             $req->bindValue(':'.$column, $real_value, PDO::PARAM_INT);
           } elseif (in_array($column, $selectable_str_fields)) {

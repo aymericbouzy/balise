@@ -6,11 +6,10 @@
 </p>
 <ul>
   <?php
-  foreach ($parameters["binet_term"] as $binet_term) {
-    $binet_term = select_term_binet($binet_term, array("id", "binet", "term"));
-    ?>
-    <li><?php echo link_to(full_path(path("new", "request", "", binet_prefix($binet_term["binet"], $binet_term["term"]))), pretty_binet_term($binet_term["id"], false)); ?></li>
-    <?php
-  }
+    foreach ($parameters["binets"] as $binet) {
+      ?>
+      <li><?php echo link_to(path("new", "request", "", binet_prefix($binet, current_term($binet))), pretty_binet($binet, false)); ?></li>
+      <?php
+    }
   ?>
 </ul>

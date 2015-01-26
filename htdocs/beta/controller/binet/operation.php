@@ -76,8 +76,7 @@
     break;
 
   case "create":
-    var_dump($_POST);
-    $operation["id"] = create_operation($binet, $term, ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["type"], $_POST);
+    $operation["id"] = create_operation($binet, $term, (1 - $_POST["sign"]*2)*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("review");
     break;
@@ -103,6 +102,11 @@
     break;
 
   case "delete":
+    $operation = select_operation($operation["id"], array("created_by", "binet_validation_by", "binet", "term"));
+    if (empty($operation["binet_validation_by"]) && !in_array(array("id" => current_student()), select_admins_binet($operation["binet"], $operation["term"]))) {
+      send_email(current_student(), "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
+    }
+    delete_operation($operation["id"]);
     $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
     redirect_to_action("index");
     break;
@@ -134,6 +138,10 @@
     }
     add_budgets_operation($operation["id"], $budget_amounts_array);
     validate_operation($operation["id"]);
+    $operation = select_operation($operation["id"], array("id", "created_by"));
+    if ($operation["created_by"] != connected_student()) {
+      send_email($operation["created_by"], "Opération acceptée", "operation_accepted", array("operation" => $operation["id"], "binet" => $binet));
+    }
     $_SESSION["notice"][] = "L'opération a été acceptée.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;

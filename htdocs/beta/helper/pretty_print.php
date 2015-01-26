@@ -58,3 +58,14 @@
     // TODO
     return $type;
   }
+
+  function pretty_operation($operation, $link = false) {
+    // TODO
+    $operation = select_operation($operation, array("binet", "term", "id"));
+    return link_to(path("show", "operation", $operation["id"], binet_prefix($operation["term"], $operation["id"])), "operation ".$operation["id"]);
+  }
+
+  function pretty_request($request) {
+    // TODO
+    return "request ".$request;
+  }
