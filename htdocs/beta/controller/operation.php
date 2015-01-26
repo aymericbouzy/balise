@@ -39,6 +39,9 @@
   case "create":
     $operation["id"] = create_operation($_POST["binet"], $_POST["term"], ($_POST["sign"]*2 - 1)*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
+    foreach (select_admins($_POST["binet"], $_POST["term"]) as $student) {
+      send_email($student, "Nouvelle opération", "new_operation", array("operation" => $operation["id"], "student" => connected_student(), "binet" => $_POST["binet"], "term" => $_POST["term"]));
+    }
     redirect_to_action("show");
     break;
 
