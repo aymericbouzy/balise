@@ -21,11 +21,11 @@
   function pretty_binet($binet) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
     // TODO : create Kès logo
-    $content = $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? " <span class=\"label\">s</span>\"" : "");
+    $content = $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? " <span class=\"label\">s</span>" : "");
     return link_to(path("show", "binet", $binet["id"]), $content);
   }
-  
-  function pretty_binet_nolink($binet) {
+
+  function pretty_binet_no_link($binet) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
     return $content = $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
   }
