@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-<div class="home-wrapper">
-=======
 <div id="home-wrapper">
->>>>>>> 78e8733fc2b1d6b76bfb37c058a6390eac90a46a
   <!-- TODO : si new, les mettre dans le flashcard news -->
   <div class="flashcard opanel news alert alert-dismissible fade in">
     <button class="close" data-dismiss="alert">
