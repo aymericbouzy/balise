@@ -19,7 +19,7 @@
   <!-- TODO : update to show a nicer homepage -->
  <div class="container">
     <div class="signin">
-       <?php echo link_to(path("login", "home"), "<h3>Connexion via Frankiz</h3>", "btn btn-primary"); ?>
+       <?php echo link_to(path("login", "home"), "<h3>Connexion via Frankiz</h3>", array("class" => "btn btn-primary")); ?>
     </div>
  </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-  function link_to($path, $caption, $options) {
+  function link_to($path, $caption, $options = array()) {
     set_if_not_set($options["class"], "");
     set_if_not_set($options["id"], "");
     set_if_not_set($options["goto"], false);
