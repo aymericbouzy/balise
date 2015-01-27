@@ -13,13 +13,10 @@
 
   $query_array = compute_query_array();
 
-  if (!($_GET["controller"] == "error" || ($_GET["controller"] == "home" && ($_GET["action"] == "login" || $_GET["action"] == "welcome")))) {
-    $student = connected_student();
-    if (!$student) {
+  if (!($_GET["controller"] == "error" || ($_GET["controller"] == "home" && (in_array($_GET["action"], array("login", "chose_identity", "welcome")))))) {
+    if (!connected_student()) {
       $_SESSION["redirect_to_after_connection"] = $_SERVER["REDIRECT_URL"]; // original URL requested by the user
       redirect_to_path(path("login", "home"));
-    } else {
-      $current_student = select_student($_SESSION["student"], array("full_name"));
     }
   }
 

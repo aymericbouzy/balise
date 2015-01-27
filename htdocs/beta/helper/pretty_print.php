@@ -30,8 +30,14 @@
   }
 
   function pretty_binet_term($binet_term, $link = true) {
-    // TODO
-    return "binet/".$binet_term;
+    $binet_term = select_term_binet($binet_term, array("binet", "term"));
+    $binet = select_binet($binet_term["binet"], array("id", "name"));
+    $caption = $binet["name"]." <span style=\"font-size:smaller\">".$binet_term["term"]."</span>";
+    if ($link) {
+      return link_to(path("show", "binet", $binet["id"]), $caption);
+    } else {
+      return $caption;
+    }
   }
 
   function pretty_budget($budget) {
@@ -44,9 +50,13 @@
     return $wave;
   }
 
-  function pretty_student($student) {
+  function pretty_student($student, $link = true) {
     $student = select_student($student, array("name", "email"));
-    return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+    if ($link) {
+      return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+    } else {
+      return $student["name"];
+    }
   }
 
   function pretty_date($date) {

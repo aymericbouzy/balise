@@ -8,6 +8,7 @@
   define("DATABASE_USERNAME", $database_username);
   define("DATABASE_PASSWORD", $database_password);
   define("FRANKIZ_AUTH_KEY", $frankiz_auth_key);
+  define("REAL_FRANKIZ_CONNECTION", $real_frankiz_connection);
 
   define("GLOBAL_PATH", "global/");
   define("MODEL_PATH", "model/");
