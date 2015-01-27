@@ -16,20 +16,14 @@
   </div>
   <!--TODO Pour chaque binet un 'spot' -->
   <!-- TODO si pas de binet afficher un message sympa : vous n'avez pas de binet -->
-  <div class="spot opanel">
-    <?php
-      $binet_has_image=false;
-      if($binet_has_image){
-        ?>
-        <!-- TODO : metre l'image du binet : elle doit être carrée -->
-        <img src="imagedubinet-carrée">
-    <?php
-    }
-    else {
+  <!-- Pour l'instant pas d'image pour le binet -->
+  <?php foreach(binet_admins_current_student() as $binet_admin) {
+    $binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
     ?>
-      <img src="<?php echo ASSET_PATH; ?>img/binet.png">
-      <?php
-    }
-    ?>
-  </div>
+      <?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])),
+        "<div class=\"spot opanel\"><div class=\"binet-name\">".$binet_admin["binet_name"]."</div> <div class=\"binet-term\">".$binet_admin["term"]."</div></div>",
+        array("goto"=>true)); ?>
+    <?php
+  }
+  ?>
 </div>
