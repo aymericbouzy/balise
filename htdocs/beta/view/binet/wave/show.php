@@ -21,14 +21,14 @@
 		<?php
       if (has_editing_rights($binet, $term)) {
         echo link_to(
-          path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $binet["term"])),
+          path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
           "<div class=\"round-button grey-background opanel\">
             <i class=\"fa fa-fw fa-edit anim\"></i>
             <span>Modifier</span>
           </div>"
         );
         echo link_to(
-        path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $binet["term"])),
+        path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
           "<div class=\"round-button grey-background opanel\">
             <i class=\"fa fa-fw fa-bookmark-o anim\"></i>
             <span>Statistiques</span>
@@ -61,12 +61,12 @@
     </span>
   </div>
   <?php
-    foreach ($select_requests(array("wave" => $wave["id"])) as $request) {
+    foreach (select_requests(array("wave" => $wave["id"])) as $request) {
       $request = select_request($request["id"], array("id", "granted", "binet", "term", "requested_amount"));
       echo link_to(
         path("review", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
         "<div class=\"sh-wa-request opanel\">
-          <p class="icon">
+          <p class=\"icon\">
             ".($request["granted"] ? "<i class=\"fa fa-3x fa-check\"></i>" : "<i class=\"fa fa-3x fa-times\"></i>")."
           </p>
           <p class=\"binet\">

@@ -48,7 +48,7 @@
     break;
 
   case "show":
-    $wave = select_wave($wave, array("id", "submission_date", "expiry_date", "published", "binet", "term"));
+    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state"));
     break;
 
   case "edit":
@@ -70,7 +70,7 @@
     $requests_per_student = array();
     foreach (select_requests(array("wave" => $wave["id"])) as $request) {
       $request = select_request($request["id"], array("binet", "term", "id"));
-      foreach (select_admins($request["binet"], $request["term"]]) as $student) {
+      foreach (select_admins($request["binet"], $request["term"]) as $student) {
         $requests_per_student[$student["id"]][] = $request["id"];
       }
     }

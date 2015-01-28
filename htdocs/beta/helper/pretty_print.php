@@ -20,7 +20,7 @@
 
   function pretty_binet($binet) {
     $binet = select_binet($binet, array("id"));
-    return link_to(path("show", "binet", $binet["id"]), pretty_binet_no_link($binet));
+    return link_to(path("show", "binet", $binet["id"]), pretty_binet_no_link($binet["id"]));
   }
 
   function pretty_binet_no_link($binet) {

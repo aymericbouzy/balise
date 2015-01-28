@@ -35,7 +35,7 @@
         $wave[$field] = get_used_amount_wave($wave);
         break;
       case "state":
-        $wave[$field] = $wave["submission_date"] > date("Ymd") ? "submission" : ($wave["expiry_date"] > date("Ymd") ? "distribution" : "closed")
+        $wave[$field] = $wave["submission_date"] > date("Ymd") ? "submission" : ($wave["expiry_date"] > date("Ymd") ? "distribution" : "closed");
         break;
       }
     }
