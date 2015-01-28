@@ -117,79 +117,12 @@
   margin: 5px;
 }
 
-  .sh-actions>.round-button {
-    font-size: 30px;
-    padding: 5px;
-  }
-
-
-@media(max-width:900px){
-  .sh-actions>.round-button {
-    display: inline-block;
-    width: 30%;
-    margin: 1.2%;
-    text-align: center;
-  }
-  
-  .sh-actions>.round-button:hover {
-    box-shadow: none;
-    /* Some browsers supported : other just have
-    no shadow on hover */
-    -webkit-filter: brightness(1.2);
-    -moz-filter: brightness(1.2);
-    -o-filter: brightness(1.2);
-    -ms-filter: brightness(1.2);
-  }
-  
-  .sh-actions>.round-button>span{
-    visibility: hidden;
-    display: inline-block;
-    width: 0px;
-    height: 0px;
-  }
-}
-
 @media(min-width: 900px){
   .sh-actions {
     width: 50px;
     float: right;
     right: -60px;
     position: absolute;
-  }
-
-  .sh-actions>.round-button {
-    margin-bottom: 15px;
-    width: 50px;
-    height: 50px;
-    border-radius: 25px;
-  }
-
-  .sh-actions>.round-button>.anim{
-    transition-timing-function: linear;
-    transition-duration: 0.5s;
-    transition-property: transform;
-    transform: rotate(0deg);
-  }
-  .sh-actions>.round-button>span{
-    display:block;
-    position: absolute;
-    margin-left: 55px;
-    margin-top: -40px;
-    visibility: hidden;
-    transition-timing-function: linear;
-    transition-duration: 0.5s;
-    transition-property: visibility;
-  }
-
-  .sh-actions>.round-button:hover>.anim{
-    transform: rotate(45deg);
-    -webkit-filter: brightness(1.2);
-    -moz-filter: brightness(1.2);
-    -o-filter: brightness(1.2);
-    -ms-filter: brightness(1.2);
-  }
-  .sh-actions>.round-button:hover>span{
-    visibility: visible;
   }
 }
 
