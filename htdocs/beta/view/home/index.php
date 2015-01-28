@@ -48,13 +48,13 @@
     <?php
       echo link_to(
         path("",""),
-        "<div>   <i class=\"fa-fw fa fa-money\">  Liste des subventions </div>",
+        "<div>   <i class=\"fa-fw fa fa-money\"></i>  Liste des subventions </div>",
         array("class" => "homelink", "id" => "subsidies","goto" => "true" ));
       ?>
     <?php
       echo link_to(
         path("",""),
-        "<div>   <i class=\"fa-fw fa fa-group\">  Liste des binets </div>",
+        "<div>   <i class=\"fa-fw fa fa-group\"></i>  Liste des binets </div>",
         array("class" => "homelink", "id" => "binets","goto" => "true" ));
       ?>
   </div>
