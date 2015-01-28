@@ -70,7 +70,7 @@
     $requests_per_student = array();
     foreach (select_requests(array("wave" => $wave["id"])) as $request) {
       $request = select_request($request["id"], array("binet", "term", "id"));
-      foreach (select_admins($request["binet"], $request["term"]]) as $student) {
+      foreach (select_admins($request["binet"], $request["term"]) as $student) {
         $requests_per_student[$student["id"]][] = $request["id"];
       }
     }

@@ -87,5 +87,9 @@
       return "étapes pour la récupération des subventions";
       case "current_term":
       return "mandat actuel";
+      case "submission_date":
+      return "date de soumission";
+      case "expiry_date":
+      return "date d'expiration";
     }
   }

@@ -3,6 +3,11 @@
   define("amount_prefix", "amount_");
   define("purpose_prefix", "purpose_");
 
+  $purpose_array = array();
+  $requested_amount_array = array();
+  $explanation_array = array();
+  $granted_amount_array = array();
+
   function adds_amount_prefix($object) {
     return amount_prefix.$object["id"];
   }
@@ -58,26 +63,33 @@
     return !empty($req->fetch());
   }
 
+  function check_wave_parameter() {
+    header_if(!validate_input(array("wave")), 400);
+    header_if(!exists_wave($_GET["wave"]), 404);
+    header_if(select_wave($_GET["wave"], array("state"))["state"] != "submission", 403);
+  }
+
+  before_action("check_wave_parameter", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send"));
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant"), array("model_name" => "request", "binet" => $binet, "term" => $term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant"));
-  before_action("setup_for_editing", array("create", "update"));
+  before_action("setup_for_editing", array("new", "create", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "request",
     "str_fields" => array_merge(array(array("answer", 100000)), array_map("adds_max_length_purpose", $purpose_array)),
     "amount_fields" => array_map("adds_max_amount", $requested_amount_array),
     "other_fields" => array(array("wave", "exists_wave")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $request["id"] : "", binet_prefix($binet, $term)),
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" && isset($request) ? $request["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge($requested_amount_array, $purpose_array)
   ));
-  before_action("setup_for_review", array("grant"));
+  before_action("setup_for_review", array("review", "grant"));
   before_action("check_form_input", array("grant"), array(
     "model_name" => "request",
     "str_fields" => $explanation_array,
     "amount_fields" => $granted_amount_array,
-    "redirect_to" => path("review", "request", $request["id"], binet_prefix($binet, $term))
+    "redirect_to" => path("review", "request", $_GET["action"] == "grant" ? $request["id"] : "", binet_prefix($binet, $term))
   ));
   before_action("not_sent", array("send", "edit", "update", "delete"));
   before_action("sent_and_not_published", array("review", "grant"));
@@ -89,6 +101,7 @@
     break;
 
   case "new":
+    $request["wave"] = $_GET["wave"];
     foreach ($budgets_involved as $budget) {
       $request["budget"][$budget["id"]] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used"));
       foreach (select_tags(array("budget" => $budget["id"])) as $tag) {
