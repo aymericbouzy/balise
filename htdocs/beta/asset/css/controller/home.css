@@ -64,3 +64,23 @@ a {
   margin:auto;
   top:10%;
 }
+
+#homelinks {
+  margin-top:50px;
+  height: 50px;
+  background-color:#cbddff;
+}
+.homelink:hover {
+  background-color:#baccff;
+}
+#subsidies {
+  display:inline-block;
+  width:50%;
+  height:100%;
+}
+
+#binets {
+  display:inline-block;
+  width:49%;
+  height:100%;
+}

@@ -44,4 +44,18 @@
       </p>";
     }
   ?>
+  <div id="homelinks" class="opanel0">
+    <?php
+      echo link_to(
+        path("",""),
+        "<div>   <i class=\"fa-fw fa fa-money\">  Liste des subventions </div>",
+        array("class" => "homelink", "id" => "subsidies","goto" => "true" ));
+      ?>
+    <?php
+      echo link_to(
+        path("",""),
+        "<div>   <i class=\"fa-fw fa fa-group\">  Liste des binets </div>",
+        array("class" => "homelink", "id" => "binets","goto" => "true" ));
+      ?>
+  </div>
 </div>
