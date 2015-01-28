@@ -16,7 +16,7 @@
   }
 
   function select_operation($operation, $fields = array()) {
-    if (in_array("state", array("state")) {
+    if (in_array("state", array("state"))) {
       $fields = array_merger(array("binet_validation_by", "kes_validation_by"), $fields);
     }
     $operation = select_entry(
