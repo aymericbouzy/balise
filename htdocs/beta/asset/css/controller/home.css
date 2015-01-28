@@ -30,13 +30,13 @@ a {
   border-radius: 50px;
   display: inline-block;
   background-color:#3e3e3e;
-  color:#ccbdff;
+  color:#cbddff;
   margin :37px;
   margin-bottom: 5px;
 }
 
 .spot:hover {
-  border: 5px solid  rgba(0,0,0,0.2);
+  background-color:#2e2e3e;
 }
 
 .spot>img{
@@ -47,13 +47,14 @@ a {
 
 .binet-name {
   display:block;
+  position: relative;
   width:90px;
   height:60px;
   overflow:hidden;
-  text-align:center;
   margin:auto;
-  position: relative;
-  top: 30%;
+  text-align:center;
+  font-weight:900;
+  top:25px;
 }
 .binet-term {
   position:relative;
