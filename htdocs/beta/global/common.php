@@ -86,3 +86,7 @@
   function tag_array_to_string($tags) {
     return implode("+", array_map("tag_to_clean_name", $tags));
   }
+
+  function current_date() {
+    return date("Y-m-d");
+  }
