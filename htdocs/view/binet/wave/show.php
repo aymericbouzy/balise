@@ -1,22 +1,41 @@
 <div class="show-container">
-  <!-- TODO : red ou green selon en cours / terminé -->
-  <div class="sh-plus red-background opanel">
-    <!-- TODO : fa-check vague en cours
-                fa-times demande vague terminée-->
-    <i class="fa fa-fw fa-check"></i>
-    <div class="text"> <!-- TODO Statut de la vague --> </div>
+  <div class="sh-plus <?php echo $wave["state"] == "closed" ? "red" : "green"; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo $wave["state"] == "closed" ? "times" : "check"; ?>"></i>
+    <div class="text">
+      <?php
+        switch ($wave["state"]) {
+          case "submission":
+          echo "Dépôt de demandes de subventions en cours";
+          break;
+          case "distribution":
+          echo "Subventions ouvertes";
+          break;
+          case "closed":
+          echo "Subventions fermées";
+          break;
+        }
+      ?>
+    </div>
   </div>
   <div class="sh-actions">
-		<!-- TODO Les boutons suivants dépendent des autorisations de l'utilisateur 
-		Bouton supprimer ?-->
-		<div class="round-button red-background opanel">
-			<i class="fa fa-fw fa-trash anim"></i>
-			<span>Supprimer</span>
-		</div>
-		<div class="round-button grey-background opanel">
-			<i class="fa fa-fw fa-edit anim"></i>
-			<span>Modifier</span>
-		</div>
+		<?php
+      if (has_editing_rights($binet, $term)) {
+        echo link_to(
+          path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $binet["term"])),
+          "<div class=\"round-button grey-background opanel\">
+            <i class=\"fa fa-fw fa-edit anim\"></i>
+            <span>Modifier</span>
+          </div>"
+        );
+        echo link_to(
+        path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $binet["term"])),
+          "<div class=\"round-button grey-background opanel\">
+            <i class=\"fa fa-fw fa-bookmark-o anim\"></i>
+            <span>Statistiques</span>
+          </div>"
+        );
+      }
+    ?>
 	</div>
   <div class="sh-title opanel">
     <div class="logo">

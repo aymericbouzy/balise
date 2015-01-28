@@ -14,8 +14,8 @@
   }
 
   function select_wave($wave, $fields = array()) {
-    if (in_array("open", $fields) && !in_array("submission_date", $fields)) {
-      $fields[] = "submission_date";
+    if (in_array("state", $fields)) {
+      $fields = array_merge(array("submission_date", "expiry_date"), $fields);
     }
     $wave = select_entry(
       "wave",
@@ -34,8 +34,9 @@
       case "used_amount":
         $wave[$field] = get_used_amount_wave($wave);
         break;
-      case "open":
-        $wave[$field] = $wave["submission_date"] > date("Ymd");
+      case "state":
+        $wave[$field] = $wave["submission_date"] > date("Ymd") ? "submission" : ($wave["expiry_date"] > date("Ymd") ? "distribution" : "closed")
+        break;
       }
     }
     return $wave;

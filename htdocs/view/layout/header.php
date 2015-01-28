@@ -26,7 +26,7 @@
             <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", "add-operation"); ?>
           </li >
           <?php
-          if (!empty(select_budgets(array("binet" => $binet, "term" => $term))) && !empty(select_waves(array("open" => true)))) {
+          if (!empty(select_budgets(array("binet" => $binet, "term" => $term))) && !empty(select_waves(array("state" => "submission")))) {
             ?>
               <li class="add-operation">
                 <?php echo link_to(path("new", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Demande de subvention", "add-operation"); ?>
