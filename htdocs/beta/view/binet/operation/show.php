@@ -1,38 +1,35 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <!-- TODO : green recette, red dépense -->
-  <div class="sh-plus green-background opanel">
-    <!-- TODO : fa-plus ou fa-minus selon le signe de l'opération -->
-    <i class="fa fa-fw fa-plus-circle"></i>
-    <div class="text"> <!-- TODO Recette ou dépense --> </div>
+  <div class="sh-plus <?php echo $operation["amount"] > 0 ? "green" : "red" ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo $operation["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
+    <div class="text"><?php echo $operation["amount"] > 0 ? "Recette" : "Dépense" ?></div>
   </div>
-  <!--TODO mettre des goto sur les div round-button -->
   <div class="sh-actions">
-		<!-- TODO pour le premier bouton :
-			-		si l'opération n'est pas validée, on peut clicker sur le bouton, 
-					lui ajouter la classe anim et orange-background
-			-		si elle est validée, green-background et pas d'anim -->
-		<div class="round-button green-background opanel">
-			<i class="fa fa-fw fa-check"></i>
-			<span>En attente / Validée</span>
-		</div>
-		<!-- SI l'opération est validée par le binet, l'opération est en attente 
-		de validation par la Kes
-		Si l'opération est validée, on n'affiche plus l'information
-		seul le bouton "Validée" précédent apparait -->
-		<div class="round-button orange-background opanel">
-			<i class="fa fa-fw fa-question"></i>
-			<span>En attente de validation par la Kes</span>
-		</div>
-		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur -->
-		<div class="round-button red-background opanel">
-			<i class="fa fa-fw fa-trash anim"></i>
-			<span>Supprimer</span>
-		</div>
-		<div class="round-button grey-background opanel">
-			<i class="fa fa-fw fa-edit anim"></i>
-			<span>Modifier</span>
-		</div>
+    <?php
+      if (has_editing_rights()) {
+        switch ($operation["state"]) {
+          case "suggested":
+          echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Ajouter", "plus", "green");
+          break;
+          case "waiting_validation":
+          echo button("", "En attente de validation par la Kès", "question", "orange", false);
+          break;
+          case "validated":
+          echo button("", "Validée", "check", "green", false);
+          break;
+        }
+        echo button(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+        echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term)), "Supprimer", "trash", "red");
+      }
+      if (is_current_kessier()) {
+        switch ($operation["state"]) {
+          case "waiting_validation":
+          echo button(path("validate", "operation", $operation["id"], binet_prefix($binet, $term)), "Valider", "check", "green");
+          echo button(path("reject", "operation", $operation["id"], binet_prefix($binet, $term)), "Refuser", "times", "red");
+          break;
+        }
+      }
+    ?>
 	</div>
   <div class="sh-title opanel">
     <div class="logo">
@@ -66,10 +63,14 @@
     </div>
     <ul class="pieID legend">
       <li>
-        <!--TODO : pour chaque opération , ajouter : -->
-        <em>Nom du budget</em>
-        <span>Montant utilisé</span>
-        <!-- ------------- -- >
+        <?php
+          foreach (select_budgets_operation($operation["id"]) as $operation) {
+            ?>
+            <em><?php echo pretty_operation($operation["id"]); ?></em>
+            <span><?php echo pretty_amount($operation["amount"]); ?></span>
+            <?php
+          }
+        ?>
       </li>
     </ul>
   </div>
