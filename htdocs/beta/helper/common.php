@@ -29,13 +29,13 @@
 
   function button($path, $caption, $icon, $background_color, $link = true) {
     $caption = "<div class=\"round-button ".$background_color."-background opanel\">
-                  <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")"\"></i>
+                  <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
                   <span>".$caption."</span>
                 </div>";
     if ($link) {
       return link_to(
         $path,
-        $caption;
+        $caption,
         array("goto" => true)
       );
     } else {
