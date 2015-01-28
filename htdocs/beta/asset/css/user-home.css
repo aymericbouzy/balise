@@ -241,6 +241,10 @@ body {
   background-color: rgb(255, 175, 36);
 }
 
+.transparent-background {
+  background-color: rgba(0,0,0,0);
+}
+
 /*-------------------------------------------------------------------*/
 /*Search form*/
 
