@@ -11,13 +11,4 @@
     return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
   }
 
-  function button($path, $caption, $icon, $background_color) {
-    return link_to(
-      $path,
-      "<div class=\"round-button ".$background_color."-background opanel\">
-        <i class=\"fa fa-fw fa-".$icon." anim\"></i>
-        <span>".$caption."</span>
-      </div>",
-      array("goto" => true)
-    );
-  }
+  

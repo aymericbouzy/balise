@@ -1,0 +1,485 @@
+/*!
+ * Start Bootstrap - SB Admin Bootstrap Admin Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Global Styles */
+
+body {
+    margin-top: 100px;
+    background-color: #fff;
+    height:100%;
+}
+
+@media(min-width:768px) {
+    body {
+        margin-top: 50px;
+    }
+}
+
+#page-wrapper {
+    width: 100%;
+    padding: 5px;
+    background-color: #fff;
+    padding-bottom: 50px;
+    height:auto;
+    margin-bottom: 50px;
+}
+
+.huge {
+    font-size: 50px;
+    line-height: normal;
+}
+
+@media(min-width:768px) {
+    #wrapper {
+        padding-left: 225px;
+    }
+
+    #page-wrapper {
+        padding: 10px;
+    }
+}
+
+/* Top Navigation */
+
+.top-nav {
+    padding: 0 15px;
+}
+
+.top-nav>li {
+    display:inline-block;
+    float: none;
+    color:#ddd;
+}
+
+.top-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    line-height: 20px;
+    color: #999;
+}
+
+.top-nav>li>a:hover,
+.top-nav>li>a:focus,
+.top-nav>.open>a,
+.top-nav>.open>a:hover,
+.top-nav>.open>a:focus {
+    color: #fff;
+    background-color: #000;
+}
+
+.top-nav>.open>.dropdown-menu {
+    float: left;
+    position: absolute;
+    margin-top: 0;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius:0px;
+    background-color: #eee;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+.top-nav>.open>.dropdown-menu>li>a {
+    white-space: normal;
+}
+
+.top-nav>.open>.dropdown-menu>li>a:hover {
+    background-color: #BABABA;
+}
+
+
+
+.top-nav>li>ul .add-operation {
+    min-width: 230px;
+    float: none;
+}
+
+#operation-plus {
+    color:#52CC29;
+}
+
+/* Side Navigation */
+
+@media(min-width:768px) {
+    .side-nav {
+        position: fixed;
+        top: 51px;
+        left: 225px;
+        width: 225px;
+        height: 100%;
+        margin-left: -225px;
+        border: none;
+        border-radius: 0;
+        overflow-y: auto;
+        background-color: #5B5B5B;
+    }
+
+    .side-nav>li>a {
+        width: 225px;
+    }
+
+    .side-nav li a:hover,
+    .side-nav li a:focus {
+        outline: none;
+        background-color: #000 !important;
+    }
+}
+
+.side-nav>li>ul {
+    padding: 1px;
+}
+
+.side-nav>li>ul>li>a {
+    display: block;
+    padding: 10px 15px 10px 38px;
+    text-decoration: none;
+    color: #999;
+}
+
+.side-nav>li>ul>li>a:hover {
+    color: #fff;
+}
+
+/* Flot Chart Containers */
+
+.flot-chart {
+    display: block;
+    height: 400px;
+}
+
+.flot-chart-content {
+    width: 100%;
+    height: 100%;
+}
+
+.add-operation:hover {
+    background-color:#6CB5FF;
+}
+
+
+/*------------------------------------------------------------------*/
+/*Custom rules for the table*/
+
+.row-centered {
+    margin:auto;
+    max-width: 1000px;
+}
+
+#main-table {
+    margin: auto;
+}
+
+.col-max {
+    max-width: 1000px;
+}
+
+.tabtitle {
+    padding-left:10px;
+    background-color: #5CADFF;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    font-size: 1.2em;
+    box-shadow: 3px;
+}
+
+.table-small-char {
+    font-size: 0.8em;
+}
+
+.separator {
+    border-collapse: collapse;
+    background-image: -webkit-linear-gradient(#fff 80%,#5CADFF 10%);
+}
+
+.total {
+    background-color:#D7EBFF;
+}
+
+/*-------------------------------------------------------------------*/
+/*Tags*/
+
+.tag-red {
+    color: #000;
+    border-radius: 2px;
+    padding: 2px;
+    background-color: #FF4719;
+}
+
+.tag-green {
+    color: #000;
+    border-radius: 2px;
+    padding: 2px;
+    background-color:#009900;
+}
+
+.tag-blue {
+    color: #000;
+    border-radius: 2px;
+    padding: 2px;
+    background-color:#0066FF;
+}
+
+.tag-yellow {
+    color: #000;
+    border-radius: 2px;
+    padding: 2px;
+    background-color:#FFFF00;
+}
+
+.tag-orange {
+    color: #000;
+    border-radius: 2px;
+    padding: 2px;
+    background-color:#FF9900;
+}
+
+.tag-grey {
+    color: #000;
+    border-radius: 2px;
+    padding: 2px;
+    background-color:#B2B2B2;
+}
+
+/*-------------------------------------------------------------------*/
+/* Background coloring*/
+.green-background{
+  background-color: rgb(50, 173, 39);
+}
+.red-background {
+  background-color: rgb(173, 50, 39);
+}
+.orange-background {
+  background-color: rgb(255, 175, 36);
+}
+
+.grey-background {
+	background-color: rgb(150, 150, 150);
+}
+
+/*-------------------------------------------------------------------*/
+/*Search form*/
+
+.form input {
+	width:85%;
+}
+.form-container {
+  position: relative;
+  width: 100%;
+  margin: auto;
+  padding: 10px;
+  background-color: #cbddff;
+  color :#2e2e2e ;
+}
+
+@media (min-width:768px){
+  .form-container {
+    /* 768 - (side menu width : 225 px ) = 543 */
+    width:543px;
+    margin-top: 20px;
+    box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.2);
+  }
+}
+
+.amount-input {
+      display: block;
+        width:100%;
+      height: 30px;
+      padding: 6px 12px;
+      font-size: 14px;
+      line-height: 1.42857143;
+      color: #444;
+      background-color: #fff;
+      background-image: none;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+              box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+      -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+           -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+              transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+#login-container {
+    display: block;
+    position:absolute;
+    margin: auto;
+}
+
+/*-------------------------------------------------------------------*/
+/* Flash-cards */
+.alert {
+  border-radius: 0px;
+}
+
+/* Warning */
+/* Clear previous CSS "close" properties from boostrap */
+.close {
+  all : none ;
+}
+
+.flash-container{
+  position: fixed;
+  right: 5px;
+  z-index: 100;
+}
+
+.flashcard {
+  position:relative;
+  width: 250px;
+  overflow: hidden;
+  padding: 10px;
+  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+}
+
+.flashcard> button {
+  margin-right: 20px;
+  display: block;
+  position: relative;
+}
+.notice {
+  background-color: rgb(50, 173, 39);
+  color : #000;
+}
+.error {
+  background-color: rgb(173, 50, 39);
+  color : #000;
+}
+
+/*--------------------------------------------------------------------*/
+/* Panels with shadow */
+.opanel{
+  box-shadow: 1px 1px 5px 1px rgba(0,0,0,0.2);
+}
+
+/*----------------------------------------------------*/
+/* Charts */
+
+.pieID {
+  display: inline-block;
+  vertical-align: top;
+}
+.pie {
+  height: 200px;
+  width: 200px;
+  position: relative;
+  margin: 0 30px 30px 0;
+}
+.pie::before {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  width: 100px;
+  height: 100px;
+  background: #cbddff;
+  border-radius: 50%;
+  top: 50px;
+  left: 50px;
+}
+.pie::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 2px;
+  background: rgba(0,0,0,0.1);
+  border-radius: 50%;
+  box-shadow: 0 0 3px 4px rgba(0,0,0,0.1);
+  margin: 220px auto;
+
+}
+.slice {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  clip: rect(0px, 200px, 200px, 100px);
+  animation: bake-pie 1s;
+}
+.slice span {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: black;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  clip: rect(0px, 200px, 200px, 100px);
+}
+.legend {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  padding: 15px;
+  font-size: 13px;
+}
+.legend li {
+  max-width: 210px;
+  min-height: 1.25em;
+  margin-bottom: 0.7em;
+  padding-left: 0.5em;
+  border-left: 1.25em solid black;
+}
+.legend em {
+  font-style: normal;
+}
+.legend span {
+  float: right;
+}
+
+/*------ Footer ------------*/
+footer {
+	all:none;
+	position :fixed;
+	padding:10px;
+	height: 50px;
+	width :100%;
+	bottom:0;
+	background-color: rgba(0,0,0,0);
+}
+footer>span {
+ font-size:0.9em;
+ float:left;
+}
+footer>.btn {
+	float:right;
+}
+
+/*----- Switch -----------*/
+/*-- Switch -- */
+.switch{
+  display: inline-block;
+  margin-top: 2px;
+  float: right;
+  width: 150px;
+  height: 28px;
+  background-color: #cbddff;
+  border-radius:0px;
+}
+.switch>.component {
+  display: inline-block;
+  text-align: center;
+  width: 50%;
+  padding: 2px;
+  color: #3399ff;
+}
+
+.switch>.component:hover {
+  background-color: #3399ff;
+  color: #fff;
+}
+.switch>.left {
+  float: left;
+}
+.switch>.right {
+  float: right;
+}
+.switch>.active {
+  background-color: #cbddff;
+  color: #5b5b5b;
+}
+.switch>.inactive {
+  background-color: #afafaf;
+  color: #8b8b8b;
+}

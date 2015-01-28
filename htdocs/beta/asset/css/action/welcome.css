@@ -1,0 +1,76 @@
+body{
+  height:100vh;
+  background: -webkit-radial-gradient(#fff,#ccc); /* Safari 5.1 to 6.0 */
+  background: -o-radial-gradient(#fff,#ccc); /* For Opera 11.6 to 12.0 */
+  background: -moz-radial-gradient(#fff,#ccc); /* For Firefox 3.6 to 15 */
+  background: radial-gradient(#fff,#ccc); /* Standard syntax */
+  background-size: cover;
+}
+#wrapper {
+  margin:0px;
+  padding:0px;
+  background-color:rgba(0,0,0,0);
+}
+#page-wrapper{
+  margin:0px;
+  padding:0px;
+  background-color:rgba(0,0,0,0);
+}
+#welcome {
+  margin-top:-50px;
+  padding:10px;
+  height:100%;
+}
+
+#login{
+  width:200px;
+  height:200px;
+  border-radius:100px;
+  background-color:#2e2e2e;
+  margin:auto;
+  margin-top:50px;
+  margin-bottom:50px;
+  text-align:center;
+  padding-top:90px;
+  color:#cbddff;
+  font-size:16px;
+}
+
+#login:hover{
+  background-color:#3e3e3e;
+  font-size:17px;
+}
+
+#login>a{
+  text-decoration:none;
+}
+
+#login:hover>a{
+  text-decoration:none;
+}
+
+#presentation{
+  width:900px;
+  margin:auto;
+  background-color:#cbddff;
+  padding:10px;
+  bottom : 60px;
+}
+
+@media(max-width:900px){
+  #login {
+    width:150px;
+    height:150px;
+    border-radius:75px;
+    padding-top:55px;
+    margin-top:-40px;
+    margin-bottom:20px;
+  }
+  #login:hover{
+    background-color:#3e3e3e;
+    font-size:17px;
+  }
+  #presentation{
+    width:100%;
+  }
+}
