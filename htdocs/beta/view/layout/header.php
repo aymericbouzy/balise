@@ -26,17 +26,10 @@
             <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
           </li >
           <?php
-          if (!empty(select_budgets(array("binet" => $binet, "term" => $term))) && !empty(select_waves(array("state" => "submission")))) {
-            ?>
-              <li class="add-operation">
-                <?php echo link_to(path("new", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Demande de subvention", array("class" => "add-operation")); ?>
-              </li>
-            <?php
-          }
           if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
             ?>
             <li class = "divider"></li>
-            <li>
+            <li class="add-operation">
               <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
             </li>
             <?php

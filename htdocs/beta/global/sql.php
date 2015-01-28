@@ -65,7 +65,7 @@
   }
 
   function select_with_request_string($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
-    $sql = "SELECT ".$select_string."
+    $sql = "SELECT DISTINCT ".$select_string."
             FROM ".$table."
             WHERE true";
     foreach ($criteria as $column => $value) {

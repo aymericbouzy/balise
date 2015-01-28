@@ -21,7 +21,6 @@ body {
     background-color: #fff;
     padding-bottom: 50px;
     height:auto;
-    margin-bottom: 50px;
     padding-top:100px;
 }
 
@@ -258,6 +257,7 @@ body {
   padding: 10px;
   background-color: #cbddff;
   color :#2e2e2e ;
+  margin-bottom: 50px;
 }
 
 @media (min-width:768px){

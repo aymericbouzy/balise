@@ -62,6 +62,16 @@
     );
   }
 
+  function update_wave($wave, $hash) {
+    update_entry(
+      "wave",
+      array(),
+      array("submission_date", "expiry_date", "question"),
+      $wave,
+      $hash
+    );
+  }
+
   function publish_wave($wave) {
     $sql = "UPDATE wave
             SET published = 1

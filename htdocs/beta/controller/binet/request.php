@@ -69,7 +69,12 @@
     header_if(select_wave($_GET["wave"], array("state"))["state"] != "submission", 403);
   }
 
+  function check_exists_spending_budget() {
+    header_if(empty(select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)))), 403);
+  }
+
   before_action("check_wave_parameter", array("new"));
+  before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send"));
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant"), array("model_name" => "request", "binet" => $binet, "term" => $term));
@@ -78,7 +83,7 @@
   before_action("setup_for_editing", array("new", "create", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "request",
-    "str_fields" => array_merge(array(array("answer", 100000)), array_map("adds_max_length_purpose", $purpose_array)),
+    "str_fields" => array_merge(array(array("answer", MAX_TEXT_LENGTH)), array_map("adds_max_length_purpose", $purpose_array)),
     "amount_fields" => array_map("adds_max_amount", $requested_amount_array),
     "other_fields" => array(array("wave", "exists_wave")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" && isset($request) ? $request["id"] : "", binet_prefix($binet, $term)),

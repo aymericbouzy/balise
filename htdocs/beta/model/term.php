@@ -57,7 +57,7 @@
 
   function select_terms($criteria = array(), $order_by = NULL, $ascending = true) {
     $terms = select_with_request_string(
-      "DISTINCT CONCAT(binet, '/', term) as id",
+      "CONCAT(binet, '/', term) as id",
       "binet_admin",
       array("binet", "term", "student"),
       array(),
