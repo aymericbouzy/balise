@@ -47,14 +47,14 @@
   <div id="homelinks" class="opanel0">
     <?php
       echo link_to(
-        path("",""),
-        "<div>   <i class=\"fa-fw fa fa-money\"></i>  Liste des subventions </div>",
+        path("","wave"),
+        "<div>   <i class=\"fa-fw fa fa-money\"></i> Subventions </div>",
         array("class" => "homelink", "id" => "subsidies","goto" => "true" ));
       ?>
     <?php
       echo link_to(
-        path("",""),
-        "<div>   <i class=\"fa-fw fa fa-group\"></i>  Liste des binets </div>",
+        path("","binet"),
+        "<div>   <i class=\"fa-fw fa fa-group\"></i> Binets </div>",
         array("class" => "homelink", "id" => "binets","goto" => "true" ));
       ?>
   </div>
