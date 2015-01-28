@@ -70,9 +70,17 @@ a {
   height: 50px;
   background-color:#cbddff;
 }
+
+.homelink {
+  padding:10px;
+  text-align:center;
+  font-size:20px;
+}
+
 .homelink:hover {
   background-color:#baccff;
 }
+
 #subsidies {
   display:inline-block;
   width:50%;

@@ -44,7 +44,7 @@
       </p>";
     }
   ?>
-  <div id="homelinks" class="opanel0">
+  <div id="homelinks" class="opanel2">
     <?php
       echo link_to(
         path("","wave"),
