@@ -30,8 +30,14 @@
   }
 
   function pretty_binet_term($binet_term, $link = true) {
-    // TODO
-    return "binet/".$binet_term;
+    $binet_term = select_term_binet($binet_term, array("binet", "term"));
+    $binet = select_binet($binet_term["binet"], array("id", "name"));
+    $caption = $binet["name"]." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
+    if ($link) {
+      return link_to(path("show", "binet", $binet["id"]), $caption);
+    } else {
+      return $caption;
+    }
   }
 
   function pretty_budget($budget) {
