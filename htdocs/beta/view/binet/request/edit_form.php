@@ -5,8 +5,8 @@
       echo form_group_text(pretty_budget("Raison de la demande pour le budget ".$budget["id"])." :", adds_purpose_prefix($budget), $request, "request");
     }
   ?>
-  <?php echo form_group_text($question, "answer", $request, "request"); ?>
-  <?php echo form_group_hidden("wave", $request); ?>
+  <?php echo form_group_text($request["wave"]["question"], "answer", $request, "request"); ?>
+  <?php echo form_hidden("wave", $request["wave"]["id"]); ?>
   <?php echo form_csrf_token(); ?>
   <?php echo form_submit_button($submit_label); ?>
 </form>

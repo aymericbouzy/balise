@@ -102,6 +102,7 @@
 
   case "new":
     $request["wave"] = $_GET["wave"];
+    $request["wave"] = select_wave($request["wave"], array("question", "id"));
     foreach ($budgets_involved as $budget) {
       $request["budget"][$budget["id"]] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used"));
       foreach (select_tags(array("budget" => $budget["id"])) as $tag) {

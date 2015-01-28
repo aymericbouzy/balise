@@ -1,14 +1,15 @@
 <?php
 
-  function create_wave($binet, $term, $submission_date, $expiry_date) {
+  function create_wave($binet, $term, $submission_date, $expiry_date, $question) {
     $values["binet"] = $binet;
     $values["term"] = $term;
     $values["submission_date"] = $submission_date;
     $values["expiry_date"] = $expiry_date;
+    $values["question"] = $question;
     return create_entry(
       "wave",
       array("binet", "term"),
-      array("submission_date", "expiry_date"),
+      array("submission_date", "expiry_date", "question"),
       $values
     );
   }
@@ -19,7 +20,7 @@
     }
     $wave = select_entry(
       "wave",
-      array("id", "binet", "term", "submission_date", "expiry_date", "published"),
+      array("id", "binet", "term", "submission_date", "expiry_date", "published", "question"),
       $wave,
       $fields
     );
