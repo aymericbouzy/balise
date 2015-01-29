@@ -20,7 +20,7 @@
     /* si kes besoin d'alerter sur l'état du binet */
     $binet_state_color="green";
     ob_start();
-    echo "<div><i class=\"fa fa-3x fa-money\"></i>
+    echo "<div><i class=\"fa fa-3x fa-group\"></i>
     <span class=\"name\">Nom du binet</span>";
     /* TODO : état du binet si KES*/
     echo "<span class=\"state ".$binet_state_color."-background\">Etat du binet</span>";
@@ -44,7 +44,7 @@
       <?php
       echo button(path("",""), "Modifier", "edit", "grey");
       ?>
+
     </span>
   </div>
-
 </div>

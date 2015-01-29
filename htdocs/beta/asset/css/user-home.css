@@ -13,6 +13,7 @@ body {
   background: -moz-radial-gradient(#fff,#ccc); /* For Firefox 3.6 to 15 */
   background: radial-gradient(#fff,#ccc); /* Standard syntax */
   background-size: cover;
+  background-attachment:fixed;
 }
 
 #page-wrapper {
