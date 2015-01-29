@@ -536,7 +536,14 @@ footer>.btn {
   color: #8b8b8b;
 }
 
-
+/*--------------------------------------------------------------------------*/
+/* Fuzzy search */
+.fuzzy-search{
+  background-color:rgba(255,255,255,0.00);
+  width:90%;
+  border:none;
+  border-bottom:2px solid #1566cc;
+}
 /*--------------------------------------------------------------------------*/
 /* Round buttons */
 .round-button {
@@ -567,6 +574,7 @@ footer>.btn {
     display: inline-block;
     width: 0px;
     height: 0px;
+    font-size:20px;
   }
 }
 
@@ -589,6 +597,7 @@ footer>.btn {
     position: absolute;
     margin-left: 55px;
     margin-top: -40px;
+    font-size:20px;
     visibility: hidden;
     transition-timing-function: linear;
     transition-duration: 0.5s;
@@ -597,12 +606,13 @@ footer>.btn {
 
   .round-button:hover>.anim{
     transform: rotate(45deg);
-    -webkit-filter: brightness(1.2);
-    -moz-filter: brightness(1.2);
-    -o-filter: brightness(1.2);
-    -ms-filter: brightness(1.2);
+    -webkit-filter: brightness(1.3);
+    -moz-filter: brightness(1.3);
+    -o-filter: brightness(1.3);
+    -ms-filter: brightness(1.3);
   }
   .round-button:hover>span{
     visibility: visible;
+    font-size:20px;
   }
 }

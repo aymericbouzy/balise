@@ -20,6 +20,8 @@
     padding-top:155px;
   }
 }
+
+/*------ Action header ----------*/
 #action-header{
   text-decoration:none;
   position:fixed;
@@ -44,7 +46,13 @@
   position:absolute;
   width:100%;
   padding-left:80px;
-  padding-right:30px;
+  padding-right:80px;
+}
+.searchbar>i{
+  padding-top:5px;
+  float:right;
+  color:#1566cc;
+  width:10%;
 }
 .alpha-selecter {
   position:absolute;
@@ -68,7 +76,10 @@
   border-bottom:2px solid #1566cc;
 }
 
-
+/*------ List objects --------*/
+.list {
+  margin-left:-40px;
+}
 .content-line-panel{
   display:block;
   margin:5px;
