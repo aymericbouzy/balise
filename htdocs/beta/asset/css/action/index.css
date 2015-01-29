@@ -75,20 +75,34 @@
   width:758px;
   background-color:#cbddff;
   margin:5px;
-  padding:5px;
   text-decoration:none;
   color:#2e2e2e;
+}
+.content-line-panel:hover{
+  background-color:#3399FF;
 }
 .content-line-panel>i{
   display:table-cell;
   padding-left:15px;
+  padding-right:15px;
 }
-.content-line-panel>.name{
+.name,.state{
   display:table-cell;
   vertical-align:middle;
   font-size:20px;
-  margin-left:20px;
-  margin-bottom:15px;
+  padding:5px;
   text-decoration:none;
   height:25px;
+}
+.amount {
+  display:table-cell;
+  vertical-align:middle;
+  padding:5px;
+  width:50px;
+}
+.actions{
+  display:block
+  height:50px;
+  position:absolute;
+  right:10px;
 }

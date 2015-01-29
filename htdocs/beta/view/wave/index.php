@@ -15,9 +15,12 @@
     </div>
   </div>
   <?php echo link_to(path('',''),
-    "<i class=\"fa fa-3x fa-money\"></i>
-      <span class=\"name\">Nom du binet</span>",
-      array("class"=>"opanel content-line-panel"));
+    "<div><i class=\"fa fa-3x fa-money\"></i>
+      <span class=\"name\">Nom de la subvention</span>
+      <span class=\"state orange-background\">Etat de la subvention</span>
+      <span class=\"amount green-background\"> 200.00 </span>
+      </div>",
+      array("class"=>"opanel content-line-panel","goto"=>true));
       ?>
 
 </div>
