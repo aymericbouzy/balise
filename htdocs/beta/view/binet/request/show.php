@@ -1,6 +1,6 @@
 <div class="show-container">
-  <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
-    <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
+  <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
     <div class="text">
       <?php
         switch ($request["state"]) {
@@ -32,10 +32,8 @@
         }
       }
       if (status_admin_binet($request["wave"]["binet"], $request["wave"]["term"])) {
-        switch ($request["state"]) {
-          case "sent":
+        if (in_array($request["state"], array("sent", "reviewed"))) {
           echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
-          break;
         }
       }
     ?>
