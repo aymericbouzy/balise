@@ -91,7 +91,6 @@
 
   case "edit":
     function operation_to_form_fields($operation) {
-      // var_dump($operation["amount"]);
       $operation["sign"] = $operation["amount"] > 0 ? 0 : 1;
       $operation["amount"] *= $operation["sign"] ? -1 : 1;
       $operation["amount"] *= 1/100;
