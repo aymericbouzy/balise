@@ -26,7 +26,7 @@
         switch ($request["state"]) {
           case "rough_draft":
           echo button(path("edit", "request", $request["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
-          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term)), "Soumettre", "paper-plane", "green");
+          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true), "Soumettre", "paper-plane", "green");
           break;
         }
       }

@@ -79,3 +79,7 @@
     // TODO
     return "request ".$request;
   }
+
+  function pretty_subsidy($subsidy) {
+    return "subsidy ".$subsidy;
+  }

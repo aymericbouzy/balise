@@ -24,7 +24,7 @@
   }
 
   function setup_for_review() {
-    $GLOBALS["subsidies_involved"] = select_subsidies(array("request" => $GLOBALS["request"]));
+    $GLOBALS["subsidies_involved"] = select_subsidies(array("request" => $GLOBALS["request"]["id"]));
     $GLOBALS["granted_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["subsidies_involved"]);
     $GLOBALS["explanation_array"] = array_map("adds_purpose_prefix", $GLOBALS["subsidies_involved"]);
     $GLOBALS["review_form_fields"] = array_merge($GLOBALS["granted_amount_array"], $GLOBALS["explanation_array"]);
@@ -43,7 +43,7 @@
   }
 
   function sent_and_not_published() {
-    $request = select_request($GLOBALS["request"], array("sent", "wave"));
+    $request = select_request($GLOBALS["request"]["id"], array("sent", "wave"));
     $wave = select_wave($request["wave"], array("published"));
     header_if($request["sent"] != 1 || $wave["published"] != 0, 403);
   }
@@ -183,14 +183,14 @@
 
   case "review":
     function request_to_form_fields($request) {
-      foreach (subsidies_involved() as $subsidy) {
-        $subsidy = select_subsidy($subsidy["id"], array("granted_amount", "explanation"));
-        $request[add_amount_prefix($subsidy)] = $subsidy["granted_amount"];
-        $request[add_purpose_prefix($subsidy)] = $subsidy["explanation"];
+      foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
+        $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation"));
+        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"];
+        $request[adds_purpose_prefix($subsidy)] = $subsidy["explanation"];
       }
       return $request;
     }
-    $request = set_editable_entry_for_form("request", $request["id"], $review_form_fields);
+    $request = set_editable_entry_for_form("request", $request, $review_form_fields);
     break;
 
   case "grant":
@@ -218,6 +218,7 @@
     break;
 
   case "send":
+    send_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été envoyée avec succès.";
     redirect_to_action("show");
     break;
