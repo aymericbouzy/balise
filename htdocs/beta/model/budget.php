@@ -112,10 +112,10 @@
 
   function get_subsidized_amount_used_details_budget($budget) {
     $subsidies = select_subsidies(array("budget" => $budget));
-    foreach($subsidies as $subsidy) {
-      $subsidy = select_subsidy($subsidy, array("id", "granted_amount", "wave"));
-      $subsidy["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
-      $subsidy["used_amount"] = 0;
+    foreach($subsidies as $index => $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave"));
+      $subsidies[$index]["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
+      $subsidies[$index]["used_amount"] = 0;
     }
     usort($subsidies, "sort_by_date");
     foreach(select_operations_budget($budget) as $operation) {

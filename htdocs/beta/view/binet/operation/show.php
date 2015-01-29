@@ -6,7 +6,7 @@
   </div>
   <div class="sh-actions">
     <?php
-      if (has_editing_rights()) {
+      if (has_editing_rights($binet, $term)) {
         switch ($operation["state"]) {
           case "suggested":
           echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Ajouter", "plus", "green");

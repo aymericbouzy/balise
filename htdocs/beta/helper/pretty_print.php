@@ -50,9 +50,13 @@
     return $wave;
   }
 
-  function pretty_student($student) {
+  function pretty_student($student, $link = true) {
     $student = select_student($student, array("name", "email"));
-    return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+    if ($link) {
+      return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+    } else {
+      return $student["name"];
+    }
   }
 
   function pretty_date($date) {
@@ -74,4 +78,8 @@
   function pretty_request($request) {
     // TODO
     return "request ".$request;
+  }
+
+  function pretty_subsidy($subsidy) {
+    return "subsidy ".$subsidy;
   }

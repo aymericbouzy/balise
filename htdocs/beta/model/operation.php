@@ -17,7 +17,7 @@
 
   function select_operation($operation, $fields = array()) {
     if (in_array("state", array("state"))) {
-      $fields = array_merger(array("binet_validation_by", "kes_validation_by"), $fields);
+      $fields = array_merge(array("binet_validation_by", "kes_validation_by"), $fields);
     }
     $operation = select_entry(
       "operation",
@@ -95,12 +95,7 @@
   }
 
   function delete_operation($operation) {
-    $sql = "DELETE
-            FROM operation
-            WHERE id = :operation";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
-    $req->execute();
+    delete_entry("operation", $operation);
   }
 
   function select_operations_budget($budget) {

@@ -57,10 +57,11 @@
 
   function set_editable_entry_for_form($table, $object, $form_fields) {
     $id = $object["id"];
-    if (isset($_SESSION[$table])) {
+    if (isset($_SESSION[$table]) && $_SESSION[$table] != array("errors" => array())) {
       $object = initialise_for_form_from_session($form_fields, $table);
     } else {
       $object = call_user_func("select_".$table, $id, $form_fields);
+      $object["id"] = $id;
       $object = call_user_func($table."_to_form_fields", $object);
       $object = initialise_for_form($form_fields, $object);
     }

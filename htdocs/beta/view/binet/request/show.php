@@ -22,11 +22,11 @@
   </div>
   <div class="sh-actions">
     <?php
-      if (has_editing_rights()) {
+      if (has_editing_rights($binet, $term)) {
         switch ($request["state"]) {
           case "rough_draft":
           echo button(path("edit", "request", $request["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
-          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term)), "Soumettre", "paper-plane", "green");
+          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true), "Soumettre", "paper-plane", "green");
           break;
         }
       }
@@ -45,10 +45,10 @@
     </div>
     <div class="text">
       <p class="main">
-        <?php echo pretty_binet_term($request["binet"]."/".$request["term"]); ?>
+        <?php echo pretty_binet_term($binet."/".$term); ?>
       </p>
       <p class="sub">
-        <?php echo pretty_wave($request["wave"], false); ?>
+        <?php echo pretty_wave($request["wave"]["id"], false); ?>
       </p>
     </div>
   </div>
