@@ -17,5 +17,5 @@
 			ratio1 = ".($numerator/$denominator).";
 			ratiobar( ratio1 , 'real_budget');
 		</script>
-		".$numerator."/".$denominator;
+		".pretty_amount($numerator)."/".pretty_amount($denominator);
 	}

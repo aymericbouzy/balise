@@ -10,7 +10,7 @@
       $values
     );
     foreach($subsidies as $subsidy) {
-      create_subsidy($subsidy["budget"], $request, $subsidy["amount"], $subsidy["optional_values"]);
+      create_subsidy($subsidy["budget"], $request, $subsidy["requested_amount"], $subsidy["optional_values"]);
     }
     return $request;
   }
@@ -30,15 +30,12 @@
     if (!empty(array_intersect($virtual_fields, $fields))) {
       // TODO : check no request without subsidy
       $subsidies = select_subsidies(array("request" => $request["id"]));
-      $budget = select_budget($subsidies[0]["budget"], array("binet", "term"));
+      $budget = select_budget(select_subsidy($subsidies[0]["id"], array("budget"))["budget"], array("binet", "term"));
       if (in_array("binet", $fields)) {
         $request["binet"] = $budget["binet"];
       }
       if (in_array("term", $fields)) {
         $request["term"] = $budget["term"];
-      }
-      if (in_array("granted", $fields)) {
-        $request["granted"] = $subsidies[0]["explanation"] != NULL;
       }
       if (in_array("requested_amount", $fields)) {
         $request["requested_amount"] = get_requested_amount_request($id);

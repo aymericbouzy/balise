@@ -123,17 +123,19 @@
       if ($field_elements[0]."_" == amount_prefix && $value > 0) {
         $subsidy = array();
         $subsidy["budget"] = $field_elements[1];
-        $subsidy["granted_amount"] = $value;
+        $subsidy["requested_amount"] = $value;
         $subsidy["optional_values"] = array("purpose" => $_POST[purpose_prefix.$field_elements[1]]);
         $subsidies[] = $subsidy;
       }
     }
-    create_request($_POST["wave"], $subsidies, $_POST["answer"]);
+    $request["id"] = create_request($_POST["wave"], $subsidies, $_POST["answer"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
     redirect_to_action("show");
     break;
 
   case "show":
+    $request = select_request($request["id"], array("id", "budget", "answer", "sent", "wave", "state"));
+    $request["wave"] = select_wave($request["wave"], array("id", "binet", "term", "state"));
     break;
 
   case "edit":
