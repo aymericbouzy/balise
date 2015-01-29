@@ -18,6 +18,10 @@
     "<div><i class=\"fa fa-3x fa-money\"></i>
       <span class=\"name\">Nom de la subvention</span>
       <span class=\"state orange-background\">Etat de la subvention</span>
+      <span class=\"dates\">
+        <span class=\"top green-background\">21/07/2015</span>
+        <span class=\"bottom orange-background\">05/09/2015</span>
+      </span>
       <span class=\"amount green-background\"> 200.00 </span>
       </div>",
       array("class"=>"opanel content-line-panel","goto"=>true));

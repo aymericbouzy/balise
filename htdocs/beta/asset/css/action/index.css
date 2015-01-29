@@ -78,27 +78,44 @@
   text-decoration:none;
   color:#2e2e2e;
 }
+
 .content-line-panel:hover{
   background-color:#3399FF;
 }
+
+.content-line-panel>span{
+  vertical-align:middle;
+  text-align:center;
+}
 .content-line-panel>i{
+  vertical-align:middle;
   display:table-cell;
   padding-left:15px;
   padding-right:15px;
 }
 .name,.state{
   display:table-cell;
-  vertical-align:middle;
   font-size:20px;
   padding:5px;
   text-decoration:none;
   height:25px;
 }
+
+.dates {
+  display:table-cell;
+  border-left:1px solid rgba(0,0,0,0.4);
+}
+.dates>.top , .dates>.bottom {
+  text-align:center;
+  display:block;
+  height:25px;
+}
+
 .amount {
   display:table-cell;
-  vertical-align:middle;
   padding:5px;
   width:50px;
+  border-left:1px solid rgba(0,0,0,0.4);
 }
 .actions{
   display:block

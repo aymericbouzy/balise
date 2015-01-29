@@ -184,6 +184,10 @@ body {
     background-color:#D7EBFF;
 }
 
+.cell-centered{
+  vertical-align:middle;
+  text-align:center;
+}
 /*-------------------------------------------------------------------*/
 /*Tags*/
 
