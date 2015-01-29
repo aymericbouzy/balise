@@ -18,10 +18,10 @@
     <?php ob_start();
       echo "<div><i class=\"fa fa-3x fa-money\"></i>
       <span class=\"name\">Nom de la subvention</span>";
-      /* TODO : couleur d'arriÃ¨re plan de la subvention */
+      /* TODO : couleur d'arrière plan de la subvention */
       echo "<span class=\"state orange-background\">Etat de la subvention</span>";
-      /* TODO : couleur d'arriÃ¨re plan des dates */
-      /* On fait confiance Ã  l'utilisateur pour reconnaitre date limite depot demande
+      /* TODO : couleur d'arrière plan des dates */
+      /* On fait confiance à l'utilisateur pour reconnaitre date limite depot demande
       et limite utilisation ? */
       echo "<span class=\"dates\">
         <span class=\"top green-background\">21/07/2015</span>
@@ -36,7 +36,7 @@
 
       /* Here we put one "immediate" action depending on the user */
       ?>
-      <span class=\"actions\">
+      <span class="actions">
         <?php
         echo button(path("",""), "Modifier", "edit", "grey");
       ?>

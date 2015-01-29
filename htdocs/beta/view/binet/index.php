@@ -40,7 +40,7 @@
 
     /* Here we put one "immediate" action depending on the user */
     ?>
-    <span class=\"actions\">
+    <span class="actions">
       <?php
       echo button(path("",""), "Modifier", "edit", "grey");
       ?>
