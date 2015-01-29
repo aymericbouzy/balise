@@ -134,7 +134,6 @@
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
 
-  // useless for the time being
   function status_admin_binet($binet, $term = NULL) {
     $sql = "SELECT *
             FROM binet_admin

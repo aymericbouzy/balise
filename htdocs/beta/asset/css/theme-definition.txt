@@ -1,0 +1,15 @@
+Colors :
+#2e2e2e Dark grey
+#3399FF Blue
+#cbddff Light blue
+
+--> Change a color using find/replace
+
+Alert/info colors :
+rgba(50, 173, 39, 0.7) green
+rgba(173, 50, 39, 0.7) red
+rgb(255, 175, 36)     orange
+rgb(150, 150, 150)  light grey for backgrounds
+
+Shadow :
+1px 1px 5px 1px rgba(0,0,0,0.2)

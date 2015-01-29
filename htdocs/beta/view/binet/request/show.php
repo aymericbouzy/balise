@@ -1,13 +1,44 @@
 <div class="show-container">
-  <!-- TODO : orange en attente, green acceptée, red refusée -->
-  <div class="sh-plus red-background opanel">
-    <!-- TODO : fa-question requête en attente
-                fa-check requête acceptée
-                fa-times requête refusée
-                -->
-    <i class="fa fa-fw fa-question"></i>
-    <div class="text"> <!-- TODO Statut de la requête --> </div>
+  <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
+    <div class="text">
+      <?php
+        switch ($request["state"]) {
+          case "rough_draft":
+          echo "Brouillon";
+          break;
+          case "sent":
+          echo "Demande envoyée";
+          break;
+          case "accepted":
+          echo "Demande acceptée";
+          break;
+          case "rejected":
+          echo "Demande refusée";
+          break;
+        }
+      ?>
+    </div>
   </div>
+  <div class="sh-actions">
+    <?php
+      if (has_editing_rights()) {
+        switch ($request["state"]) {
+          case "rough_draft":
+          echo button(path("edit", "request", $request["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term)), "Soumettre", "paper-plane", "green");
+          break;
+        }
+      }
+      if (status_admin_binet($request["wave"]["binet"], $request["wave"]["term"])) {
+        switch ($request["state"]) {
+          case "sent":
+          echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
+          break;
+        }
+      }
+    ?>
+	</div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
