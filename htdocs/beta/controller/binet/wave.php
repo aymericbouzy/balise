@@ -15,13 +15,13 @@
   before_action("check_editing_rights", array("new", "create", "edit", "update", "publish"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "wave",
-    "str_fields" => array(array("submission_date", MAX_DATE_LENGTH), array("expiry_date", MAX_DATE_LENGTH)),
+    "str_fields" => array(array("submission_date", MAX_DATE_LENGTH), array("expiry_date", MAX_DATE_LENGTH), array("question", MAX_TEXT_LENGTH)),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $wave["id"] : "", binet_prefix($binet, $term))
   ));
   before_action("not_published", array("publish"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
-  $form_fields = array("submission_date", "expiry_date");
+  $form_fields = array("submission_date", "expiry_date", "question");
 
   switch ($_GET["action"]) {
 
@@ -33,12 +33,12 @@
     break;
 
   case "create":
-    $wave["id"] = create_wave($binet, $term, $submission_date, $expiry_date);
+    $wave["id"] = create_wave($binet, $term, $_POST["submission_date"], $_POST["expiry_date"], $_POST["question"]);
     $_SESSION["notice"][] = "Une nouvelle vague de subvention a été ouverte.";
     $binets_per_student = array();
-    foreach (select_binets() as $binet) {
-      foreach (select_current_admins($binet["id"]) as $student) {
-        $binets_per_student[$student["id"]][] = $binet["id"];
+    foreach (select_binets() as $any_binet) {
+      foreach (select_current_admins($any_binet["id"]) as $student) {
+        $binets_per_student[$student["id"]][] = $any_binet["id"];
       }
     }
     foreach ($binets_per_student as $student => $binets) {
@@ -48,14 +48,14 @@
     break;
 
   case "show":
-    $wave = select_wave($wave, array("id", "submission_date", "expiry_date", "published", "binet", "term"));
+    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state"));
     break;
 
   case "edit":
     function wave_to_form_fields($wave) {
       return $wave;
     }
-    $wave = set_editable_entry_for_form("wave", $wave["id"], $form_fields);
+    $wave = set_editable_entry_for_form("wave", $wave, $form_fields);
     break;
 
   case "update":
@@ -70,7 +70,7 @@
     $requests_per_student = array();
     foreach (select_requests(array("wave" => $wave["id"])) as $request) {
       $request = select_request($request["id"], array("binet", "term", "id"));
-      foreach (select_admins($request["binet"], $request["term"]]) as $student) {
+      foreach (select_admins($request["binet"], $request["term"]) as $student) {
         $requests_per_student[$student["id"]][] = $request["id"];
       }
     }

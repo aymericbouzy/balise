@@ -20,7 +20,7 @@
 
   function pretty_binet($binet) {
     $binet = select_binet($binet, array("id"));
-    return link_to(path("show", "binet", $binet["id"]), pretty_binet_no_link($binet));
+    return link_to(path("show", "binet", $binet["id"]), pretty_binet_no_link($binet["id"]));
   }
 
   function pretty_binet_no_link($binet) {
@@ -50,9 +50,13 @@
     return $wave;
   }
 
-  function pretty_student($student) {
+  function pretty_student($student, $link = true) {
     $student = select_student($student, array("name", "email"));
-    return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+    if ($link) {
+      return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+    } else {
+      return $student["name"];
+    }
   }
 
   function pretty_date($date) {
@@ -61,8 +65,7 @@
   }
 
   function pretty_operation_type($type) {
-    // TODO
-    return $type;
+    return "<i class=\"fa fa-".select_operation_type($type, array("icon"))["icon"]."\"></i>";
   }
 
   function pretty_operation($operation, $link = false) {
@@ -74,4 +77,8 @@
   function pretty_request($request) {
     // TODO
     return "request ".$request;
+  }
+
+  function pretty_subsidy($subsidy) {
+    return "subsidy ".$subsidy;
   }
