@@ -4,14 +4,15 @@
     <div class="searchbar">
       <input type="search" class="fuzzy-search"><i class="fa fa-fw fa-search"></i>
     </div>
+    <!-- Inutile pour l'instant'
     <div class="alpha-selecter">
       <!-- Ici utilisation d'ancres seulement : on peut garder des href="#ancre"-->
       <!-- TODO : voir comment implémenter ca -->
-      <a href="#">A</a>
+      <!-- <a href="#">A</a>
       <a href="#">B</a>
       <a href="#">C</a>
       <a href="#">D</a>
-    </div>
+    </div> -->
   </div>
   <ul class="list">
     <?php for( $i=1 ; $i<=10 ;$i++){?>

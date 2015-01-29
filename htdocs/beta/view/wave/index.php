@@ -5,12 +5,13 @@
         <input type="search" class="fuzzy-search">
         <i class="fa fa-fw fa-search"></i>
     </div>
-    <div class="alpha-selecter">
+    <!-- Inutile pour le moment, le fuzzy finder suffit peut-être -->
+    <!-- <div class="alpha-selecter">
       <a href="#">2015</a>
       <a href="#">2014</a>
       <a href="#">2013</a>
       <a href="#">2012</a>
-    </div>
+    </div> -->
   </div>
   <ul class="list">
     <?php for( $i=1 ; $i<=10 ;$i++){?>
