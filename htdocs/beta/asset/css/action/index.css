@@ -106,11 +106,14 @@
   height:25px;
 }
 
-.dates {
+.dates, .users {
   display:table-cell;
   border-left:1px solid rgba(0,0,0,0.4);
 }
-.dates>.top , .dates>.bottom {
+.users {
+  width:200px;
+}
+.dates>.top , .dates>.bottom , .users>.prez, .users>.trez {
   text-align:center;
   display:block;
   height:25px;

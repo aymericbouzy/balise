@@ -34,18 +34,12 @@
 
       echo link_to(path('',''), $content, array("class"=>"opanel clickable-main","goto"=>true));
 
-      ob_start();
       /* Here we put one "immediate" action depending on the user */
-      echo "<span class=\"actions\">
-              <div class=\"round-button anim opanel red-background\">
-                  <i class=\"fa fa-fw fa-automobile\"></i>
-                  <span>Action</span>
-              </div>
-      </span>";
-
-      $actions = ob_get_clean();
-
-      echo link_to(path('',''), $actions, array("class"=>"opanel content-line-panel","goto"=>true));
       ?>
+      <span class=\"actions\">
+        <?php
+        echo button(path("",""), "Modifier", "edit", "grey");
+      ?>
+      </span>
     </div>
 </div>

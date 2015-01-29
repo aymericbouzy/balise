@@ -15,12 +15,36 @@
       <a href="#">D</a>
     </div>
   </div>
-  <?php echo link_to(path('',''),
-  "<div><i class=\"fa fa-3x fa-money\"></i>
-  <span class=\"name\">Nom du binet</span>
-  <span class=\"amount red-background\"> -200.00 </span>
-  </div>",
-  array("class"=>"opanel content-line-panel","goto"=>true));
-  ?>
+  <div class="content-line-panel">
+    <?php
+    /* si kes besoin d'alerter sur l'état du binet */
+    $binet_state_color="green";
+    ob_start();
+    echo "<div><i class=\"fa fa-3x fa-money\"></i>
+    <span class=\"name\">Nom du binet</span>";
+    /* TODO : état du binet si KES*/
+    echo "<span class=\"state ".$binet_state_color."-background\">Etat du binet</span>";
+    /* TODO : couleur d'arrière plan des dates */
+    /* On fait confiance à l'utilisateur pour reconnaitre date limite depot demande
+    et limite utilisation ? */
+    echo "<span class=\"users\">
+    <span class=\"prez\">Jacques Lacan</span>
+    <span class=\"trez\">Johhnie Walker</span>
+    </span>
+    <span class=\"amount ".$binet_state_color."-background\"> 200.00 </span>
+    </div>";
+
+    $content = ob_get_clean();
+
+    echo link_to(path('',''), $content, array("class"=>"opanel clickable-main","goto"=>true));
+
+    /* Here we put one "immediate" action depending on the user */
+    ?>
+    <span class=\"actions\">
+      <?php
+      echo button(path("",""), "Modifier", "edit", "grey");
+      ?>
+    </span>
+  </div>
 
 </div>
