@@ -1,7 +1,11 @@
 <?php
 
   function budget_is_alone() {
-    header_if(!empty(select_operations_budget($_GET["budget"])) || !empty(select_subsidies_budget($_GET["budget"])), 403);
+    return empty(select_operations_budget($_GET["budget"]))  && empty(select_subsidies_budget($_GET["budget"]));
+  }
+
+  function check_budget_is_alone() {
+    header_if(!budget_is_alone(), 403);
   }
 
   before_action("check_csrf_post", array("update", "create"));
@@ -17,7 +21,7 @@
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge($_GET["action"] == "update" ? array("label", "amount") : array(), array("sign", "tags_string"))
   ));
-  before_action("budget_is_alone", array("edit", "update", "delete"));
+  before_action("check_budget_is_alone", array("edit", "update", "delete"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("label", "tags_string", "amount");

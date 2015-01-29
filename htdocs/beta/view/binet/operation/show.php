@@ -6,7 +6,7 @@
   </div>
   <div class="sh-actions">
     <?php
-      if (has_editing_rights()) {
+      if (has_editing_rights($binet, $term)) {
         switch ($operation["state"]) {
           case "suggested":
           echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Ajouter", "plus", "green");
@@ -58,20 +58,27 @@
   <div class="sh-op-payer opanel">
     <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? pretty_student($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
   </div>
-  <div class="sh-op-budgets opanel">
-    <div class="pieID pie">
-    </div>
-    <ul class="pieID legend">
-      <li>
-        <?php
-          foreach (select_budgets_operation($operation["id"]) as $operation) {
-            ?>
-            <em><?php echo pretty_operation($operation["id"]); ?></em>
-            <span><?php echo pretty_amount($operation["amount"]); ?></span>
+  <?php
+    $budgets = select_budgets_operation($operation["id"]);
+    if (!empty($budgets)) {
+      ?>
+      <div class="sh-bu-budgets opanel">
+        <div class="pieID pie">
+        </div>
+        <ul class="pieID legend">
+          <li>
             <?php
-          }
-        ?>
-      </li>
-    </ul>
-  </div>
+              foreach ($budgets as $budget) {
+                ?>
+                <em><?php echo pretty_budget($budget["id"]); ?></em>
+                <span><?php echo pretty_amount($budget["amount"]); ?></span>
+                <?php
+              }
+            ?>
+          </li>
+        </ul>
+      </div>
+      <?php
+    }
+  ?>
 </div>
