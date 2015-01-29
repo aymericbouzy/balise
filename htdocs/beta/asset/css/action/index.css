@@ -70,24 +70,29 @@
 
 
 .content-line-panel{
+  display:block;
+  margin:5px;
+  width:100%;
+}
+
+.clickable-main{
   display:table;
   height:50px;
-  width:758px;
+  width:758px;;
   background-color:#cbddff;
-  margin:5px;
   text-decoration:none;
   color:#2e2e2e;
 }
 
-.content-line-panel:hover{
+.clickable-main:hover{
   background-color:#3399FF;
 }
 
-.content-line-panel>span{
+.clickable-main>span{
   vertical-align:middle;
   text-align:center;
 }
-.content-line-panel>i{
+.clickable-main>i{
   vertical-align:middle;
   display:table-cell;
   padding-left:15px;
@@ -118,8 +123,9 @@
   border-left:1px solid rgba(0,0,0,0.4);
 }
 .actions{
-  display:block
+  display:inline-block;
   height:50px;
   position:absolute;
-  right:10px;
+  right:-55px;
+  bottom:0px;
 }

@@ -14,17 +14,38 @@
       <a href="#">2012</a>
     </div>
   </div>
-  <?php echo link_to(path('',''),
-    "<div><i class=\"fa fa-3x fa-money\"></i>
-      <span class=\"name\">Nom de la subvention</span>
-      <span class=\"state orange-background\">Etat de la subvention</span>
-      <span class=\"dates\">
+  <div class="content-line-panel">
+    <?php ob_start();
+      echo "<div><i class=\"fa fa-3x fa-money\"></i>
+      <span class=\"name\">Nom de la subvention</span>";
+      /* TODO : couleur d'arrière plan de la subvention */
+      echo "<span class=\"state orange-background\">Etat de la subvention</span>";
+      /* TODO : couleur d'arrière plan des dates */
+      /* On fait confiance à l'utilisateur pour reconnaitre date limite depot demande
+      et limite utilisation ? */
+      echo "<span class=\"dates\">
         <span class=\"top green-background\">21/07/2015</span>
         <span class=\"bottom orange-background\">05/09/2015</span>
       </span>
       <span class=\"amount green-background\"> 200.00 </span>
-      </div>",
-      array("class"=>"opanel content-line-panel","goto"=>true));
-      ?>
+      </div>";
 
+      $content = ob_get_clean();
+
+      echo link_to(path('',''), $content, array("class"=>"opanel clickable-main","goto"=>true));
+
+      ob_start();
+      /* Here we put one "immediate" action depending on the user */
+      echo "<span class=\"actions\">
+              <div class=\"round-button anim opanel red-background\">
+                  <i class=\"fa fa-fw fa-automobile\"></i>
+                  <span>Action</span>
+              </div>
+      </span>";
+
+      $actions = ob_get_clean();
+
+      echo link_to(path('',''), $actions, array("class"=>"opanel content-line-panel","goto"=>true));
+      ?>
+    </div>
 </div>
