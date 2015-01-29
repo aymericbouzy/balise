@@ -57,7 +57,7 @@
   ));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
-  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by");
+  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign");
   if ($_GET["action"] == "new") {
     $form_fields[] = "sign";
   }
@@ -76,27 +76,33 @@
     break;
 
   case "create":
-    $operation["id"] = create_operation($binet, $term, (1 - $_POST["sign"]*2)*$_POST["amount"], $_POST["type"], $_POST);
+    $operation["id"] = create_operation($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("review");
     break;
 
   case "show":
-    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference", "state"));
+    $operation = select_operation(
+      $operation["id"],
+      array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference", "state", "type", "comment", "paid_by")
+    );
     $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
 
   case "edit":
     function operation_to_form_fields($operation) {
-      $operation["sign"] = $operation["amount"] > 0 ? 1 : 0;
-      $operation["amount"] *= $operation["sign"] ? 1 : -1;
+      // var_dump($operation["amount"]);
+      $operation["sign"] = $operation["amount"] > 0 ? 0 : 1;
+      $operation["amount"] *= $operation["sign"] ? -1 : 1;
+      $operation["amount"] *= 1/100;
       return $operation;
     }
     $operation = set_editable_entry_for_form("operation", $operation, $form_fields);
     break;
 
   case "update":
-    unset($_SESSION["operation"]);
+    $_POST["amount"] = (1 - 2*$_POST["sign"])*$_POST["amount"];
+    update_operation($operation["id"], $_POST);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
