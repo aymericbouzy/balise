@@ -220,3 +220,12 @@
     $req->execute();
     return Database::get()->lastInsertId("id");
   }
+
+  function delete_entry($table, $entry) {
+    $sql = "DELETE
+    FROM ".$table."
+    WHERE id = :entry";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':entry', $entry, PDO::PARAM_INT);
+    $req->execute();
+  }

@@ -80,7 +80,7 @@
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant"), array("model_name" => "request", "binet" => $binet, "term" => $term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant"));
-  before_action("setup_for_editing", array("new", "create", "update"));
+  before_action("setup_for_editing", array("new", "create", "edit", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "request",
     "str_fields" => array_merge(array(array("answer", MAX_TEXT_LENGTH)), array_map("adds_max_length_purpose", $purpose_array)),
@@ -140,28 +140,29 @@
 
   case "edit":
     function request_to_form_fields($request) {
-      foreach ($budgets_involved as $budget) {
-        $subsidies = select_subsidies(array("budget" => $budget["id"]));
+      foreach ($GLOBALS["budgets_involved"] as $budget) {
+        $subsidies = select_subsidies(array("budget" => $budget["id"], "request" => $request["id"]));
         if (empty($subsidies)) {
-          $request[add_amount_prefix($budget)] = 0;
-          $request[add_purpose_prefix($budget)] = "";
+          $request[adds_amount_prefix($budget)] = 0;
+          $request[adds_purpose_prefix($budget)] = "";
         } else {
           $subsidy = select_subsidy($subsidies[0]["id"], array("requested_amount", "purpose"));
-          $request[add_amount_prefix($budget)] = $subsidy["requested_amount"];
-          $request[add_purpose_prefix($budget)] = $subsidy["purpose"];
+          $request[adds_amount_prefix($budget)] = $subsidy["requested_amount"]/100;
+          $request[adds_purpose_prefix($budget)] = $subsidy["purpose"];
         }
       }
       return $request;
     }
-    $request = set_editable_entry_for_form("request", $request["id"], $edit_form_fields);
+    $request = set_editable_entry_for_form("request", $request, $edit_form_fields);
+    $request["wave"] = select_wave($request["wave"], array("question", "id"));
     break;
 
   case "update":
     update_request($request["id"], array("answer" => $_POST["answer"]));
-    foreach (subsidies_involved() as $subsidy) {
+    foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget"));
       $form_field = amount_prefix.$subsidy["budget"];
-      if (empty($_POST[$form_field]) || $_POST[$form_field] == 0) {
+      if (empty($_POST[$form_field])) {
         delete_subsidy($subsidy["id"]);
       }
     }

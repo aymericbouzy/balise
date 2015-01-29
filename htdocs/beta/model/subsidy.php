@@ -46,6 +46,10 @@
                   $hash);
   }
 
+  function delete_subsidy($subsidy) {
+    delete_entry("subsidy", $subsidy);
+  }
+
   function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
     return select_entries(
       "subsidy",

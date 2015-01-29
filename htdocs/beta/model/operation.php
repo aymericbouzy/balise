@@ -95,12 +95,7 @@
   }
 
   function delete_operation($operation) {
-    $sql = "DELETE
-            FROM operation
-            WHERE id = :operation";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
-    $req->execute();
+    delete_entry("operation", $operation);
   }
 
   function select_operations_budget($budget) {
