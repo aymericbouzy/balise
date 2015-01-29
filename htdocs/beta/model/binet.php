@@ -98,7 +98,6 @@
     WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
-    $req->bindValue(':term', $term, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }

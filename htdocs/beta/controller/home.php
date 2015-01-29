@@ -1,6 +1,6 @@
 <?php
 
-  include LIB_PATH."fkz_auth.php";
+  include LIB_PATH.(REAL_FRANKIZ_CONNECTION ? "fkz_auth.php" : "fkz_fake_auth.php");
 
   function no_useless_connection() {
     if (connected_student()) {
@@ -8,7 +8,12 @@
     }
   }
 
+  function check_fake_auth() {
+    header_if(REAL_FRANKIZ_CONNECTION, 403);
+  }
+
   before_action("no_useless_connection", array("login"));
+  before_action("check_fake_auth", array("chose_identity"));
 
   switch ($_GET["action"]) {
 
@@ -49,6 +54,9 @@
     break;
 
   case "welcome":
+    break;
+
+  case "chose_identity":
     break;
 
   default:

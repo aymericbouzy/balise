@@ -1,14 +1,11 @@
 <div class="show-container">
-  <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
-    <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
+  <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
     <div class="text">
       <?php
         switch ($request["state"]) {
           case "rough_draft":
           echo "Brouillon";
-          break;
-          case "sent":
-          echo "Demande envoyée";
           break;
           case "accepted":
           echo "Demande acceptée";
@@ -16,25 +13,27 @@
           case "rejected":
           echo "Demande refusée";
           break;
+          default:
+          if (in_array($request["state"], array("sent", "reviewed"))) {
+            echo "Demande envoyée";
+          }
         }
       ?>
     </div>
   </div>
   <div class="sh-actions">
     <?php
-      if (has_editing_rights()) {
+      if (has_editing_rights($binet, $term)) {
         switch ($request["state"]) {
           case "rough_draft":
           echo button(path("edit", "request", $request["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
-          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term)), "Soumettre", "paper-plane", "green");
+          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true), "Soumettre", "paper-plane", "green");
           break;
         }
       }
       if (status_admin_binet($request["wave"]["binet"], $request["wave"]["term"])) {
-        switch ($request["state"]) {
-          case "sent":
+        if (in_array($request["state"], array("sent", "reviewed"))) {
           echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
-          break;
         }
       }
     ?>
@@ -45,10 +44,10 @@
     </div>
     <div class="text">
       <p class="main">
-        <?php echo pretty_binet_term($request["binet"]."/".$request["term"]); ?>
+        <?php echo pretty_binet_term($binet."/".$term); ?>
       </p>
       <p class="sub">
-        <?php echo pretty_wave($request["wave"], false); ?>
+        <?php echo pretty_wave($request["wave"]["id"], false); ?>
       </p>
     </div>
   </div>

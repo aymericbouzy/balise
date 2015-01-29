@@ -65,7 +65,7 @@
   }
 
   function select_with_request_string($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
-    $sql = "SELECT ".$select_string."
+    $sql = "SELECT DISTINCT ".$select_string."
             FROM ".$table."
             WHERE true";
     foreach ($criteria as $column => $value) {
@@ -141,17 +141,16 @@
     foreach ($hash as $column => $value) {
       if (in_array($column, $updatable_int_fields) || in_array($column, $updatable_str_fields)) {
         $sql = "UPDATE ".$table."
-                SET :column = :value
+                SET ".$column." = :value
                 WHERE id = :".$table."
                 LIMIT 1";
         $req = Database::get()->prepare($sql);
         $req->bindValue(':'.$table, $entry, PDO::PARAM_INT);
         if (in_array($column, $updatable_int_fields)) {
-          $req->bindValue(':'.$value, $value, PDO::PARAM_INT);
+          $req->bindValue(':value', $value, PDO::PARAM_INT);
         } elseif (in_array($column, $updatable_str_fields)) {
-          $req->bindValue(':'.$value, $value, PDO::PARAM_STR);
+          $req->bindValue(':value', $value, PDO::PARAM_STR);
         }
-        $req->bindValue(':'.$column, $column, PDO::PARAM_STR);
         $req->execute();
       }
     }
@@ -220,4 +219,13 @@
     }
     $req->execute();
     return Database::get()->lastInsertId("id");
+  }
+
+  function delete_entry($table, $entry) {
+    $sql = "DELETE
+    FROM ".$table."
+    WHERE id = :entry";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':entry', $entry, PDO::PARAM_INT);
+    $req->execute();
   }

@@ -62,12 +62,12 @@
   </div>
   <?php
     foreach (select_requests(array("wave" => $wave["id"])) as $request) {
-      $request = select_request($request["id"], array("id", "granted", "binet", "term", "requested_amount"));
+      $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
       echo link_to(
-        path("review", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+        path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
         "<div class=\"sh-wa-request opanel\">
           <p class=\"icon\">
-            ".($request["granted"] ? "<i class=\"fa fa-3x fa-check\"></i>" : "<i class=\"fa fa-3x fa-times\"></i>")."
+            ".($request["state"] == "sent" ? "<i class=\"fa fa-3x fa-times\"></i>" : "<i class=\"fa fa-3x fa-check\"></i>")."
           </p>
           <p class=\"binet\">
             ".pretty_binet_term($request["binet"]."/".$request["term"])."
