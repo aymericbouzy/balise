@@ -2,6 +2,7 @@
 
   define("amount_prefix", "amount_");
   define("purpose_prefix", "purpose_");
+  define("explanation_prefix", "explanation_");
 
   $purpose_array = array();
   $requested_amount_array = array();
@@ -16,6 +17,10 @@
     return purpose_prefix.$object["id"];
   }
 
+  function adds_explanation_prefix($object) {
+    return explanation_prefix.$object["id"];
+  }
+
   function setup_for_editing() {
     $GLOBALS["budgets_involved"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array(">", 0)));
     $GLOBALS["requested_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["budgets_involved"]);
@@ -26,7 +31,7 @@
   function setup_for_review() {
     $GLOBALS["subsidies_involved"] = select_subsidies(array("request" => $GLOBALS["request"]["id"]));
     $GLOBALS["granted_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["subsidies_involved"]);
-    $GLOBALS["explanation_array"] = array_map("adds_purpose_prefix", $GLOBALS["subsidies_involved"]);
+    $GLOBALS["explanation_array"] = array_map("adds_explanation_prefix", $GLOBALS["subsidies_involved"]);
     $GLOBALS["review_form_fields"] = array_merge($GLOBALS["granted_amount_array"], $GLOBALS["explanation_array"]);
   }
 
@@ -92,9 +97,10 @@
   before_action("setup_for_review", array("review", "grant"));
   before_action("check_form_input", array("grant"), array(
     "model_name" => "request",
-    "str_fields" => $explanation_array,
-    "amount_fields" => $granted_amount_array,
-    "redirect_to" => path("review", "request", $_GET["action"] == "grant" ? $request["id"] : "", binet_prefix($binet, $term))
+    "str_fields" => array_map("adds_max_length_purpose", $explanation_array),
+    "amount_fields" => array_map("adds_max_amount", $granted_amount_array),
+    "redirect_to" => path("review", "request", $_GET["action"] == "grant" ? $request["id"] : "", binet_prefix($binet, $term)),
+    "optional" => $granted_amount_array
   ));
   before_action("not_sent", array("send", "edit", "update", "delete"));
   before_action("sent_and_not_published", array("review", "grant"));
@@ -186,7 +192,7 @@
       foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
         $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation"));
         $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"];
-        $request[adds_purpose_prefix($subsidy)] = $subsidy["explanation"];
+        $request[adds_explanation_prefix($subsidy)] = $subsidy["explanation"];
       }
       return $request;
     }
@@ -201,7 +207,7 @@
         case amount_prefix:
           update_subsidy($field_elements[1], array("granted_amount" => $value));
           break;
-        case purpose_prefix:
+        case explanation_prefix:
           update_subsidy($field_elements[1], array("explanation" => $value));
           break;
       }
