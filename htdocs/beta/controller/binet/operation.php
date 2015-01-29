@@ -82,7 +82,7 @@
     break;
 
   case "show":
-    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference"));
+    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference", "state"));
     $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
 
@@ -118,7 +118,7 @@
     $id = $operation["id"];
     function operation_to_form_fields($operation) {
       foreach ($GLOBALS["binet_budgets"] as $budget) {
-        $operation[adds_amount_prefix($budget)] = 0;
+        $operation[adds_amount_prefix($budget)] = "";
       }
       foreach (select_budgets_operation($operation["id"]) as $budget) {
         $operation[adds_amount_prefix($budget)] = $budget["amount"];

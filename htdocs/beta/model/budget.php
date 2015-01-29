@@ -144,4 +144,5 @@
     $req = Database::get()->prepare($sql);
     $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
+    return $req->fetchAll();
   }

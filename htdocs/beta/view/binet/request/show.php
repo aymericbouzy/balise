@@ -7,15 +7,16 @@
           case "rough_draft":
           echo "Brouillon";
           break;
-          case "sent":
-          echo "Demande envoyée";
-          break;
           case "accepted":
           echo "Demande acceptée";
           break;
           case "rejected":
           echo "Demande refusée";
           break;
+          default:
+          if (in_array($request["state"], array("sent", "reviewed"))) {
+            echo "Demande envoyée";
+          }
         }
       ?>
     </div>
