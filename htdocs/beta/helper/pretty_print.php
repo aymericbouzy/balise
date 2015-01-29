@@ -65,8 +65,7 @@
   }
 
   function pretty_operation_type($type) {
-    // TODO
-    return $type;
+    return "<i class=\"fa fa-".select_operation_type($type, array("icon"))["icon"]."\"></i>";
   }
 
   function pretty_operation($operation, $link = false) {
