@@ -4,45 +4,68 @@
     <div class="searchbar">
         <?php echo fuzzy_input(); ?>
     </div>
-    <!-- Inutile pour le moment, le fuzzy finder suffit peut-être -->
-    <!-- <div class="alpha-selecter">
-      <a href="#">2015</a>
-      <a href="#">2014</a>
-      <a href="#">2013</a>
-      <a href="#">2012</a>
-    </div> -->
+    <div class="alpha-selecter">
+      <?php
+      // foreach(range('A', 'Z') as $letter) {
+      //   echo link_to("#".$letter, $letter);
+      // }
+      ?>
+    </div>
   </div>
   <ul class="list">
-    <?php for( $i=1 ; $i<=10 ;$i++){?>
-    <li class="content-line-panel">
-      <?php ob_start();
-        echo "<div><i class=\"fa fa-3x fa-money\"></i>
-        <span class=\"name\">Nom de la subvention</span>";
-        /* TODO : couleur d'arri�re plan de la subvention */
-        echo "<span class=\"state orange-background\">Etat de la subvention</span>";
-        /* TODO : couleur d'arri�re plan des dates */
-        /* On fait confiance � l'utilisateur pour reconnaitre date limite depot demande
-        et limite utilisation ? */
-        echo "<span class=\"dates\">
-          <span class=\"top green-background\">21/07/2015</span>
-          <span class=\"bottom orange-background\">05/09/2015</span>
-        </span>
-        <span class=\"amount green-background\"> 200.00 </span>
-        </div>";
-
-        $content = ob_get_clean();
-
-        echo link_to(path('',''), $content, array("class"=>"opanel clickable-main","goto"=>true));
-
-        /* Here we put one "immediate" action depending on the user */
+    <?php
+      foreach ($waves as $wave) {
+        $wave = select_wave($wave["id"], array("id", "name", "submission_date", "expiry_date", "binet", "term", "state", "granted_amount", "requested_amount"));
         ?>
-        <span class="actions">
+        <li class="content-line-panel">
           <?php
-          echo button(path("",""), "Demander des subventions", "question", "green");
-        ?>
-        </span>
-      </li>
-      <?php } ?>
+            ob_start();
+            ?>
+            <div>
+              <i class="fa fa-3x fa-money"></i>
+              <span class="name"><?php echo pretty_wave($wave["id"], false); ?></span>
+              <span class="state <?php echo array("submission" => "green", "deliberation" => "orange", "distribution" => "grey", "closed" => "red")[$wave["state"]]; ?>-background">
+                <?php echo array("submission" => "Ouverte", "deliberation" => "Dépôt terminé", "distribution" => "En cours", "closed" => "Terminée")[$wave["state"]]; ?>
+              </span>
+              <span class="dates">
+                <span class="top green-background">
+                  <?php
+                    echo pretty_date($wave["submission_date"]);
+                  ?>
+                </span>
+                <span class="bottom orange-background">
+                  <?php
+                    echo pretty_date($wave["expiry_date"]);
+                  ?>
+                </span>
+              </span>
+              <span class=\"amount green-background\">
+                <?php
+                  if (in_array($wave["state"], array("submission", "deliberation"))) {
+                    $amount = "requested_amount";
+                  } else {
+                    $amount = "granted_amount";
+                  }
+                  echo pretty_amount($wave[$amount]);
+                ?>
+              </span>
+            <?php
+            echo link_to(path("show", "wave", $wave["id"]), ob_get_clean(), array("class" => "opanel clickable-main", "goto" => true));
+
+            if (in_array($wave["state"], array("submission", "deliberation"))) {
+              ?>
+              <span class="actions">
+                <?php
+                  echo button(path("", ""), "Demander des subventions", "question", "green");
+                ?>
+              </span>
+              <?php
+            }
+          ?>
+        </li>
+        <?php
+      }
+    ?>
   </ul>
 </div>
 <?php echo fuzzy_load_scripts("public-index-wrapper","name"); ?>
