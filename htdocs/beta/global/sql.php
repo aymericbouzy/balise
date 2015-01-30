@@ -43,6 +43,9 @@
                 break;
               }
               break;
+            case "IN":
+              $keep_entry = $keep_entry && in_array($virtual_entry[$column], $value);
+              break;
             }
           } else {
             $keep_entry = $keep_entry && $virtual_entry[$column] == $value;
@@ -104,6 +107,18 @@
 
         if (is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL"))) {
           $sql .= " ".$value[1];
+        } elseif (is_array($value) && $value[0] === "IN") {
+          $sql .= "(";
+          $first = true;
+          foreach ($value[1] as $index => $element) {
+            if ($first) {
+              $first = false;
+            } else {
+              $sql .= ",";
+            }
+            $sql .= ":".$column.$index;
+          }
+          $sql .= ")";
         } else {
           $sql .= " :".$column;
         }
@@ -123,9 +138,16 @@
       } else {
         if (!(is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL")))) {
           if (in_array($column, $selectable_int_fields)) {
-            $req->bindValue(':'.$column, $real_value, PDO::PARAM_INT);
+            $pdo_option = PDO::PARAM_INT;
           } elseif (in_array($column, $selectable_str_fields)) {
-            $req->bindValue(':'.$column, $real_value, PDO::PARAM_STR);
+            $pdo_option = PDO::PARAM_INT;
+          }
+          if (is_array($value) && $value[0] == "IN") {
+            foreach ($value[1] as $index, $element) {
+              $req->bindValue(':'.$column.$index, $element, $pdp_option);
+            }
+          } else {
+            $req->bindValue(':'.$column, $real_value, $pdp_option);
           }
         }
       }
