@@ -5,7 +5,7 @@
     set_if_not_set($options["id"], "");
     set_if_not_set($options["goto"], false);
 
-    if (!in_array(substr($path, 0, 7), array("mailto:", "http://"))) {
+    if (!in_array(substr($path, 0, 7), array("mailto:", "http://")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
     }
 
