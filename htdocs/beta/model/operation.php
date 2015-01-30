@@ -27,18 +27,16 @@
     );
     if (in_array("needs_validation", $fields)) {
       $operation["needs_validation"] = false;
-      if (empty($operation["kes_validation_by"])) {
-        $subsidies = select_subsidies(array("operation" => $operation["id"]));
-        if (!empty($subsidies)) {
-          $requests = array();
-          foreach ($subsidies as $subsidy) {
-            $subsidy = select_subsidy($subsidy["id"], array("request"));
-            $requests[$subsidy["request"]] = true;
-          }
-          foreach ($requests as $request => $present) {
-            $request = select_request($request, array("state"));
-            $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
-          }
+      $subsidies = select_subsidies(array("operation" => $operation["id"]));
+      if (!empty($subsidies)) {
+        $requests = array();
+        foreach ($subsidies as $subsidy) {
+          $subsidy = select_subsidy($subsidy["id"], array("request"));
+          $requests[$subsidy["request"]] = true;
+        }
+        foreach ($requests as $request => $present) {
+          $request = select_request($request, array("state"));
+          $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
         }
       }
     }
@@ -101,8 +99,6 @@
 
   function select_operations($criteria = array(), $order_by = "date", $ascending = true) {
     set_if_not_set($criteria["state"], array("IN", "accepted", "validated"));
-    // set_if_not_set($criteria["kes_validation_by"], array("IS", "NOT NULL"));
-    // set_if_not_set($criteria["binet_validation_by"], array("IS", "NOT NULL"));
 
     return select_entries(
       "operation",
@@ -126,7 +122,11 @@
     $req = Database::get()->prepare($sql);
     $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
-    return $req->fetchAll();
+    $operations = $req->fetchAll();
+    return array_merge(
+      filter_entries($operations, "operation", array("state", "needs_validation"), array("needs_validation" => false, "state" => "accepted")),
+      filter_entries($operations, "operation", array("state"), array("state" => "validated"))
+    );
   }
 
   function add_budgets_operation($operation, $amounts) {

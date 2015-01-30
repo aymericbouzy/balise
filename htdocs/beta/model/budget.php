@@ -66,15 +66,7 @@
   }
 
   function get_real_amount_budget($budget) {
-    $sql = "SELECT SUM(operation_budget.amount) as real_amount
-            FROM operation_budget
-            INNER JOIN operation
-            ON operation.id = operation_budget.operation
-            WHERE operation_budget.budget = :budget AND operation.kes_validation_by != NULL";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC)["real_amount"];
+    return sum_array(select_operations_budget($budget), "amount");
   }
 
   function get_subsidized_amount_granted_budget($budget) {
