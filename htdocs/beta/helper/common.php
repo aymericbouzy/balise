@@ -42,3 +42,12 @@
       return $caption;
     }
   }
+
+  function contact_binet_path($binet) {
+    $path = "mailto:"
+    foreach (select_current_admins($binet) as $admin) {
+      $admin = select_student($admin["id"], array("name", "email"));
+      $path .= $admin["name"]." <".$admin["email"]."> ; ";
+    }
+    return $path;
+  }
