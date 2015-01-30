@@ -2,7 +2,7 @@
   <div id="action-header" class="opanel2">
     <div id="action-title">Binets</div>
     <div class="searchbar">
-      <?php echo fuzzy_input() ?>
+      <?php echo fuzzy_input(); ?>
     </div>
     <!-- Inutile pour l'instant'
     <div class="alpha-selecter">

@@ -2,7 +2,7 @@
   <div id="action-header" class="opanel2">
     <div id="action-title">Vagues de subventions</div>
     <div class="searchbar">
-        <?php echo fuzzy_input() ?>
+        <?php echo fuzzy_input(); ?>
     </div>
     <!-- Inutile pour le moment, le fuzzy finder suffit peut-être -->
     <!-- <div class="alpha-selecter">
