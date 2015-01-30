@@ -16,8 +16,8 @@
   }
 
   function select_operation($operation, $fields = array()) {
-    if (in_array("state", array("state"))) {
-      $fields = array_merge(array("binet_validation_by", "kes_validation_by"), $fields);
+    if (!empty(array_intersect($fields, array("state", "needs_validation")))) {
+      $fields = array_merge(array("binet_validation_by", "kes_validation_by", "id", "needs_validation"), $fields);
     }
     $operation = select_entry(
       "operation",
@@ -25,12 +25,32 @@
       $operation,
       $fields
     );
-    foreach ($fields as $field) {
-      switch ($field) {
-        case "state":
-        $operation[$field] = isset($operation["kes_validation_by"]) ? "validated" : (isset($operation["binet_validation_by"]) ? "waiting_validation" : "suggested");
-        break;
+    if (in_array("needs_validation", $fields)) {
+      $operation["needs_validation"] = false;
+      if (empty($operation["kes_validation_by"])) {
+        $subsidies = select_subsidies(array("operation" => $operation["id"]));
+        if (!empty($subsidies)) {
+          $requests = array();
+          foreach ($subsidies as $subsidy) {
+            $subsidy = select_subsidy($subsidy["id"], array("request"));
+            $requests[$subsidy["request"]] = true;
+          }
+          foreach ($requests as $request => $present) {
+            $request = select_request($request, array("state"));
+            $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
+          }
+        }
       }
+    }
+    if (in_array("state", $fields)) {
+      $operation["state"] =
+        isset($operation["kes_validation_by"]) ?
+          "validated" :
+          (!isset($operation["binet_validation_by"]) ?
+            "suggested" :
+            $operation["needs_validation"] ?
+              "waiting_validation" :
+              "accepted");
     }
     return $operation;
   }
