@@ -1,11 +1,11 @@
 <div class="show-container">
   <div class="sh-plus <?php echo $budget["amount"] > 0 ? "green" : "red" ?>-background opanel">
     <i class="fa fa-fw fa-<?php echo $budget["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
-    <div class="text"><?php echo $operation["amount"] > 0 ? "Recette" : "Dépense" ?></div>
+    <div class="text"><?php echo $budget["amount"] > 0 ? "Recette" : "Dépense" ?></div>
   </div>
   <div class="sh-actions">
     <?php
-    if (has_editing_rights()) {
+    if (has_editing_rights($binet,$term)) {
       echo button(path("edit", "budget", $budget["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
       if (budget_is_alone()) {
         echo button(path("delete", "budget", $budget["id"], binet_prefix($binet, $term)), "Supprimer", "trash", "red");
