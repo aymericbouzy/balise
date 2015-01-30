@@ -2,7 +2,7 @@
   <div id="action-header" class="opanel2">
     <div id="action-title">Binets</div>
     <div class="searchbar">
-      <input type="search" class="fuzzy-search"><i class="fa fa-fw fa-search"></i>
+      <?php echo fuzzy_input() ?>
     </div>
     <!-- Inutile pour l'instant'
     <div class="alpha-selecter">
@@ -54,11 +54,4 @@
 Un helper avec les paramètres "container_name": ici 'public-index-wrapper'
                               "attribute_name":ici 'name'
 serait utile ! -->
-<script src="<?php echo ASSET_PATH; ?>js/filter.js"></script>
-<script src="<?php echo ASSET_PATH; ?>js/list.fuzzysearch.js"></script>
-<script>
-var objects_list = new List('public-index-wrapper', {
-  valueNames: ['name'],
-  plugins: [ ListFuzzySearch() ]
-});
-</script>
+<?php echo fuzzy_load_scripts("public-index-wrapper","name"); ?>

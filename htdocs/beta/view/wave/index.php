@@ -2,8 +2,7 @@
   <div id="action-header" class="opanel2">
     <div id="action-title">Vagues de subventions</div>
     <div class="searchbar">
-        <input type="search" class="fuzzy-search">
-        <i class="fa fa-fw fa-search"></i>
+        <?php echo fuzzy_input() ?>
     </div>
     <!-- Inutile pour le moment, le fuzzy finder suffit peut-être -->
     <!-- <div class="alpha-selecter">
@@ -46,11 +45,4 @@
       <?php } ?>
   </ul>
 </div>
-<script src="<?php echo ASSET_PATH; ?>js/filter.js"></script>
-<script src="<?php echo ASSET_PATH; ?>js/list.fuzzysearch.js"></script>
-<script>
-  var objects_list = new List('public-index-wrapper', {
-    valueNames: ['name'],
-    plugins: [ ListFuzzySearch() ]
-  });
-</script>
+<?php echo fuzzy_load_scripts("public-index-wrapper","name"); ?>
