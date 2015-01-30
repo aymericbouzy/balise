@@ -46,6 +46,7 @@
   switch ($_GET["action"]) {
 
   case "index":
+    $binets = select_binets(array("current_term" => array("IS", "NOT NULL")));
     break;
 
   case "new":
