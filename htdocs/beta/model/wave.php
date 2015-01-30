@@ -26,7 +26,7 @@
     );
     foreach ($fields as $field) {
       switch ($field) {
-      case "request_amount":
+      case "requested_amount":
         $wave[$field] = get_requested_amount_wave($wave);
         break;
       case "granted_amount":
@@ -55,7 +55,7 @@
       "wave",
       array("binet", "term", "published"),
       array("submission_date", "expiry_date"),
-      array(),
+      array("requested_amount", "granted_amount", "used_amount", "state"),
       $criteria,
       $order_by,
       $ascending

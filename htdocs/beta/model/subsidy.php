@@ -55,7 +55,7 @@
       "subsidy",
       array("budget", "request", "requested_amount", "granted_amount"),
       array(),
-      array("used_amount"),
+      array("used_amount", "wave"),
       $criteria,
       $order_by,
       $ascending

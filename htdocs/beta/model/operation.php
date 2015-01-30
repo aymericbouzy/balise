@@ -100,14 +100,15 @@
   }
 
   function select_operations($criteria = array(), $order_by = "date", $ascending = true) {
-    set_if_not_set($criteria["kes_validation_by"], array("IS", "NOT NULL"));
-    set_if_not_set($criteria["binet_validation_by"], array("IS", "NOT NULL"));
+    set_if_not_set($criteria["state"], array("IN", "accepted", "validated"));
+    // set_if_not_set($criteria["kes_validation_by"], array("IS", "NOT NULL"));
+    // set_if_not_set($criteria["binet_validation_by"], array("IS", "NOT NULL"));
 
     return select_entries(
       "operation",
       array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),
       array("bill", "date", "reference"),
-      array(),
+      array("state", "needs_validation"),
       $criteria,
       $order_by,
       $ascending

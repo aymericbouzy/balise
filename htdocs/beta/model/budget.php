@@ -50,7 +50,7 @@
       "budget",
       array("binet", "amount", "term"),
       array(),
-      array(),
+      array("real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used"),
       $criteria,
       $order_by,
       $ascending
