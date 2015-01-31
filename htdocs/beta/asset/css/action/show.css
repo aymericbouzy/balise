@@ -31,12 +31,23 @@
   max-width: 240px;
   max-height: 70px;
 }
+.sh-title>.text>.main>a {
+  text-decoration:none;
+}
 .sh-title>.text>.sub {
   display: block;
   padding: 5px;
   overflow: hidden;
   max-width:240px;
   max-height: 40px;
+  text-decoration:none;
+}
+
+.sh-block-normal {
+  padding:20px;
+  margin: 5px;
+  background-color: #cbddff;
+  color:#2e2e2e;
 }
 
 
@@ -144,7 +155,7 @@
   background-color: #cbddff ;
 }
 
-.sh-bu-operations {
+.sh-piechart-panel {
     /* Property definitions in Operations classes */
 }
 
@@ -192,7 +203,7 @@
   font-size: 50px;
 }
 
-.sh-op-budgets , .sh-bu-operations {
+.sh-op-budgets , .sh-piechart-panel {
   margin: 5px;
   margin-top: 10px;
   padding: 15px;
@@ -389,9 +400,11 @@
   background-color:#cbddff;
 }
 .sh-bin-admins>.admin {
+  position:relative;
   display:inline-block;
   margin:5px;
   width:200px;
+  min-height:30px;
   padding:5px;
   text-align:center;
   background-color:#2e2e2e;
@@ -399,6 +412,15 @@
 }
 .sh-bin-admins>.admin:hover {
   background-color:#202020;
+}
+
+.sh-bin-admins>.admin>.logo{
+  position:absolute;
+  left:20px;
+  top:10px;
+}
+.sh-bin-admins>.admin>.fa-user {
+  visibility:visible;
 }
 .sh-bin-admins>.admin:hover>.fa-user {
   visibility:hidden;
@@ -423,4 +445,8 @@
   width:100px;
   padding:20px;
   padding-top:10px;
+}
+
+.sh-bin-description {
+
 }

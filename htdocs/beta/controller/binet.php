@@ -78,6 +78,7 @@
     break;
 
   case "show":
+    $binet =select_binet($binet["id"],array("id", "name", "clean_name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
     break;
 
   case "change_term":
