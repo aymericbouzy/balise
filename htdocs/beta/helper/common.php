@@ -17,7 +17,8 @@
     $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
 
     if ($options["goto"]) {
-      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">$3", str_replace("\n", "", $caption));
+      /* Sauts de ligne pour rendre le code soruce plus lisible */
+      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">\n $3", str_replace("\n", "", $caption));
     } else {
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
     }

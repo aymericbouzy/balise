@@ -25,12 +25,12 @@
           }
           ob_start();
           ?>
-          <div><i class="fa fa-3x fa-group"></i>
+            <i class="fa fa-3x fa-group"></i>
             <span class="name"><?php echo $binet["name"]; ?></span>
             <?php
               if (is_current_kessier()) {
                 ?>
-                <span class"state <?php echo $binet["state_color"]; ?>-background">Etat du binet</span>
+                <span class="state <?php echo $binet["state_color"]; ?>-background">Etat du binet</span>
                 <?php
               }
             ?>
@@ -46,14 +46,10 @@
             <?php
               if (is_current_kessier()) {
                 ?>
-                <span class"amount <?php echo $binet["state_color"]; ?>-background"><?php echo pretty_amount($binet["balance"]); ?></span>
+                <span class="amount <?php echo $binet["state_color"]; ?>-background"><?php echo pretty_amount($binet["balance"]); ?></span>
                 <?php
               }
-            ?>
-          </div>
-          <?php
-
-          echo link_to(path("show", "binet", $binet["id"]), ob_get_clean(), array("class"=>"opanel clickable-main","goto"=>true));
+          echo link_to(path("show", "binet", $binet["id"]), "<div>".ob_get_clean()."</div>\n", array("class"=>"opanel clickable-main","goto"=>true));
           ?>
           <span class="actions">
             <?php

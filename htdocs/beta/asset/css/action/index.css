@@ -125,6 +125,7 @@
 
 .amount {
   display:table-cell;
+  vertical-align:middle;
   padding:5px;
   width:50px;
   border-left:1px solid rgba(0,0,0,0.4);

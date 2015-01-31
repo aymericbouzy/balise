@@ -21,7 +21,6 @@
           <?php
             ob_start();
             ?>
-            <div>
               <i class="fa fa-3x fa-money"></i>
               <span class="name"><?php echo pretty_wave($wave["id"], false); ?></span>
               <span class="state <?php echo array("submission" => "green", "deliberation" => "orange", "distribution" => "grey", "closed" => "red")[$wave["state"]]; ?>-background">
@@ -39,7 +38,7 @@
                   ?>
                 </span>
               </span>
-              <span class=\"amount green-background\">
+              <span class="amount green-background">
                 <?php
                   if (in_array($wave["state"], array("submission", "deliberation"))) {
                     $amount = "requested_amount";
@@ -50,7 +49,7 @@
                 ?>
               </span>
             <?php
-            echo link_to(path("show", "wave", $wave["id"]), ob_get_clean(), array("class" => "opanel clickable-main", "goto" => true));
+            echo link_to(path("show", "wave", $wave["id"]), "<div>".ob_get_clean()."</div>\n", array("class" => "opanel clickable-main", "goto" => true));
 
             if (in_array($wave["state"], array("submission", "deliberation"))) {
               ?>
