@@ -6,7 +6,7 @@
     <div class="text"> <!-- TODO Recette ou dépense --> </div>
   </div>
   <div class="sh-actions">
-		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur 
+		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur
 		Bouton supprimer ?-->
 		<div class="round-button red-background opanel">
 			<i class="fa fa-fw fa-trash anim"></i>
@@ -54,7 +54,7 @@
   <div class="sh-bu-tags opanel">
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
   </div>
-  <div class="sh-bu-operations opanel">
+  <div class="sh-piechart-panel opanel">
     <div class="pieID pie">
     </div>
     <ul class="pieID legend">
