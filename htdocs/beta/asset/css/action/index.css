@@ -110,6 +110,10 @@
   height:25px;
 }
 
+.state {
+  width:150px;
+}
+
 .dates, .users {
   display:table-cell;
   border-left:1px solid rgba(0,0,0,0.4);
