@@ -4,6 +4,7 @@
     set_if_not_set($options["class"], "");
     set_if_not_set($options["id"], "");
     set_if_not_set($options["goto"], false);
+    set_if_not_set($options["title"], false);
 
     if (!in_array(substr($path, 0, 7), array("mailto:", "http://")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
@@ -15,6 +16,7 @@
 
     $parameters = empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
     $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
+    $parameters .= empty($options["title"])? "" : " title=\"".$options["title"]."\"";
 
     if ($options["goto"]) {
       /* Sauts de ligne pour rendre le code soruce plus lisible */

@@ -378,3 +378,49 @@
     margin:5px;
   }
 }
+
+/*-----------------------------------------------------------------------*/
+/* ------  Binet specific classes -----------*/
+
+.sh-bin-admins {
+  position:relative;
+  margin:5px;
+  width:533px;
+  background-color:#cbddff;
+}
+.sh-bin-admins>.admin {
+  display:inline-block;
+  margin:5px;
+  width:200px;
+  padding:5px;
+  text-align:center;
+  background-color:#2e2e2e;
+  color:#1566cc;
+}
+.sh-bin-admins>.admin:hover {
+  background-color:#202020;
+}
+.sh-bin-admins>.admin:hover>.fa-user {
+  visibility:hidden;
+}
+.sh-bin-admins>.admin>.fa-send {
+  visibility:hidden;
+}
+.sh-bin-admins>.admin:hover>.fa-send {
+  visibility:visible;
+}
+
+.sh-bin-admins>.admin>a{
+  text-decoration:none;
+}
+
+.sh-bin-admins>.add{
+  display:inline-block;
+  position:absolute;
+  top:0px;
+  right:0px;
+  height:100%;
+  width:100px;
+  padding:20px;
+  padding-top:10px;
+}
