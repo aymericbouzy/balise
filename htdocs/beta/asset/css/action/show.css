@@ -72,6 +72,15 @@
   }
 }
 
+.sh-piechart-panel {
+  margin: 5px;
+  margin-top: 10px;
+  padding: 15px;
+  background-color: #cbddff ;
+  font-size: 50px;
+}
+
+
 /*------------------------------------------------------------------------*/
 /* Display information about current show : recette, dépense, accepté, etc.. */
 .sh-plus {
@@ -155,9 +164,6 @@
   background-color: #cbddff ;
 }
 
-.sh-piechart-panel {
-    /* Property definitions in Operations classes */
-}
 
 /*------------------------------------------------------------------------*/
 /* Operation classes */
@@ -200,14 +206,6 @@
   padding: 15px;
   background-color: #3399FF ;
   text-align: center;
-  font-size: 50px;
-}
-
-.sh-op-budgets , .sh-piechart-panel {
-  margin: 5px;
-  margin-top: 10px;
-  padding: 15px;
-  background-color: #cbddff ;
   font-size: 50px;
 }
 
