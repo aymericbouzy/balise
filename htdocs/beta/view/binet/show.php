@@ -26,6 +26,7 @@
       <?php
     }
     ?>
+    <!-- TODO if .. : Bouton pour les kessiers -->
     <div class="add">
       <?php echo button("","Ajouter un administrateur","plus","green",true);?>
     </div>
@@ -33,6 +34,7 @@
   <div class="sh-block-normal opanel">
     <?php echo $binet["description"];?>
   </div>
+  <!-- TODO : if ... : infos seulement pour les kessiers / si on a les droits sur le binet -->
   <div class="sh-bin-resume light-blue-background opanel">
     <div class="title">
       Dépenses
@@ -42,7 +44,7 @@
       ?>
     <div class="budget-line">
       <span class="label"><?php echo pretty_budget($budget["id"]);?></span>
-      <span class="amount"><?php echo pretty_amount($budget["amount"]);?></span>
+      <span class="amount"><?php echo pretty_amount($budget["real_amount"]);?></span>
     </div>
     <?php
       }
@@ -57,7 +59,7 @@
         ?>
         <div class="budget-line">
           <span class="label"><?php echo pretty_budget($budget["id"]);?></span>
-          <span class="amount"><?php echo pretty_amount($budget["amount"]);?></span>
+          <span class="amount"><?php echo pretty_amount($budget["real_amount"]);?></span>
         </div>
         <?php
       }
@@ -68,6 +70,7 @@
       Equilibre
     </div>
     <div class="balance">
+      <!-- TODO a rmeplir avec la bonne valeur -->
       +500
     </div>
   </div>
