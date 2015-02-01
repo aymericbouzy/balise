@@ -16,6 +16,22 @@
     );
   }
 
+  function form_group_date($label, $field, $object, $object_name){
+    return form_group(
+    $label,
+    $field,
+    "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">
+    <script type=\"text/javascript\">
+    $(function () {
+      $('#".$field."').datetimepicker({
+        format: 'LT'
+      });
+    });
+    </script>",
+    $object_name
+  );
+  }
+
   function form_csrf_token() {
     return "<input type=\"hidden\" name=\"csrf_token\" value=\"".get_csrf_token()."\">";
   }
