@@ -4,6 +4,10 @@
     return ($amount > 0 ? "+" : "").($amount / 100);
   }
 
+  function pretty_amount_absolute($amount) {
+    return ($amount > 0) ? ($amount / 100) : (-$amount / 100);
+  }
+
   function pretty_tags($tags, $link = false) {
     $tag_string = "";
     foreach ($tags as $tag) {
