@@ -199,6 +199,11 @@
   background-color: #cbddff ;
   font-size: 50px;
 }
+.sh-op-budgets>a , .sh-bu-operations>a{
+  text-decoration:none;
+  font-size:15px;
+  color:#2e2e2e;
+}
 
 @media( min-width:543px){
   .sh-op-amount {

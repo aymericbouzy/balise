@@ -1,3 +1,4 @@
+<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
   <div class="sh-plus <?php echo $budget["amount"] > 0 ? "green" : "red" ?>-background opanel">
     <i class="fa fa-fw fa-<?php echo $budget["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
@@ -55,11 +56,11 @@
   <div class="sh-bu-tags opanel">
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
   </div>
+  <div class="sh-bu-operations opanel">
   <?php
     $operations = select_operations_budget($budget["id"]);
-    if (!empty($operations)) {
+    if (!empty($operations) && sizeOf($operations)>1) {
       ?>
-      <div class="sh-bu-operations opanel">
         <div class="pieID pie">
         </div>
         <ul class="pieID legend">
@@ -74,8 +75,18 @@
             ?>
           </li>
         </ul>
-      </div>
       <?php
     }
+    else{
+      if(!empty($operations)){
+        echo pretty_operation($operations[0]["id"]);
+      }
+      else{
+        ?>
+        Vous n'avez aucune opération associée à ce budget !
+        <?php
+      }
+    }
   ?>
+  </div>
 </div>
