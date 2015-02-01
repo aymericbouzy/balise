@@ -5,13 +5,13 @@
       <?php
         switch ($wave["state"]) {
           case "submission":
-          echo "Dépôt de demandes de subventions en cours";
+          echo "Demandes en cours";
           break;
           case "distribution":
-          echo "Subventions ouvertes";
+          echo "Ouverte";
           break;
           case "closed":
-          echo "Subventions fermées";
+          echo "Fermée";
           break;
         }
       ?>
@@ -52,11 +52,11 @@
   </div>
   <div class="sh-wa-dates opanel">
     <span class="submission-date">
-      Demandes avant le :
+      Demandes avant le :<br/>
       <?php echo pretty_date($wave["submission_date"]); ?>
     </span>
     <span class="validity-date">
-      Limite de validité :
+      Limite de validité :<br/>
       <?php echo pretty_date($wave["expiry_date"]); ?>
     </span>
   </div>

@@ -8,14 +8,14 @@
           echo "Brouillon";
           break;
           case "accepted":
-          echo "Demande acceptée";
+          echo "Acceptée";
           break;
           case "rejected":
-          echo "Demande refusée";
+          echo "Refusée";
           break;
           default:
           if (in_array($request["state"], array("sent", "reviewed"))) {
-            echo "Demande envoyée";
+            echo "Envoyée";
           }
         }
       ?>
