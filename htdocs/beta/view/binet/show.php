@@ -11,7 +11,7 @@
     </div>
     <div class="text">
       <span class="main"><?php echo pretty_binet($binet["id"]); ?></span>
-      <?php echo link_to("#","2013",array("class"=>"sub","title"=>"Changer de terme"));?>
+      <?php echo link_to("#","2013",array("class"=>"sub","title"=>"Changer d'année"));?>
     </div>
   </div>
   <div class="sh-bin-admins opanel">
@@ -33,25 +33,32 @@
   <div class="sh-block-normal opanel">
     <?php echo $binet["description"];?>
   </div>
-  <div class="sh-piechart-panel opanel">
-    <div class="pieID pie">
+  <div class="sh-bin-resume opanel">
+    <div class="title">
     </div>
-    <ul class="pieID legend">
+    <ul class="spending">
+      <?php foreach($budgets as $budget){
+        if($budget["amount"]>0){
+        ?>
       <li>
-        <em>Nom del'opération</em>
-        <span>15</span>
+        <span><?php echo pretty_budget($budget["label"]);?></span>
+        <i><?php echo pretty_amount($budget["amount"]);?></i>
       </li>
+      <?php
+        }
+      } ?>
     </ul>
-  </div>
-  <div class="sh-piechart-panel opanel">
-    <div class="pieID pie">
-    </div>
-    <ul class="pieID legend">
-      <li>
-        <em>Nom del'opération</em>
-        <span>15</span>
-      </li>
+    <ul class="income">
+      <?php foreach($budgets as $budget){
+        if($budget["amount"]<0){
+          ?>
+          <li>
+            <span><?php echo pretty_budget($budget["label"]);?></span>
+            <i><?php echo pretty_amount($budget["amount"]);?></i>
+          </li>
+          <?php
+        }
+      } ?>
     </ul>
   </div>
 </div>
-<script src="<?php echo ASSET_PATH; ?>js/piechart.js"></script>

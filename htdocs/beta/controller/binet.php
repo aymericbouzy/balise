@@ -79,6 +79,10 @@
 
   case "show":
     $binet =select_binet($binet["id"],array("id", "name", "clean_name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
+    $budgets = array();
+    foreach (select_budgets(array_merge($query_array, array("binet" => $binet["id"], "term" => $binet["current_term"])), "date") as $budget) {
+      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+    }
     break;
 
   case "change_term":
