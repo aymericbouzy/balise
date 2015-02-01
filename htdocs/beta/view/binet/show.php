@@ -33,32 +33,42 @@
   <div class="sh-block-normal opanel">
     <?php echo $binet["description"];?>
   </div>
-  <div class="sh-bin-resume opanel">
+  <div class="sh-bin-resume light-blue-background opanel">
     <div class="title">
+      Dépenses
     </div>
-    <ul class="spending">
-      <?php foreach($budgets as $budget){
-        if($budget["amount"]>0){
+    <?php foreach($budgets as $budget){
+      if($budget["amount"]<0){
+      ?>
+    <div class="budget-line">
+      <span class="label"><?php echo pretty_budget($budget["id"]);?></span>
+      <span class="amount"><?php echo pretty_amount($budget["amount"]);?></span>
+    </div>
+    <?php
+      }
+    } ?>
+  </div>
+  <div class="sh-bin-resume light-blue-background opanel">
+    <div class="title">
+      Recettes
+    </div>
+    <?php foreach($budgets as $budget){
+      if($budget["amount"]>0){
         ?>
-      <li>
-        <span><?php echo pretty_budget($budget["label"]);?></span>
-        <i><?php echo pretty_amount($budget["amount"]);?></i>
-      </li>
-      <?php
-        }
-      } ?>
-    </ul>
-    <ul class="income">
-      <?php foreach($budgets as $budget){
-        if($budget["amount"]<0){
-          ?>
-          <li>
-            <span><?php echo pretty_budget($budget["label"]);?></span>
-            <i><?php echo pretty_amount($budget["amount"]);?></i>
-          </li>
-          <?php
-        }
-      } ?>
-    </ul>
+        <div class="budget-line">
+          <span class="label"><?php echo pretty_budget($budget["id"]);?></span>
+          <span class="amount"><?php echo pretty_amount($budget["amount"]);?></span>
+        </div>
+        <?php
+      }
+    } ?>
+  </div>
+  <div class="sh-bin-balance blue-background opanel">
+    <div class="title">
+      Equilibre
+    </div>
+    <div class="balance">
+      +500
+    </div>
   </div>
 </div>

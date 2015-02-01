@@ -44,7 +44,7 @@
 }
 
 .sh-block-normal {
-  padding:20px;
+  padding:10px;
   margin: 5px;
   background-color: #cbddff;
   color:#2e2e2e;
@@ -132,6 +132,124 @@
     right: -60px;
     position: absolute;
   }
+}
+
+
+/*-----------------------------------------------------------------------*/
+/* ------  Binet specific classes -----------*/
+
+.sh-bin-admins {
+  position:relative;
+  margin:5px;
+  width:533px;
+  background-color:#cbddff;
+}
+.sh-bin-admins>.admin {
+  position:relative;
+  display:inline-block;
+  margin:5px;
+  width:200px;
+  min-height:30px;
+  padding:5px;
+  text-align:center;
+  background-color:#2e2e2e;
+  color:#1566cc;
+}
+.sh-bin-admins>.admin:hover {
+  background-color:#202020;
+}
+
+.sh-bin-admins>.admin>.logo{
+  position:absolute;
+  left:20px;
+  top:10px;
+}
+.sh-bin-admins>.admin>.fa-user {
+  visibility:visible;
+}
+.sh-bin-admins>.admin:hover>.fa-user {
+  visibility:hidden;
+}
+.sh-bin-admins>.admin>.fa-send {
+  visibility:hidden;
+}
+.sh-bin-admins>.admin:hover>.fa-send {
+  visibility:visible;
+}
+
+.sh-bin-admins>.admin>a{
+  text-decoration:none;
+}
+
+.sh-bin-admins>.add{
+  display:inline-block;
+  position:absolute;
+  top:0px;
+  right:0px;
+  height:100%;
+  width:100px;
+  padding:20px;
+  padding-top:10px;
+}
+.sh-bin-resume {
+  margin:5px;
+  padding-bottom:10px;
+}
+.sh-bin-resume>.title {
+  background-color:#2e2e2e;
+  color:#cbddff;
+  width:100%;
+  padding-left:5px;
+  height:20px;
+}
+
+.sh-bin-resume>.budget-line {
+  display:block;
+  position:relative;
+  height:20px;
+  width:auto;
+  border-bottom:1px solid rgba(0,0,0,0.2);
+}
+.sh-bin-resume>.budget-line>.label {
+  display:inline-block;
+  margin-top:3px;
+  color:#2e2e2e;
+}
+.sh-bin-resume>.budget-line>.amount {
+  font-size:15px;
+  font-weight:800;
+  color:#ff3d00;
+  padding-bottom:5px;
+  display:inline-block;
+  position:absolute;
+  right:20px;
+  top:0px;
+}
+
+.sh-bin-balance {
+  position:relative;
+  height:30px;
+  margin:5px;
+  font-size:15px;
+  font-weight:600;
+}
+
+.sh-bin-balance>.title {
+  display:inline-block;
+  width:200px;
+  height:100%;
+  padding:4px;
+  padding-left:20px;
+  background-color:#2e2e2e;
+  color:#0277bd;
+}
+.sh-bin-balance>.balance {
+  display:inline-block;
+  position:absolute;
+  right:20px;
+  top:0px;
+  padding:4px;
+  color:#fff;
 }
 
 /*------------------------------------------------------------------------*/
@@ -386,65 +504,4 @@
     width:533px;
     margin:5px;
   }
-}
-
-/*-----------------------------------------------------------------------*/
-/* ------  Binet specific classes -----------*/
-
-.sh-bin-admins {
-  position:relative;
-  margin:5px;
-  width:533px;
-  background-color:#cbddff;
-}
-.sh-bin-admins>.admin {
-  position:relative;
-  display:inline-block;
-  margin:5px;
-  width:200px;
-  min-height:30px;
-  padding:5px;
-  text-align:center;
-  background-color:#2e2e2e;
-  color:#1566cc;
-}
-.sh-bin-admins>.admin:hover {
-  background-color:#202020;
-}
-
-.sh-bin-admins>.admin>.logo{
-  position:absolute;
-  left:20px;
-  top:10px;
-}
-.sh-bin-admins>.admin>.fa-user {
-  visibility:visible;
-}
-.sh-bin-admins>.admin:hover>.fa-user {
-  visibility:hidden;
-}
-.sh-bin-admins>.admin>.fa-send {
-  visibility:hidden;
-}
-.sh-bin-admins>.admin:hover>.fa-send {
-  visibility:visible;
-}
-
-.sh-bin-admins>.admin>a{
-  text-decoration:none;
-}
-
-.sh-bin-admins>.add{
-  display:inline-block;
-  position:absolute;
-  top:0px;
-  right:0px;
-  height:100%;
-  width:100px;
-  padding:20px;
-  padding-top:10px;
-}
-
-.sh-bin-description {
-
 }

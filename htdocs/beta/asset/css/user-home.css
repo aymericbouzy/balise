@@ -252,6 +252,16 @@ body {
 	background-color: rgb(150, 150, 150);
 }
 
+.light-blue-background {
+  background-color:#cbddff;
+}
+
+.blue-background {
+  background-color:#3399FF;
+}
+
+
+
 /*-------------------------------------------------------------------*/
 /*Search form*/
 
