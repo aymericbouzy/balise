@@ -12,17 +12,9 @@
 	}
 
 	function ratio_bar($numerator, $denominator) {
-		return ($denominator>0)? "
-		<script>
-			ratio1 = ".($numerator/$denominator).";
+		return "<script>
+			ratio1 = ".(($denominator!=0)?($numerator/$denominator):"0").";
 			ratiobar( ratio1 , 'real_budget');
 		</script>
-		".pretty_amount($numerator)."/".pretty_amount($denominator) :
-		"
-		<script>
-		ratio1 = 0;
-		ratiobar( ratio1 , 'real_budget');
-		</script>
-		".pretty_amount($numerator)."/".pretty_amount($denominator)
-		;
+		".pretty_amount($numerator)."/".pretty_amount($denominator) ;
 	}
