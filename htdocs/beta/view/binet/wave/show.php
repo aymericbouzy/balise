@@ -1,3 +1,4 @@
+<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
   <div class="sh-plus <?php echo $wave["state"] == "closed" ? "red" : "green"; ?>-background opanel">
     <i class="fa fa-fw fa-<?php echo $wave["state"] == "closed" ? "times" : "check"; ?>"></i>

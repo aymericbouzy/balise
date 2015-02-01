@@ -1,3 +1,4 @@
+<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
   <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
     <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
