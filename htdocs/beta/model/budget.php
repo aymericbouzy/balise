@@ -66,7 +66,16 @@
   }
 
   function get_real_amount_budget($budget) {
-    return sum_array(select_operations_budget($budget), "amount");
+    $all_operations = ids_as_keys(select_operations_budget($budget));
+    $filtered_operations = array_merge(
+      filter_entries($all_operations, "operation", array("state", "needs_validation"), array("needs_validation" => false, "state" => "accepted")),
+      filter_entries($all_operations, "operation", array("state"), array("state" => "validated"))
+    );
+    $operations = array();
+    foreach(ids_as_keys($filtered_operations) as $id => $operation) {
+      $operations[] = $all_operations[$id];
+    }
+    return sum_array($operations, "amount");
   }
 
   function get_subsidized_amount_granted_budget($budget) {
@@ -108,6 +117,7 @@
       $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave"));
       $subsidies[$index]["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
       $subsidies[$index]["used_amount"] = 0;
+      set_if_not_set($subsidies[$index]["granted_amount"], 0);
     }
     usort($subsidies, "sort_by_date");
     foreach(select_operations_budget($budget) as $operation) {

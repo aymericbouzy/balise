@@ -40,7 +40,6 @@
         }
       }
     }
-    var_dump($operation);
     if (in_array("state", $fields)) {
       $operation["state"] =
         isset($operation["kes_validation_by"]) ?
@@ -123,11 +122,7 @@
     $req = Database::get()->prepare($sql);
     $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
-    $operations = $req->fetchAll();
-    return array_merge(
-      filter_entries($operations, "operation", array("state", "needs_validation"), array("needs_validation" => false, "state" => "accepted")),
-      filter_entries($operations, "operation", array("state"), array("state" => "validated"))
-    );
+    return $req->fetchAll();
   }
 
   function add_budgets_operation($operation, $amounts) {

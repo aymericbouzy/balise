@@ -91,3 +91,11 @@
   function current_date() {
     return date("Y-m-d");
   }
+
+  function ids_as_keys($array) {
+    $returned_array = array();
+    foreach ($array as $object) {
+      $returned_array[$object["id"]] = $object;
+    }
+    return $returned_array;
+  }
