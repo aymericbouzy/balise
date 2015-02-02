@@ -116,16 +116,6 @@
       }
     } ?>
   </div>
-  <div class="sh-bu-ratio opanel">
-    <div class="header">
-      Subventions utlisées / reçues
-    </div>
-    <div>
-      <div class="used" id="real_budget">
-        <?php echo ratio_bar(sum_array($budgets,"subsidized_amount_used"), sum_array($budgets,"subsidized_amount_granted")); ?>
-      </div>
-    </div>
-  </div>
   <?php }
   ?>
 </div>
