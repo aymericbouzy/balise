@@ -82,6 +82,36 @@
     $req->execute();
   }
 
+  function reset_kes_validation_for_operations_affected_by_wave($wave) {
+    $sql = "UPDATE operation
+    INNER JOIN operation_budget
+    ON operation_budget.operation = operation.id
+    INNER JOIN subsidy
+    ON subsidy.budget = operation_budget.budget
+    INNER JOIN request
+    ON request.id = subsidy.request
+    SET operation.kes_validation_by = NULL
+    WHERE request.wave = :wave AND subsidy.granted_amount > 0";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':wave', $wave, PDO::PARAM_INT);
+    $req->execute();
+
+    $sql = "SELECT DISTINCT operation.id
+    FROM operation
+    INNER JOIN operation_budget
+    ON operation_budget.operation = operation.id
+    INNER JOIN subsidy
+    ON subsidy.budget = operation_budget.budget
+    INNER JOIN request
+    ON request.id = subsidy.request
+    SET operation.kes_validation_by = NULL
+    WHERE request.wave = :wave AND subsidy.granted_amount > 0";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':wave', $wave, PDO::PARAM_INT);
+    $req->execute();
+    return $req->fetchAll();
+  }
+
   function get_requested_amount_wave($wave) {
     $amount = 0;
     foreach(select_requests(array("wave" => $wave)) as $request) {
