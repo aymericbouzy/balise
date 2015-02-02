@@ -1,0 +1,147 @@
+/* -- Wrapper --*/
+#public-index-wrapper {
+  position: relative;
+  width:auto;
+  margin: auto;
+  color: #2e2e2e;
+}
+
+@media(min-width:768px){
+  #public-index-wrapper {
+    margin:auto;
+    width:768px;
+    padding-top:155px;
+  }
+}
+
+/*------ Action header ----------*/
+#action-header{
+  text-decoration:none;
+  position:fixed;
+  top:55px;
+  display:block;
+  height:150px;
+  width:758px;
+  background-color:#2e2e2e;
+  color:#cbddff;
+  margin:5px;
+  padding-bottom:40px;
+}
+
+#action-title {
+  margin:20px;
+  margin-top:5px;
+  text-align:center;
+  font-size:30px;
+}
+
+.searchbar{
+  position:absolute;
+  width:100%;
+  padding-left:80px;
+  padding-right:80px;
+}
+.searchbar>i{
+  padding-top:5px;
+  float:right;
+  color:#1566cc;
+  width:10%;
+}
+.alpha-selecter {
+  position:absolute;
+  width:100%;
+  text-align:center;
+  bottom:10px;
+  font-size:20px;
+}
+
+.alpha-selecter > a {
+  padding:5px;
+  padding-bottom:0px;
+  bottom:0px;
+  font-size:20px;
+  text-decoration:none;
+  color:#3399FF;
+  border-bottom:2px solid #3399FF;
+}
+.alpha-selecter > a:hover {
+  color:#1566cc;
+  border-bottom:2px solid #1566cc;
+}
+
+/*------ List objects --------*/
+.list {
+  margin-left:-40px;
+}
+.content-line-panel{
+  display:block;
+  margin:5px;
+  margin-right:-70px;
+}
+
+.clickable-main{
+  display:table;
+  height:50px;
+  width:758px;;
+  background-color:#cbddff;
+  text-decoration:none;
+  color:#2e2e2e;
+}
+
+.clickable-main:hover{
+  background-color:#3399FF;
+}
+
+.clickable-main>span{
+  vertical-align:middle;
+  text-align:center;
+}
+.clickable-main>i{
+  vertical-align:middle;
+  display:table-cell;
+  padding-left:15px;
+  padding-right:15px;
+}
+.name,.state{
+  display:table-cell;
+  font-size:20px;
+  padding:5px;
+  text-decoration:none;
+  height:25px;
+}
+
+.state {
+  width:150px;
+}
+
+.dates, .users {
+  display:table-cell;
+  border-left:1px solid rgba(0,0,0,0.4);
+}
+.users {
+  width:200px;
+}
+.dates>.top , .dates>.bottom , .users>.prez, .users>.trez {
+  text-align:center;
+  display:block;
+  height:25px;
+}
+
+.amount {
+  display:table-cell;
+  vertical-align:middle;
+  padding:5px;
+  width:50px;
+  border-left:1px solid rgba(0,0,0,0.4);
+}
+.content-line-panel>.actions {
+  display:inline;
+  float:right;
+  width:50px;
+  height:50px;
+  margin-top:-50px;
+  visibility:hidden;
+}
+.content-line-panel:hover>.actions {
+  visibility:visible;
+}

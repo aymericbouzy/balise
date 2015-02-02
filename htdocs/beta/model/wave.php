@@ -16,7 +16,10 @@
 
   function select_wave($wave, $fields = array()) {
     if (in_array("state", $fields)) {
-      $fields = array_merge(array("submission_date", "expiry_date"), $fields);
+      $fields = array_merge(array("submission_date", "expiry_date", "published"), $fields);
+    }
+    if (!empty(array_intersect(array("requested_amount", "granted_amount", "used_amount"), $fields))) {
+      $fields = array_merge(array("id"), $fields);
     }
     $wave = select_entry(
       "wave",
@@ -26,17 +29,17 @@
     );
     foreach ($fields as $field) {
       switch ($field) {
-      case "request_amount":
-        $wave[$field] = get_requested_amount_wave($wave);
+      case "requested_amount":
+        $wave[$field] = get_requested_amount_wave($wave["id"]);
         break;
       case "granted_amount":
-        $wave[$field] = get_granted_amount_wave($wave);
+        $wave[$field] = get_granted_amount_wave($wave["id"]);
         break;
       case "used_amount":
-        $wave[$field] = get_used_amount_wave($wave);
+        $wave[$field] = get_used_amount_wave($wave["id"]);
         break;
       case "state":
-        $wave[$field] = $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? "distribution" : "closed");
+        $wave[$field] = $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed");
         break;
       }
     }
@@ -48,14 +51,11 @@
   }
 
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
-    if (!isset($criteria["published"])) {
-      $criteria["published"] = 1;
-    }
     return select_entries(
       "wave",
       array("binet", "term", "published"),
       array("submission_date", "expiry_date"),
-      array(),
+      array("requested_amount", "granted_amount", "used_amount", "state"),
       $criteria,
       $order_by,
       $ascending
@@ -85,7 +85,7 @@
   function get_requested_amount_wave($wave) {
     $amount = 0;
     foreach(select_requests(array("wave" => $wave)) as $request) {
-      $amount += get_requested_amount_request($request);
+      $amount += get_requested_amount_request($request["id"]);
     }
     return $amount;
   }

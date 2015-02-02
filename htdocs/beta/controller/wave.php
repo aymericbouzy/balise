@@ -5,6 +5,7 @@
   switch ($_GET["action"]) {
 
   case "index":
+    $waves = select_waves();
     break;
 
   case "show":

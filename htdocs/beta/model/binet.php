@@ -92,7 +92,7 @@
   }
 
   function select_current_admins($binet) {
-    $sql = "SELECT binet_admin.student AS id
+    $sql = "SELECT DISTINCT binet_admin.student AS id
     FROM binet_admin
     INNER JOIN binet
     WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term";
