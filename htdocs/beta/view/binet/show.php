@@ -1,9 +1,18 @@
 <div class="show-container">
-  <!-- Etat du binet : arrière plan red- orange - green et icones
+  <!-- TODO Etat du binet : arrière plan red- orange - green et icones
   check warning minus-circle ? -->
+  <?php if(is_current_kessier()|| has_editing_rights($binet["id"],$binet["current_term"])){ ?>
   <div class="sh-plus green-background opanel">
     <i class="fa fa-fw fa-check"></i>
     <span class="text">Etat du binet</span>
+  </div>
+  <?php
+  }?>
+  <div class="sh-actions">
+    <?php if(is_current_kessier()) {
+       echo button("", "Changer de terme", "edit", "orange");
+       }
+    echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");?>
   </div>
   <div class="sh-title opanel">
     <div class="logo">
@@ -11,10 +20,13 @@
     </div>
     <div class="text">
       <span class="main"><?php echo pretty_binet($binet["id"]); ?></span>
-      <?php echo link_to("#","2013",array("class"=>"sub","title"=>"Changer d'année"));?>
+      <?php echo link_to("#","2013",array("class"=>"sub","title"=>"Voir une autre année"));?>
     </div>
   </div>
   <div class="sh-bin-admins opanel">
+    <span class="title">
+      Administrateurs
+    </span>
     <?php
     foreach (select_current_admins($binet["id"]) as $admin) {
       ?>
@@ -72,7 +84,7 @@
       Equilibre
     </div>
     <div class="balance">
-      <?php echo pretty_sum_amounts($budgets,"real_amount"); ?>
+      <?php echo pretty_amount(sum_array($budgets,"real_amount")); ?>
     </div>
   </div>
   <div class="sh-bu-ratio opanel">
@@ -81,7 +93,7 @@
     </div>
     <div>
       <div class="used" id="real_budget">
-        <?php echo ratio_bar(pretty_sum_amounts($budgets,"subsidized_amount_used")*100, pretty_sum_amounts($budgets,"subsidized_amount_granted")*100); ?>
+        <?php echo ratio_bar(sum_array($budgets,"subsidized_amount_used"), sum_array($budgets,"subsidized_amount_granted")); ?>
       </div>
     </div>
   </div>

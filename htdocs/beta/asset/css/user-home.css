@@ -618,7 +618,7 @@ footer>.btn {
   }
 
   .round-button:hover>.anim{
-    transform: rotate(45deg);
+    transform: rotate(30deg);
     -webkit-filter: brightness(1.3);
     -moz-filter: brightness(1.3);
     -o-filter: brightness(1.3);

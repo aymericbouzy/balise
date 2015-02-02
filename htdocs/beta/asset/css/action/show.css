@@ -144,6 +144,16 @@
   width:533px;
   background-color:#cbddff;
 }
+.sh-bin-admins>.title {
+  display:block;
+  height:30px;
+  padding:5px;
+  width:100%;
+  background-color:#2e2e2e;
+  color:#cbddff;
+  font-size:15px;
+  font-weight:500;
+}
 .sh-bin-admins>.admin {
   position:relative;
   display:inline-block;
