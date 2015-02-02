@@ -7,7 +7,7 @@
   function select_operation_type($operation_type, $fields = array()) {
     return select_entry(
       "operation_type",
-      array("id", "name"),
+      array("id", "name", "icon"),
       $operation_type,
       $fields
     );

@@ -1,25 +1,26 @@
 <?php
 
-  function create_wave($binet, $term, $submission_date, $expiry_date) {
+  function create_wave($binet, $term, $submission_date, $expiry_date, $question) {
     $values["binet"] = $binet;
     $values["term"] = $term;
     $values["submission_date"] = $submission_date;
     $values["expiry_date"] = $expiry_date;
+    $values["question"] = $question;
     return create_entry(
       "wave",
       array("binet", "term"),
-      array("submission_date", "expiry_date"),
+      array("submission_date", "expiry_date", "question"),
       $values
     );
   }
 
   function select_wave($wave, $fields = array()) {
-    if (in_array("open", $fields) && !in_array("submission_date", $fields)) {
-      $fields[] = "submission_date";
+    if (in_array("state", $fields)) {
+      $fields = array_merge(array("submission_date", "expiry_date"), $fields);
     }
     $wave = select_entry(
       "wave",
-      array("id", "binet", "term", "submission_date", "expiry_date", "published"),
+      array("id", "binet", "term", "submission_date", "expiry_date", "published", "question"),
       $wave,
       $fields
     );
@@ -34,8 +35,9 @@
       case "used_amount":
         $wave[$field] = get_used_amount_wave($wave);
         break;
-      case "open":
-        $wave[$field] = $wave["submission_date"] > date("Ymd");
+      case "state":
+        $wave[$field] = $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? "distribution" : "closed");
+        break;
       }
     }
     return $wave;
@@ -57,6 +59,16 @@
       $criteria,
       $order_by,
       $ascending
+    );
+  }
+
+  function update_wave($wave, $hash) {
+    update_entry(
+      "wave",
+      array(),
+      array("submission_date", "expiry_date", "question"),
+      $wave,
+      $hash
     );
   }
 

@@ -16,12 +16,23 @@
   }
 
   function select_operation($operation, $fields = array()) {
-    return select_entry(
+    if (in_array("state", array("state"))) {
+      $fields = array_merge(array("binet_validation_by", "kes_validation_by"), $fields);
+    }
+    $operation = select_entry(
       "operation",
       array("id", "binet", "term", "amount", "created_by", "paid_by", "type", "date", "bill", "reference", "comment", "binet_validation_by", "kes_validation_by"),
       $operation,
       $fields
     );
+    foreach ($fields as $field) {
+      switch ($field) {
+        case "state":
+        $operation[$field] = isset($operation["kes_validation_by"]) ? "validated" : (isset($operation["binet_validation_by"]) ? "waiting_validation" : "suggested");
+        break;
+      }
+    }
+    return $operation;
   }
 
   function exists_operation($operation) {
@@ -84,12 +95,7 @@
   }
 
   function delete_operation($operation) {
-    $sql = "DELETE
-            FROM operation
-            WHERE id = :operation";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
-    $req->execute();
+    delete_entry("operation", $operation);
   }
 
   function select_operations_budget($budget) {
