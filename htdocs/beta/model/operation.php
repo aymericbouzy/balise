@@ -46,9 +46,9 @@
           "validated" :
           (!isset($operation["binet_validation_by"]) ?
             "suggested" :
-            $operation["needs_validation"] ?
+            ($operation["needs_validation"] ?
               "waiting_validation" :
-              "accepted");
+              "accepted"));
     }
     return $operation;
   }
@@ -159,5 +159,5 @@
   }
 
   function kes_pending_validations_operations() {
-    return select_operations(array("id" => array("!=", 0), "state" => "waiting_validation"), "date");
+    return select_operations(array("state" => "waiting_validation"), "date");
   }
