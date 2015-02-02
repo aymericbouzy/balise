@@ -50,8 +50,9 @@
   }
 
   function pretty_wave($wave, $link = true) {
-    // TODO
-    return $wave;
+    $wave = select_wave($wave,array("binet","submission_date"));
+    $binet= select_binet($wave["binet"],array("name"));
+    return "Subventions ".$binet["name"]." ".month($wave["submission_date"])." ".year($wave["submission_date"]);
   }
 
   function pretty_student($student, $link = true) {
