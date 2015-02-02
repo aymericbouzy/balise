@@ -101,7 +101,7 @@
     <?php foreach($budgets as $budget){
       if($budget["amount"]<0){
       ?>
-    <div class="budget-line">
+    <div class="line">
       <span class="label"><?php echo pretty_budget($budget["id"]);?></span>
       <span class="amount"><?php echo pretty_amount($budget["real_amount"]);?></span>
     </div>
@@ -116,7 +116,7 @@
     <?php foreach($budgets as $budget){
       if($budget["amount"]>0){
         ?>
-        <div class="budget-line">
+        <div class="line">
           <span class="label"><?php echo pretty_budget($budget["id"]);?></span>
           <span class="amount"><?php echo pretty_amount($budget["real_amount"]);?></span>
         </div>
@@ -124,6 +124,25 @@
       }
     } ?>
   </div>
-  <?php }
-  ?>
+  <?php
+  }
+  if(!empty($waves)) {
+    ?>
+  <div class="sh-bin-resume light-blue-background opanel">
+    <div class="title">
+      Vagues de subventions
+    </div>
+    <?php foreach($waves as $wave){
+        ?>
+        <div class="line">
+          <span class="label"><?php echo pretty_wave($wave["id"]);?></span>
+          <span class="submission date"><?php echo $wave["submission_date"];?></span>
+            <span class="expiry date"> <?php echo $wave["expiry_date"];?></span>
+        </div>
+        <?php
+    } ?>
+  </div>
+  <?php
+    }
+    ?>
 </div>

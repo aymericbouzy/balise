@@ -83,6 +83,10 @@
     foreach (select_budgets(array_merge($query_array, array("binet" => $binet["id"], "term" => $binet["current_term"])), "date") as $budget) {
       $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     }
+    $waves = array();
+    foreach (select_waves(array_merge($query_array, array("binet" => $binet["id"])), "date") as $wave) {
+      $waves[] = select_wave($wave["id"], array("id", "binet", "term", "submission_date", "expiry_date", "published"));
+    }
     break;
 
   case "change_term":

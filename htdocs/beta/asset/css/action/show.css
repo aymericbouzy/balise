@@ -295,25 +295,43 @@
   background-color:#3E2723;
 }
 
-.sh-bin-resume>.budget-line {
+.sh-bin-resume>.line {
   display:block;
   position:relative;
   height:20px;
   width:auto;
   border-bottom:1px solid rgba(0,0,0,0.2);
 }
-.sh-bin-resume>.budget-line>.label {
+.sh-bin-resume>.line>.label {
   display:inline-block;
   margin-top:3px;
   color:#2e2e2e;
 }
-.sh-bin-resume>.budget-line>.amount {
+.sh-bin-resume>.line>.amount {
   font-size:15px;
   font-weight:800;
   color:#ff3d00;
   padding-bottom:5px;
   display:inline-block;
   position:absolute;
+  right:20px;
+  top:0px;
+}
+.sh-bin-resume>.line>.date {
+  font-size:14px;
+  font-weight:700;
+  padding-bottom:5px;
+  display:inline-block;
+  position:absolute;
+  width:100px;
+}
+.sh-bin-resume>.line>.submission {
+  color:#AA00FF;
+  right:120px;
+  top:0px;
+}
+.sh-bin-resume>.line>.expiry {
+  color:#ff3d00;
   right:20px;
   top:0px;
 }
