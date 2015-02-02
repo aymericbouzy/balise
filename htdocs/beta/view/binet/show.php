@@ -75,6 +75,16 @@
       <?php echo pretty_sum_amounts($budgets,"real_amount"); ?>
     </div>
   </div>
+  <div class="sh-bu-ratio opanel">
+    <div class="header">
+      Subventions utlisées / reçues
+    </div>
+    <div>
+      <div class="used" id="real_budget">
+        <?php echo ratio_bar(pretty_sum_amounts($budgets,"subsidized_amount_used")*100, pretty_sum_amounts($budgets,"subsidized_amount_granted")*100); ?>
+      </div>
+    </div>
+  </div>
   <?php }
   ?>
 </div>
