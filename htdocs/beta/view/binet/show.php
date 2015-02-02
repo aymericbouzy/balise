@@ -48,7 +48,44 @@
     <?php echo $binet["description"];?>
   </div>
   <?php if(is_current_kessier() || has_editing_rights($binet["id"],$binet["current_term"])) {
-    ?>
+    $real_income = 0;
+    $income = 0;
+    $real_spending = 0;
+    $spending = 0;
+    foreach($budgets as $budget){
+      if($budget["amount"]>0){
+        $real_income+=$budget["real_amount"];
+        $income+=$budget["amount"];
+      }
+      else {
+        $real_spending+=$budget["real_amount"];
+        $spending+=$budget["amount"];
+      }
+    }
+      ?>
+  <div class="sh-bin-stats light-blue-background opanel">
+    <div class="minipane" id="income">
+      <div class="title">Recettes</div><?php echo pretty_amount($real_income);?>/
+      <span><?php echo pretty_amount($income);?></span>
+      </div>
+    <div class="minipane" id="spending">
+      <div class="title">Dépenses</div><?php echo pretty_amount($real_spending);?>/
+      <span><?php echo pretty_amount($spending);?></span>
+      </div>
+    <div class="minipane" id="balance">
+      <div class="title">Equilibre</div>
+      <?php echo pretty_amount(sum_array($budgets,"real_amount")); ?> /
+      <span><?php echo pretty_amount(sum_array($budgets,"amount")); ?></span>
+    </div>
+    <div class="minipane" id="subsidies_granted">
+      <div class="title">Subventions accordées</div>
+      <?php echo pretty_amount(sum_array($budgets,"subsidized_amount_granted")); ?>
+      </div>
+    <div class="minipane" id="subsidies_used">
+      <div class="title">Subventions utilisées</div>
+    <?php echo pretty_amount(sum_array($budgets,"subsidized_amount_used")); ?>
+    </div>
+  </div>
   <div class="sh-bin-resume light-blue-background opanel">
     <div class="title">
       Dépenses
@@ -78,14 +115,6 @@
         <?php
       }
     } ?>
-  </div>
-  <div class="sh-bin-balance blue-background opanel">
-    <div class="title">
-      Equilibre
-    </div>
-    <div class="balance">
-      <?php echo pretty_amount(sum_array($budgets,"real_amount")); ?>
-    </div>
   </div>
   <div class="sh-bu-ratio opanel">
     <div class="header">
