@@ -15,7 +15,7 @@
   }
 
   function redirect_to_action($action) {
-    $path = path($action, $_GET["controller"], (isset($GLOBALS[$_GET["controller"]]["id"]) ? $GLOBALS[$_GET["controller"]]["id"] : ""), (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
+    $path = path($action, $_GET["controller"], (isset($GLOBALS[$_GET["controller"]]["id"]) && $_GET["action"] != "delete" ? $GLOBALS[$_GET["controller"]]["id"] : ""), (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
     redirect_to_path($path);
   }
 

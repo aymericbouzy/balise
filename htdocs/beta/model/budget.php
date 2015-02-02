@@ -65,6 +65,10 @@
                   $hash);
   }
 
+  function delete_budget($budget) {
+    delete_entry("budget", $budget);
+  }
+
   function get_real_amount_budget($budget) {
     $sql = "SELECT SUM(operation_budget.amount) as real_amount
             FROM operation_budget

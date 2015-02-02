@@ -43,7 +43,7 @@
     break;
 
   case "create":
-    $budget["id"] = create_budget($binet, $term, (2*$_POST["sign"] - 1)*$_POST["amount"], $_POST["label"]);
+    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
@@ -85,6 +85,7 @@
     break;
 
   case "delete":
+    delete_budget($budget["id"]);
     redirect_to_action("index");
     break;
 
