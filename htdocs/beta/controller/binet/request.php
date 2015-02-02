@@ -22,7 +22,7 @@
   }
 
   function setup_for_editing() {
-    $GLOBALS["budgets_involved"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array(">", 0)));
+    $GLOBALS["budgets_involved"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)));
     $GLOBALS["requested_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["budgets_involved"]);
     $GLOBALS["purpose_array"] = array_map("adds_purpose_prefix", $GLOBALS["budgets_involved"]);
     $GLOBALS["edit_form_fields"] = array_merge(array("answer", "wave"), $GLOBALS["requested_amount_array"], $GLOBALS["purpose_array"]);

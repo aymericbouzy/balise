@@ -65,6 +65,10 @@
                   $hash);
   }
 
+  function delete_budget($budget) {
+    delete_entry("budget", $budget);
+  }
+
   function get_real_amount_budget($budget) {
     $all_operations = ids_as_keys(select_operations_budget($budget));
     $filtered_operations = array_merge(

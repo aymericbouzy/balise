@@ -2,11 +2,7 @@
   <div class="col-lg-3">
   </div>
   <div class="col-lg-6">
-    <form class="form">
-      <!--TODO-->
-      <button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
-      <input type="search" class="form-control pull-left">
-    </form>
+    <?php echo fuzzy_input();?>
   </div>
   <div class="col-lg-3">
     <div class="switch opanel">
@@ -40,3 +36,4 @@
     </div>
   </div>
 </div>
+<?php echo fuzzy_load_scripts("",""); ?>

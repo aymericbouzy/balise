@@ -45,7 +45,7 @@
     return $budget["label"].pretty_tags(select_tags_budget($budget["id"]));
   }
 
-  function pretty_wave($wave) {
+  function pretty_wave($wave, $link = true) {
     // TODO
     return $wave;
   }
