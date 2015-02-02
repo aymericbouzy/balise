@@ -143,11 +143,11 @@
     }
     add_budgets_operation($operation["id"], $budget_amounts_array);
     validate_operation($operation["id"]);
-    $operation = select_operation($operation["id"], array("id", "created_by"));
+    $operation = select_operation($operation["id"], array("id", "created_by", "state"));
     if ($operation["created_by"] != connected_student()) {
       send_email($operation["created_by"], "Opération acceptée", "operation_accepted", array("operation" => $operation["id"], "binet" => $binet));
     }
-    $_SESSION["notice"][] = "L'opération a été acceptée.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    $_SESSION["notice"][] = "L'opération a été acceptée.".($operation["state"] == "waiting_validation" ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;
 

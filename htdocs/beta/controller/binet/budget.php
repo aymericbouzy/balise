@@ -60,9 +60,10 @@
       $budget["sign"] = $budget["amount"] < 0 ? true : false;
       $budget["amount"] *= $budget["sign"] ? -1 : 1;
       $first = true;
-      foreach (select_tags_budget($id) as $tag) {
+      foreach (select_tags_budget($budget["id"]) as $tag) {
         if ($first) {
           $first = false;
+          $budget["tags_string"] = "";
         } else {
           $budget["tags_string"] .= ";";
         }
@@ -77,7 +78,7 @@
     update_budget($budget["id"], $_POST);
     remove_tags_budget($budget["id"]);
     foreach ($tags as $tag) {
-      add_tag_budget($tag, $budget);
+      add_tag_budget($tag, $budget["id"]);
     }
     unset($_SESSION["budget"]);
     $_SESSION["notice"][] = "La ligne de budget a été mise à jour avec succès.";
