@@ -26,15 +26,17 @@
       <?php
     }
     ?>
-    <!-- TODO if .. : Bouton pour les kessiers -->
-    <div class="add">
-      <?php echo button("","Ajouter un administrateur","plus","green",true);?>
-    </div>
+    <?php if(is_current_kessier()){ ?>
+      <div class="add">
+        <?php echo button("","Ajouter un administrateur","plus","green",true);?>
+      </div>
+    <?php } ?>
   </div>
   <div class="sh-block-normal opanel">
     <?php echo $binet["description"];?>
   </div>
-  <!-- TODO : if ... : infos seulement pour les kessiers / si on a les droits sur le binet -->
+  <?php if(is_current_kessier() || has_editing_rights($binet["id"],$binet["current_term"])) {
+    ?>
   <div class="sh-bin-resume light-blue-background opanel">
     <div class="title">
       Dépenses
@@ -70,8 +72,9 @@
       Equilibre
     </div>
     <div class="balance">
-      <!-- TODO a rmeplir avec la bonne valeur -->
-      +500
+      <?php echo pretty_sum_amounts($budgets,"real_amount"); ?>
     </div>
   </div>
+  <?php }
+  ?>
 </div>

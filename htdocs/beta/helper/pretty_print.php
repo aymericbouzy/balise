@@ -8,6 +8,14 @@
     return ($amount > 0) ? ($amount / 100) : (-$amount / 100);
   }
 
+  function pretty_sum_amounts($array,$field){
+    $total=0;
+    foreach($array as $tuple){
+      $total+=$tuple[$field];
+    }
+    return pretty_amount($total);
+  }
+
   function pretty_tags($tags, $link = false) {
     $tag_string = "";
     foreach ($tags as $tag) {
