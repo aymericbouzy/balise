@@ -17,7 +17,7 @@
 
   function select_operation($operation, $fields = array()) {
     if (!empty(array_intersect($fields, array("state", "needs_validation")))) {
-      $fields = array_merge(array("binet_validation_by", "kes_validation_by", "id", "needs_validation"), $fields);
+      $fields = array_unique(array_merge(array("binet_validation_by", "kes_validation_by", "id", "needs_validation"), $fields));
     }
     $operation = select_entry(
       "operation",
@@ -40,6 +40,7 @@
         }
       }
     }
+    var_dump($operation);
     if (in_array("state", $fields)) {
       $operation["state"] =
         isset($operation["kes_validation_by"]) ?
@@ -154,10 +155,14 @@
     return count(pending_validations_operations($binet, $term)) + ($binet == KES_ID ? count(kes_pending_validations_operations()) : 0);
   }
 
+  function count_pending_validations_kes() {
+    return count(kes_pending_validations_operations());
+  }
+
   function pending_validations_operations($binet, $term) {
-    return select_operations(array("kes_validation_by" => array("IS", "NULL"), "binet_validation_by" => array("IS", "NULL"), "binet" => $binet, "term" => $term), "date");
+    return select_operations(array("binet" => $binet, "term" => $term, "state" => "suggested"), "date");
   }
 
   function kes_pending_validations_operations() {
-    return select_operations(array("kes_validation_by" => array("IS", "NULL"), "binet_validation_by" => array("IS NOT", "NULL")), "date");
+    return  select_operations(array("id" => array("!=", 0), "state" => "waiting_validation"), "date");
   }
