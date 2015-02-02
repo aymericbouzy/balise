@@ -137,6 +137,24 @@
 
 /*-----------------------------------------------------------------------*/
 /* ------  Binet specific classes -----------*/
+.sh-bin-eye {
+  position:absolute;
+  top:5px;
+  right:10px;
+  color:#000;
+  margin:5px;
+  padding:5px;
+  padding-right:10px;
+  border-radius:5px;
+}
+.sh-bin-eye:hover {
+  background-color:#64B5F6;
+  color:#F57C00;
+}
+.sh-bin-eye>span{
+  font-size:10px;
+  color:#2e2e2e;
+}
 
 .sh-bin-admins {
   position:relative;
@@ -196,10 +214,8 @@
   position:absolute;
   top:0px;
   right:0px;
-  height:100%;
-  width:100px;
-  padding:20px;
-  padding-top:10px;
+  width:10px;
+  padding-top:20px;
 }
 .sh-bin-resume {
   margin:5px;

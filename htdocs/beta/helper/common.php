@@ -46,6 +46,22 @@
     }
   }
 
+  function button_small($path, $caption, $icon, $background_color, $link = true) {
+    $caption = "<div class=\"round-button-small ".$background_color."-background opanel\">
+    <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
+    <span>".$caption."</span>
+    </div>";
+    if ($link) {
+      return link_to(
+      $path,
+      $caption,
+      array("goto" => true)
+    );
+  } else {
+    return $caption;
+  }
+}
+
   function contact_binet_path($binet) {
     $path = "mailto:";
     foreach (select_current_admins($binet) as $admin) {

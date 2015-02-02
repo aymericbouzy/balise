@@ -19,7 +19,14 @@
       <i class="fa fa-5x fa-group"></i>
     </div>
     <div class="text">
-      <span class="main"><?php echo pretty_binet($binet["id"]); ?></span>
+      <span class="main"><?php
+      echo pretty_binet($binet["id"]);
+      if(is_current_kessier()|| has_editing_rights($binet["id"],$binet["current_term"])){
+        echo link_to("#",
+        "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
+        array("class"=>"sh-bin-eye opanel0","title"=>"Voir l'activité"));
+      }
+       ?></span>
       <?php echo link_to("#","2013",array("class"=>"sub","title"=>"Voir une autre année"));?>
     </div>
   </div>
@@ -40,7 +47,8 @@
     ?>
     <?php if(is_current_kessier()){ ?>
       <div class="add">
-        <?php echo button("","Ajouter un administrateur","plus","green",true);?>
+        <?php echo button_small("","Ajouter un administrateur","plus","green",true);?>
+        <?php echo button_small("","Supprimer un administrateur","minus","red",true);?>
       </div>
     <?php } ?>
   </div>
