@@ -59,9 +59,7 @@
   <body>
     <div id="wrapper">
       <?php
-        if ($_GET["controller"] == "error" || $_GET["controller"] == "home" && in_array($_GET["action"], array("welcome", "chose_identity"))) {
-
-        } else {
+        if (!($_GET["controller"] == "error" || $_GET["controller"] == "home" && in_array($_GET["action"], array("welcome", "chose_identity")))) {
           include LAYOUT_PATH."structure.php";
         }
       ?>
