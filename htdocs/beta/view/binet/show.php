@@ -1,7 +1,7 @@
 <div class="show-container">
   <!-- TODO Etat du binet : arrière plan red- orange - green et icones
   check warning minus-circle ? -->
-  <?php if(has_viewing_rights()){ ?>
+  <?php if(has_viewing_rights($binet["id"],$binet["current_term"])){ ?>
   <div class="sh-plus green-background opanel">
     <i class="fa fa-fw fa-check"></i>
     <span class="text">Etat du binet</span>
@@ -83,7 +83,7 @@
   <div class="sh-block-normal opanel">
     <?php echo $binet["description"];?>
   </div>
-  <?php if(has_viewing_rights()) {
+  <?php if(has_viewing_rights($binet["id"],$binet["current_term"])) {
     $real_income = 0;
     $income = 0;
     $real_spending = 0;

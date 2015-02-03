@@ -50,9 +50,10 @@
   }
 
   function pretty_wave($wave, $link = true) {
-    $wave = select_wave($wave,array("binet","submission_date"));
+    $wave = select_wave($wave,array("id","binet","submission_date"));
     $binet= select_binet($wave["binet"],array("name"));
-    return "Subventions ".$binet["name"]." ".month($wave["submission_date"])." ".year($wave["submission_date"]);
+    $caption = "Subventions ".$binet["name"]." ".month($wave["submission_date"])." ".year($wave["submission_date"]);
+    return ($link)? link_to(path("show", "wave", $wave["id"]),$caption) : $caption;
   }
 
   function pretty_student($student, $link = true) {
