@@ -57,17 +57,23 @@
       Administrateurs
     </span>
     <?php
-    foreach (select_current_admins($binet["id"]) as $admin) {
-      ?>
-      <span class="admin">
-        <i class="fa fa-fw fa-user logo"></i>
-        <i class="fa fa-fw fa-send logo"></i>
-        <?php echo pretty_student($admin["id"]); ?>
-      </span>
-      <?php
-    }
-    ?>
-    <?php if(is_current_kessier()){ ?>
+    $admins = select_current_admins($binet["id"]);
+    if(!empty($admins))
+    {
+      foreach ($admins as $admin) {
+        ?>
+        <span class="admin">
+          <i class="fa fa-fw fa-user logo"></i>
+          <i class="fa fa-fw fa-send logo"></i>
+          <?php echo pretty_student($admin["id"]); ?>
+        </span>
+        <?php
+      }
+    } else {?>
+       <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet ! 
+    <?php
+      }
+    if(is_current_kessier()){ ?>
       <div class="add">
         <?php echo button_small("","Ajouter un administrateur","plus","green",true);?>
         <?php echo button_small("","Supprimer un administrateur","minus","red",true);?>
