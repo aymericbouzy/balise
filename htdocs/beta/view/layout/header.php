@@ -34,19 +34,19 @@
             </li>
             <?php
           }
-          if ($binet == KES_ID) {
-            ?>
-            <li class = "divider"></li>
-            <li class="add-operation">
-              <?php echo link_to(path("new", "binet"), "<i class=\"fa fa-fw fa-group\"></i> Binet", array("class" => "add-operation")); ?>
-            </li>
-            <?php
-          }
         } else {
           ?>
             <li class="add-operation">
               <?php echo link_to(path("new", "operation"), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
             </li>
+          <?php
+        }
+        if (is_current_kessier()) {
+          ?>
+          <li class = "divider"></li>
+          <li class="add-operation">
+            <?php echo link_to(path("new", "binet"), "<i class=\"fa fa-fw fa-group\"></i> Binet", array("class" => "add-operation")); ?>
+          </li>
           <?php
         }
       ?>
