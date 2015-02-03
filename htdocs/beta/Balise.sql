@@ -133,8 +133,8 @@ CREATE TABLE `operation_type` (
 
 INSERT INTO `operation_type` (`id`, `name`, `icon`) VALUES
 (1, 'virement', 'credit-card'),
-(2, 'chèque', 'newspaper-o'),
-(3, 'espèces', 'money');
+(2, 'chÃ¨que', 'newspaper-o'),
+(3, 'espÃ¨ces', 'money');
 
 -- --------------------------------------------------------
 
