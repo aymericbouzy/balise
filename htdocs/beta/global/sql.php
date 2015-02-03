@@ -8,9 +8,10 @@
   function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
     if (!empty($virtual_criteria)) {
+      $virtual_entries = array();
       $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria));
       foreach($entries as $entry) {
-        $virtual_entry = "select_".$table($entry["id"], array_merge($virtual_fields, array("id")));
+        $virtual_entry = call_user_func("select_".$table, $entry["id"], array_merge($virtual_fields, array("id")));
         $keep_entry = true;
         foreach($virtual_criteria as $column => $value) {
           if (is_array($value)) {
@@ -42,6 +43,9 @@
                 $keep_entry = $keep_entry && !is_null($virtual_entry[$column]);
                 break;
               }
+              break;
+            case "IN":
+              $keep_entry = $keep_entry && in_array($virtual_entry[$column], $value);
               break;
             }
           } else {
@@ -104,6 +108,18 @@
 
         if (is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL"))) {
           $sql .= " ".$value[1];
+        } elseif (is_array($value) && $value[0] === "IN") {
+          $sql .= "(";
+          $first = true;
+          foreach ($value[1] as $index => $element) {
+            if ($first) {
+              $first = false;
+            } else {
+              $sql .= ",";
+            }
+            $sql .= ":".$column.$index;
+          }
+          $sql .= ")";
         } else {
           $sql .= " :".$column;
         }
@@ -122,10 +138,19 @@
         }
       } else {
         if (!(is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL")))) {
-          if (in_array($column, $selectable_int_fields)) {
-            $req->bindValue(':'.$column, $real_value, PDO::PARAM_INT);
-          } elseif (in_array($column, $selectable_str_fields)) {
-            $req->bindValue(':'.$column, $real_value, PDO::PARAM_STR);
+          if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
+            if (in_array($column, $selectable_int_fields)) {
+              $pdo_option = PDO::PARAM_INT;
+            } elseif (in_array($column, $selectable_str_fields)) {
+              $pdo_option = PDO::PARAM_INT;
+            }
+            if (is_array($value) && $value[0] == "IN") {
+              foreach ($value[1] as $index => $element) {
+                $req->bindValue(':'.$column.$index, $element, $pdo_option);
+              }
+            } else {
+              $req->bindValue(':'.$column, $real_value, $pdo_option);
+            }
           }
         }
       }

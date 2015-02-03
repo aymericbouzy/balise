@@ -82,7 +82,7 @@
       "request",
       array("wave", "requested_amount", "granted_amount", "used_amount"),
       array(),
-      array("binet", "term", "state"),
+      array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state"),
       $criteria,
       $order_by,
       $ascending

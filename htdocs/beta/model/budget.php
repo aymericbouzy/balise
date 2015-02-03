@@ -50,7 +50,7 @@
       "budget",
       array("binet", "amount", "term"),
       array(),
-      array(),
+      array("real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used"),
       $criteria,
       $order_by,
       $ascending
@@ -70,15 +70,16 @@
   }
 
   function get_real_amount_budget($budget) {
-    $sql = "SELECT SUM(operation_budget.amount) as real_amount
-            FROM operation_budget
-            INNER JOIN operation
-            ON operation.id = operation_budget.operation
-            WHERE operation_budget.budget = :budget AND operation.kes_validation_by != NULL";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC)["real_amount"];
+    $all_operations = ids_as_keys(select_operations_budget($budget));
+    $filtered_operations = array_merge(
+      filter_entries($all_operations, "operation", array("state", "needs_validation"), array("needs_validation" => false, "state" => "accepted")),
+      filter_entries($all_operations, "operation", array("state"), array("state" => "validated"))
+    );
+    $operations = array();
+    foreach(ids_as_keys($filtered_operations) as $id => $operation) {
+      $operations[] = $all_operations[$id];
+    }
+    return sum_array($operations, "amount");
   }
 
   function get_subsidized_amount_granted_budget($budget) {
