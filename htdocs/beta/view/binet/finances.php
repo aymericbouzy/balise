@@ -1,5 +1,25 @@
 <div class="row">
   <div class="col-lg-3">
+    <!-- Select term modal -->
+    <span class="opanel0" style="padding:5px;"id="choose-term" data-toggle="modal" data-target="#terms">
+      <?php echo $term; ?><i class="fa fa-fw fa-caret-square-o-down"></i>
+    </span>
+    <div class="balise-modal fade" id="terms" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-content balise-modal-container">
+        <div class="modal-body">
+          <?php
+          echo close_button("modal");?>
+          <span class="header">Voir l'activité d'un autre mandat</span>
+          <div class="content">
+            <?php
+            // TODO : mettre le bon lien
+              echo link_to(path("show", "binet", ""),"2013",array());
+            ?>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End modal -->
   </div>
   <div class="col-lg-6">
     <?php echo fuzzy_input();?>

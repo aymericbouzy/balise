@@ -39,6 +39,7 @@
               <span class="header">Voir l'activité d'un autre mandat</span>
               <div class="content">
                 <?php
+                // TODO : mettre le bon lien
                 $binet_other_terms=select_binets(array_merge($query_array, array("clean_name" => $binet["clean_name"])), "current_term");
                 foreach($binet_other_terms as $binet_other_term){
                   $binet_term = select_binet($binet_other_term["id"],array("id","current_term"));
