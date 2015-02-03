@@ -1,9 +1,11 @@
 <?php
 
   define("WEBMASTER_EMAIL", $webmaster_email);
+
+  // when changing these values, run localhost/url_rewriting.php to rewrite .htaccess file.
   define("STATE", $state);
-  define("URL_REWRITE", true); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file. set to false if you don't want pretty urls.
-  define("ROOT_PATH", STATE == "test" ? "beta/" : ""); // set to "" to remove root_path
+  define("URL_REWRITE", true); // set to false if you don't want pretty urls.
+  define("ROOT_PATH", STATE == "production" ? "" : "beta/"); // set to "" to remove root_path
 
   define("DATABASE_USERNAME", $database_username);
   define("DATABASE_PASSWORD", $database_password);
