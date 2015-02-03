@@ -22,7 +22,7 @@
       <span class="main"><?php
       echo pretty_binet($binet["id"]);
       if(is_current_kessier()|| has_editing_rights($binet["id"],$binet["current_term"])){
-        echo link_to("#",
+        echo link_to(path("",$binet["clean_name"],$binet["current_term"],"binet"),
         "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
         array("class"=>"sh-bin-eye opanel0","title"=>"Voir l'activité"));
       }
