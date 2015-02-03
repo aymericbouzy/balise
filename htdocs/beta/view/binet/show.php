@@ -1,7 +1,7 @@
 <div class="show-container">
   <!-- TODO Etat du binet : arrière plan red- orange - green et icones
   check warning minus-circle ? -->
-  <?php if(is_current_kessier()|| has_editing_rights($binet["id"],$binet["current_term"])){ ?>
+  <?php if(has_viewing_rights()){ ?>
   <div class="sh-plus green-background opanel">
     <i class="fa fa-fw fa-check"></i>
     <span class="text">Etat du binet</span>
@@ -70,7 +70,7 @@
         <?php
       }
     } else {?>
-       <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet ! 
+       <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet !
     <?php
       }
     if(is_current_kessier()){ ?>
@@ -83,7 +83,7 @@
   <div class="sh-block-normal opanel">
     <?php echo $binet["description"];?>
   </div>
-  <?php if(is_current_kessier() || has_editing_rights($binet["id"],$binet["current_term"])) {
+  <?php if(has_viewing_rights()) {
     $real_income = 0;
     $income = 0;
     $real_spending = 0;

@@ -74,3 +74,12 @@ function close_button($data_dismiss){
     }
     return $path;
   }
+
+
+  function month($date){
+    return strftime("%B",strtotime($date));
+  }
+
+  function year($date){
+    return strftime("%Y",strtotime($date));
+  }

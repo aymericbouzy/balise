@@ -91,13 +91,3 @@
   function current_date() {
     return date("Y-m-d");
   }
-
-  function month($date){
-    $month = date("m",strtotime($date));
-    $months = array("Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre");
-    return $months[$month-1];
-  }
-
-  function year($date){
-    return date("Y",strtotime($date));
-  }
