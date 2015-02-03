@@ -1,21 +1,18 @@
+<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <!-- TODO : green recette, red dépense -->
-  <div class="sh-plus green-background opanel">
-    <!-- TODO : fa-plus ou fa-minus selon le signe du budget -->
-    <i class="fa fa-fw fa-plus-circle"></i>
-    <div class="text"> <!-- TODO Recette ou dépense --> </div>
+  <div class="sh-plus <?php echo $budget["amount"] > 0 ? "green" : "red" ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo $budget["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
+    <div class="text"><?php echo $budget["amount"] > 0 ? "Recette" : "Dépense" ?></div>
   </div>
   <div class="sh-actions">
-		<!-- Les boutons suivants dépendent des autorisations de l'utilisateur
-		Bouton supprimer ?-->
-		<div class="round-button red-background opanel">
-			<i class="fa fa-fw fa-trash anim"></i>
-			<span>Supprimer</span>
-		</div>
-		<div class="round-button grey-background opanel">
-			<i class="fa fa-fw fa-edit anim"></i>
-			<span>Modifier</span>
-		</div>
+    <?php
+    if (has_editing_rights($binet,$term)) {
+      echo button(path("edit", "budget", $budget["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+      if (budget_is_alone()) {
+        echo button(path("delete", "budget", $budget["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
+      }
+    }
+    ?>
 	</div>
   <div class="sh-title opanel">
     <div class="logo">
@@ -40,30 +37,56 @@
       </div>
     </div>
   </div>
-  <!-- TODO : seulement si cela a du sens !-->
-  <div class="sh-bu-ratio opanel">
-    <div class="header">
-      Subventions utilisées / accordées
-    </div>
-    <div>
-      <div class="used" id="subsidies">
-        <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"]); ?>
+  <?php
+    if (!empty($budget["subsidized_amount_granted"])) {
+      ?>
+      <div class="sh-bu-ratio opanel">
+        <div class="header">
+          Subventions utilisées / accordées
+        </div>
+        <div>
+          <div class="used" id="subsidies">
+            <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"]); ?>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
+      <?php
+    }
+  ?>
   <div class="sh-bu-tags opanel">
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
   </div>
   <div class="sh-piechart-panel opanel">
-    <div class="pieID pie">
-    </div>
-    <ul class="pieID legend">
-      <li>
-        <!--TODO : pour chaque opération , ajouter : -->
-        <em>Nom del'opération</em>
-        <span>Montant de l'opération</span>
-        <!-- ------------- -- >
-      </li>
-    </ul>
+  <?php
+    $operations = select_operations_budget($budget["id"]);
+    if (!empty($operations) && sizeOf($operations)>1) {
+      ?>
+        <div class="pieID pie">
+        </div>
+        <ul class="pieID legend">
+          <li>
+            <?php
+              foreach ($operations as $operation) {
+                ?>
+                <em><?php echo pretty_operation($operation["id"]); ?></em>
+                <span><?php echo pretty_amount($operation["amount"]); ?></span>
+                <?php
+              }
+            ?>
+          </li>
+        </ul>
+      <?php
+    }
+    else{
+      if(!empty($operations)){
+        echo pretty_operation($operations[0]["id"]);
+      }
+      else{
+        ?>
+        Vous n'avez aucune opération associée à ce budget !
+        <?php
+      }
+    }
+  ?>
   </div>
 </div>

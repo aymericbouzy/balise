@@ -1,21 +1,23 @@
+<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
-    <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
+  <div class="sh-plus <?php echo array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red")[$request["state"]]; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times")[$request["state"]]; ?>"></i>
     <div class="text">
       <?php
         switch ($request["state"]) {
           case "rough_draft":
           echo "Brouillon";
           break;
-          case "sent":
-          echo "Demande envoyée";
-          break;
           case "accepted":
-          echo "Demande acceptée";
+          echo "Acceptée";
           break;
           case "rejected":
-          echo "Demande refusée";
+          echo "Refusée";
           break;
+          default:
+          if (in_array($request["state"], array("sent", "reviewed"))) {
+            echo "Envoyée";
+          }
         }
       ?>
     </div>
@@ -31,10 +33,8 @@
         }
       }
       if (status_admin_binet($request["wave"]["binet"], $request["wave"]["term"])) {
-        switch ($request["state"]) {
-          case "sent":
+        if (in_array($request["state"], array("sent", "reviewed"))) {
           echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
-          break;
         }
       }
     ?>

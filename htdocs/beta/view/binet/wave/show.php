@@ -1,3 +1,4 @@
+<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
   <div class="sh-plus <?php echo $wave["state"] == "closed" ? "red" : "green"; ?>-background opanel">
     <i class="fa fa-fw fa-<?php echo $wave["state"] == "closed" ? "times" : "check"; ?>"></i>
@@ -5,13 +6,13 @@
       <?php
         switch ($wave["state"]) {
           case "submission":
-          echo "Dépôt de demandes de subventions en cours";
+          echo "Demandes en cours";
           break;
           case "distribution":
-          echo "Subventions ouvertes";
+          echo "Ouverte";
           break;
           case "closed":
-          echo "Subventions fermées";
+          echo "Fermée";
           break;
         }
       ?>
@@ -52,22 +53,22 @@
   </div>
   <div class="sh-wa-dates opanel">
     <span class="submission-date">
-      Demandes avant le :
+      Demandes avant le :<br/>
       <?php echo pretty_date($wave["submission_date"]); ?>
     </span>
     <span class="validity-date">
-      Limite de validité :
+      Limite de validité :<br/>
       <?php echo pretty_date($wave["expiry_date"]); ?>
     </span>
   </div>
   <?php
     foreach (select_requests(array("wave" => $wave["id"])) as $request) {
-      $request = select_request($request["id"], array("id", "granted", "binet", "term", "requested_amount"));
+      $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
       echo link_to(
-        path("review", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+        path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
         "<div class=\"sh-wa-request opanel\">
           <p class=\"icon\">
-            ".($request["granted"] ? "<i class=\"fa fa-3x fa-check\"></i>" : "<i class=\"fa fa-3x fa-times\"></i>")."
+            ".($request["state"] == "sent" ? "<i class=\"fa fa-3x fa-times\"></i>" : "<i class=\"fa fa-3x fa-check\"></i>")."
           </p>
           <p class=\"binet\">
             ".pretty_binet_term($request["binet"]."/".$request["term"])."

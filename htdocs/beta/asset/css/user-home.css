@@ -16,6 +16,10 @@ body {
   background-attachment:fixed;
 }
 
+#wrapper {
+  padding-bottom: 50px;
+}
+
 #page-wrapper {
     width: 100%;
     padding: 5px;

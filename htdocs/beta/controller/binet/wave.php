@@ -66,6 +66,7 @@
 
   case "publish":
     publish_wave($wave["id"]);
+    $affected_operations = reset_kes_validation_for_operations_affected_by_wave($wave["id"]);
     $_SESSION["notice"][] = "Les attributions de la vague de subvention ont été publiées avec succès.";
     $requests_per_student = array();
     foreach (select_requests(array("wave" => $wave["id"])) as $request) {

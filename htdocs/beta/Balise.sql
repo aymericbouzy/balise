@@ -123,17 +123,18 @@ CREATE TABLE `operation_budget` (
 
 CREATE TABLE `operation_type` (
   `id` tinyint(4) NOT NULL,
-  `name` varchar(30) NOT NULL
+  `name` varchar(30) NOT NULL,
+  `icon` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `operation_type`
 --
 
-INSERT INTO `operation_type` (`id`, `name`) VALUES
-(1, 'chèque'),
-(2, 'espèces'),
-(3, 'virement');
+INSERT INTO `operation_type` (`id`, `name`, `icon`) VALUES
+(1, 'virement', 'credit-card'),
+(2, 'chÃ¨que', 'newspaper-o'),
+(3, 'espÃ¨ces', 'money');
 
 -- --------------------------------------------------------
 

@@ -19,7 +19,6 @@
     $parameters .= empty($options["title"])? "" : " title=\"".$options["title"]."\"";
 
     if ($options["goto"]) {
-      /* Sauts de ligne pour rendre le code soruce plus lisible */
       return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">\n $3", str_replace("\n", "", $caption));
     } else {
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
