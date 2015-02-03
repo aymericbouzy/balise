@@ -20,7 +20,7 @@
     </div>
     <div class="text">
       <span class="main"><?php
-      echo pretty_binet($binet["id"]);
+      echo pretty_binet_no_link($binet["id"]);
       if(is_current_kessier()|| has_editing_rights($binet["id"],$binet["current_term"])){
         echo link_to(path("",$binet["clean_name"],$binet["current_term"],"binet"),
         "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
