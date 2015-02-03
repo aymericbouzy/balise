@@ -654,3 +654,18 @@ footer>.btn {
     font-size:12px;
   }
 }
+
+/*-------------------------------------------------------------------------*/
+/*------ Modals --------------*/
+.balise-modal {
+  position:absolute;
+  z-index:2000;
+}
+
+.balise-modal-container{
+  width:300px;
+  min-height:100px;
+  border:none;
+  border-radius:0px;
+  background-color:#2e2e2e;
+}

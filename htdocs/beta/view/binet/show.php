@@ -10,7 +10,7 @@
   }?>
   <div class="sh-actions">
     <?php if(is_current_kessier()) {
-       echo button("", "Changer de terme", "edit", "orange");
+       echo button("", "Changer le terme", "edit", "orange");
        }
     echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");?>
   </div>
@@ -27,7 +27,24 @@
         array("class"=>"sh-bin-eye opanel0","title"=>"Voir l'activité"));
       }
        ?></span>
-      <?php echo link_to("#","2013",array("class"=>"sub","title"=>"Voir une autre année"));?>
+       <!-- Modal to choose a different term -->
+      <span class="sub opanel0" id="choose-term" data-toggle="modal" data-target="#terms">
+        <?php echo $binet["current_term"]; ?><i class="fa fa-fw fa-caret-square-o-down"></i>
+      </span>
+      <div class="balise-modal fade" id="terms" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-content balise-modal-container">
+            <div class="modal-body">
+              <?php
+              echo close_button("modal");
+              $binet_other_terms=select_binets(array_merge($query_array, array("clean_name" => $binet["clean_name"])), "current_term");
+              foreach($binet_other_terms as $binet_other_term){
+                $binet_term = select_binet($binet_other_term["id"],array("id","current_term"));
+                echo link_to(path("show", "binet", $binet_term["id"]),$binet_term["current_term"],array());
+              };?>
+            </div>
+          </div>
+      </div>
+      <!-- Modal -->
     </div>
   </div>
   <div class="sh-bin-admins opanel">

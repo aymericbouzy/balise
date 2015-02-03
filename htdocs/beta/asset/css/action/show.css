@@ -137,6 +137,17 @@
 
 /*-----------------------------------------------------------------------*/
 /* ------  Binet specific classes -----------*/
+
+#choose-term{
+  padding:5px;
+  border-radius:5px;
+  text-align:center;
+  margin-bottom:5px;
+}
+#choose-term:hover{
+  background-color:#64B5F6;
+}
+
 .sh-bin-eye {
   position:absolute;
   top:5px;
