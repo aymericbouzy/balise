@@ -3,10 +3,13 @@
   define("WEBMASTER_EMAIL", $webmaster_email);
   define("STATE", $state);
   define("URL_REWRITE", true); // when changing this value, run localhost/url_rewriting.php to rewrite .htaccess file. set to false if you don't want pretty urls.
-  define("ROOT_PATH", "beta/"); // set to "" to remove root_path
+  define("ROOT_PATH", STATE == "test" ? "beta/" : ""); // set to "" to remove root_path
 
   define("DATABASE_USERNAME", $database_username);
   define("DATABASE_PASSWORD", $database_password);
+  define("DATABASE_NAME", STATE == "test" ? "balise_test" : "balise");
+  define("DATABASE_HOST", $database_host);
+  define("DATABASE_PORT", $database_port);
   define("FRANKIZ_AUTH_KEY", $frankiz_auth_key);
   define("REAL_FRANKIZ_CONNECTION", $real_frankiz_connection);
 
