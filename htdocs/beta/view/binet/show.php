@@ -35,12 +35,16 @@
           <div class="modal-content balise-modal-container">
             <div class="modal-body">
               <?php
-              echo close_button("modal");
-              $binet_other_terms=select_binets(array_merge($query_array, array("clean_name" => $binet["clean_name"])), "current_term");
-              foreach($binet_other_terms as $binet_other_term){
-                $binet_term = select_binet($binet_other_term["id"],array("id","current_term"));
-                echo link_to(path("show", "binet", $binet_term["id"]),$binet_term["current_term"],array());
-              };?>
+              echo close_button("modal");?>
+              <span class="header">Voir l'activité d'un autre mandat</span>
+              <div class="content">
+                <?php
+                $binet_other_terms=select_binets(array_merge($query_array, array("clean_name" => $binet["clean_name"])), "current_term");
+                foreach($binet_other_terms as $binet_other_term){
+                  $binet_term = select_binet($binet_other_term["id"],array("id","current_term"));
+                  echo link_to(path("show", "binet", $binet_term["id"]),$binet_term["current_term"],array());
+                };?>
+              </div>
             </div>
           </div>
       </div>
