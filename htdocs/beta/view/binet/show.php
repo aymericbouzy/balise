@@ -76,7 +76,7 @@
       }
     if(is_current_kessier()){ ?>
       <div class="add">
-        <?php echo button_small("","Ajouter un administrateur","plus","green",true);?>
+        <?php echo button_small(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])),"Ajouter un administrateur","plus","green",true);?>
         <?php echo button_small("","Supprimer un administrateur","minus","red",true);?>
       </div>
     <?php } ?>
