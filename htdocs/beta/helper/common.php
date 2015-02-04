@@ -29,32 +29,24 @@
     return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
   }
 
-  function button($path, $caption, $icon, $background_color, $link = true) {
-    return button_template($path, $caption, $icon, $background_color, $link,"");
+  function button($path, $caption, $icon, $background_color, $link = true, $size = "") {
+    if ($size != "") {
+      $size = "-".$size;
+    }
+    $caption = "<div class=\"round-button".$size." ".$background_color."-background opanel\">
+    <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
+    <span>".$caption."</span>
+    </div>";
+    if ($link) {
+      return link_to($path, $caption, array("goto" => true));
+    } else {
+      return $caption;
+    }
   }
 
-  function button_small($path, $caption, $icon, $background_color, $link = true) {
-    return button_template($path, $caption, $icon, $background_color, $link,"small");
-}
-
-function button_template($path, $caption, $icon, $background_color, $link = true,$size=""){
-  if($size!=""){
-    $size="-".$size;
+  function close_button($data_dismiss){
+    return "<button type=\"button\" class=\"close\" data-dismiss=".$data_dismiss." aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
   }
-  $caption = "<div class=\"round-button".$size." ".$background_color."-background opanel\">
-  <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
-  <span>".$caption."</span>
-  </div>";
-  if ($link) {
-    return link_to($path,$caption,array("goto" => true));
-  } else {
-    return $caption;
-  }
-}
-
-function close_button($data_dismiss){
-  return "<button type=\"button\" class=\"close\" data-dismiss=".$data_dismiss." aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
-}
 
   function contact_binet_path($binet) {
     $path = "mailto:";

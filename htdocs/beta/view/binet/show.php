@@ -77,8 +77,8 @@
       if (is_current_kessier()) {
         ?>
         <div class="add">
-          <?php echo button_small(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true); ?>
-          <?php echo button_small(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true); ?>
+          <?php echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small"); ?>
+          <?php echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small"); ?>
         </div>
         <?php
       }
@@ -113,7 +113,7 @@
             <div class="line">
               <span class="label"><?php echo pretty_wave($wave["id"]); ?></span>
               <span class="submission date"><?php echo $wave["submission_date"]; ?></span>
-                <span class="expiry date"> <?php echo $wave["expiry_date"]; ?></span>
+              <span class="expiry date"> <?php echo $wave["expiry_date"]; ?></span>
             </div>
             <?php
           }

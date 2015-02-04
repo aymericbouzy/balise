@@ -4,10 +4,6 @@
     return ($amount > 0 ? "+" : "").($amount / 100);
   }
 
-  function pretty_amount_absolute($amount) {
-    return ($amount > 0) ? ($amount / 100) : (-$amount / 100);
-  }
-
   function pretty_tags($tags, $link = false) {
     $tag_string = "";
     foreach ($tags as $tag) {
@@ -89,12 +85,11 @@
     return "subsidy ".$subsidy;
   }
 
-  function pretty_terms_list($binet){
-    $binet_other_terms=select_terms(array("binet"=>$binet));
-    $list="";
-    foreach($binet_other_terms as $binet_other_term){
-      $binet_term = explode("/",$binet_other_term["id"]);
-      $list.=link_to(path("", "binet", binet_term_id($binet_term[0],$binet_term[1])),$binet_term[1],array())." ";
+  function pretty_terms_list($binet) {
+    $list = "";
+    foreach (select_terms(array("binet" => $binet)) as $binet_other_term) {
+      $binet_term = select_term_binet($binet_term["id"], array("binet", "term"));
+      $list. = link_to(path("", "binet", binet_term_id($binet_term["binet"], $binet_term["term"])), $binet_term["term"])." ";
     }
     return $list;
   }
