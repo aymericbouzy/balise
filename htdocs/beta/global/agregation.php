@@ -1,9 +1,11 @@
 <?php
 
-  function sum_array($array, $column) {
+  function sum_array($array, $column, $sign = "") {
     $sum = 0;
     foreach($array as $entry) {
-      $sum += $entry[$column];
+      if (empty($sign) || ($sign == "positive" && $entry[$column] > 0) || ($sign == "negative" && $entry[$column] < 0)) {
+        $sum += $entry[$column];
+      }
     }
     return $sum;
   }
