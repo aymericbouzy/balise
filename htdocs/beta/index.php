@@ -52,6 +52,8 @@
     echo ob_get_clean();
   } catch (ErrorException $e) {
     ob_get_clean();
-    send_error_by_mail(array("type" => $e->getSeverity(), "file" => $e->getFile(), "line" => $e->getLine(), "message" => $e->getMessage()));
+    if (STATE != "development") {
+      send_error_by_mail(array("type" => $e->getSeverity(), "file" => $e->getFile(), "line" => $e->getLine(), "message" => $e->getMessage()));
+    }
     header_if(true, 500);
   }
