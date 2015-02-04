@@ -17,9 +17,11 @@
     $term_binet["binet"] = $id[0];
     $term_binet["term"] = $id[1];
     if (!empty(array_intersect($fields, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")))) {
+      $budgets = array();
       foreach (select_budgets(array("binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $budget) {
         $budgets[] = select_budget($budget["id"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "amount"));
       }
+      $operations = array();
       foreach (select_operations(array("binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $operation) {
         $operations[] = select_operation($operation["id"], array("amount"));
       }
@@ -39,7 +41,7 @@
         $term_binet["real_income"] = sum_array($operations, "amount", "positive");
       }
       if (in_array("real_balance", $fields)) {
-        $term_binet["real_balance"] = sum_array($operations, "amount") + $binet["subsidy_used"];
+        $term_binet["real_balance"] = sum_array($operations, "amount") + $term_binet["subsidized_amount_used"];
       }
       if (in_array("expected_spending", $fields)) {
         $term_binet["expected_spending"] = sum_array($budgets, "amount", "negative");
@@ -48,10 +50,10 @@
         $term_binet["expected_income"] = sum_array($budgets, "amount", "positive");
       }
       if (in_array("expected_balance", $fields)) {
-        $term_binet["expected_balance"] = sum_array($budgets, "amount") + $binet["subsidy_granted"];
+        $term_binet["expected_balance"] = sum_array($budgets, "amount") + $term_binet["subsidized_amount_granted"];
       }
       if (in_array("state", $fields)) {
-        $term_binet["state"] = $binet["balance"] >= 0 ? "green" : ($binet["expected_balance"] >= 0 ? "orange" : "red");
+        $term_binet["state"] = $term_binet["real_balance"] >= 0 ? "green" : ($term_binet["expected_balance"] >= 0 ? "orange" : "red");
       }
     }
     return $term_binet;
@@ -61,7 +63,7 @@
     $id = explode("/", $term_binet);
     $binet = $id[0];
     $term = $id[1];
-    return !empty(select_terms(array("binet" => $binet, "term" => $term)));
+    return select_binet($binet, array("current_term"))["current_term"] == $term || !empty(select_terms(array("binet" => $binet, "term" => $term)));
   }
 
 
