@@ -91,27 +91,13 @@
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
       <div class="sh-bin-stats light-blue-background opanel">
-        <div class="minipane" id="income">
-          <div class="title">Recettes</div><?php echo pretty_amount($real_income);?>/
-          <span><?php echo pretty_amount($income);?></span>
-          </div>
-        <div class="minipane" id="spending">
-          <div class="title">Dépenses</div><?php echo pretty_amount($real_spending);?>/
-          <span><?php echo pretty_amount($spending);?></span>
-          </div>
-        <div class="minipane" id="balance">
-          <div class="title">Equilibre</div>
-          <?php echo pretty_amount(sum_array($budgets,"real_amount")); ?> /
-          <span><?php echo pretty_amount(sum_array($budgets,"amount")); ?></span>
-        </div>
-        <div class="minipane" id="subsidies_granted">
-          <div class="title">Subventions accordées</div>
-          <?php echo pretty_amount(sum_array($budgets,"subsidized_amount_granted")); ?>
-          </div>
-        <div class="minipane" id="subsidies_used">
-          <div class="title">Subventions utilisées</div>
-        <?php echo pretty_amount(sum_array($budgets,"subsidized_amount_used")); ?>
-        </div>
+        <?php
+          echo minipane("income", "Recettes", $binet["real_income"], $binet["expected_income"]);
+          echo minipane("spending", "Dépenses", $binet["real_spending"], $binet["expected_spending"]);
+          echo minipane("balance", "Equilibre", $binet["real_balance"], $binet["expected_balance"]);
+          echo minipane("subsidies_granted", "Subventions accordées", $binet["subsidized_amount_granted"], NULL);
+          echo minipane("subsidies_used", "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
+        ?>
       </div>
       <?php
     }

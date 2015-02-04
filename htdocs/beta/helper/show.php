@@ -18,3 +18,11 @@
 		</script>
 		".pretty_amount($numerator)."/".pretty_amount($denominator) ;
 	}
+
+	function minipane($id, $title, $numerator, $denominator) {
+		return "<div class=\"minipane\" id=\"".$id."\">
+		<div class=\"title\">".$title."</div>
+			".pretty_amount($numerator)."
+			".(isset($numerator) ? " / <span>"pretty_amount($numerator)."</span>" : "").
+		"</div>";
+	}
