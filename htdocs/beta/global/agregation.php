@@ -3,7 +3,7 @@
   function sum_array($array, $column, $sign = "") {
     $sum = 0;
     foreach($array as $entry) {
-      if (empty($sign) || ($sign == "positive" && $entry[$column] > 0) || ($sign == "negative" && $entry[$column] < 0)) {
+      if (empty($sign) || ($sign == "negative" && $entry[$column] < 0) || ($sign == "positive" && $entry[$column] > 0)) {
         $sum += $entry[$column];
       }
     }
