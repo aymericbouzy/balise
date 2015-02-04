@@ -87,7 +87,7 @@
 
   function pretty_terms_list($binet) {
     $list = "";
-    foreach (select_terms(array("binet" => $binet)) as $binet_other_term) {
+    foreach (select_terms(array("binet" => $binet)) as $binet_term) {
       $binet_term = select_term_binet($binet_term["id"], array("binet", "term"));
       $list .= link_to(path("", "binet", binet_term_id($binet_term["binet"], $binet_term["term"])), $binet_term["term"])." ";
     }
