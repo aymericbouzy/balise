@@ -25,6 +25,9 @@
       case 404:
         $header = "404 Not Found";
         break;
+      case 500:
+        $header = "500 Server Error";
+        break;
       }
       header("HTTP/1.1 ".$header);
 
@@ -258,7 +261,7 @@
         if (in_array($parameter, array_merge($required_parameters, $optional_parameters))) {
           switch ($parameter) {
           case "action":
-            $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
+            $valid = $valid && preg_does_match("/^[a-z_]+|[0-9]+$/", $value);
             break;
           case "controller":
             $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
