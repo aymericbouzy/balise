@@ -1,4 +1,4 @@
 <?php
   include "global/initialisation.php";
 
-  phpinfo();
+  var_dump($_SERVER);

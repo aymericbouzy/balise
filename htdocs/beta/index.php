@@ -2,4 +2,11 @@
 
   include "global/initialisation.php";
 
-  include "controller/base.php";
+  try {
+    ob_start();
+    include "controller/base.php";
+    echo ob_get_clean();
+  } catch (Exception $e) {
+    ob_get_clean();
+    header_if(true, 500);
+  }

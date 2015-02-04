@@ -17,7 +17,7 @@
   }
 
   $reference = substr(md5(rand()), 0, 10);
-  $url = $_SERVER["REDIRECT_URL"];
+  $url = isset($_SERVER["REDIRECT_URL"]) ? $_SERVER["REDIRECT_URL"] : $_SERVER["REQUEST_URI"];
   $email = connected_student() ? select_student($_SESSION["student"], array("email"))["email"] : "";
   $post = array_to_string($_POST);
   $session = array_to_string($_SESSION);
