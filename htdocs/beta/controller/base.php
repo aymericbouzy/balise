@@ -24,6 +24,6 @@
     include CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
   }
 
-  if (!(STATE == "development" && headers_sent())) {
+  if (!(STATE == "development" && ob_get_length() != 0)) {
     include LAYOUT_PATH."application.php";
   }
