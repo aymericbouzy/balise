@@ -1,5 +1,5 @@
 
-      ErrorDocument  404  ./beta/index.php?controller=error&action=404&
+      ErrorDocument  404  /beta/index.php?controller=error&action=400&
 	    AddDefaultCharset UTF-8
 	    RewriteEngine on
 	    RewriteRule ^beta/?$ ./beta/index.php?controller=home&action=welcome&%{QUERY_STRING} [L,NC,QSA]
