@@ -1,4 +1,5 @@
 <div class="show-container">
+  <?php echo button(path("","binet"),"","chevron-left","blue"); ?>
   <!-- TODO Etat du binet : arrière plan red- orange - green et icones
   check warning minus-circle ? -->
   <?php if(has_viewing_rights($binet["id"],$binet["current_term"])){ ?>

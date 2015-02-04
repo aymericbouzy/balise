@@ -5,6 +5,10 @@
   color: #2e2e2e;
 }
 
+.show-container>.round-button {
+  position:absolute;
+  left:-120px;
+}
 .sh-title {
   height: 130px;
   margin: 5px;
