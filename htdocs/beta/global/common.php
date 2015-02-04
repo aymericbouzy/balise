@@ -115,3 +115,14 @@
       unset($_SESSION[$class]);
     }
   }
+
+  function array_to_string($array) {
+    ob_start();
+    var_dump($array);
+    $string = ob_get_clean();
+    return str_replace(
+      array(" "),
+      array("\040"),
+      $string
+    );
+  }

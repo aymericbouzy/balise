@@ -5,17 +5,6 @@
 </span>
 <?php
 
-  function array_to_string($array) {
-    ob_start();
-    var_dump($array);
-    $string = ob_get_clean();
-    return str_replace(
-      array(" "),
-      array("\040"),
-      $string
-    );
-  }
-
   $reference = substr(md5(rand()), 0, 10);
   $url = isset($_SERVER["REDIRECT_URL"]) ? $_SERVER["REDIRECT_URL"] : $_SERVER["REQUEST_URI"];
   $email = connected_student() ? select_student($_SESSION["student"], array("email"))["email"] : "";

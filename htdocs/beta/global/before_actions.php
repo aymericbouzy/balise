@@ -10,7 +10,7 @@
     }
   }
 
-  function header_if($test, $status) {
+  function header_if($test, $status, $no_exit = false) {
     if ($test) {
       switch ($status) {
       case 400:
@@ -49,7 +49,9 @@
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
       include LAYOUT_PATH."application.php";
-      exit;
+      if (!$no_exit) {
+        exit;
+      }
     }
   }
 

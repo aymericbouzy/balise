@@ -38,6 +38,11 @@
   }
 
   function exceptions_error_handler($severity, $message, $filename, $lineno) {
+    ob_get_clean();
+    if (STATE != "development") {
+      send_error_by_mail(array("type" => $severity, "file" => $filename, "line" => $lineno, "message" => $message));
+    }
+    header_if(true, 500, true);
     throw new ErrorException($message, 0, $severity, $filename, $lineno);
   }
 
@@ -46,14 +51,6 @@
 
   include "global/initialisation.php";
 
-  try {
-    ob_start();
-    include "controller/base.php";
-    echo ob_get_clean();
-  } catch (ErrorException $e) {
-    ob_get_clean();
-    if (STATE != "development") {
-      send_error_by_mail(array("type" => $e->getSeverity(), "file" => $e->getFile(), "line" => $e->getLine(), "message" => $e->getMessage()));
-    }
-    header_if(true, 500);
-  }
+  ob_start();
+  include "controller/base.php";
+  echo ob_get_clean();
