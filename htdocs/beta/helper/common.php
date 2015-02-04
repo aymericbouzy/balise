@@ -30,11 +30,11 @@
   }
 
   function button($path, $caption, $icon, $background_color, $link = true) {
-    return button_template($path, $caption, $icon, $background_color, $link = true,"");
+    return button_template($path, $caption, $icon, $background_color, $link,"");
   }
 
   function button_small($path, $caption, $icon, $background_color, $link = true) {
-    return button_template($path, $caption, $icon, $background_color, $link = true,"small");
+    return button_template($path, $caption, $icon, $background_color, $link,"small");
 }
 
 function button_template($path, $caption, $icon, $background_color, $link = true,$size=""){
