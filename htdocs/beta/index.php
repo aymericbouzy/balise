@@ -1,5 +1,45 @@
 <?php
 
+  function send_last_error_by_mail() {
+    $error = error_get_last();
+
+    if ($error !== NULL) {
+      $errno   = $error["type"];
+      $errfile = $error["file"];
+      $errline = $error["line"];
+      $errstr  = $error["message"];
+
+      $trace = print_r(debug_backtrace(false), true);
+
+      $content  = "<table><thead bgcolor='#c8c8c8'><th>Item</th><th>Description</th></thead><tbody>";
+      $content .= "<tr valign='top'><td><b>Error</b></td><td><pre>$errstr</pre></td></tr>";
+      $content .= "<tr valign='top'><td><b>Errno</b></td><td><pre>$errno</pre></td></tr>";
+      $content .= "<tr valign='top'><td><b>File</b></td><td>$errfile</td></tr>";
+      $content .= "<tr valign='top'><td><b>Line</b></td><td>$errline</td></tr>";
+      $content .= "<tr valign='top'><td><b>Trace</b></td><td><pre>$trace</pre></td></tr>";
+      $content .= "</tbody></table>";
+
+      return mail_with_headers(WEBMASTER_EMAIL, "Error ".$errno." : ".$errstr, $content);
+    }
+  }
+
+  function mail_with_headers($to, $subject, $message) {
+    $headers  = "MIME-Version: 1.0" . "\r\n";
+    $headers .= "Content-type: text/html;charset=UTF-8" . "\r\n";
+    $headers .= "From:         Projet Balise <balise.bugreport@gmail.com>" . "\r\n";
+
+    $subject = "[Projet balise] ".$subject;
+
+    return mail($to, $subject, $message, $headers);
+  }
+
+  function exceptions_error_handler($severity, $message, $filename, $lineno) {
+    throw new ErrorException($message, 0, $severity, $filename, $lineno);
+  }
+
+  register_shutdown_function("send_last_error_by_mail");
+  set_error_handler("exceptions_error_handler");
+
   include "global/initialisation.php";
 
   try {
@@ -8,5 +48,6 @@
     echo ob_get_clean();
   } catch (Exception $e) {
     ob_get_clean();
+    header_if(!send_last_error_by_mail(), 0);
     header_if(true, 500);
   }

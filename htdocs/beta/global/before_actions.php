@@ -38,8 +38,11 @@
         var_dump($_SESSION);
         echo "\$_POST : ";
         var_dump($_POST);
-        echo "Appelé par : ";
-        var_dump(debug_backtrace()[1]["function"]);
+        $backtrace = debug_backtrace();
+        if (isset($backtrace[1])) {
+          echo "Appelé par : ";
+          var_dump($backtrace[1]["function"]);
+        }
       }
 
       $_GET["controller"] = "error";
