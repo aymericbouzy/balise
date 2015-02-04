@@ -11,37 +11,41 @@
     }
   ?>
   <div class="sh-actions">
-    <?php if(is_current_kessier()) {
+    <?php
+      if (is_current_kessier()) {
        echo button(path("edit", "binet", $binet["id"]), "Changer le terme", "edit", "orange");
-       }
-       echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
-       ?>
+      }
+      echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
+    ?>
   </div>
   <div class="sh-title opanel">
     <div class="logo">
       <i class="fa fa-5x fa-group"></i>
     </div>
     <div class="text">
-      <span class="main"><?php
-      echo pretty_binet_no_link($binet["id"]);
-      if(is_current_kessier()|| has_editing_rights($binet["id"],$binet["current_term"])){
-        echo link_to(path("",$binet["clean_name"],$binet["current_term"],"binet"),
-        "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
-        array("class"=>"sh-bin-eye opanel0"));
-      }
-       ?></span>
-       <!-- Modal to choose a different term -->
+      <span class="main">
+        <?php
+          echo pretty_binet_no_link($binet["id"]);
+          if (has_viewing_rights($binet["id"], $binet["current_term"])) {
+            echo link_to(
+              path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),
+              "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
+              array("class" => "sh-bin-eye opanel0")
+            );
+          }
+        ?>
+      </span>
+      <!-- Modal to choose a different term -->
       <span class="sub opanel0" id="choose-term" data-toggle="modal" data-target="#terms">
         <?php echo $binet["current_term"]; ?><i class="fa fa-fw fa-caret-square-o-down"></i>
       </span>
       <div class="balise-modal fade" id="terms" tabindex="-1" role="dialog" aria-hidden="true">
           <div class="modal-content balise-modal-container">
             <div class="modal-body">
-              <?php
-              echo close_button("modal");?>
+              <?php echo close_button("modal"); ?>
               <span class="header">Voir l'activité d'un autre mandat</span>
               <div class="content">
-                <?php echo pretty_terms_list($binet["id"]);?>
+                <?php echo pretty_terms_list($binet["id"]); ?>
               </div>
             </div>
           </div>
