@@ -11,9 +11,10 @@
   }?>
   <div class="sh-actions">
     <?php if(is_current_kessier()) {
-       echo button("", "Changer le terme", "edit", "orange");
+       echo button(path("edit", "binet", $binet["id"]), "Changer le terme", "edit", "orange");
        }
-    echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");?>
+       echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
+       ?>
   </div>
   <div class="sh-title opanel">
     <div class="logo">
@@ -25,7 +26,7 @@
       if(is_current_kessier()|| has_editing_rights($binet["id"],$binet["current_term"])){
         echo link_to(path("",$binet["clean_name"],$binet["current_term"],"binet"),
         "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
-        array("class"=>"sh-bin-eye opanel0","title"=>"Voir l'activité"));
+        array("class"=>"sh-bin-eye opanel0"));
       }
        ?></span>
        <!-- Modal to choose a different term -->
@@ -39,13 +40,7 @@
               echo close_button("modal");?>
               <span class="header">Voir l'activité d'un autre mandat</span>
               <div class="content">
-                <?php
-                // TODO : mettre le bon lien
-                $binet_other_terms=select_binets(array_merge($query_array, array("clean_name" => $binet["clean_name"])), "current_term");
-                foreach($binet_other_terms as $binet_other_term){
-                  $binet_term = select_binet($binet_other_term["id"],array("id","current_term"));
-                  echo link_to(path("show", "binet", $binet_term["id"]),$binet_term["current_term"],array());
-                };?>
+                <?php echo pretty_terms_list($binet["id"]);?>
               </div>
             </div>
           </div>

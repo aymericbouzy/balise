@@ -11,10 +11,7 @@
           echo close_button("modal");?>
           <span class="header">Voir l'activité d'un autre mandat</span>
           <div class="content">
-            <?php
-            // TODO : mettre le bon lien
-              echo link_to(path("show", "binet", ""),"2013",array());
-            ?>
+            <?php echo pretty_terms_list($binet);?>
           </div>
         </div>
       </div>

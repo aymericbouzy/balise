@@ -88,3 +88,13 @@
   function pretty_subsidy($subsidy) {
     return "subsidy ".$subsidy;
   }
+
+  function pretty_terms_list($binet){
+    $binet_other_terms=select_terms(array("binet"=>$binet));
+    $list="";
+    foreach($binet_other_terms as $binet_other_term){
+      $binet_term = explode("/",$binet_other_term["id"]);
+      $list.=link_to(path("", "binet", binet_term_id($binet_term[0],$binet_term[1])),$binet_term[1],array())." ";
+    }
+    return $list;
+  }
