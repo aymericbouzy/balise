@@ -45,7 +45,7 @@
   }
 
   function close_button($data_dismiss){
-    return "<button type=\"button\" class=\"close\" data-dismiss=".$data_dismiss." aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
+    return "<button type=\"button\" class=\"close\" data-dismiss=\"".$data_dismiss."\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
   }
 
   function contact_binet_path($binet) {
