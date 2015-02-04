@@ -1,14 +1,15 @@
 <div class="show-container">
   <?php echo button(path("","binet"),"","chevron-left","blue"); ?>
-  <!-- TODO Etat du binet : arrière plan red- orange - green et icones
-  check warning minus-circle ? -->
-  <?php if(has_viewing_rights($binet["id"],$binet["current_term"])){ ?>
-  <div class="sh-plus green-background opanel">
-    <i class="fa fa-fw fa-check"></i>
-    <span class="text">Etat du binet</span>
-  </div>
   <?php
-  }?>
+    if (has_viewing_rights($binet["id"], $binet["current_term"])) {
+      ?>
+      <div class="sh-plus <?php echo $binet["state"]; ?>-background opanel">
+        <i class="fa fa-fw fa-<?php echo array("green" => "check", "orange" => "warning", "red" => "minus-circle")[$binet["state"]]; ?>"></i>
+        <span class="text">Etat du binet</span>
+      </div>
+      <?php
+    }
+  ?>
   <div class="sh-actions">
     <?php if(is_current_kessier()) {
        echo button(path("edit", "binet", $binet["id"]), "Changer le terme", "edit", "orange");
