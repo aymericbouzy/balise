@@ -58,7 +58,6 @@
   <div class="sh-op-payer opanel">
     <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? pretty_student($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
   </div>
-<<<<<<< HEAD
   <div class="sh-piechart-panel opanel">
     <div class="pieID pie">
     </div>
