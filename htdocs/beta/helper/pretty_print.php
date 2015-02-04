@@ -1,7 +1,13 @@
 <?php
 
-  function pretty_amount($amount) {
-    return ($amount > 0 ? "+" : "").($amount / 100);
+  function pretty_amount($amount, $sign = true, $symbol = false) {
+    $amount *= 1/100;
+    $symbol = $symbol ? "<i class=\"fa fa-euro\"></i>" : "";
+    if ($sign) {
+      return ($amount > 0 ? "+" : "").$amount.$symbol;
+    } else {
+      return ($amount > 0 ? $amount : -$amount).$symbol;
+    }
   }
 
   function pretty_tags($tags, $link = false) {
@@ -60,8 +66,7 @@
   }
 
   function pretty_date($date) {
-    // TODO
-    return $date;
+    return strftime("%d/%m/%Y",strtotime($date));
   }
 
   function pretty_operation_type($type) {
@@ -69,16 +74,18 @@
   }
 
   function pretty_operation($operation, $link = false) {
-    // TODO
-    $operation = select_operation($operation, array("binet", "term", "id"));
-    return link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), "operation ".$operation["id"]);
+    $operation = select_operation($operation, array("binet", "term", "id", "amount", "type", "date"));
+    $caption = pretty_operation_type($operation["type"]).($operation["amount"] > 0 ? "Recette" : "Dépense")." ".pretty_date($operation["date"])." (".pretty_amount($operation["amount"], false, true).")";
+    return link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), $caption);
   }
 
-  function pretty_request($request) {
-    // TODO
-    return "request ".$request;
+  function pretty_request($request, $link = true) {
+    $request = select_request($request, array("id", "binet", "term"))
+    $caption = "Demande de subventions ".pretty_binet_term($request["binet"]."/".$request["term"], false);
+    return $link ? link_to(path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])), $caption) : $caption;
   }
 
+  // TODO : get rid of it
   function pretty_subsidy($subsidy) {
     return "subsidy ".$subsidy;
   }
