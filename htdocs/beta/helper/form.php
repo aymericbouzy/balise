@@ -95,5 +95,7 @@
       return "date de soumission";
       case "expiry_date":
       return "date d'expiration";
+      default:
+      return "";
     }
   }

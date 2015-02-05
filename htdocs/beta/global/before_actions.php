@@ -2,7 +2,7 @@
 
   function before_action($function, $actions, $argument = NULL) {
     if (in_array($_GET["action"], $actions)) {
-      if (empty($argument)) {
+      if (!isset($argument)) {
         call_user_func($function);
       } else {
         call_user_func($function, $argument);
@@ -64,7 +64,7 @@
     $criteria = $array;
     unset($criteria["model_name"]);
     $entry = call_user_func("select_".$array["model_name"], $_GET[$array["model_name"]], array_merge(array("id"), array_keys($criteria)));
-    header_if(empty($entry), 404);
+    header_if(!$entry, 404);
     foreach ($criteria as $column => $value) {
       header_if($value != $entry[$column], 403);
     }
@@ -81,7 +81,7 @@
 
     foreach (array("str_fields", "int_fields", "amount_fields", "other_fields") as $fields_range) {
       foreach ($array[$fields_range] as $index => $field) {
-        if (!isset($_POST[$field[0]]) || empty($_POST[$field[0]])) {
+        if (!isset($_POST[$field[0]])) {
           if (!isset($array["optional"]) || !in_array($field[0], $array["optional"])) {
             $_SESSION[$array["model_name"]]["errors"][] = $field[0];
           } else {
@@ -131,7 +131,7 @@
     foreach ($array["other_fields"] as $field) {
       if (!call_user_func($field[1], $_POST[$field[0]])) {
         $readable_field = translate_form_field($field[0]);
-        if (!empty($readable_field)) {
+        if ($readable_field != "") {
           $_SESSION["error"][] = "La valeur entrée pour le champ \"".$readable_field."\" n'est pas valide.";
         }
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
@@ -139,7 +139,7 @@
     }
 
     if (isset($array["tags_string"]) && $array["tags_string"]) {
-      if (!empty($_POST["tags_string"])) {
+      if (isset($_POST["tags_string"]) && $_POST["tags_string"] != "") {
         foreach (explode(";", $_POST["tags_string"]) as $tag_name) {
           $tag_name = remove_exterior_spaces($tag_name);
           $tags = select_tags(array("clean_name" => clean_string($tag_name)));
@@ -158,7 +158,7 @@
       redirect_to_path($array["redirect_to"]);
     }
 
-    if (!empty($_SESSION["tag_to_create"])) {
+    if (isset($_SESSION["tag_to_create"])) {
       $_SESSION["return_to"] = binet_prefix($GLOBALS["binet"], $GLOBALS["term"]);
       redirect_to_path(path("new", "tag"));
     }
@@ -301,7 +301,7 @@
 
   function compute_query_array() {
     $query_array = array_intersect_key($_GET, array_flip(array("tags")));
-    if (!empty($query_array["tags"])) {
+    if ($query_array["tags"] != "") {
       $tags_clean_names = explode(" ", $query_array["tags"]);
       $query_array["tags"] = array();
       foreach ($tags_clean_names as $clean_name) {
