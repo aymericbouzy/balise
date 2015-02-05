@@ -31,10 +31,10 @@
   }
 
   function pretty_binet_term($binet_term, $link = true) {
-    $binet_term = select_term_binet($binet_term, array("binet", "term", "id"));
+    $binet_term = select_term_binet($binet_term, array("binet", "term"));
     $caption = pretty_binet($binet_term["binet"], false)." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
     if ($link) {
-      return link_to(path("show", "binet", $binet_term["id"]), $caption);
+      return link_to(path("show", "binet", $binet_term["binet"]), $caption);
     } else {
       return $caption;
     }
