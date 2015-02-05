@@ -9,7 +9,7 @@
 
   define("DATABASE_USERNAME", $database_username);
   define("DATABASE_PASSWORD", $database_password);
-  define("DATABASE_NAME", STATE == "test" ? "balise_test" : "balise");
+  define("DATABASE_NAME", $database_name);
   define("DATABASE_HOST", $database_host);
   define("DATABASE_PORT", $database_port);
   define("FRANKIZ_AUTH_KEY", $frankiz_auth_key);

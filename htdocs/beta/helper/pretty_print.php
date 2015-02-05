@@ -1,7 +1,13 @@
 <?php
 
-  function pretty_amount($amount) {
-    return ($amount > 0 ? "+" : "").($amount / 100);
+  function pretty_amount($amount, $sign = true, $symbol = false) {
+    $amount *= 1/100;
+    $symbol = $symbol ? "<i class=\"fa fa-euro\"></i>" : "";
+    if ($sign) {
+      return ($amount > 0 ? "+" : "").$amount.$symbol;
+    } else {
+      return ($amount > 0 ? $amount : -$amount).$symbol;
+    }
   }
 
   function pretty_tags($tags, $link = false) {
@@ -18,21 +24,15 @@
     return $tag_string;
   }
 
-  function pretty_binet($binet) {
-    $binet = select_binet($binet, array("id"));
-    return link_to(path("show", "binet", $binet["id"]), pretty_binet_no_link($binet["id"]));
-  }
-
-  function pretty_binet_no_link($binet) {
-    // TODO : create Kès logo
+  function pretty_binet($binet, $link = true) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
-    return $binet["id"] == KES_ID ? "Kès" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
+    $caption = $binet["id"] == KES_ID ? "<i class=\"icon-logo-kes fa-2x\" alt=\"Kès\"></i>" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
+    return $link ? link_to(path("show", "binet", $binet["id"]), $caption) : $caption;
   }
 
   function pretty_binet_term($binet_term, $link = true) {
     $binet_term = select_term_binet($binet_term, array("binet", "term"));
-    $binet = select_binet($binet_term["binet"], array("id", "name"));
-    $caption = $binet["name"]." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
+    $caption = pretty_binet($binet_term["binet"], false)." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
     if ($link) {
       return link_to(path("show", "binet", $binet["id"]), $caption);
     } else {
@@ -60,8 +60,7 @@
   }
 
   function pretty_date($date) {
-    // TODO
-    return $date;
+    return strftime("%d/%m/%Y",strtotime($date));
   }
 
   function pretty_operation_type($type) {
@@ -69,16 +68,18 @@
   }
 
   function pretty_operation($operation, $link = false) {
-    // TODO
-    $operation = select_operation($operation, array("binet", "term", "id"));
-    return link_to(path("show", "operation", $operation["id"], binet_prefix($operation["term"], $operation["id"])), "operation ".$operation["id"]);
+    $operation = select_operation($operation, array("binet", "term", "id", "amount", "type", "date"));
+    $caption = pretty_operation_type($operation["type"]).($operation["amount"] > 0 ? "Recette" : "Dépense")." ".pretty_date($operation["date"])." (".pretty_amount($operation["amount"], false, true).")";
+    return link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), $caption);
   }
 
-  function pretty_request($request) {
-    // TODO
-    return "request ".$request;
+  function pretty_request($request, $link = true) {
+    $request = select_request($request, array("id", "binet", "term"));
+    $caption = "Demande de subventions ".pretty_binet_term($request["binet"]."/".$request["term"], false);
+    return $link ? link_to(path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])), $caption) : $caption;
   }
 
+  // TODO : get rid of it
   function pretty_subsidy($subsidy) {
     return "subsidy ".$subsidy;
   }
