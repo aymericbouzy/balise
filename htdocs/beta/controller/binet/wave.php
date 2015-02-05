@@ -9,11 +9,17 @@
   }
 
   function setup_for_form_input() {
-    $_POST["laps_between_submission_and_expiry"] = 0; // not computable easily at this time, but we need the variable to be set.
+    $_POST["laps_between_submission_and_expiry"] = "laps"; // not computable easily at this time, but we need the variable to be set.
   }
 
   function check_laps_is_positive($laps) {
-    return strtotime($_POST["expiry_date"]) - strtotime($_POST["submission_date"]) > 0;
+    $positive = strtotime($_POST["expiry_date"]) - strtotime($_POST["submission_date"]) > 0;
+    if ($positive) {
+      return true;
+    } else {
+      $_SESSION["error"][] = "La date d'expiration doit être postérieure à la date de soumission.";
+      return false;
+    }
   }
 
   before_action("check_csrf_post", array("update", "create"));
@@ -24,10 +30,10 @@
   before_action("setup_for_form_input", array("create", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "wave",
-    "date_fields" => array(array("submission_date", current_date()), array("expiry_date", current_date()), array("question", MAX_TEXT_LENGTH)),
-    "str_fields" => array(array("question"), MAX_TEXT_LENGTH),
-    "other_fields" => array("laps_between_submission_and_expiry", "check_laps_is_positive"),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $wave["id"] : "", binet_prefix($binet, $term))
+    "date_fields" => array(array("submission_date", current_date()), array("expiry_date", current_date())),
+    "str_fields" => array(array("question", MAX_TEXT_LENGTH)),
+    "other_fields" => array(array("laps_between_submission_and_expiry", "check_laps_is_positive")),
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "wave", $_GET["action"] == "update" ? $wave["id"] : "", binet_prefix($binet, $term))
   ));
   before_action("not_published", array("publish"));
   before_action("generate_csrf_token", array("new", "edit", "show"));

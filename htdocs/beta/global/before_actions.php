@@ -134,7 +134,7 @@
       if (preg_does_match($regex, $_POST[$field[0]])) {
         $_POST[$field[0]] = preg_replace($regex, "$3-$2-$1", $_POST[$field[0]]);
       }
-      if ($_POST[$field[0]] <= $field[1]) {
+      if (!($_POST[$field[0]] > $field[1])) {
         $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }

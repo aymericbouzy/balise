@@ -88,14 +88,16 @@
     return implode("+", array_map("tag_to_clean_name", $tags));
   }
 
+  // not working and useless
   function date_in_n_days($n) {
     return date("Y-m-d", time() + mktime(0, 0, 0, 0, $n, 0));
   }
 
   function current_date() {
-    return date_in_n_days(0);
+    return date("Y-m-d");
+    // return date_in_n_days(0);
   }
-  
+
   function ids_as_keys($array) {
     $returned_array = array();
     foreach ($array as $object) {
