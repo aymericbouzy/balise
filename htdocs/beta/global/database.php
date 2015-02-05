@@ -6,9 +6,11 @@
       if (null === $instance) {
         try {
           try {
-            $instance = new PDO('mysql:host='.DATABASE_HOST.';port='.DATABASE_PORT.';dbname='.DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD);
+            $port = empty(DATABASE_PORT) ? "" : ';port='.DATABASE_PORT;
+            $instance = new PDO('mysql:host='.DATABASE_HOST.$port.';dbname='.DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD);
           } catch (PDOException $e) {
-            $instance = new PDO('mysql:host='.DATABASE_HOST.':'.DATABASE_PORT.';dbname='.DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD);
+            $port = empty(DATABASE_PORT) ? "" : ':'.DATABASE_PORT;
+            $instance = new PDO('mysql:host='.DATABASE_HOST.$port.';dbname='.DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD);
           }
         } catch (PDOException $e) {
           print "Error : " . $e->getMessage() . "<br/>";
