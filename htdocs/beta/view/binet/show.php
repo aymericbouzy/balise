@@ -95,12 +95,17 @@
           echo minipane("income", "Recettes", $binet["real_income"], $binet["expected_income"]);
           echo minipane("spending", "Dépenses", $binet["real_spending"], $binet["expected_spending"]);
           echo minipane("balance", "Equilibre", $binet["real_balance"], $binet["expected_balance"]);
-          echo minipane("subsidies_granted", "Subventions accordées", $binet["subsidized_amount_granted"], NULL);
-          echo minipane("subsidies_used", "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
+          $subsidies_granted_id= "subsidies_granted";
+          $subsidies_used_id= "subsidies_used";
+        } else {
+          $subsidies_granted_id= "subsidies_granted_std";
+          $subsidies_used_id= "subsidies_used_std";
+        }
+        echo minipane($subsidies_granted_id, "Subventions accordées", $binet["subsidized_amount_granted"], NULL);
+        echo minipane($subsidies_used_id, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
         ?>
       </div>
       <?php
-    }
     if (!empty($waves)) {
       ?>
       <div class="sh-bin-resume light-blue-background opanel">
