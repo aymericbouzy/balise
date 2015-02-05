@@ -8,6 +8,7 @@
 
   include "constants.php";
   session_start();
+  date_default_timezone_set('France/Paris');
 
   include GLOBAL_PATH."database.php";
   include GLOBAL_PATH."agregation.php";

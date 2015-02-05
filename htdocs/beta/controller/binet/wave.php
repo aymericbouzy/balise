@@ -8,14 +8,25 @@
     header_if(select_binet($_GET["binet"], array("subsidy_provider"))["subsidy_provider"], 401);
   }
 
+  function setup_for_form_input() {
+    $_POST["laps_between_submission_and_expiry"] = 0; // not computable easily at this time, but we need the variable to be set.
+  }
+
+  function check_laps_is_positive($laps) {
+    return strtotime($_POST["expiry_date"]) - strtotime($_POST["submission_date"]) > 0;
+  }
+
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("publish"));
   subsidy_provider();
   before_action("check_entry", array("show", "edit", "update", "publish"), array("model_name" => "wave", "binet" => $binet, "term" => $term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "publish"));
+  before_action("setup_for_form_input", array("create", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "wave",
-    "str_fields" => array(array("submission_date", MAX_DATE_LENGTH), array("expiry_date", MAX_DATE_LENGTH), array("question", MAX_TEXT_LENGTH)),
+    "date_fields" => array(array("submission_date", current_date()), array("expiry_date", current_date()), array("question", MAX_TEXT_LENGTH)),
+    "str_fields" => array(array("question"), MAX_TEXT_LENGTH),
+    "other_fields" => array("laps_between_submission_and_expiry", "check_laps_is_positive"),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" ? $wave["id"] : "", binet_prefix($binet, $term))
   ));
   before_action("not_published", array("publish"));
