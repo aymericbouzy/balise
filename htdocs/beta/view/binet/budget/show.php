@@ -38,7 +38,7 @@
     </div>
   </div>
   <?php
-    if (!empty($budget["subsidized_amount_granted"])) {
+    if (!in_array($budget["subsidized_amount_granted"], array("", "0", 0))) {
       ?>
       <div class="sh-bu-ratio opanel">
         <div class="header">

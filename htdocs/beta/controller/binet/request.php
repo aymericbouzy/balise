@@ -168,7 +168,7 @@
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget"));
       $form_field = amount_prefix.$subsidy["budget"];
-      if (empty($_POST[$form_field])) {
+      if (!isset($_POST[$form_field]) || in_array($_POST[$form_field], array("", 0, "0"))) {
         delete_subsidy($subsidy["id"]);
       }
     }

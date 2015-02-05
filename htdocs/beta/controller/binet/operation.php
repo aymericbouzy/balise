@@ -107,8 +107,8 @@
     break;
 
   case "delete":
-    $operation = select_operation($operation["id"], array("created_by", "binet_validation_by", "binet", "term", "id"));
-    if (empty($operation["binet_validation_by"]) && !in_array(array("id" => $operation["created_by"]), select_admins($operation["binet"], $operation["term"]))) {
+    $operation = select_operation($operation["id"], array("created_by", "state", "binet", "term", "id"));
+    if ($operation["state"] == "suggested" && !in_array(array("id" => $operation["created_by"]), select_admins($operation["binet"], $operation["term"]))) {
       send_email($operation["created_by"], "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
     }
     delete_operation($operation["id"]);

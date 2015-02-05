@@ -13,8 +13,8 @@
       $path = full_path($path);
     }
 
-    $parameters = empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
-    $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
+    $parameters = $options["class"] == "" ? "" : " class=\"".$options["class"]."\"";
+    $parameters .= $options["id"] == "" ? "" : " id=\"".$options["id"]."\"";
 
     if ($options["goto"]) {
       return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">\n $3", str_replace("\n", "", $caption));
