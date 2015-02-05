@@ -9,7 +9,7 @@ if (!empty($admins)) {
       <i class="fa fa-fw fa-send logo"></i>
       <?php echo pretty_student($admin["id"]);
       /* TODO : path */
-        echo button(path("",""),"Retirer cet administrateur","times","red",true,"small");?>
+        echo button(path("delete", "admin", $admin["id"], binet_prefix($binet, $term), array(), true),"Retirer cet administrateur","times","red",true,"small");?>
     </span>
     <?php
   }
