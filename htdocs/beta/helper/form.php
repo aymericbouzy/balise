@@ -17,10 +17,15 @@
   }
 
   function form_group_date($label, $field, $object, $object_name){
+    set_if_not_set($object[$field], "");
+    $regex = "/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/";
+    if (preg_does_match($regex, $object[$field])) {
+      $value = preg_replace($regex, "$3/$2/$1", $object[$field]);
+    }
     return form_group(
     $label,
     $field,
-    "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">
+    "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".$value."\">
     <script type=\"text/javascript\">
     $(function () {
       $('#".$field."').datetimepicker({
