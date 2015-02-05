@@ -1,14 +1,8 @@
 <?php
 
-  function check_admin() {
-    header_if(!validate_input(array("admin")), 400);
-    header_if(empty(select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]))), 404);
-    $GLOBALS[$admin] = $_GET["admin"];
-  }
-
   before_action("check_csrf_post", array("create"));
   before_action("check_csrf_get", array("delete"));
-  before_action("check_admin", array("delete"));
+  before_action("check_entry", array("delete"), array("model_name" => "admin", "binet" => $binet, "term" => $term));
   before_action("current_kessier", array("new", "create", "delete"));
   before_action("check_form_input", array("create"), array(
     "model_name" => "admin",
