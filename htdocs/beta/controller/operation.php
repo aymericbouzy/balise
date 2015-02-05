@@ -1,8 +1,8 @@
 <?php
 
   function creator_operation_or_kessier() {
-    $operation = select_operation($_GET["operation"], array("created_by", "binet_validation_by", "kes_validation_by"));
-    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_admin_current_binet(KES_ID) || !empty($operation["kes_validation_by"])), 401);
+    $operation = select_operation($_GET["operation"], array("created_by", "state"));
+    header_if(!(($operation["created_by"] == $_SESSION["student"] && $operation["state"] == "suggested") || (is_current_kessier() && $operation["state"] == "waiting_validation")), 401);
   }
 
   function correct_term($term) {
