@@ -201,7 +201,14 @@
   }
 
   function check_editing_rights() {
-    header_if(!has_editing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+    if ($_GET["controller"] == "binet") {
+      $binet = $GLOBALS["binet"]["id"];
+      $term = current_term($binet);
+    } else {
+      $binet = $GLOBALS["binet"];
+      $term = $GLOBALS["term"];
+    }
+    header_if(!has_editing_rights($binet, $term), 401);
   }
 
   // useless

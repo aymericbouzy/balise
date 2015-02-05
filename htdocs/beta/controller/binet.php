@@ -79,7 +79,7 @@
 
   case "show":
     $binet = select_binet($binet["id"], array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
-    $binet = array_merge($binet, select_term_binet($binet["id"]."/".$binet["current_term"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")));
+    $binet = array_merge(select_term_binet($binet["id"]."/".$binet["current_term"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $binet);
     foreach (select_waves(array("binet" => $binet["id"]), "submission_date") as $wave) {
       $waves[] = select_wave($wave["id"], array("id", "binet", "term", "submission_date", "expiry_date", "published"));
     }
