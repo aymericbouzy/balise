@@ -3,7 +3,7 @@
     <!-- Choose binet using dropdown menu -->
     <li>
       <!-- For all binets -->
-    	<a href="javascript:;" data-target="#binets" data-toggle="collapse"><?php echo pretty_binet_no_link($binet)?> </a>
+    	<a href="javascript:;" data-target="#binets" data-toggle="collapse"><?php echo pretty_binet($binet, false); ?> </a>
 				<ul id="binets" class="collapse">
 					<?php
             foreach(binet_admins_current_student() as $binet_admin) {
@@ -11,7 +11,7 @@
               // TODO : use pretty_binet_term below
   						?>
   						<li>
-  							<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), $binet_admin["binet_name"]." <span class=\"binet-term\">".$binet_admin["term"]."</span>"); ?>
+  							<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), pretty_binet_term($binet_admin["binet"]."/".$binet_admin["term"], false)); ?>
   						</li>
   						<?php
 						}
