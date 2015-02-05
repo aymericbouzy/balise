@@ -2,3 +2,7 @@
 htdocs/beta/config/production.php
 
 htdocs/-FProjet
+
+htdocs/beta/test.php
+
+htdocs/.htaccess

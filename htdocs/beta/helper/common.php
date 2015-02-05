@@ -5,7 +5,7 @@
     set_if_not_set($options["id"], "");
     set_if_not_set($options["goto"], false);
 
-    if (!in_array(substr($path, 0, 7), array("mailto:", "http://"))) {
+    if (!in_array(substr($path, 0, 7), array("mailto:", "http://")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
     }
 
@@ -17,7 +17,7 @@
     $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
 
     if ($options["goto"]) {
-      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">$3", str_replace("\n", "", $caption));
+      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">\n $3", str_replace("\n", "", $caption));
     } else {
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
     }
@@ -25,4 +25,29 @@
 
   function img($src, $alt = "") {
     return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
+  }
+
+  function button($path, $caption, $icon, $background_color, $link = true) {
+    $caption = "<div class=\"round-button ".$background_color."-background opanel\">
+                  <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
+                  <span>".$caption."</span>
+                </div>";
+    if ($link) {
+      return link_to(
+        $path,
+        $caption,
+        array("goto" => true)
+      );
+    } else {
+      return $caption;
+    }
+  }
+
+  function contact_binet_path($binet) {
+    $path = "mailto:";
+    foreach (select_current_admins($binet) as $admin) {
+      $admin = select_student($admin["id"], array("name", "email"));
+      $path .= $admin["name"]." <".$admin["email"].">, ";
+    }
+    return $path;
   }

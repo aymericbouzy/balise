@@ -92,13 +92,12 @@
   }
 
   function select_current_admins($binet) {
-    $sql = "SELECT binet_admin.student AS id
+    $sql = "SELECT DISTINCT binet_admin.student AS id
     FROM binet_admin
     INNER JOIN binet
     WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
-    $req->bindValue(':term', $term, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }
@@ -134,7 +133,6 @@
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
 
-  // useless for the time being
   function status_admin_binet($binet, $term = NULL) {
     $sql = "SELECT *
             FROM binet_admin

@@ -46,6 +46,7 @@
   switch ($_GET["action"]) {
 
   case "index":
+    $binets = select_binets(array("current_term" => array("IS", "NOT NULL")));
     break;
 
   case "new":
@@ -54,7 +55,7 @@
 
   case "create":
     $binet["id"] = create_binet($_POST["name"], $_POST["term"]);
-    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet)." a été créé avec succès.";
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." a été créé avec succès.";
     redirect_to_action("show");
     break;
 

@@ -10,12 +10,16 @@
       $values
     );
     foreach($subsidies as $subsidy) {
-      create_subsidy($subsidy["budget"], $request, $subsidy["amount"], $subsidy["optional_values"]);
+      create_subsidy($subsidy["budget"], $request, $subsidy["requested_amount"], $subsidy["optional_values"]);
     }
     return $request;
   }
 
   function select_request($request, $fields = array()) {
+    $virtual_fields = array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state");
+    if (!empty(array_intersect($virtual_fields, $fields))) {
+      $fields = array_merge($fields, array("id", "wave", "sent"));
+    }
     $id = $request;
     $request = select_entry(
       "request",
@@ -23,18 +27,16 @@
       $request,
       $fields
     );
-    if (!empty(array_intersect(array("binet", "term", "granted", "requested_amount", "granted_amount", "used_amount"), $fields))) {
+    if (!empty(array_intersect($virtual_fields, $fields))) {
       // TODO : check no request without subsidy
       $subsidies = select_subsidies(array("request" => $request["id"]));
-      $budget = select_budget($subsidies[0]["budget"]);
+      $subsidy = select_subsidy($subsidies[0]["id"], array("budget", "explanation"));
+      $budget = select_budget($subsidy["budget"], array("binet", "term"));
       if (in_array("binet", $fields)) {
         $request["binet"] = $budget["binet"];
       }
       if (in_array("term", $fields)) {
         $request["term"] = $budget["term"];
-      }
-      if (in_array("granted", $fields)) {
-        $request["granted"] = $subsidies[0]["explanation"] != NULL;
       }
       if (in_array("requested_amount", $fields)) {
         $request["requested_amount"] = get_requested_amount_request($id);
@@ -44,6 +46,16 @@
       }
       if (in_array("used_amount", $fields)) {
         $request["used_amount"] = get_used_amount_request($id);
+      }
+      if (in_array("state", $fields)) {
+        $wave = select_wave($request["wave"], array("state"));
+        $request["state"] =
+          $request["sent"] != 1 ?
+            "rough_draft" :
+            ($wave["state"] == "submission" ?
+              (!isset($subsidy["explanation"]) ? "sent" : "reviewed") :
+              ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
+
       }
     }
 
@@ -68,9 +80,9 @@
     }
     return select_entries(
       "request",
-      array("wave", "sent"),
+      array("wave", "requested_amount", "granted_amount", "used_amount"),
       array(),
-      array("binet", "term"),
+      array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state"),
       $criteria,
       $order_by,
       $ascending

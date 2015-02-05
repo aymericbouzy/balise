@@ -7,7 +7,7 @@
   case "index":
     $pending_validations_operations = pending_validations_operations($binet, $term);
     if ($binet == KES_ID) {
-      $pending_validations_operations_kes = pending_validations_operations_kes();
+      $pending_validations_operations_kes = kes_pending_validations_operations();
     }
     break;
 

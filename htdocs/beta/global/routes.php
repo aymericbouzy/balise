@@ -100,7 +100,7 @@
 		if (fwrite(
       $htaccess,
       "
-      ErrorDocument  404  ".true_path("404", "error")."
+      ErrorDocument  404  ".substr(true_path("400", "error"), 1)."
 	    AddDefaultCharset UTF-8
 	    RewriteEngine ".(URL_REWRITE ? "on" : "off")."
 	    ") === FALSE) {
@@ -114,7 +114,7 @@
     if (!URL_REWRITE || !empty(ROOT_PATH)) {
       write_path_rule("home/login", true_path("login", "home"), "[NC,QSA]");
     }
-    write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome")));
+    write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome", "chose_identity")));
     write_controller_rules(array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "set_term", "deactivate")));
     write_controller_rules(array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
     write_controller_rules(array("controller" => "tag", "except" => array("edit", "update", "delete")));

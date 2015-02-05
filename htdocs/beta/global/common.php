@@ -15,7 +15,7 @@
   }
 
   function redirect_to_action($action) {
-    $path = path($action, $_GET["controller"], (isset($GLOBALS[$_GET["controller"]]["id"]) ? $GLOBALS[$_GET["controller"]]["id"] : ""), (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
+    $path = path($action, $_GET["controller"], (isset($GLOBALS[$_GET["controller"]]["id"]) && $_GET["action"] != "delete" ? $GLOBALS[$_GET["controller"]]["id"] : ""), (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : ""));
     redirect_to_path($path);
   }
 
@@ -57,10 +57,11 @@
 
   function set_editable_entry_for_form($table, $object, $form_fields) {
     $id = $object["id"];
-    if (isset($_SESSION[$table])) {
+    if (isset($_SESSION[$table]) && $_SESSION[$table] != array("errors" => array())) {
       $object = initialise_for_form_from_session($form_fields, $table);
     } else {
       $object = call_user_func("select_".$table, $id, $form_fields);
+      $object["id"] = $id;
       $object = call_user_func($table."_to_form_fields", $object);
       $object = initialise_for_form($form_fields, $object);
     }
@@ -85,4 +86,16 @@
 
   function tag_array_to_string($tags) {
     return implode("+", array_map("tag_to_clean_name", $tags));
+  }
+
+  function current_date() {
+    return date("Y-m-d");
+  }
+
+  function ids_as_keys($array) {
+    $returned_array = array();
+    foreach ($array as $object) {
+      $returned_array[$object["id"]] = $object;
+    }
+    return $returned_array;
   }

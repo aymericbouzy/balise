@@ -8,9 +8,10 @@
   function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
     if (!empty($virtual_criteria)) {
+      $virtual_entries = array();
       $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria));
       foreach($entries as $entry) {
-        $virtual_entry = "select_".$table($entry["id"], array_merge($virtual_fields, array("id")));
+        $virtual_entry = call_user_func("select_".$table, $entry["id"], array_merge($virtual_fields, array("id")));
         $keep_entry = true;
         foreach($virtual_criteria as $column => $value) {
           if (is_array($value)) {
@@ -43,6 +44,9 @@
                 break;
               }
               break;
+            case "IN":
+              $keep_entry = $keep_entry && in_array($virtual_entry[$column], $value);
+              break;
             }
           } else {
             $keep_entry = $keep_entry && $virtual_entry[$column] == $value;
@@ -65,7 +69,7 @@
   }
 
   function select_with_request_string($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
-    $sql = "SELECT ".$select_string."
+    $sql = "SELECT DISTINCT ".$select_string."
             FROM ".$table."
             WHERE true";
     foreach ($criteria as $column => $value) {
@@ -104,6 +108,18 @@
 
         if (is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL"))) {
           $sql .= " ".$value[1];
+        } elseif (is_array($value) && $value[0] === "IN") {
+          $sql .= "(";
+          $first = true;
+          foreach ($value[1] as $index => $element) {
+            if ($first) {
+              $first = false;
+            } else {
+              $sql .= ",";
+            }
+            $sql .= ":".$column.$index;
+          }
+          $sql .= ")";
         } else {
           $sql .= " :".$column;
         }
@@ -122,10 +138,19 @@
         }
       } else {
         if (!(is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL")))) {
-          if (in_array($column, $selectable_int_fields)) {
-            $req->bindValue(':'.$column, $real_value, PDO::PARAM_INT);
-          } elseif (in_array($column, $selectable_str_fields)) {
-            $req->bindValue(':'.$column, $real_value, PDO::PARAM_STR);
+          if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
+            if (in_array($column, $selectable_int_fields)) {
+              $pdo_option = PDO::PARAM_INT;
+            } elseif (in_array($column, $selectable_str_fields)) {
+              $pdo_option = PDO::PARAM_INT;
+            }
+            if (is_array($value) && $value[0] == "IN") {
+              foreach ($value[1] as $index => $element) {
+                $req->bindValue(':'.$column.$index, $element, $pdo_option);
+              }
+            } else {
+              $req->bindValue(':'.$column, $real_value, $pdo_option);
+            }
           }
         }
       }
@@ -141,17 +166,16 @@
     foreach ($hash as $column => $value) {
       if (in_array($column, $updatable_int_fields) || in_array($column, $updatable_str_fields)) {
         $sql = "UPDATE ".$table."
-                SET :column = :value
+                SET ".$column." = :value
                 WHERE id = :".$table."
                 LIMIT 1";
         $req = Database::get()->prepare($sql);
         $req->bindValue(':'.$table, $entry, PDO::PARAM_INT);
         if (in_array($column, $updatable_int_fields)) {
-          $req->bindValue(':'.$value, $value, PDO::PARAM_INT);
+          $req->bindValue(':value', $value, PDO::PARAM_INT);
         } elseif (in_array($column, $updatable_str_fields)) {
-          $req->bindValue(':'.$value, $value, PDO::PARAM_STR);
+          $req->bindValue(':value', $value, PDO::PARAM_STR);
         }
-        $req->bindValue(':'.$column, $column, PDO::PARAM_STR);
         $req->execute();
       }
     }
@@ -220,4 +244,13 @@
     }
     $req->execute();
     return Database::get()->lastInsertId("id");
+  }
+
+  function delete_entry($table, $entry) {
+    $sql = "DELETE
+    FROM ".$table."
+    WHERE id = :entry";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':entry', $entry, PDO::PARAM_INT);
+    $req->execute();
   }

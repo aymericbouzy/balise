@@ -50,7 +50,7 @@
       "budget",
       array("binet", "amount", "term"),
       array(),
-      array(),
+      array("real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used"),
       $criteria,
       $order_by,
       $ascending
@@ -65,16 +65,21 @@
                   $hash);
   }
 
+  function delete_budget($budget) {
+    delete_entry("budget", $budget);
+  }
+
   function get_real_amount_budget($budget) {
-    $sql = "SELECT SUM(operation_budget.amount) as real_amount
-            FROM operation_budget
-            INNER JOIN operation
-            ON operation.id = operation_budget.operation
-            WHERE operation_budget.budget = :budget AND operation.kes_validation_by != NULL";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':budget', $budget, PDO::PARAM_INT);
-    $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC)["real_amount"];
+    $all_operations = ids_as_keys(select_operations_budget($budget));
+    $filtered_operations = array_merge(
+      filter_entries($all_operations, "operation", array("state", "needs_validation"), array("needs_validation" => false, "state" => "accepted")),
+      filter_entries($all_operations, "operation", array("state"), array("state" => "validated"))
+    );
+    $operations = array();
+    foreach(ids_as_keys($filtered_operations) as $id => $operation) {
+      $operations[] = $all_operations[$id];
+    }
+    return sum_array($operations, "amount");
   }
 
   function get_subsidized_amount_granted_budget($budget) {
@@ -112,10 +117,11 @@
 
   function get_subsidized_amount_used_details_budget($budget) {
     $subsidies = select_subsidies(array("budget" => $budget));
-    foreach($subsidies as $subsidy) {
-      $subsidy = select_subsidy($subsidy, array("id", "granted_amount", "wave"));
-      $subsidy["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
-      $subsidy["used_amount"] = 0;
+    foreach($subsidies as $index => $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave"));
+      $subsidies[$index]["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
+      $subsidies[$index]["used_amount"] = 0;
+      set_if_not_set($subsidies[$index]["granted_amount"], 0);
     }
     usort($subsidies, "sort_by_date");
     foreach(select_operations_budget($budget) as $operation) {
@@ -144,4 +150,5 @@
     $req = Database::get()->prepare($sql);
     $req->bindValue(':operation', $operation, PDO::PARAM_INT);
     $req->execute();
+    return $req->fetchAll();
   }

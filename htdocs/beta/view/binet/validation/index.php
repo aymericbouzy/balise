@@ -42,7 +42,7 @@
               </thead>
               <tbody>
                 <?php
-                  foreach ($pending_validations_operations as $operation) {
+                  foreach ($pending_validations_operations_kes as $operation) {
                     echo validatable_operation_line($operation, true);
                   }
                 ?>

@@ -11,7 +11,7 @@
     return form_group(
       $label,
       $field,
-      "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".($object[$field] ?: "")."\">",
+      "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".(isset($object[$field]) ? $object[$field] : "")."\">",
       $object_name
     );
   }
@@ -33,7 +33,11 @@
   }
 
   function form_csrf_token() {
-    return "<input type=\"hidden\" name=\"csrf_token\" value=\"".get_csrf_token()."\">";
+    return form_hidden("csrf_token", get_csrf_token());
+  }
+
+  function form_hidden($field, $value) {
+    return "<input type=\"hidden\" name=\"".$field."\" value=\"".$value."\">";
   }
 
   function form_group_checkbox($label, $field, $object, $object_name) {
@@ -103,5 +107,9 @@
       return "étapes pour la récupération des subventions";
       case "current_term":
       return "mandat actuel";
+      case "submission_date":
+      return "date de soumission";
+      case "expiry_date":
+      return "date d'expiration";
     }
   }

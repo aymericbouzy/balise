@@ -13,6 +13,9 @@
   }
 
   function select_subsidy($subsidy, $fields = NULL) {
+    if (!empty(array_intersect($fields, array("used_amount", "wave")))) {
+      $fields = array_merge(array("id", "request"), $fields);
+    }
     $subsidy = select_entry(
       "subsidy",
       array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation"),
@@ -24,6 +27,8 @@
       case "used_amount":
         $subsidy[$field] = get_used_amount_subsidy($subsidy["id"]);
         break;
+      case "wave":
+        $subsidy[$field] = select_request($subsidy["request"], array("wave"))["wave"];
       }
     }
     return $subsidy;
@@ -41,12 +46,16 @@
                   $hash);
   }
 
+  function delete_subsidy($subsidy) {
+    delete_entry("subsidy", $subsidy);
+  }
+
   function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
     return select_entries(
       "subsidy",
       array("budget", "request", "requested_amount", "granted_amount"),
       array(),
-      array("used_amount"),
+      array("used_amount", "wave"),
       $criteria,
       $order_by,
       $ascending

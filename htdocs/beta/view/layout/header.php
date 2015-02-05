@@ -26,26 +26,11 @@
             <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
           </li >
           <?php
-          if (!empty(select_budgets(array("binet" => $binet, "term" => $term))) && !empty(select_waves(array("open" => true)))) {
-            ?>
-              <li class="add-operation">
-                <?php echo link_to(path("new", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Demande de subvention", array("class" => "add-operation")); ?>
-              </li>
-            <?php
-          }
           if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
             ?>
             <li class = "divider"></li>
-            <li>
-              <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
-            </li>
-            <?php
-          }
-          if ($binet == KES_ID) {
-            ?>
-            <li class = "divider"></li>
             <li class="add-operation">
-              <?php echo link_to(path("new", "binet"), "<i class=\"fa fa-fw fa-group\"></i> Binet", array("class" => "add-operation")); ?>
+              <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
             </li>
             <?php
           }
@@ -56,12 +41,20 @@
             </li>
           <?php
         }
+        if (is_current_kessier()) {
+          ?>
+          <li class = "divider"></li>
+          <li class="add-operation">
+            <?php echo link_to(path("new", "binet"), "<i class=\"fa fa-fw fa-group\"></i> Binet", array("class" => "add-operation")); ?>
+          </li>
+          <?php
+        }
       ?>
     </ul>
   </li>
 
   <li>
-    <span><i class="fa fa-user"></i> <?php echo $current_student["name"]; ?></span>
+    <span><i class="fa fa-user"></i> <?php echo pretty_student(connected_student(), false); ?></span>
   </li>
   <li style="padding-right:20px;">
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>

@@ -16,12 +16,41 @@
   }
 
   function select_operation($operation, $fields = array()) {
-    return select_entry(
+    if (!empty(array_intersect($fields, array("state", "needs_validation")))) {
+      $fields = array_unique(array_merge(array("binet_validation_by", "kes_validation_by", "id", "needs_validation"), $fields));
+    }
+    $operation = select_entry(
       "operation",
       array("id", "binet", "term", "amount", "created_by", "paid_by", "type", "date", "bill", "reference", "comment", "binet_validation_by", "kes_validation_by"),
       $operation,
       $fields
     );
+    if (in_array("needs_validation", $fields)) {
+      $operation["needs_validation"] = false;
+      $subsidies = select_subsidies(array("operation" => $operation["id"]));
+      if (!empty($subsidies)) {
+        $requests = array();
+        foreach ($subsidies as $subsidy) {
+          $subsidy = select_subsidy($subsidy["id"], array("request"));
+          $requests[$subsidy["request"]] = true;
+        }
+        foreach ($requests as $request => $present) {
+          $request = select_request($request, array("state"));
+          $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
+        }
+      }
+    }
+    if (in_array("state", $fields)) {
+      $operation["state"] =
+        isset($operation["kes_validation_by"]) ?
+          "validated" :
+          (!isset($operation["binet_validation_by"]) ?
+            "suggested" :
+            ($operation["needs_validation"] ?
+              "waiting_validation" :
+              "accepted"));
+    }
+    return $operation;
   }
 
   function exists_operation($operation) {
@@ -69,14 +98,13 @@
   }
 
   function select_operations($criteria = array(), $order_by = "date", $ascending = true) {
-    set_if_not_set($criteria["kes_validation_by"], array("IS", "NOT NULL"));
-    set_if_not_set($criteria["binet_validation_by"], array("IS", "NOT NULL"));
+    set_if_not_set($criteria["state"], array("IN", "accepted", "validated"));
 
     return select_entries(
       "operation",
       array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),
       array("bill", "date", "reference"),
-      array(),
+      array("state", "needs_validation"),
       $criteria,
       $order_by,
       $ascending
@@ -84,12 +112,7 @@
   }
 
   function delete_operation($operation) {
-    $sql = "DELETE
-            FROM operation
-            WHERE id = :operation";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':operation', $operation, PDO::PARAM_INT);
-    $req->execute();
+    delete_entry("operation", $operation);
   }
 
   function select_operations_budget($budget) {
@@ -127,10 +150,14 @@
     return count(pending_validations_operations($binet, $term)) + ($binet == KES_ID ? count(kes_pending_validations_operations()) : 0);
   }
 
+  function count_pending_validations_kes() {
+    return count(kes_pending_validations_operations());
+  }
+
   function pending_validations_operations($binet, $term) {
-    return select_operations(array("kes_validation_by" => array("IS", "NULL"), "binet_validation_by" => array("IS", "NULL"), "binet" => $binet, "term" => $term), "date");
+    return select_operations(array("binet" => $binet, "term" => $term, "state" => "suggested"), "date");
   }
 
   function kes_pending_validations_operations() {
-    return select_operations(array("kes_validation_by" => array("IS", "NULL"), "binet_validation_by" => array("IS NOT", "NULL")), "date");
+    return select_operations(array("state" => "waiting_validation"), "date");
   }

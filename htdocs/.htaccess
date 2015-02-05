@@ -1,5 +1,5 @@
 
-      ErrorDocument  404  ./beta/index.php?controller=error&action=404&
+      ErrorDocument  404  /beta/index.php?controller=error&action=400&
 	    AddDefaultCharset UTF-8
 	    RewriteEngine on
 	    RewriteRule ^beta/?$ ./beta/index.php?controller=home&action=welcome&%{QUERY_STRING} [L,NC,QSA]
@@ -9,6 +9,7 @@
     RewriteRule ^beta/home/login/?$ ./beta/index.php?controller=home&action=login&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/home/logout/?$ ./beta/index.php?controller=home&action=logout&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/home/welcome/?$ ./beta/index.php?controller=home&action=welcome&%{QUERY_STRING} [L,NC,QSA]
+    RewriteRule ^beta/home/chose_identity/?$ ./beta/index.php?controller=home&action=chose_identity&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/?$ ./beta/index.php?controller=binet&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/index/?$ ./beta/index.php?controller=binet&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/new/?$ ./beta/index.php?controller=binet&action=new&%{QUERY_STRING} [L,NC,QSA]

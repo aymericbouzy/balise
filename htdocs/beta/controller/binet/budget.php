@@ -1,7 +1,11 @@
 <?php
 
   function budget_is_alone() {
-    header_if(!empty(select_operations_budget($_GET["budget"])) || !empty(select_subsidies_budget($_GET["budget"])), 403);
+    return empty(select_operations_budget($_GET["budget"]))  && empty(select_subsidies(array("budget" => $_GET["budget"])));
+  }
+
+  function check_budget_is_alone() {
+    header_if(!budget_is_alone(), 403);
   }
 
   before_action("check_csrf_post", array("update", "create"));
@@ -17,7 +21,7 @@
     "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge($_GET["action"] == "update" ? array("label", "amount") : array(), array("sign", "tags_string"))
   ));
-  before_action("budget_is_alone", array("edit", "update", "delete"));
+  before_action("check_budget_is_alone", array("edit", "update", "delete"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("label", "tags_string", "amount");
@@ -39,7 +43,7 @@
     break;
 
   case "create":
-    $budget["id"] = create_budget($binet, $term, (2*$_POST["sign"] - 1)*$_POST["amount"], $_POST["label"]);
+    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
@@ -48,7 +52,7 @@
     break;
 
   case "show":
-    $budget = select_budget($budget, array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+    $budget = select_budget($budget["id"], array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     break;
 
   case "edit":
@@ -56,9 +60,10 @@
       $budget["sign"] = $budget["amount"] < 0 ? true : false;
       $budget["amount"] *= $budget["sign"] ? -1 : 1;
       $first = true;
-      foreach (select_tags_budget($id) as $tag) {
+      foreach (select_tags_budget($budget["id"]) as $tag) {
         if ($first) {
           $first = false;
+          $budget["tags_string"] = "";
         } else {
           $budget["tags_string"] .= ";";
         }
@@ -73,7 +78,7 @@
     update_budget($budget["id"], $_POST);
     remove_tags_budget($budget["id"]);
     foreach ($tags as $tag) {
-      add_tag_budget($tag, $budget);
+      add_tag_budget($tag, $budget["id"]);
     }
     unset($_SESSION["budget"]);
     $_SESSION["notice"][] = "La ligne de budget a été mise à jour avec succès.";
@@ -81,6 +86,7 @@
     break;
 
   case "delete":
+    delete_budget($budget["id"]);
     redirect_to_action("index");
     break;
 

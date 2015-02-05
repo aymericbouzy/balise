@@ -57,7 +57,7 @@
   ));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
-  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by");
+  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign");
   if ($_GET["action"] == "new") {
     $form_fields[] = "sign";
   }
@@ -76,35 +76,40 @@
     break;
 
   case "create":
-    $operation["id"] = create_operation($binet, $term, (1 - $_POST["sign"]*2)*$_POST["amount"], $_POST["type"], $_POST);
+    $operation["id"] = create_operation($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("review");
     break;
 
   case "show":
-    $operation = select_operation($operation["id"], array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference"));
+    $operation = select_operation(
+      $operation["id"],
+      array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference", "state", "type", "comment", "paid_by")
+    );
     $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
 
   case "edit":
     function operation_to_form_fields($operation) {
-      $operation["sign"] = $operation["amount"] > 0 ? 1 : 0;
-      $operation["amount"] *= $operation["sign"] ? 1 : -1;
+      $operation["sign"] = $operation["amount"] > 0 ? 0 : 1;
+      $operation["amount"] *= $operation["sign"] ? -1 : 1;
+      $operation["amount"] *= 1/100;
       return $operation;
     }
     $operation = set_editable_entry_for_form("operation", $operation, $form_fields);
     break;
 
   case "update":
-    unset($_SESSION["operation"]);
+    $_POST["amount"] = (1 - 2*$_POST["sign"])*$_POST["amount"];
+    update_operation($operation["id"], $_POST);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
     redirect_to_action("show");
     break;
 
   case "delete":
-    $operation = select_operation($operation["id"], array("created_by", "binet_validation_by", "binet", "term"));
-    if (empty($operation["binet_validation_by"]) && !in_array(array("id" => current_student()), select_admins_binet($operation["binet"], $operation["term"]))) {
-      send_email(current_student(), "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
+    $operation = select_operation($operation["id"], array("created_by", "binet_validation_by", "binet", "term", "id"));
+    if (empty($operation["binet_validation_by"]) && !in_array(array("id" => $operation["created_by"]), select_admins($operation["binet"], $operation["term"]))) {
+      send_email($operation["created_by"], "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
     }
     delete_operation($operation["id"]);
     $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
@@ -118,7 +123,7 @@
     $id = $operation["id"];
     function operation_to_form_fields($operation) {
       foreach ($GLOBALS["binet_budgets"] as $budget) {
-        $operation[adds_amount_prefix($budget)] = 0;
+        $operation[adds_amount_prefix($budget)] = "";
       }
       foreach (select_budgets_operation($operation["id"]) as $budget) {
         $operation[adds_amount_prefix($budget)] = $budget["amount"];
@@ -138,11 +143,11 @@
     }
     add_budgets_operation($operation["id"], $budget_amounts_array);
     validate_operation($operation["id"]);
-    $operation = select_operation($operation["id"], array("id", "created_by"));
+    $operation = select_operation($operation["id"], array("id", "created_by", "state"));
     if ($operation["created_by"] != connected_student()) {
       send_email($operation["created_by"], "Opération acceptée", "operation_accepted", array("operation" => $operation["id"], "binet" => $binet));
     }
-    $_SESSION["notice"][] = "L'opération a été acceptée.".(true ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    $_SESSION["notice"][] = "L'opération a été acceptée.".($operation["state"] == "waiting_validation" ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;
 
