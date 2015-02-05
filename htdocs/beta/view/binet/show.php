@@ -98,6 +98,7 @@
           $subsidies_granted_id= "subsidies_granted";
           $subsidies_used_id= "subsidies_used";
         } else {
+          echo "<div class=\"sh-bin-stats-std light-blue-background opanel\">";
           $subsidies_granted_id= "subsidies_granted_std";
           $subsidies_used_id= "subsidies_used_std";
         }
