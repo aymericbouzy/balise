@@ -34,7 +34,7 @@
     $binet = select_binet($binet_term["binet"], array("id", "name"));
     $caption = $binet["name"]." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
     if ($link) {
-      return link_to(path("show", "binet", $binet["id"]), $caption);
+      return link_to(path("show", "binet", $binet_term["binet"]), $caption);
     } else {
       return $caption;
     }

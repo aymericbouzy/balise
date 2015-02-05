@@ -34,7 +34,11 @@
 
     $subject = "[Projet balise] ".$subject;
 
-    return mail($to, $subject, $message, $headers);
+    if (!mail($to, $subject, $message, $headers)) {
+      error_log("Email sending to ".$to." with subject \"".$subject."\" failed.");
+      return false;
+    }
+    return true;
   }
 
   function exceptions_error_handler($severity, $message, $filename, $lineno) {
