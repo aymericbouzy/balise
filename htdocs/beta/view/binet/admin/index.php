@@ -15,3 +15,4 @@ if (!empty($admins)) {
   }
 }
 ?>
+</div>

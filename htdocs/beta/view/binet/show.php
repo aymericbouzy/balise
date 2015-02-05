@@ -13,7 +13,7 @@
   <div class="sh-actions">
     <?php
       if (is_current_kessier()) {
-       echo button(path("edit", "binet", $binet["id"]), "Changer le terme", "edit", "orange");
+       echo button(path("edit", "binet", $binet["id"]), "Modifier le binet", "edit", "orange");
       }
       echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
     ?>
