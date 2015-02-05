@@ -24,7 +24,7 @@
     <script type=\"text/javascript\">
     $(function () {
       $('#".$field."').datetimepicker({
-        format: 'LT'
+        format: 'DD-MM-YYYY'
       });
     });
     </script>",
