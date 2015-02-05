@@ -133,14 +133,14 @@
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
 
-  function status_admin_binet($binet, $term = "") {
+  function status_admin_binet($binet, $term = NULL) {
     $sql = "SELECT *
             FROM binet_admin
-            WHERE binet = :binet ".($term == "" ? "" : "AND term = :term ")."AND student = :student
+            WHERE binet = :binet ".(empty($term) ? "" : "AND term = :term ")."AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
-    if ($term != "") {
+    if (!empty($term)) {
       $req->bindValue(':term', $term, PDO::PARAM_INT);
     }
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);

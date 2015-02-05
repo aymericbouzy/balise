@@ -5,7 +5,7 @@
     return filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by, $ascending);
   }
 
-  function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = "", $ascending = true) {
+  function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
     if (!empty($virtual_criteria)) {
       $virtual_entries = array();
@@ -56,7 +56,7 @@
           $virtual_entries[] = $virtual_entry;
         }
       }
-      if ($order_by != "" && in_array($order_by, $filterable_virtual_fields)) {
+      if (!empty($order_by) && in_array($order_by, $filterable_virtual_fields)) {
         function sort_by_virtual_field($e1, $e2) {
           return ($ascending ? 1 : (-1))*strcmp($e1[$order_by], $s2[$order_by]);
         }
@@ -68,7 +68,7 @@
     }
   }
 
-  function select_with_request_string($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = "", $ascending = true) {
+  function select_with_request_string($select_string, $table, $selectable_int_fields, $selectable_str_fields, $criteria, $order_by = NULL, $ascending = true) {
     $sql = "SELECT DISTINCT ".$select_string."
             FROM ".$table."
             WHERE true";
@@ -125,7 +125,7 @@
         }
       }
     }
-    $ordered = $order_by != "" && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields));
+    $ordered = !empty($order_by) && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields));
     if ($ordered) {
       $sql .= " ORDER BY :order_by".($ascending ? " ASC" : " DESC");
     }

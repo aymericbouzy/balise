@@ -18,7 +18,7 @@
       $query_array["csrf_token"] = get_csrf_token();
     }
     foreach ($query_array as $key => $value) {
-      if (isset($value) && $value != "") {
+      if (!empty($value)) {
         if ($include_start_char) {
           $query_string .= "?";
           $include_start_char = false;
@@ -35,25 +35,25 @@
     if (!URL_REWRITE) {
       return true_path($action, $model_name, $model_id, $prefix).$query_string;
     }
-    return ROOT_PATH.($prefix == "" ? "" : $prefix."/").$model_name.($model_id == "" ? "" : "/".$model_id).($action == "" ? "" : "/".$action).$query_string;
+    return ROOT_PATH.(empty($prefix) ? "" : $prefix."/").$model_name.(empty($model_id) ? "" : "/".$model_id).(empty($action) ? "" : "/".$action).$query_string;
   }
 
   function full_path($path) {
     if (substr($path, 0, 1) != "/") {
       $path = "/".$path;
     }
-    return "http".(isset($_SERVER["HTTPS"]) ? "s" : "")."://".$_SERVER["HTTP_HOST"].$path;
+    return "http".(empty($_SERVER["HTTPS"]) ? "" : "s")."://".$_SERVER["HTTP_HOST"].$path;
   }
 
   function true_path($action, $model_name, $model_id = "", $prefix = "") {
-    if ($prefix == "") {
+    if (empty($prefix)) {
       $prefix_string = "";
     } else {
       $prefix_elements = explode("/", $prefix);
       $prefix_string = "&prefix=".$prefix_elements[0]."&binet=".$prefix_elements[1]."&term=".$prefix_elements[2];
     }
-    $action = $action == "" ? "index" : $action;
-    return "./".ROOT_PATH."index.php?controller=".$model_name."&action=".$action.($model_id == "" ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
+    $action = empty($action) ? "index" : $action;
+    return "./".ROOT_PATH."index.php?controller=".$model_name."&action=".$action.(empty($model_id) ? "" : "&".$model_name."=".$model_id).$prefix_string."&";
   }
 
   function write_path_rule($path, $url, $options = "[L,NC,QSA]") {
@@ -92,7 +92,7 @@
   }
 
   function urlrewrite() {
-    $htaccess = fopen((ROOT_PATH == "" ? "" : ".")."./.htaccess", "w");
+    $htaccess = fopen((empty(ROOT_PATH) ? "" : ".")."./.htaccess", "w");
   	if (!$htaccess) {
   		echo ".htaccess could not be opened for urlrewriting.";
   		exit;
@@ -111,7 +111,7 @@
     $GLOBALS["htaccess"] = $htaccess;
 
     write_path_rule(substr(ROOT_PATH, 0, strlen(ROOT_PATH) -1), true_path("welcome", "home"));
-    if (!URL_REWRITE || ROOT_PATH != "") {
+    if (!URL_REWRITE || !empty(ROOT_PATH)) {
       write_path_rule("home/login", true_path("login", "home"), "[NC,QSA]");
     }
     write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome", "chose_identity")));

@@ -28,7 +28,7 @@
     return "<div class=\"checkbox".(isset($_SESSION[$object_name]["errors"]) && in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
               <label>
                 <input type=\"hidden\" name=\"".$field."\" value=\"0\">
-                <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(!isset($object[$field]) || in_array($object[$field], array("", 0, "0")) ? "" : " checked").">
+                <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(empty($object[$field]) ? "" : " checked").">
                 ".$label."
               </label>
             </div>";
@@ -95,7 +95,5 @@
       return "date de soumission";
       case "expiry_date":
       return "date d'expiration";
-      default:
-      return "";
     }
   }

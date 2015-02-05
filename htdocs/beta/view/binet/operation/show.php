@@ -61,7 +61,7 @@
   <div class="sh-bu-budgets opanel">
   <?php
     $budgets = select_budgets_operation($operation["id"]);
-    if (!empty($budgets) && sizeOf($budgets) > 1) {
+    if (!empty($budgets)) {
       ?>
         <div class="pieID pie">
         </div>
