@@ -20,7 +20,7 @@
         <?php
           $binet = select_binet($binet["id"], array("id", "current_term"));
           if (is_current_kessier()) {
-            $binet["balance"] = select_term_binet($binet["id"]."/".$binet["current_term"], array("balance"))["balance"];
+            $binet["balance"] = select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance"))["real_balance"];
             $binet["state_color"] = $binet["balance"] > 0 ? "green" : "red";
           }
           ob_start();

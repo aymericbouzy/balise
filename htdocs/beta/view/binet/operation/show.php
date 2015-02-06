@@ -58,26 +58,22 @@
   <div class="sh-op-payer opanel">
     <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? pretty_student($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
   </div>
-  <div class="sh-bu-budgets opanel">
-  <?php
-    $budgets = select_budgets_operation($operation["id"]);
-    if (!empty($budgets)) {
-      ?>
-        <div class="pieID pie">
-        </div>
-        <ul class="pieID legend">
-          <li>
-            <?php
-              foreach ($budgets as $budget) {
-                ?>
-                <em><?php echo pretty_budget($budget["id"]); ?></em>
-                <span><?php echo pretty_amount($budget["amount"]); ?></span>
-                <?php
-              }
+  <div class="sh-piechart-panel opanel">
+    <div class="pieID pie">
+    </div>
+    <ul class="pieID legend">
+      <li>
+        <?php
+          foreach ($budgets as $budget) {
             ?>
-          </li>
-        </ul>
-      <?php
+            <em><?php echo pretty_budget($budget["id"]); ?></em>
+            <span><?php echo pretty_amount($budget["amount"]); ?></span>
+            <?php
+          }
+        ?>
+        </li>
+      </ul>
+    <?php
     }
     else{
       if(!empty($budgets)){
