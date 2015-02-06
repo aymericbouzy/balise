@@ -1,3 +1,3 @@
 <?php
 
-  phpinfo();
+var_dump("opanel" === 0);

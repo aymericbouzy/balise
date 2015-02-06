@@ -1,7 +1,7 @@
 <?php
 
   function set_if_not_set(&$variable, $value) {
-    if(!isset($variable)) {
+    if (!isset($variable)) {
       $variable = $value;
     }
   }
@@ -49,7 +49,14 @@
   }
 
   function is_empty(&$variable) {
-    return !isset($variable) || in_array($variable, array("", 0, "0", 0.0, false, array(), NULL));
+    return !isset($variable) ||
+    $variable === array() ||
+    $variable === "" ||
+    $variable === false ||
+    $variable === 0 ||
+    $variable === NULL ||
+    $variable === "0" ||
+    $variable === 0.0;
   }
 
   function connected_student() {
