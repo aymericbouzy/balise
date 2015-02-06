@@ -14,18 +14,11 @@
     <?php
       echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
       if (is_current_kessier()) {
-       echo button(path("edit", "binet", $binet["id"]), "Modifier le binet", "edit", "orange");
-       if($binet["subsidy_provider"]>0){
-        $change= false;
-        $message="Retirer les droits de subventionneur";
-        $color="orange";
-       } else {
-        $change= true;
-        $message= "Ajouter les droits de subventionneur";
-        $color="blue";
-       }
-       echo button(path("set_subsidy_provider", "binet", $binet["id"], "", array(), $change),$message,"money","blue");
-       echo button(path("change_term", "binet", $binet["id"]),"Faire la passation","forward","green");
+        echo button(path("edit", "binet", $binet["id"]), "Modifier le binet", "edit", "orange");
+        if ($binet["subsidy_provider"] == 0) {
+          echo button(path("set_subsidy_provider", "binet", $binet["id"], "", array(), true), "Ajouter les droits de subventionneur", "money", "blue");
+        }
+        echo button(path("change_term", "binet", $binet["id"]),"Faire la passation","forward","green");
       }
     ?>
   </div>
