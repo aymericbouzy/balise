@@ -25,7 +25,7 @@
         $color="blue";
        }
        echo button(path("set_subsidy_provider", "binet", $binet["id"], "", array(), $change),$message,"money","blue");
-       echo button(path("change_term", "binet", $binet["id"]),"Faire la passation","user","green");
+       echo button(path("change_term", "binet", $binet["id"]),"Faire la passation","forward","green");
       }
     ?>
   </div>
