@@ -29,13 +29,13 @@
     return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
   }
 
-  function button($path, $caption, $icon, $background_color, $link = true, $size = "") {
+  function button($path, $caption, $icon, $background_color, $link = true, $size = "",$label_position="right") {
     if ($size != "") {
       $size = "-".$size;
     }
     $caption = "<div class=\"round-button".$size." ".$background_color."-background opanel\">
     <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
-    <span>".$caption."</span>
+    <span class=\"olabel ".$label_position."\">".$caption."</span>
     </div>";
     if ($link) {
       return link_to($path, $caption, array("goto" => true));

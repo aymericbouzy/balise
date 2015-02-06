@@ -1,6 +1,6 @@
 <div id="admin-wrapper">
 <div class="actionbar-left">
-  <?php echo button(path("show", "binet", $binet),"","chevron-left","blue",true,"");?>
+  <?php echo button(path("show", "binet", $binet),"Retour au résumé du binet","chevron-left","blue",true,"","left");?>
 </div>
 <?php
 $admins = select_current_admins($binet);

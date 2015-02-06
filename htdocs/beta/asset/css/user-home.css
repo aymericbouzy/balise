@@ -581,16 +581,13 @@ footer>.btn {
   }
 
   .round-button:hover{
-    box-shadow: none;
-    /* Some browsers supported : other just have
-    no shadow on hover */
     -webkit-filter: brightness(1.2);
     -moz-filter: brightness(1.2);
     -o-filter: brightness(1.2);
     -ms-filter: brightness(1.2);
   }
 
-  .round-button>span{
+  .round-button>.olabel{
     visibility: hidden;
     display: inline-block;
     width: 0px;
@@ -614,8 +611,6 @@ footer>.btn {
     height: 20px;
     border-radius: 10px;
     text-align:center;
-    padding:2px;
-    padding-top:2px;
     font-size:13px;
   }
 
@@ -625,8 +620,10 @@ footer>.btn {
     transition-property: transform;
     transform: rotate(0deg);
   }
-  .round-button>span , .round-button-small>span{
+  .round-button>.olabel , .round-button-small>.olabel{
     display:block;
+    max-width:150px;
+    color:#2e2e2e;
     position: absolute;
     visibility: hidden;
     transition-timing-function: linear;
@@ -634,15 +631,25 @@ footer>.btn {
     transition-property: visibility;
   }
 
-  .round-button>span {
+  .round-button>.olabel {
+    font-size:20px;
+  }
+  .round-button>.right {
     margin-left: 30px;
-    font-size:18px;
+  }
+  .round-button>.left {
+    margin-left:-200px;
   }
 
-  .round-button-small>span{
-    margin-left: 20px;
+  .round-button-small>.olabel{
     font-size:12px;
     background-color:rgba(255,255,255,0.7);
+  }
+  .round-button-small>.right{
+    margin-left: 20px;
+  }
+  .round-button-small>.left{
+    margin-left: -120px;
   }
 
   .round-button:hover>.anim,.round-button-small:hover>.anim{
@@ -652,10 +659,10 @@ footer>.btn {
     -o-filter: brightness(1.3);
     -ms-filter: brightness(1.3);
   }
-  .round-button:hover>span{
+  .round-button:hover>.olabel{
     visibility: visible;
   }
-  .round-button-small:hover>span{
+  .round-button-small:hover>.olabel{
     visibility: visible;
   }
 }
