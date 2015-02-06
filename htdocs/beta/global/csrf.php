@@ -6,7 +6,7 @@
   }
 
   function valid_csrf_token($csrf_token) {
-    if (empty($_SESSION["csrf_token"])) {
+    if (is_empty($_SESSION["csrf_token"])) {
       return false;
     }
     return $csrf_token == $_SESSION["csrf_token"];

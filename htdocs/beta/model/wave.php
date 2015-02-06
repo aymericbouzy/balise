@@ -18,7 +18,7 @@
     if (in_array("state", $fields)) {
       $fields = array_merge(array("submission_date", "expiry_date", "published"), $fields);
     }
-    if (!empty(array_intersect(array("requested_amount", "granted_amount", "used_amount"), $fields))) {
+    if (!is_empty(array_intersect(array("requested_amount", "granted_amount", "used_amount"), $fields))) {
       $fields = array_merge(array("id"), $fields);
     }
     $wave = select_entry(

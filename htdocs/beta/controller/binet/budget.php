@@ -1,7 +1,7 @@
 <?php
 
   function budget_is_alone() {
-    return empty(select_operations_budget($_GET["budget"]))  && empty(select_subsidies(array("budget" => $_GET["budget"])));
+    return is_empty(select_operations_budget($_GET["budget"]))  && is_empty(select_subsidies(array("budget" => $_GET["budget"])));
   }
 
   function check_budget_is_alone() {

@@ -61,7 +61,7 @@
   <div class="sh-bu-budgets opanel">
   <?php
     $budgets = select_budgets_operation($operation["id"]);
-    if (!empty($budgets)) {
+    if (!is_empty($budgets)) {
       ?>
         <div class="pieID pie">
         </div>
@@ -80,7 +80,7 @@
       <?php
     }
     else{
-      if(!empty($budgets)){
+      if(!is_empty($budgets)){
         echo pretty_budget($budgets[0]["id"]);
       }
       else{

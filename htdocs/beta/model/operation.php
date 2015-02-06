@@ -16,7 +16,7 @@
   }
 
   function select_operation($operation, $fields = array()) {
-    if (!empty(array_intersect($fields, array("state", "needs_validation")))) {
+    if (!is_empty(array_intersect($fields, array("state", "needs_validation")))) {
       $fields = array_unique(array_merge(array("binet_validation_by", "kes_validation_by", "id", "needs_validation"), $fields));
     }
     $operation = select_entry(
@@ -28,7 +28,7 @@
     if (in_array("needs_validation", $fields)) {
       $operation["needs_validation"] = false;
       $subsidies = select_subsidies(array("operation" => $operation["id"]));
-      if (!empty($subsidies)) {
+      if (!is_empty($subsidies)) {
         $requests = array();
         foreach ($subsidies as $subsidy) {
           $subsidy = select_subsidy($subsidy["id"], array("request"));

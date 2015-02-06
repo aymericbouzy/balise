@@ -37,7 +37,7 @@
         array("goto"=>true)
       );
     }
-    if (empty($binet_admins)) {
+    if (is_empty($binet_admins)) {
     echo "<p>
       Vous n'avez pas de binets pour le moment ...
       </p>";

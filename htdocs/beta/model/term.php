@@ -51,7 +51,7 @@
     $id = explode("/", $term_binet);
     $binet = $id[0];
     $term = $id[1];
-    return !empty(select_terms(array("binet" => $binet, "term" => $term)));
+    return !is_empty(select_terms(array("binet" => $binet, "term" => $term)));
   }
 
 

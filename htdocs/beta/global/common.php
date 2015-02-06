@@ -48,6 +48,10 @@
     return file_exists($file);
   }
 
+  function is_empty(&$variable) {
+    return !isset($variable) || in_array($variable, array("", 0, "0", 0.0, false, array(), NULL));
+  }
+
   function connected_student() {
     if (validate_input(array("student"), array(), "session") && exists_student($_SESSION["student"])) {
       return $_SESSION["student"];
@@ -77,7 +81,7 @@
   }
 
   function tag_is_selected($tag, $query_array) {
-    return !empty($query_array["tags"]) && in_array(tag_to_clean_name($tag), $query_array["tags"]);
+    return !is_empty($query_array["tags"]) && in_array(tag_to_clean_name($tag), $query_array["tags"]);
   }
 
   function tag_to_clean_name($tag) {

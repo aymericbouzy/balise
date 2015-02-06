@@ -14,7 +14,7 @@
     </a>
     <ul class="dropdown-menu" role="menu">
       <?php if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet") {
-          if (!empty(select_budgets(array("binet" => $binet, "term" => $term)))) {
+          if (!is_empty(select_budgets(array("binet" => $binet, "term" => $term)))) {
             ?>
               <li class="add-operation">
                 <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>

@@ -65,7 +65,7 @@
     $req->bindValue(':request', $GLOBALS["request"]["id"], PDO::PARAM_INT);
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !empty($req->fetch());
+    return !is_empty($req->fetch());
   }
 
   function check_wave_parameter() {
@@ -75,7 +75,7 @@
   }
 
   function check_exists_spending_budget() {
-    header_if(empty(select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)))), 403);
+    header_if(is_empty(select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)))), 403);
   }
 
   before_action("check_wave_parameter", array("new"));
@@ -148,7 +148,7 @@
     function request_to_form_fields($request) {
       foreach ($GLOBALS["budgets_involved"] as $budget) {
         $subsidies = select_subsidies(array("budget" => $budget["id"], "request" => $request["id"]));
-        if (empty($subsidies)) {
+        if (is_empty($subsidies)) {
           $request[adds_amount_prefix($budget)] = 0;
           $request[adds_purpose_prefix($budget)] = "";
         } else {
@@ -168,7 +168,7 @@
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget"));
       $form_field = amount_prefix.$subsidy["budget"];
-      if (empty($_POST[$form_field])) {
+      if (is_empty($_POST[$form_field])) {
         delete_subsidy($subsidy["id"]);
       }
     }
@@ -176,7 +176,7 @@
       $field_elements = explode("_", $field);
       if ($field_elements[0]."_" == amount_prefix && $value > 0) {
         $subsidies = select_subsidies(array("budget" => $field_elements[1], "request" => $request["id"]));
-        if (empty($subsidies)) {
+        if (is_empty($subsidies)) {
           create_subsidy($field_elements[1], $request["id"], $value, array("purpose" => $_POST[purpose_prefix.$field_elements[1]]));
         } else {
           update_subsidy($subsidies[0]["id"], array("requested_amount" => $value, "purpose" => $_POST[purpose_prefix.$field_elements[1]]));

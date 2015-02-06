@@ -2,7 +2,7 @@
 
   function check_admin() {
     header_if(!validate_input(array("admin")), 400);
-    header_if(empty(select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]))), 404);
+    header_if(is_empty(select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]))), 404);
     $GLOBALS[$admin] = $_GET["admin"];
   }
 

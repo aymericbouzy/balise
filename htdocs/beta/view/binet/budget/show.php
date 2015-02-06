@@ -38,7 +38,7 @@
     </div>
   </div>
   <?php
-    if (!empty($budget["subsidized_amount_granted"])) {
+    if (!is_empty($budget["subsidized_amount_granted"])) {
       ?>
       <div class="sh-bu-ratio opanel">
         <div class="header">
@@ -59,7 +59,7 @@
   <div class="sh-bu-operations opanel">
   <?php
     $operations = select_operations_budget($budget["id"]);
-    if (!empty($operations) && sizeOf($operations)>1) {
+    if (!is_empty($operations) && sizeOf($operations)>1) {
       ?>
         <div class="pieID pie">
         </div>
@@ -78,7 +78,7 @@
       <?php
     }
     else{
-      if(!empty($operations)){
+      if(!is_empty($operations)){
         echo pretty_operation($operations[0]["id"]);
       }
       else{

@@ -6,10 +6,10 @@
       if (null === $instance) {
         try {
           try {
-            $port = empty(DATABASE_PORT) ? "" : ';port='.DATABASE_PORT;
+            $port = is_empty(DATABASE_PORT) ? "" : ';port='.DATABASE_PORT;
             $instance = new PDO('mysql:host='.DATABASE_HOST.$port.';dbname='.DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD);
           } catch (PDOException $e) {
-            $port = empty(DATABASE_PORT) ? "" : ':'.DATABASE_PORT;
+            $port = is_empty(DATABASE_PORT) ? "" : ':'.DATABASE_PORT;
             $instance = new PDO('mysql:host='.DATABASE_HOST.$port.';dbname='.DATABASE_NAME, DATABASE_USERNAME, DATABASE_PASSWORD);
           }
         } catch (PDOException $e) {

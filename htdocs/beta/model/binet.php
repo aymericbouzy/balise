@@ -136,16 +136,16 @@
   function status_admin_binet($binet, $term = NULL) {
     $sql = "SELECT *
             FROM binet_admin
-            WHERE binet = :binet ".(empty($term) ? "" : "AND term = :term ")."AND student = :student
+            WHERE binet = :binet ".(is_empty($term) ? "" : "AND term = :term ")."AND student = :student
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
-    if (!empty($term)) {
+    if (!is_empty($term)) {
       $req->bindValue(':term', $term, PDO::PARAM_INT);
     }
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !empty($req->fetchAll());
+    return !is_empty($req->fetchAll());
   }
 
   function status_admin_current_binet($binet) {
@@ -159,7 +159,7 @@
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !empty($req->fetchAll());
+    return !is_empty($req->fetchAll());
   }
 
   function current_term($binet) {
