@@ -73,6 +73,7 @@
     break;
 
   case "set_subsidy_provider":
+    set_subsidy_provider($binet["id"]);
     $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." est devenu un binet subventionneur.";
     redirect_to_action("show");
     break;
