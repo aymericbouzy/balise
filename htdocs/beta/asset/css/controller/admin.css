@@ -65,5 +65,9 @@
 
 #admin-wrapper>.actionbar-left{
   position:absolute;
-  left:-80px;
+  left:-60px;
+}
+#admin-wrapper>.actionbar-right{
+  position:absolute;
+  right:-60px;
 }
