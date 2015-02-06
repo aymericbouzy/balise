@@ -561,8 +561,15 @@ footer>.btn {
 /*--------------------------------------------------------------------------*/
 /* Round buttons */
 .round-button , .round-button-small {
+  display:table;
   font-size: 30px;
-  padding: 5px;
+}
+.round-button>i , .round-button-small>i {
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
+  width:100%;
+  height:100%;
 }
 
 @media(max-width:900px){
@@ -628,16 +635,14 @@ footer>.btn {
   }
 
   .round-button>span {
-    margin-left: 55px;
-    margin-top: -40px;
-    font-size:20px;
+    margin-left: 30px;
+    font-size:18px;
   }
 
   .round-button-small>span{
-    margin-left: 40px;
-    margin-top: -20px;
+    margin-left: 20px;
     font-size:12px;
-    background-color:rgba(255,255,255,0.6);
+    background-color:rgba(255,255,255,0.7);
   }
 
   .round-button:hover>.anim,.round-button-small:hover>.anim{
@@ -649,11 +654,9 @@ footer>.btn {
   }
   .round-button:hover>span{
     visibility: visible;
-    font-size:20px;
   }
   .round-button-small:hover>span{
     visibility: visible;
-    font-size:12px;
   }
 }
 
