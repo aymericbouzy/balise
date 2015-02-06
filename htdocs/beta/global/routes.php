@@ -92,7 +92,7 @@
   }
 
   function urlrewrite() {
-    $htaccess = fopen((is_empty(ROOT_PATH) ? "" : ".")."./.htaccess", "w");
+    $htaccess = fopen((ROOT_PATH == "" ? "" : ".")."./.htaccess", "w");
   	if (!$htaccess) {
   		echo ".htaccess could not be opened for urlrewriting.";
   		exit;
@@ -111,7 +111,7 @@
     $GLOBALS["htaccess"] = $htaccess;
 
     write_path_rule(substr(ROOT_PATH, 0, strlen(ROOT_PATH) -1), true_path("welcome", "home"));
-    if (!URL_REWRITE || !is_empty(ROOT_PATH)) {
+    if (!URL_REWRITE || ROOT_PATH != "") {
       write_path_rule("home/login", true_path("login", "home"), "[NC,QSA]");
     }
     write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome", "chose_identity")));
