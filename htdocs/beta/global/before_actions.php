@@ -74,12 +74,13 @@
   function check_form_input($array) {
     $_SESSION[$array["model_name"]]["errors"] = array();
     $_SESSION[$array["model_name"]] = $_POST;
-    $array["str_fields"] = isset($array["str_fields"]) ? $array["str_fields"] : array();
-    $array["int_fields"] = isset($array["int_fields"]) ? $array["int_fields"] : array();
-    $array["amount_fields"] = isset($array["amount_fields"]) ? $array["amount_fields"] : array();
-    $array["other_fields"] = isset($array["other_fields"]) ? $array["other_fields"] : array();
+    set_if_not_set($array["str_fields"], array());
+    set_if_not_set($array["int_fields"], array());
+    set_if_not_set($array["amount_fields"], array());
+    set_if_not_set($array["date_fields"], array());
+    set_if_not_set($array["other_fields"], array());
 
-    foreach (array("str_fields", "int_fields", "amount_fields", "other_fields") as $fields_range) {
+    foreach (array("str_fields", "int_fields", "amount_fields", "other_fields", "date_fields") as $fields_range) {
       foreach ($array[$fields_range] as $index => $field) {
         if (!isset($_POST[$field[0]]) || is_empty($_POST[$field[0]])) {
           if (!isset($array["optional"]) || !in_array($field[0], $array["optional"])) {
@@ -123,6 +124,17 @@
 
     foreach (array_merge($array["amount_fields"], $array["int_fields"]) as $field) {
       if (!is_numeric($_POST[$field[0]]) || $_POST[$field[0]] < 0 || $_POST[$field[0]] > $field[1]) {
+        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
+        $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+      }
+    }
+
+    foreach ($array["date_fields"] as $field) {
+      $regex = "/^([0-9]{2})\/([0-9]{2})\/(2[0-9]{3})$/";
+      if (preg_does_match($regex, $_POST[$field[0]])) {
+        $_POST[$field[0]] = preg_replace($regex, "$3-$2-$1", $_POST[$field[0]]);
+      }
+      if (!($_POST[$field[0]] > $field[1])) {
         $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
       }
