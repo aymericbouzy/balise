@@ -62,3 +62,8 @@
   right:5px;
   color:#2e2e2e;
 }
+
+#admin-wrapper>.actionbar-left{
+  position:absolute;
+  left:-80px;
+}
