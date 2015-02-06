@@ -77,18 +77,17 @@
             ?>
           </li>
         </ul>
-      <?php
-    }
-    else{
-      if(!is_empty($budgets)){
-        echo pretty_budget($budgets[0]["id"]);
-      }
-      else{
-        ?>
-        Vous n'avez aucune opération associée à ce budget !
         <?php
+      } else{
+        if(!is_empty($budgets)){
+          echo pretty_budget($budgets[0]["id"]);
+        }
+        else{
+          ?>
+          Vous n'avez aucune opération associée à ce budget !
+          <?php
+        }
       }
-    }
-  ?>
+    ?>
   </div>
 </div>

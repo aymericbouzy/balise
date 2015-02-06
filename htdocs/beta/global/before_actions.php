@@ -53,7 +53,7 @@
     header_if(is_empty($binets), 404);
     $GLOBALS["binet"] = $binets[0]["id"];
     $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $_GET["term"]));
-    if (is_empty($binet_terms)) {
+    if (is_empty($binet_terms) && $_GET["controller"] != "admin") {
       $_SESSION["error"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
     }
     $GLOBALS["term"] = $_GET["term"];
@@ -201,7 +201,14 @@
   }
 
   function check_editing_rights() {
-    header_if(!has_editing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+    if ($_GET["controller"] == "binet") {
+      $binet = $GLOBALS["binet"]["id"];
+      $term = current_term($binet);
+    } else {
+      $binet = $GLOBALS["binet"];
+      $term = $GLOBALS["term"];
+    }
+    header_if(!has_editing_rights($binet, $term), 401);
   }
 
   // useless

@@ -14,7 +14,7 @@
     $tag_string = "";
     foreach ($tags as $tag) {
       $tag = select_tag($tag["id"], array("name", "id"));
-      $label = "<span class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>";
+      $label = "<span class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>\t";
       if ($link) {
         $tag_string .= link_to(search_by_tag_path($tag["id"]), $label);
       } else {
@@ -42,12 +42,14 @@
 
   function pretty_budget($budget) {
     $budget = select_budget($budget, array("id", "label"));
-    return $budget["label"].pretty_tags(select_tags_budget($budget["id"]));
+    return $budget["label"]." \t".pretty_tags(select_tags_budget($budget["id"]));
   }
 
   function pretty_wave($wave, $link = true) {
-    // TODO
-    return $wave;
+    $wave = select_wave($wave,array("id","binet","submission_date"));
+    $binet= select_binet($wave["binet"],array("name"));
+    $caption = "Subventions ".$binet["name"]." ".month($wave["submission_date"])." ".year($wave["submission_date"]);
+    return ($link)? link_to(path("show", "wave", $wave["id"]),$caption) : $caption;
   }
 
   function pretty_student($student, $link = true) {
@@ -82,4 +84,13 @@
   // TODO : get rid of it
   function pretty_subsidy($subsidy) {
     return "subsidy ".$subsidy;
+  }
+
+  function pretty_terms_list($binet) {
+    $list = "";
+    foreach (select_terms(array("binet" => $binet)) as $binet_term) {
+      $binet_term = select_term_binet($binet_term["id"], array("binet", "term"));
+      $list .= link_to(path("", "binet", binet_term_id($binet_term["binet"], $binet_term["term"])), $binet_term["term"])." ";
+    }
+    return $list;
   }

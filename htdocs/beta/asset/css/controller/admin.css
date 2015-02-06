@@ -1,0 +1,73 @@
+#page-wrapper {
+  background-color:rgba(0,0,0,0);
+}
+
+#admin-wrapper {
+  position: relative;
+  width:auto;
+  margin: auto;
+  color: #2e2e2e;
+}
+
+@media(min-width:768px){
+  #admin-wrapper {
+    position: relative;
+    width:543px;
+    margin: auto;
+  }
+}
+
+.admin {
+  position:relative;
+  display:block;
+  padding:5px;
+  min-height:30px;
+  padding:5px;
+  margin:5px;
+  text-align:center;
+  background-color:#2e2e2e;
+  color:#1566cc;
+  font-weight:700;
+}
+.admin:hover {
+  background-color:#202020;
+}
+
+.admin>.logo{
+  position:absolute;
+  left:20px;
+  top:10px;
+}
+.admin>.fa-user {
+  visibility:visible;
+}
+.admin:hover>.fa-user {
+  visibility:hidden;
+}
+.admin>.fa-send {
+  visibility:hidden;
+}
+.admin:hover>.fa-send {
+  visibility:visible;
+}
+
+.admin>a{
+  text-decoration:none;
+  font-weight:700;
+}
+
+.admin>.round-button-small {
+  position:absolute;
+  top:5px;
+  right:5px;
+  color:#2e2e2e;
+}
+
+#admin-wrapper>.actionbar-left{
+  position:absolute;
+  left:-60px;
+}
+#admin-wrapper>.actionbar-right{
+  position:absolute;
+  right:-60px;
+}
