@@ -63,7 +63,7 @@
     $id = explode("/", $term_binet);
     $binet = $id[0];
     $term = $id[1];
-    return select_binet($binet, array("current_term"))["current_term"] == $term || !empty(select_terms(array("binet" => $binet, "term" => $term)));
+    return current_term($binet) == $term || !empty(select_terms(array("binet" => $binet, "term" => $term)));
   }
 
 
