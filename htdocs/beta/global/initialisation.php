@@ -6,12 +6,12 @@
     include "config/production.php";
   }
 
-  error_reporting(E_ALL);
-  ini_set("display_errors", "1");
-
   include "constants.php";
   session_start();
   date_default_timezone_set('Europe/Paris');
+
+  error_reporting(E_ALL);
+  ini_set("display_errors", STATE == "development" ? "1" : "0");
 
   include GLOBAL_PATH."database.php";
   include GLOBAL_PATH."agregation.php";
