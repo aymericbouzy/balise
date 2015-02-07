@@ -171,7 +171,7 @@
     }
 
     if (!is_empty($_SESSION["tag_to_create"])) {
-      $_SESSION["return_to"] = binet_prefix($GLOBALS["binet"], $GLOBALS["term"]);
+      $_SESSION["return_to"] = $array["redirect_to"];
       redirect_to_path(path("new", "tag"));
     }
 

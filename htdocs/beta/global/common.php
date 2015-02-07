@@ -84,6 +84,9 @@
   }
 
   function remove_exterior_spaces($string) {
+    if (preg_does_match("/^\s*$/", $string)) {
+      return "";
+    }
     return preg_replace("/^\s*(\S(.*\S)?)\s*$/", "$1", $string);
   }
 
