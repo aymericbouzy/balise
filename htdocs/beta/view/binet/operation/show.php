@@ -61,7 +61,7 @@
   <div class="sh-bu-budgets opanel">
     <?php
     $budgets = select_budgets_operation($operation["id"]);
-    if (!is_empty($budgets)) {
+    if (!is_empty($budgets) && sizeOf($budgets) > 1) {
       ?>
       <div class="pieID pie">
       </div>
@@ -70,24 +70,20 @@
         foreach ($budgets as $budget) {
           ?>
           <li>
-
             <em><?php echo pretty_budget($budget["id"]); ?></em>
             <span><?php echo pretty_amount($budget["amount"]); ?></span>
-
           </li>
           <?php
         }
         ?>
       </ul>
       <?php
+    } elseif (!is_empty($budgets)) {
+      echo pretty_budget($budgets[0]["id"]);
     } else {
-      if (!is_empty($budgets)) {
-        echo pretty_budget($budgets[0]["id"]);
-      } else {
-        ?>
-        Vous n'avez aucune opération associée à ce budget !
-        <?php
-      }
+      ?>
+      <i>Vous n'avez aucune opération associée à ce budget !</i>
+      <?php
     }
     ?>
   </div>
