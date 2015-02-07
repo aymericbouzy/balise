@@ -16,7 +16,8 @@
   }
 
   function select_operation($operation, $fields = array()) {
-    if (!is_empty(array_intersect($fields, array("state", "needs_validation")))) {
+    $present_virtual_fields = array_intersect($fields, array("state", "needs_validation"));
+    if (!is_empty($present_virtual_fields)) {
       $fields = array_unique(array_merge(array("binet_validation_by", "kes_validation_by", "id", "needs_validation"), $fields));
     }
     $operation = select_entry(

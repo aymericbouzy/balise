@@ -13,7 +13,8 @@
   }
 
   function select_subsidy($subsidy, $fields = NULL) {
-    if (!is_empty(array_intersect($fields, array("used_amount", "wave")))) {
+    $present_virtual_fields = array_intersect($fields, array("used_amount", "wave"));
+    if (!is_empty($present_virtual_fields)) {
       $fields = array_merge(array("id", "request"), $fields);
     }
     $subsidy = select_entry(

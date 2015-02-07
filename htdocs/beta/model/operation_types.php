@@ -1,7 +1,8 @@
 <?php
 
   function exists_operation_type($operation_type) {
-    return !is_empty(select_operation_type($operation_type));
+    $operation_types = select_operation_type($operation_type);
+    return !is_empty($operation_types);
   }
 
   function select_operation_type($operation_type, $fields = array()) {

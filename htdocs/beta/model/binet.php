@@ -145,7 +145,8 @@
     }
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !is_empty($req->fetchAll());
+    $results = $req->fetchAll();
+    return !is_empty($results);
   }
 
   function status_admin_current_binet($binet) {
@@ -159,7 +160,8 @@
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !is_empty($req->fetchAll());
+    $results = $req->fetchAll();
+    return !is_empty($results);
   }
 
   function current_term($binet) {

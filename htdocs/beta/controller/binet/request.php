@@ -65,7 +65,8 @@
     $req->bindValue(':request', $GLOBALS["request"]["id"], PDO::PARAM_INT);
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !is_empty($req->fetch());
+    $result = $req->fetch();
+    return !is_empty($result);
   }
 
   function check_wave_parameter() {
@@ -75,7 +76,8 @@
   }
 
   function check_exists_spending_budget() {
-    header_if(is_empty(select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)))), 403);
+    $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)));
+    header_if(is_empty($budgets), 403);
   }
 
   before_action("check_wave_parameter", array("new"));

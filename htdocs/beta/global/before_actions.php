@@ -179,9 +179,13 @@
   }
 
   function has_viewing_rights($binet, $term) {
-    return status_admin_current_binet(KES_ID) ||
-      !is_empty(select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]))) ||
+    if (status_admin_current_binet(KES_ID)) {
+      return true;
+    } else {
+      $terms = select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]));
+      return !is_empty($terms) ||
       received_subsidy_request_from($binet);
+    }
   }
 
   function has_editing_rights($binet, $term) {
@@ -315,7 +319,8 @@
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !is_empty($req->fetch());
+    $result = $req->fetch();
+    return !is_empty($result);
   }
 
   function compute_query_array() {
@@ -326,6 +331,8 @@
       foreach ($tags_clean_names as $clean_name) {
         $query_array["tags"][] = select_tags(array("clean_name" => $clean_name))[0]["id"];
       }
+    } else {
+      unset($query_array["tags"]);
     }
     return $query_array;
   }
