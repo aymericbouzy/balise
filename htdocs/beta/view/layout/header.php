@@ -15,8 +15,8 @@
     <ul class="dropdown-menu" role="menu">
       <?php
         if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
-          $budgets = select_budgets(array("binet" => $binet, "term" => $term));
-          if (!is_empty($budgets)) {
+          $budgets_for_checking_if_not_empty = select_budgets(array("binet" => $binet, "term" => $term));
+          if (!is_empty($budgets_for_checking_if_not_empty)) {
             ?>
               <li class="add-operation">
                 <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>

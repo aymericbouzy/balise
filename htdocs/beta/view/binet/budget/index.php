@@ -26,7 +26,6 @@
       $sum_real_amount_exp = 0;
       $sum_subsidized_amount_granted_exp = 0;
       $sum_subsidized_amount_used_exp = 0;
-
       foreach ($budgets as $budget) {
         if ($budget["amount"] < 0) {
           $sum_amount_exp += $budget["amount"];
