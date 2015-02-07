@@ -9,6 +9,7 @@
   include "constants.php";
   session_start();
   date_default_timezone_set('Europe/Paris');
+  setlocale(LC_TIME, "fr_fr");
 
   error_reporting(E_ALL);
   ini_set("display_errors", STATE == "development" ? "1" : "0");

@@ -108,6 +108,9 @@
   }
 
   function current_date() {
+    if (STATE == "development" && isset($_GET["current_date"])) {
+      return $_GET["current_date"];
+    }
     return date("Y-m-d");
     // return date_in_n_days(0);
   }

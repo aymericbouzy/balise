@@ -116,5 +116,7 @@
       return "date de soumission";
       case "expiry_date":
       return "date d'expiration";
+      case "question":
+      return "question à poser aux binets";
     }
   }
