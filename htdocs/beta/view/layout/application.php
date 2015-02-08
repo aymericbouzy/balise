@@ -11,7 +11,12 @@
     	<!--Minified Bootstrap CSS-->
     	<link rel="stylesheet" href="<?php echo ASSET_PATH; ?>dist/css/bootstrap.min.css" type="text/css">
      	<!-- Custom CSS -->
-     	<link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/user-home.css" type="text/css">
+     	<link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/common.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/backgrounds.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/flashcards.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/piechart.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/buttons.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/modals.css" type="text/css">
       <!--- Datetimepicker -->
       <link href="<?php echo ASSET_PATH; ?>css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
 

@@ -19,6 +19,7 @@
     $sum_expenses = 0;
     foreach ($operations as $operation) {
   ?>
+    <!-- TODO : on doit pouvoir cliquer sur la ligne ! -->
     <tr>
       <td>
         <?php echo $operation["comment"]; ?>

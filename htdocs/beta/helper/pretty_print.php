@@ -40,9 +40,9 @@
     }
   }
 
-  function pretty_budget($budget) {
+  function pretty_budget($budget , $show_tags = true) {
     $budget = select_budget($budget, array("id", "label"));
-    return $budget["label"]." \t".pretty_tags(select_tags_budget($budget["id"]));
+    return $show_tags? $budget["label"]." \t".pretty_tags(select_tags_budget($budget["id"])) : $budget["label"];
   }
 
   function pretty_wave($wave, $link = true) {
@@ -69,10 +69,11 @@
     return "<i class=\"fa fa-".select_operation_type($type, array("icon"))["icon"]."\"></i>";
   }
 
-  function pretty_operation($operation, $link = false) {
+  function pretty_operation($operation, $link = false, $raw = false) {
     $operation = select_operation($operation, array("binet", "term", "id", "amount", "type", "date"));
-    $caption = pretty_operation_type($operation["type"]).($operation["amount"] > 0 ? "Recette" : "Dépense")." ".pretty_date($operation["date"])." (".pretty_amount($operation["amount"], false, true).")";
-    return link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), $caption);
+    $raw_caption = ($operation["amount"] > 0 ? "Recette" : "Dépense")." ".pretty_date($operation["date"]);
+    $caption = $raw ? $raw_caption : pretty_operation_type($operation["type"])." ".$raw_caption." (".pretty_amount($operation["amount"], false, true)." )";
+    return $link? link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), $caption) : $caption;
   }
 
   function pretty_request($request, $link = true) {

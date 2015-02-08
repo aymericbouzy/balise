@@ -137,10 +137,11 @@
   case "validate":
     $budget_amounts_array = array();
     foreach ($_POST as $key => $amount) {
-      if ($amount > 0) {
+      if (in_array($key, $amount_array) && $amount > 0) {
         $budget_amounts_array[substr($key, strlen(amount_prefix))] = $amount;
       }
     }
+    remove_budgets_operation($operation["id"]);
     add_budgets_operation($operation["id"], $budget_amounts_array);
     validate_operation($operation["id"]);
     $operation = select_operation($operation["id"], array("id", "created_by", "state"));
