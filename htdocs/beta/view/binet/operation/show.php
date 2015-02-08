@@ -80,7 +80,7 @@
       <script>createPie(".pieID.legend", ".pieID.pie");</script>
       <?php
     } elseif (!is_empty($budgets)) {
-      echo pretty_budget($budgets[0]["id"]);
+      echo pretty_budget($budgets[0]["id"],false);
     } else {
       ?>
       <i>Vous n'avez aucun budget associé à cette opération ?</i>

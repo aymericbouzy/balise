@@ -18,31 +18,31 @@
     $sum_revenue = 0;
     $sum_expenses = 0;
     foreach ($operations as $operation) {
-  ?>
-    <!-- TODO : on doit pouvoir cliquer sur la ligne ! -->
-    <tr>
-      <td>
-        <?php echo $operation["comment"]; ?>
-      </td>
-      <td>
-        <?php echo pretty_tags(select_tags_operation($operation["id"]), true); ?>
-      </td>
-      <td>
-        <?php echo $operation["date"]; ?>
-      </td>
-      <?php if ($operation["amount"] > 0) {
-        $sum_revenue += $operation["amount"];
-        ?><td></td><td>
-          <?php echo pretty_amount($operation["amount"]); ?>
-        </td><?php
-      } else {
-        $sum_expenses += $operation["amount"];
-        ?><td>
-          <?php echo pretty_amount($operation["amount"]); ?>
-        </td><td></td><?php
-      } ?>
-    </tr>
-  <?php
+      ob_start();
+      ?>
+        <td>
+          <?php echo $operation["comment"]; ?>
+        </td>
+        <td>
+          <?php echo pretty_tags(select_tags_operation($operation["id"]), true); ?>
+        </td>
+        <td>
+          <?php echo $operation["date"]; ?>
+        </td>
+        <?php if ($operation["amount"] > 0) {
+          $sum_revenue += $operation["amount"];
+          ?><td></td><td>
+            <?php echo pretty_amount($operation["amount"]); ?>
+          </td><?php
+        } else {
+          $sum_expenses += $operation["amount"];
+          ?><td>
+            <?php echo pretty_amount($operation["amount"]); ?>
+          </td><td></td>
+      <?php
+        }
+      echo link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])),
+      "<tr>".ob_get_clean()."</tr>",array("goto"=>true));
     }
   ?>
 </tbody>
