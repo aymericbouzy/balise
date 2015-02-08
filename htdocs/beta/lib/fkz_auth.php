@@ -20,7 +20,7 @@ function frankiz_do_auth(){
   * url de la page de login, doit correspondre *exactement* à celle entrée dans
   * la base de données de Frankiz (définie lors de l'inscription)
   */
-  $site = 'http://localhost:3000/home/login';
+  $site = full_path("home/login");
   /**
   * Champ non utile pour l'authentification et retransmis tel quel par frankiz.
   * Il est prévu pour pouvoir mettre en place un système de redirection après
