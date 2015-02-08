@@ -75,6 +75,7 @@
             }
           ?>
         </ul>
+        <script>createPie(".pieID.legend", ".pieID.pie");</script>
       <?php
     }
     else{

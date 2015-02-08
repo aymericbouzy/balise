@@ -77,6 +77,7 @@
         }
         ?>
       </ul>
+      <script>createPie(".pieID.legend", ".pieID.pie");</script>
       <?php
     } elseif (!is_empty($budgets)) {
       echo pretty_budget($budgets[0]["id"]);
