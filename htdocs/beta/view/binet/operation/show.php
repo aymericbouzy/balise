@@ -83,7 +83,7 @@
       echo pretty_budget($budgets[0]["id"]);
     } else {
       ?>
-      <i>Vous n'avez aucune opération associée à ce budget !</i>
+      <i>Vous n'avez acuun budget associé à cette opération ? Problème ..</i>
       <?php
     }
     ?>

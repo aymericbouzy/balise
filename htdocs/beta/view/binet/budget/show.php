@@ -68,7 +68,7 @@
             foreach ($operations as $operation) {
               ?>
               <li>
-                <em><?php echo pretty_operation($operation["id"],false,true); ?></em>
+                <em><?php echo pretty_operation($operation["id"],true,true); ?></em>
                 <span><?php echo pretty_amount($operation["amount"],false,false); ?></span>
               </li>
               <?php
