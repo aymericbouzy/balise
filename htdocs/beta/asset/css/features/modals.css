@@ -2,7 +2,6 @@
 /*------ Modals --------------*/
 .balise-modal {
   position:absolute;
-  z-index:2000;
 }
 
 .balise-modal-container{
@@ -31,4 +30,8 @@
 
 .balise-modal-container>.modal-body>.content {
   padding:5px;
+}
+
+.modal-over-all {
+  z-index:2000;
 }

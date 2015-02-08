@@ -80,7 +80,7 @@
     }
     else{
       if(!is_empty($operations)){
-        echo pretty_operation($operations[0]["id"]);
+        echo pretty_operation($operations[0]["id"],true);
       }
       else{
         ?>

@@ -40,9 +40,10 @@
     }
   }
 
-  function pretty_budget($budget , $show_tags = true) {
-    $budget = select_budget($budget, array("id", "label"));
-    return $show_tags? $budget["label"]." \t".pretty_tags(select_tags_budget($budget["id"])) : $budget["label"];
+  function pretty_budget($budget , $link= true, $show_tags = true) {
+    $budget = select_budget($budget, array("id", "label","binet","term"));
+    $label = $link ? link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),$budget["label"]) : $budget["label"];
+    return $show_tags? $label." \t".pretty_tags(select_tags_budget($budget["id"])) : $label;
   }
 
   function pretty_wave($wave, $link = true) {

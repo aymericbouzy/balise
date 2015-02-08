@@ -48,7 +48,7 @@
     <?php echo pretty_amount($operation["amount"]); ?> <i class="fa fa-euro"></i>
   </div>
   <div class="sh-op-refs opanel">
-    <i class="fa fa-fw fa-folder-o"></i> </br>
+    <i class="fa fa-fw fa-folder-o"></i>
     <?php echo $operation["bill"] ?: "Aucune facture associée"; ?> </br>
     <?php echo pretty_operation_type($operation["type"])." ".($operation["reference"] ?: "Aucune référence de paiement associée"); ?>
   </div>
@@ -70,7 +70,7 @@
         foreach ($budgets as $budget) {
           ?>
           <li>
-            <em><?php echo pretty_budget($budget["id"], false); ?></em>
+            <em><?php echo pretty_budget($budget["id"], true, false); ?></em>
             <span><?php echo pretty_amount($budget["amount"], false); ?></span>
           </li>
           <?php
@@ -80,7 +80,7 @@
       <script>createPie(".pieID.legend", ".pieID.pie");</script>
       <?php
     } elseif (!is_empty($budgets)) {
-      echo pretty_budget($budgets[0]["id"]);
+      echo pretty_budget($budgets[0]["id"], true);
     } else {
       ?>
       <i>Vous n'avez aucun budget associé à cette opération ?</i>
