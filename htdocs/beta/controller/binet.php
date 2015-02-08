@@ -37,7 +37,7 @@
     "str_fields" => array(array("term", MAX_TERM)),
     "redirect_to" => path("change_term", "binet", $_GET["action"] == "set_term" ? $binet["id"] : "")
   ));
-  before_action("generate_csrf_token", array("new", "edit", "change_term"));
+  before_action("generate_csrf_token", array("new", "edit", "change_term", "show"));
 
   $binet_form_fields = array("name", "term");
   $description_form_fields = array("name", "description", "subsidy_steps");
