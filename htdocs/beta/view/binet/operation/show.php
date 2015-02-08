@@ -70,7 +70,7 @@
         foreach ($budgets as $budget) {
           ?>
           <li>
-            <em><?php echo pretty_budget($budget["id"], false); ?></em>
+            <em><?php echo pretty_budget($budget["id"], true, false); ?></em>
             <span><?php echo pretty_amount($budget["amount"], false); ?></span>
           </li>
           <?php
@@ -80,7 +80,7 @@
       <script>createPie(".pieID.legend", ".pieID.pie");</script>
       <?php
     } elseif (!is_empty($budgets)) {
-      echo pretty_budget($budgets[0]["id"],false);
+      echo pretty_budget($budgets[0]["id"], true);
     } else {
       ?>
       <i>Vous n'avez aucun budget associé à cette opération ?</i>
