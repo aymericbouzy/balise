@@ -8,6 +8,9 @@
           case "submission":
           echo "Demandes en cours";
           break;
+          case "deliberation":
+          echo "Etude des demandes";
+          break;
           case "distribution":
           echo "Ouverte";
           break;

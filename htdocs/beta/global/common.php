@@ -1,7 +1,7 @@
 <?php
 
   function set_if_not_set(&$variable, $value) {
-    if(!isset($variable)) {
+    if (!isset($variable)) {
       $variable = $value;
     }
   }
@@ -48,6 +48,17 @@
     return file_exists($file);
   }
 
+  function is_empty(&$variable) {
+    return !isset($variable) ||
+    $variable === array() ||
+    $variable === "" ||
+    $variable === false ||
+    $variable === 0 ||
+    $variable === NULL ||
+    $variable === "0" ||
+    $variable === 0.0;
+  }
+
   function connected_student() {
     if (validate_input(array("student"), array(), "session") && exists_student($_SESSION["student"])) {
       return $_SESSION["student"];
@@ -73,11 +84,14 @@
   }
 
   function remove_exterior_spaces($string) {
+    if (preg_does_match("/^\s*$/", $string)) {
+      return "";
+    }
     return preg_replace("/^\s*(\S(.*\S)?)\s*$/", "$1", $string);
   }
 
   function tag_is_selected($tag, $query_array) {
-    return !empty($query_array["tags"]) && in_array(tag_to_clean_name($tag), $query_array["tags"]);
+    return !is_empty($query_array["tags"]) && in_array(tag_to_clean_name($tag), $query_array["tags"]);
   }
 
   function tag_to_clean_name($tag) {
@@ -94,6 +108,9 @@
   }
 
   function current_date() {
+    if (STATE == "development" && isset($_GET["current_date"])) {
+      return $_GET["current_date"];
+    }
     return date("Y-m-d");
     // return date_in_n_days(0);
   }

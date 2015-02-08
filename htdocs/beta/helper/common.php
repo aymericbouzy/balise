@@ -14,9 +14,9 @@
       $path = full_path($path);
     }
 
-    $parameters = empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
-    $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
-    $parameters .= empty($options["title"])? "" : " title=\"".$options["title"]."\"";
+    $parameters = is_empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
+    $parameters .= is_empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
+    $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
 
     if ($options["goto"]) {
       return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">\n $3", str_replace("\n", "", $caption));

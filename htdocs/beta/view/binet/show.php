@@ -13,8 +13,10 @@
   <div class="sh-actions">
     <?php
       echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
-      if (is_current_kessier()) {
+      if (has_editing_rights($binet["id"], $binet["current_term"])) {
         echo button(path("edit", "binet", $binet["id"]), "Modifier le binet", "edit", "orange");
+      }
+      if (is_current_kessier()) {
         if ($binet["subsidy_provider"] == 0) {
           echo button(path("set_subsidy_provider", "binet", $binet["id"], "", array(), true), "Ajouter les droits de subventionneur", "money", "blue");
         }
@@ -29,7 +31,7 @@
     <div class="text">
       <span class="main">
         <?php
-          echo pretty_binet_no_link($binet["id"]);
+          echo pretty_binet($binet["id"], false);
           if (has_viewing_rights($binet["id"], $binet["current_term"])) {
             echo link_to(
               path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),

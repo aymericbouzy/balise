@@ -16,7 +16,8 @@
     $term_binet["id"] = $id[0]."/".$id[1];
     $term_binet["binet"] = $id[0];
     $term_binet["term"] = $id[1];
-    if (!empty(array_intersect($fields, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")))) {
+    $present_virtual_fields = array_intersect($fields, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state"));
+    if (!is_empty($present_virtual_fields)) {
       $budgets = array();
       foreach (select_budgets(array("binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $budget) {
         $budgets[] = select_budget($budget["id"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "amount"));
@@ -63,7 +64,8 @@
     $id = explode("/", $term_binet);
     $binet = $id[0];
     $term = $id[1];
-    return current_term($binet) == $term || !empty(select_terms(array("binet" => $binet, "term" => $term)));
+    $terms = select_terms(array("binet" => $binet, "term" => $term));
+    return current_term($binet) == $term || !is_empty($terms);
   }
 
 

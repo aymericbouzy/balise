@@ -10,7 +10,7 @@
 
   function check_unique_clean_name() {
     $tags = select_tags(array("clean_name" => clean_string($_SESSION["tag_to_create"])));
-    header_if(!empty($tags), 403);
+    header_if(!is_empty($tags), 403);
   }
 
   before_action("check_csrf_get", array("create"));
@@ -33,7 +33,7 @@
     $return_to = $_SESSION["return_to"];
     unset($_SESSION["return_to"]);
     unset($_SESSION["tag_to_create"]);
-    redirect_to_path(path("new", "budget", "", $return_to));
+    redirect_to_path($return_to);
     break;
 
   case "show":

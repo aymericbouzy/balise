@@ -2,7 +2,7 @@
 
   function send_email($to, $subject, $file, $parameters) {
     $student = select_student($to, array("email", "name"));
-    $to = $student["name"]." <".$student["email"].">";
+    $to = $student["name"]." <".(STATE == "development" ? WEBMASTER_EMAIL : $student["email"]).">";
 
     ob_start();
     $GLOBALS["full_path_links"] = true;

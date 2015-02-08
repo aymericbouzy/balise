@@ -1,7 +1,9 @@
 <?php
 
   function budget_is_alone() {
-    return empty(select_operations_budget($_GET["budget"]))  && empty(select_subsidies(array("budget" => $_GET["budget"])));
+    $operations = select_operations_budget($_GET["budget"]);
+    $subsidies = select_subsidies(array("budget" => $_GET["budget"]));
+    return is_empty($operations) && is_empty($subsidies);
   }
 
   function check_budget_is_alone() {
@@ -18,7 +20,7 @@
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "tags_string" => true,
-    "redirect_to" => path($_GET["action"], "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
+    "redirect_to" => path($_GET["action"] == "create" ? "new" : "edit", "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge($_GET["action"] == "update" ? array("label", "amount") : array(), array("sign", "tags_string"))
   ));
   before_action("check_budget_is_alone", array("edit", "update", "delete"));
@@ -59,6 +61,7 @@
     function budget_to_form_fields($budget) {
       $budget["sign"] = $budget["amount"] < 0 ? true : false;
       $budget["amount"] *= $budget["sign"] ? -1 : 1;
+      $budget["amount"] *= 1/100;
       $first = true;
       foreach (select_tags_budget($budget["id"]) as $tag) {
         if ($first) {

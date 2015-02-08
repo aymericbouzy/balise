@@ -2,7 +2,7 @@
 
   function check_unique_clean_name() {
     $binets = select_binets(array("clean_name" => clean_string($_POST["name"])));
-    if (!empty($binets)) {
+    if (!is_empty($binets)) {
       $_SESSION["binet"]["errors"][] = "name";
       $_SESSION["error"][] = "Ce nom de binet est déjà utilisé par le binet ".pretty_binet($binets[0]["id"]).". Veuillez en choisir un autre.";
       return false;
@@ -37,7 +37,7 @@
     "str_fields" => array(array("term", MAX_TERM)),
     "redirect_to" => path("change_term", "binet", $_GET["action"] == "set_term" ? $binet["id"] : "")
   ));
-  before_action("generate_csrf_token", array("new", "edit", "change_term"));
+  before_action("generate_csrf_token", array("new", "edit", "change_term", "show"));
 
   $binet_form_fields = array("name", "term");
   $description_form_fields = array("name", "description", "subsidy_steps");

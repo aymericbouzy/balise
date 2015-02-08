@@ -1,7 +1,7 @@
 <?php
 
   function print_flash($class) {
-    if (!empty($_SESSION[$class])) {
+    if (!is_empty($_SESSION[$class])) {
       foreach ($_SESSION[$class] as $flash) {
         ?>
           <div class="flashcard <?php echo $class;?> alert alert-dismissible fade in">
