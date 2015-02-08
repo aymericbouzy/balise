@@ -29,6 +29,11 @@
   display: block;
   position: relative;
 }
+
+.flashcard> a{
+  text-decoration:underline;
+  color:#2e2e2e;
+}
 .notice {
   background-color: rgb(50, 173, 39);
   color : #000;
