@@ -28,7 +28,7 @@
 		<!-- jQuery -->
      	<script src="<?php echo ASSET_PATH; ?>js/jquery.js"></script>
      	<!--Core Bootstrap JS-->
-     	<script src="<?php echo ASSET_PATH; ?>dist/js/bootstrap.min.js"></script>
+     	<script src="<?php echo ASSET_PATH; ?>dist/js/bootstrap.js"></script>
       <script src="<?php echo ASSET_PATH; ?>js/moment.js"></script>
       <script src="<?php echo ASSET_PATH; ?>js/bootstrap-datetimepicker.min.js"></script>
    	<!--[if IE]>
