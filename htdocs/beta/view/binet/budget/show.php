@@ -64,16 +64,16 @@
         <div class="pieID pie">
         </div>
         <ul class="pieID legend">
-          <li>
-            <?php
-              foreach ($operations as $operation) {
-                ?>
-                <em><?php echo pretty_operation($operation["id"]); ?></em>
-                <span><?php echo pretty_amount($operation["amount"]); ?></span>
-                <?php
-              }
-            ?>
-          </li>
+          <?php
+            foreach ($operations as $operation) {
+              ?>
+              <li>
+                <em><?php echo pretty_operation($operation["id"],false,true); ?></em>
+                <span><?php echo pretty_amount($operation["amount"],false,false); ?></span>
+              </li>
+              <?php
+            }
+          ?>
         </ul>
       <?php
     }
