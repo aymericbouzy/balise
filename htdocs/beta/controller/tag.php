@@ -33,7 +33,7 @@
     $return_to = $_SESSION["return_to"];
     unset($_SESSION["return_to"]);
     unset($_SESSION["tag_to_create"]);
-    redirect_to_path(path("new", "budget", "", $return_to));
+    redirect_to_path($return_to);
     break;
 
   case "show":
