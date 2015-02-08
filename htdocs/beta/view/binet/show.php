@@ -4,7 +4,7 @@
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
       <div class="sh-plus <?php echo $binet["state"]; ?>-background opanel">
-        <i class="fa fa-fw fa-<?php echo array("green" => "check", "orange" => "warning", "red" => "minus-circle")[$binet["state"]]; ?>"></i>
+        <i class="fa fa-fw fa-<?php $color_to_icon = array("green" => "check", "orange" => "warning", "red" => "minus-circle"); echo $color_to_icon[$binet["state"]]; ?>"></i>
         <span class="text">Etat du binet</span>
       </div>
       <?php
