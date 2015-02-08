@@ -9,6 +9,3 @@
     <li>retrouver plein d'informations utiles pour gérer ton binet</li>
   </ul>
 </p>
-<p>
-  Tu trouveras plus d'informations <?php echo link_to(path("info", "home"), "ici"); ?>.
-</p>
