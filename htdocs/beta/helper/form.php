@@ -73,6 +73,19 @@
     );
   }
 
+  function form_group_radio($field, $options, $object, $object_name) {
+    $form_group_radio = "";
+    foreach ($options as $value => $label) {
+      $form_group_radio .= "<div class=\"radio\">
+        <label>
+          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($object[$field] == $value ? " checked" : "").">
+          ".$label."
+        </label>
+      </div>";
+    }
+    return $form_group_radio;
+  }
+
   function option_array($entries, $key_field, $value_field, $model_name) {
     $return_array = array();
     foreach ($entries as $entry) {
