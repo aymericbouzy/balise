@@ -601,6 +601,10 @@
 .sh-wa-request:hover{
   background-color:#baccdd;
 }
+.sh-wa-request>.marker{
+  display:table-cell;
+  width:5px;
+}
 .sh-wa-request>.icon {
   display: table-cell;
   width: 40px;
