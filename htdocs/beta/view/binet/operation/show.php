@@ -56,7 +56,7 @@
     <?php echo $operation["comment"]; ?>
   </div>
   <div class="sh-op-payer opanel">
-    <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? pretty_student($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
+    <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? paid_by_to_caption($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
   </div>
   <div class="sh-piechart-panel opanel">
     <?php
