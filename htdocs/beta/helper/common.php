@@ -79,3 +79,20 @@
   function year($date){
     return strftime("%Y",strtotime($date));
   }
+
+  function modal_toggle($id,$content,$class,$target){
+    return "<span class=\"".$class."\" id=\"".$id."\" data-toggle=\"modal\" data-target=\"#".$target."\">".$content."</span>";
+  }
+
+  function modal($id,$title,$content){
+      return "<div class=\"balise-modal fade\" id=\"terms\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
+                <div class=\"modal-content balise-modal-container\">
+                  <div class=\"modal-body\">
+                      ".close_button("modal")."
+                      <span class=\"header\">".$title."</span>
+                      <div class=\"content\">\n".$content."
+                      </div>
+                  </div>
+                </div>
+              </div>";
+  }
