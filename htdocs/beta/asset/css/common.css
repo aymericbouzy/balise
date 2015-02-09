@@ -106,7 +106,11 @@ body {
     min-width: 230px;
     float: none;
 }
-
+.top-nav>.modal-over-all{
+  position:fixed;
+  top:100px;
+  left:40%;
+}
 #operation-plus {
     color:#52CC29;
 }
