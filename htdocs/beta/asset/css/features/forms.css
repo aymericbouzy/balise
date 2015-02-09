@@ -49,3 +49,12 @@
   border-bottom: 2px solid #304FFE;
   box-shadow:none;
 }
+
+select {
+  border:none;
+  background-color:#cbddff;
+}
+
+option {
+  background-color:#cbddff;
+}

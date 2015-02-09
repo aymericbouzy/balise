@@ -98,6 +98,7 @@
     -moz-filter: brightness(1.3);
     -o-filter: brightness(1.3);
     -ms-filter: brightness(1.3);
+    cursor : pointer;
   }
   .round-button:hover>.olabel{
     visibility: visible;
