@@ -72,7 +72,7 @@
           path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
           "<div class=\"sh-wa-request opanel\">
             <p class=\"marker
-              ".($request["state"] == " sent" ? " green" : "red")."-background\" ></p>
+              ".(($request["sent"] != 1)? " red" : " green")."-background\" ></p>
             <p class=\"icon\">
               ".($request["state"] != "reviewed" ? "<i class=\"fa fa-fw fa-times\"></i>" : "<i class=\"fa fa-fw fa-check\"></i>")."
             </p>
