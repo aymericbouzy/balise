@@ -81,17 +81,20 @@
   }
 
   function modal_toggle($id,$content,$class,$target){
-    return "<span class=\"".$class."\" id=\"".$id."\" data-toggle=\"modal\" data-target=\"#".$target."\">".$content."</span>";
+    return "<span class=\"modal-toggle ".$class."\" id=\"".$id."\" data-toggle=\"modal\" data-target=\"#".$target."\">".$content."</span>";
   }
 
   function modal($id,$title,$content){
-      return "<div class=\"balise-modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
-                <div class=\"modal-content balise-modal-container\">
-                  <div class=\"modal-body\">
-                      ".close_button("modal")."
-                      <span class=\"header\">".$title."</span>
+      return "<div class=\"modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
+                <div class=\"modal-dialog\">
+                  <div class=\"modal-content\">
+                    <div class=\"modal-header\">
+                    ".close_button("modal")."
+                    <h4 class=\"modal-title\">".$title."</h4>
+                    </div>
+                    <div class=\"modal-body\">
                       <div class=\"content\">\n".$content."
-                      </div>
+                    </div>
                   </div>
                 </div>
               </div>";
