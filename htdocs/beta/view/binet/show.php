@@ -42,10 +42,7 @@
         ?>
       </span>
       <!-- Modal to choose a different term -->
-      <?php
-      echo modal_toggle("choose-term",$binet["current_term"]."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","sub opanel0","terms");
-      echo modal("terms","Voir l'activité d'un autre mandat",pretty_terms_list($binet["id"]));?>
-      <!-- Modal -->
+      <?php echo modal_toggle("choose-term",$binet["current_term"]."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","sub opanel0","terms"); ?>
     </div>
   </div>
   <div class="sh-bin-admins opanel">
@@ -127,3 +124,4 @@
     }
   ?>
 </div>
+<? echo modal("terms","Voir l'activité d'un autre mandat",pretty_terms_list($binet["id"]));?>
