@@ -82,6 +82,24 @@
     return $return_array;
   }
 
+  function paid_by_to_caption($paid_by) {
+    if ($paid_by > 0) {
+      return pretty_student($paid_by);
+    } else {
+      $other_options = paid_by_static_options();
+      return $other_options[$paid_by];
+    }
+  }
+
+  function paid_by_static_options() {
+    return array(
+      "0" => "",
+      "-1" => "Virement Kès",
+      "-2" => "Virement Corps",
+      "-3" => "Virement DFS"
+    );
+  }
+
   function translate_form_field($form_field) {
     switch ($form_field) {
       case "binet":
