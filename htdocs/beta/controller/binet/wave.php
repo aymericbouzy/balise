@@ -43,6 +43,7 @@
   switch ($_GET["action"]) {
 
   case "index":
+    $waves = select_waves(array($_GET["binet"] => "binet",$_GET["term"] => "term"));
     break;
 
   case "new":
