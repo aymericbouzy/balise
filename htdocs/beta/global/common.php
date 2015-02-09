@@ -122,3 +122,10 @@
     }
     return $returned_array;
   }
+
+  function array_true_merge($array1, $array2) {
+    foreach($array1 as $key => $value) {
+      $array2[$key] = $value;
+    }
+    return $array2;
+  }
