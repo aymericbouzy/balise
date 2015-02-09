@@ -29,7 +29,6 @@
       $fields
     );
     if (!is_empty($present_virtual_fields)) {
-      // TODO : check no request without subsidy
       $subsidies = select_subsidies(array("request" => $request["id"]));
       $subsidy = select_subsidy($subsidies[0]["id"], array("budget", "explanation"));
       $budget = select_budget($subsidy["budget"], array("binet", "term"));
