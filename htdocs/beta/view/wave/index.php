@@ -49,7 +49,7 @@
                 ?>
               </span>
             <?php
-            echo link_to(path("show", "wave", $wave["id"]), "<div>".ob_get_clean()."</div>\n", array("class" => "opanel clickable-main", "goto" => true));
+            echo link_to(path("show", "wave", $wave["id"],binet_prefix($wave["binet"],$wave["term"])), "<div>".ob_get_clean()."</div>\n", array("class" => "opanel clickable-main", "goto" => true));
 
             if (in_array($wave["state"], array("submission", "deliberation"))) {
               ?>
