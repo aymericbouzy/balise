@@ -79,7 +79,7 @@
     foreach ($options as $value => $label) {
       $form_group_radio .= "<div class=\"radio\">
         <label>
-          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($object[$field] == $value || $include_first ? " checked" : "").">
+          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($object[$field] === $value || $include_first ? " checked" : "").">
           ".$label."
         </label>
       </div>";
