@@ -1,7 +1,7 @@
 <div class="bigpanel opanel">
-  <h2 class="tabtitle">Opération :</h2>
-  <div class="table-responsive" id="validations-table">
-    <table class="table table-bordered table-hover table-small-char">
+  <span class="title">Opération</span>
+  <div class="table-responsive panel-content" id="validations-table">
+    <table class="table table-bordered table-small-char">
       <tbody>
         <?php echo validatable_operation_line($operation, false); ?>
       </tbody>
@@ -10,9 +10,9 @@
 </div>
 
 <div class="bigpanel opanel">
-  <h2 class="tabtitle">Budgets :</h2>
+  <span class="title">Budgets</span>
   <form role="form" id="operation" action="/<?php echo path("validate", "operation", $operation["id"], binet_prefix($binet, $term)); ?>" method="post">
-    <div class="table-responsive" id="validations-table">
+    <div class="table-responsive panel-content" id="validations-table">
       <table class="table table-bordered table-hover table-small-char">
         <tbody>
           <?php
@@ -61,7 +61,9 @@
       </table>
     </div>
     <?php echo form_csrf_token(); ?>
-    <?php echo form_submit_button("Enregistrer"); ?>
-    <?php echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer l'opération", array("class" => "btn btn-danger")); ?>
+    <div class="buttons">
+      <?php echo form_submit_button("Enregistrer"); ?>
+      <?php echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer l'opération", array("class" => "btn btn-danger")); ?>
+    </div>
   </form>
 </div>
