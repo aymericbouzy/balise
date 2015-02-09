@@ -1,7 +1,7 @@
 <form role="form" id="budget" action="/<?php echo path($form_action, "budget", $form_action == "create" ? "" : $budget["id"], binet_prefix($binet, $term)); ?>" method="post">
   <?php
     if ($_GET["action"] == "new") {
-      echo form_group_checkbox("Dépense :", "sign", $budget, "budget");
+      echo form_group_radio("sign", array("1" => "Sortie d'argent", "0" => "Rentrée d'argent"), $budget, "budget");
     }
   ?>
   <?php echo form_group_text("Nom :", "label", $budget, "budget"); ?>
