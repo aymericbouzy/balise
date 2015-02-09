@@ -7,7 +7,7 @@
   <?php echo form_group_text("Montant :", "amount", $operation, "operation"); ?>
   <?php echo form_group_checkbox("Dépense", "sign", $operation, "operation"); ?>
   <?php echo form_group_select("Type de transaction :", "type", option_array(select_operation_types(), "id", "name", "operation_type"), $operation, "operation"); ?>
-  <?php echo form_group_select("Payé par :", "paid_by", option_array(select_students(), "id", "name", "student"), $operation, "operation"); ?>
+  <?php echo form_group_select("Payé par :", "paid_by", array_merge(paid_by_static_options(), option_array(select_students(), "id", "name", "student")), $operation, "operation"); ?>
   <?php echo form_csrf_token(); ?>
   <?php echo form_submit_button($submit_label); ?>
 </form>

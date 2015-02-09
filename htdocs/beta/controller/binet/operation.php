@@ -43,7 +43,7 @@
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
+    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));

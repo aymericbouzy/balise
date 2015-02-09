@@ -84,11 +84,15 @@
 
   function paid_by_to_caption($paid_by) {
     if ($paid_by > 0) {
-      return pretty_student($paid_by);
+      return pretty_student($paid_by, false);
     } else {
       $other_options = paid_by_static_options();
       return $other_options[$paid_by];
     }
+  }
+
+  function exists_paid_by($paid_by) {
+    return in_array($paid_by, array_keys(paid_by_static_options())) || exists_student($paid_by);
   }
 
   function paid_by_static_options() {
