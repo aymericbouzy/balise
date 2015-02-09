@@ -19,7 +19,7 @@
     $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
 
     if ($options["goto"]) {
-      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">\n $3", str_replace("\n", "", $caption));
+      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\" style=\"cursor:pointer\" >\n $3", str_replace("\n", "", $caption));
     } else {
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
     }
