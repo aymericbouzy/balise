@@ -32,6 +32,23 @@
   padding:5px;
 }
 
+.modal-list-element {
+  display:block;
+  width:90%;
+  margin:auto;
+  margin-top:5px;
+  padding:5px;
+  text-align:center;
+  color:#cbddff;
+  background-color:#AD1457;
+  text-decoration:none;
+}
+.modal-list-element:hover {
+  background-color:#AD1457;
+  text-decoration:none;
+  color:#fff;
+}
+
 .modal-over-all {
   z-index:2000;
 }

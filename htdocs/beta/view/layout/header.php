@@ -68,7 +68,7 @@
     if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
         ob_start();
         foreach(select_waves(array(),"submission_date",false) as $wave){
-          echo link_to(path("",""),pretty_wave($wave["id"]),array("class"=>"modal-list-element"));
+          echo link_to(path("new",binet_prefix($binet,$term),"request"),pretty_wave($wave["id"],false),array("class" => "modal-list-element opanel0"));
         }
         echo modal("wave-select","Sélectionner une vague de subventions : ",ob_get_clean());
     }
