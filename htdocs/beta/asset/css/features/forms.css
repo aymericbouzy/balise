@@ -41,3 +41,11 @@
   -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
   transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
 }
+
+.form-control {
+  border-radius:0px;
+  background-color:rgba(0,0,0,0);
+  border:none;
+  border-bottom: 2px solid #304FFE;
+  box-shadow:none;
+}
