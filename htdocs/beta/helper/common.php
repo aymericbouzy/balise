@@ -85,7 +85,7 @@
   }
 
   function modal($id,$title,$content){
-      return "<div class=\"balise-modal fade\" id=\"terms\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
+      return "<div class=\"balise-modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
                 <div class=\"modal-content balise-modal-container\">
                   <div class=\"modal-body\">
                       ".close_button("modal")."
