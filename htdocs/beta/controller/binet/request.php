@@ -85,7 +85,16 @@
     header_if(is_empty($budgets), 403);
   }
 
+  function check_no_existing_request() {
+    $requests = select_requests(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "wave" => $_GET["wave"]));
+    if (!is_empty($requests)) {
+      $GLOBALS["request"] = $requests[0];
+      redirect_to_action("show");
+    }
+  }
+
   before_action("check_wave_parameter", array("new"));
+  before_action("check_no_existing_request", array("new"));
   before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send"));
@@ -119,6 +128,7 @@
     break;
 
   case "new":
+    $request = initialise_for_form_from_session($edit_form_fields, "request");
     $request["wave"] = $_GET["wave"];
     $request["wave"] = select_wave($request["wave"], array("question", "id"));
     foreach ($budgets_involved as $budget) {
