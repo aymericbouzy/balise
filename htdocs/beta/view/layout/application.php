@@ -17,6 +17,7 @@
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/piechart.css" type="text/css">
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/buttons.css" type="text/css">
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/modals.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/forms.css" type="text/css">
       <!--- Datetimepicker -->
       <link href="<?php echo ASSET_PATH; ?>css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
 
