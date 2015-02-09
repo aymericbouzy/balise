@@ -144,6 +144,8 @@
   case "show":
     $request = select_request($request["id"], array("id", "budget", "answer", "sent", "wave", "state"));
     $request["wave"] = select_wave($request["wave"], array("id", "binet", "term", "state"));
+    $binet_info = select_binet($binet, array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
+    $binet_info = array_merge(select_term_binet($binet_info["id"]."/".$binet_info["current_term"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $binet_info);
     break;
 
   case "edit":
