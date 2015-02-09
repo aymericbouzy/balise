@@ -26,6 +26,11 @@
     $GLOBALS["requested_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["budgets_involved"]);
     $GLOBALS["purpose_array"] = array_map("adds_purpose_prefix", $GLOBALS["budgets_involved"]);
     $GLOBALS["edit_form_fields"] = array_merge(array("answer", "wave"), $GLOBALS["requested_amount_array"], $GLOBALS["purpose_array"]);
+    $total_amount = 0;
+    foreach ($GLOBALS["requested_amount_array"] as $amount_field) {
+      $total_amount += isset($_POST[$amount_field]) ? $_POST[$amount_field] : 0;
+    }
+    $_POST["total_amount_requested"] = $total_amount;
   }
 
   function setup_for_review() {
@@ -80,7 +85,16 @@
     header_if(is_empty($budgets), 403);
   }
 
+  function check_no_existing_request() {
+    $requests = select_requests(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "wave" => $_GET["wave"]));
+    if (!is_empty($requests)) {
+      $GLOBALS["request"] = $requests[0];
+      redirect_to_action("show");
+    }
+  }
+
   before_action("check_wave_parameter", array("new"));
+  before_action("check_no_existing_request", array("new"));
   before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send"));
@@ -91,9 +105,9 @@
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "request",
     "str_fields" => array_merge(array(array("answer", MAX_TEXT_LENGTH)), array_map("adds_max_length_purpose", $purpose_array)),
-    "amount_fields" => array_map("adds_max_amount", $requested_amount_array),
+    "amount_fields" => array_map("adds_max_amount", array_merge($requested_amount_array, array("total_amount_requested"))),
     "other_fields" => array(array("wave", "exists_wave")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" && isset($request) ? $request["id"] : "", binet_prefix($binet, $term)),
+    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "request", $_GET["action"] == "update" && isset($request) ? $request["id"] : "", binet_prefix($binet, $term), array("wave" => isset($_POST["wave"]) ? $_POST["wave"] : 0)),
     "optional" => array_merge($requested_amount_array, $purpose_array)
   ));
   before_action("setup_for_review", array("review", "grant"));
@@ -114,6 +128,7 @@
     break;
 
   case "new":
+    $request = initialise_for_form_from_session($edit_form_fields, "request");
     $request["wave"] = $_GET["wave"];
     $request["wave"] = select_wave($request["wave"], array("question", "id"));
     foreach ($budgets_involved as $budget) {

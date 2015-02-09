@@ -140,5 +140,9 @@
       return "date d'expiration";
       case "question":
       return "question à poser aux binets";
+      case "answer":
+      return "réponse";
+      case "total_amount_requested":
+      return "montant total demandé";
     }
   }
