@@ -1,0 +1,18 @@
+.title:hover{
+}
+.content>.infos {
+  display:inline-block;
+  width:70%;
+}
+
+.content>.granted-amount {
+  display:inline-block;
+  width:29%;
+}
+.content>.granted-amount>.form-group {
+  margin-bottom:5px;
+}
+.content>.granted-amount>.form-group> label {
+  font-size:1em;
+  font-weight:500;
+}

@@ -1,4 +1,5 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
+<link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="show-container">
   <div class="sh-plus <?php $state_to_color = array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
     <i class="fa fa-fw fa-<?php $state_to_icon = array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times"); echo $state_to_icon[$request_info["state"]]; ?>"></i>
@@ -52,6 +53,9 @@
       </p>
     </div>
   </div>
+  <div class="sh-block-normal opanel">
+    <?php echo $binet_info["description"]; ?>
+  </div>
   <?php
   if (has_viewing_rights($binet, $term)) {
     ?>
@@ -71,27 +75,42 @@
       echo minipane($subsidies_used_id, "Subventions utilisées", $binet_info["subsidized_amount_used"], NULL);
       ?>
     </div>
+    <div class="panel green-background opanel">
+      <div class="content white-text">
+        <?php echo $request_info["answer"]; ?>
+      </div>
+    </div>
+    <form role="form" id="request" action="/<?php echo path("grant", "request", $request["id"], binet_prefix($binet, $term)); ?>" method="post">
     <?php
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
       $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term"));
-      echo link_to(
-      path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-      "<div class=\"sh-req-budget opanel\">
-        <div class=\"header\">
-          <span class=\"name\">".$budget["label"]."</span>
+      path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])) ?>
+      <div class="panel light-blue-background opanel">
+        <?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
+                        "<div class=\"title\">".$budget["label"]."</div>",
+                        array("goto"=>true));?>
+        <div class="content">
+          <div class="infos">
+            <p class="amount">
+              <?php echo pretty_amount($subsidy["requested_amount"],false,true); ?></i>
+            </p>
+            <p class="text">
+              <?php echo $subsidy["purpose"]?>
+            </p>
+          </div>
+          <div class="granted-amount">
+          <?php echo form_group_text("Montant accordé :", adds_amount_prefix($subsidy), $request, "request"); ?>
+          </div>
+          <div class="explanation">
+            <?php echo form_group_text("Explication pour le montant accordé à ".pretty_subsidy($subsidy["id"])." :", adds_explanation_prefix($subsidy), $request, "request",array(),true); ?>
+          </div>
         </div>
-        <div class=\"content\">
-          <p class=\"amount\">
-            ".pretty_amount($subsidy["requested_amount"])." <i class=\"fa fa-fw fa-euro\"></i>
-          </p>
-          <p class=\"text\">
-            ".$subsidy["purpose"]."
-          </p>
-        </div>
-      </div>",
-      array("goto"=>true)
-      );
+      </div>
+    <?php
     }
     ?>
+    <?php echo form_csrf_token(); ?>
+    <?php echo form_submit_button("Enregistrer"); ?>
+    </form>
   </div>

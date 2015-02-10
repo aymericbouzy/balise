@@ -23,3 +23,28 @@
   padding:7px;
   width:100%;
 }
+
+.panel {
+  margin: 5px;
+  padding:0px;
+  color:#2e2e2e;
+  border-radius:0px;
+  border:none;
+  shadow:none;
+}
+
+.panel>.title {
+  display:block;
+  margin:0px;
+  width:100%;
+  padding:2px;
+  padding-left:15px;
+  font-size:20px;
+  background-color:#2e2e2e;
+  color:#cbddff;
+}
+
+.panel>.content {
+  display:block;
+  padding:5px;
+}

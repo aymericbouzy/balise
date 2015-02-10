@@ -7,17 +7,20 @@
             </div>";
   }
 
-  function form_group_text($label, $field, $object, $object_name, $html_decoration = array()) {
+  function form_group_text($label, $field, $object, $object_name, $html_decoration = array(),$textarea = false) {
     set_if_not_set($html_decoration["class"], "");
     $html_decoration["class"] .= " form-control";
     $html_decoration_string = "";
     foreach ($html_decoration as $property => $value) {
       $html_decoration_string .= " ".$property."=\"".$value."\"";
     }
+    $textarea ? $input = "textarea" : $input = "input" ;
+    $textarea ? $endtag = "</textarea>" : $endtag = "" ;
     return form_group(
       $label,
       $field,
-      "<input type=\"text\"".$html_decoration_string." id=\"".$field."\" name=\"".$field."\" value=\"".(isset($object[$field]) ? $object[$field] : "")."\">",
+      "<".$input." type=\"text\"".$html_decoration_string." id=\"".$field."\" name=\"".$field."\" value=\"".(isset($object[$field]) ? $object[$field] : "")."\">
+      ".$endtag,
       $object_name
     );
   }
