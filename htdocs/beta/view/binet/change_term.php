@@ -16,7 +16,7 @@
         $new_term = $binet["term"] + 1;
         echo link_to(path("set_term", "binet", $binet["id"], "", array("term" => $new_term), true), "Passer à la promo ".$new_term, array("class" => "btn btn-primary"));
         echo "\t";
-        echo link_to(path("set_term", "binet", $binet["id"], "", array("term" => -1), true), "Désactiver le binet",  array("class" => "btn btn-danger"));
+        echo link_to(path("deactivate", "binet", $binet["id"], "", array(), true), "Désactiver le binet",  array("class" => "btn btn-danger"));
       ?>
     </div>
     <?php
