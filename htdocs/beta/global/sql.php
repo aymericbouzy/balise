@@ -131,12 +131,12 @@
     }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
-      $real_value = is_array($value) ? $value[1] : $value;
       if ($column === "tags") {
         for ($j = 0; $j < $i; $j++) {
           $req->bindValue(':tag'.$j, $tags[$j], PDO::PARAM_INT);
         }
       } else {
+        $real_value = is_array($value) ? $value[1] : $value;
         if (!(is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL")))) {
           if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
             if (in_array($column, $selectable_int_fields)) {
