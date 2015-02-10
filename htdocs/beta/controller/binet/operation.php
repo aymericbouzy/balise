@@ -43,7 +43,7 @@
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
+    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
@@ -67,7 +67,7 @@
   case "index":
     $operations = array();
     foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $operation) {
-      $operations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type"));
+      $operations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type","term","binet"));
     }
     break;
 
@@ -108,7 +108,7 @@
 
   case "delete":
     $operation = select_operation($operation["id"], array("created_by", "binet_validation_by", "binet", "term", "id"));
-    if (empty($operation["binet_validation_by"]) && !in_array(array("id" => $operation["created_by"]), select_admins($operation["binet"], $operation["term"]))) {
+    if (is_empty($operation["binet_validation_by"]) && !in_array(array("id" => $operation["created_by"]), select_admins($operation["binet"], $operation["term"]))) {
       send_email($operation["created_by"], "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
     }
     delete_operation($operation["id"]);
@@ -137,10 +137,11 @@
   case "validate":
     $budget_amounts_array = array();
     foreach ($_POST as $key => $amount) {
-      if ($amount > 0) {
+      if (in_array($key, $amount_array) && $amount > 0) {
         $budget_amounts_array[substr($key, strlen(amount_prefix))] = $amount;
       }
     }
+    remove_budgets_operation($operation["id"]);
     add_budgets_operation($operation["id"], $budget_amounts_array);
     validate_operation($operation["id"]);
     $operation = select_operation($operation["id"], array("id", "created_by", "state"));

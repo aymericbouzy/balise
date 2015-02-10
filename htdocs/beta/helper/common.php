@@ -4,6 +4,7 @@
     set_if_not_set($options["class"], "");
     set_if_not_set($options["id"], "");
     set_if_not_set($options["goto"], false);
+    set_if_not_set($options["title"], false);
 
     if (!in_array(substr($path, 0, 7), array("mailto:", "http://")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
@@ -13,11 +14,12 @@
       $path = full_path($path);
     }
 
-    $parameters = empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
-    $parameters .= empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
+    $parameters = is_empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
+    $parameters .= is_empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
+    $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
 
     if ($options["goto"]) {
-      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\">\n $3", str_replace("\n", "", $caption));
+      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\" style=\"cursor:pointer\" >\n $3", str_replace("\n", "", $caption));
     } else {
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
     }
@@ -27,20 +29,23 @@
     return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
   }
 
-  function button($path, $caption, $icon, $background_color, $link = true) {
-    $caption = "<div class=\"round-button ".$background_color."-background opanel\">
-                  <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
-                  <span>".$caption."</span>
-                </div>";
+  function button($path, $caption, $icon, $background_color, $link = true, $size = "",$label_position="right") {
+    if ($size != "") {
+      $size = "-".$size;
+    }
+    $caption = "<div class=\"round-button".$size." ".$background_color."-background opanel\">
+    <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
+    <span class=\"olabel ".$label_position."\">".$caption."</span>
+    </div>";
     if ($link) {
-      return link_to(
-        $path,
-        $caption,
-        array("goto" => true)
-      );
+      return link_to($path, $caption, array("goto" => true));
     } else {
       return $caption;
     }
+  }
+
+  function close_button($data_dismiss){
+    return "<button type=\"button\" class=\"close\" data-dismiss=\"".$data_dismiss."\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>";
   }
 
   function contact_binet_path($binet) {
@@ -50,4 +55,27 @@
       $path .= $admin["name"]." <".$admin["email"].">, ";
     }
     return $path;
+  }
+
+
+  function month($date){
+    $french_months = array(
+      "01" => "Janvier",
+      "02" => "Février",
+      "03" => "Mars",
+      "04" => "Avril",
+      "05" => "Mai",
+      "06" => "Juin",
+      "07" => "Juillet",
+      "08" => "Août",
+      "09" => "Septembre",
+      "10" => "Octobre",
+      "11" => "Novembre",
+      "12" => "Décembre"
+    );
+    return $french_months[strftime("%m",strtotime($date))];
+  }
+
+  function year($date){
+    return strftime("%Y",strtotime($date));
   }

@@ -7,7 +7,7 @@
 
   function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
-    if (!empty($virtual_criteria)) {
+    if (!is_empty($virtual_criteria)) {
       $virtual_entries = array();
       $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria));
       foreach($entries as $entry) {
@@ -56,7 +56,7 @@
           $virtual_entries[] = $virtual_entry;
         }
       }
-      if (!empty($order_by) && in_array($order_by, $filterable_virtual_fields)) {
+      if (!is_empty($order_by) && in_array($order_by, $filterable_virtual_fields)) {
         function sort_by_virtual_field($e1, $e2) {
           return ($ascending ? 1 : (-1))*strcmp($e1[$order_by], $s2[$order_by]);
         }
@@ -125,7 +125,7 @@
         }
       }
     }
-    $ordered = !empty($order_by) && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields));
+    $ordered = !is_empty($order_by) && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields));
     if ($ordered) {
       $sql .= " ORDER BY :order_by".($ascending ? " ASC" : " DESC");
     }
@@ -183,7 +183,7 @@
 
   function select_entry($table, $selectable_fields, $id, $fields = array()) {
     $fields = array_intersect($fields, $selectable_fields);
-    if (empty($fields)) {
+    if (is_empty($fields)) {
       $fields = $selectable_fields;
     }
     $sql = "SELECT ";

@@ -48,7 +48,7 @@
     <?php echo pretty_amount($operation["amount"]); ?> <i class="fa fa-euro"></i>
   </div>
   <div class="sh-op-refs opanel">
-    <i class="fa fa-fw fa-folder-o"></i> </br>
+    <i class="fa fa-fw fa-folder-o"></i>
     <?php echo $operation["bill"] ?: "Aucune facture associée"; ?> </br>
     <?php echo pretty_operation_type($operation["type"])." ".($operation["reference"] ?: "Aucune référence de paiement associée"); ?>
   </div>
@@ -56,39 +56,36 @@
     <?php echo $operation["comment"]; ?>
   </div>
   <div class="sh-op-payer opanel">
-    <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? pretty_student($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
+    <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? paid_by_to_caption($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
   </div>
-  <div class="sh-bu-budgets opanel">
-  <?php
+  <div class="sh-piechart-panel opanel">
+    <?php
     $budgets = select_budgets_operation($operation["id"]);
-    if (!empty($budgets)) {
+    if (!is_empty($budgets) && sizeOf($budgets) > 1) {
       ?>
-        <div class="pieID pie">
-        </div>
-        <ul class="pieID legend">
+      <div class="pieID pie">
+      </div>
+      <ul class="pieID legend">
+        <?php
+        foreach ($budgets as $budget) {
+          ?>
           <li>
-            <?php
-              foreach ($budgets as $budget) {
-                ?>
-                <em><?php echo pretty_budget($budget["id"]); ?></em>
-                <span><?php echo pretty_amount($budget["amount"]); ?></span>
-                <?php
-              }
-            ?>
+            <em><?php echo pretty_budget($budget["id"], true, false); ?></em>
+            <span><?php echo pretty_amount($budget["amount"], false); ?></span>
           </li>
-        </ul>
+          <?php
+        }
+        ?>
+      </ul>
+      <script>createPie(".pieID.legend", ".pieID.pie");</script>
+      <?php
+    } elseif (!is_empty($budgets)) {
+      echo pretty_budget($budgets[0]["id"], true);
+    } else {
+      ?>
+      <i>Vous n'avez aucun budget associé à cette opération ?</i>
       <?php
     }
-    else{
-      if(!empty($budgets)){
-        echo pretty_budget($budgets[0]["id"]);
-      }
-      else{
-        ?>
-        Vous n'avez aucune opération associée à ce budget !
-        <?php
-      }
-    }
-  ?>
+    ?>
   </div>
 </div>

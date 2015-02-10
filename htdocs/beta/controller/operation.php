@@ -1,8 +1,8 @@
 <?php
 
   function creator_operation_or_kessier() {
-    $operation = select_operation($_GET["operation"], array("created_by", "binet_validation_by", "kes_validation_by"));
-    header_if(($operation["created_by"] != $_SESSION["student"] || !empty($operation["binet_validation_by"])) && (!status_admin_current_binet(KES_ID) || !empty($operation["kes_validation_by"])), 401);
+    $operation = select_operation($_GET["operation"], array("created_by", "state"));
+    header_if(!(($operation["created_by"] == $_SESSION["student"] && $operation["state"] == "suggested") || (is_current_kessier() && $operation["state"] == "waiting_validation")), 401);
   }
 
   function correct_term($term) {
@@ -18,7 +18,7 @@
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student"), array("binet", "exists_binet"), array("term", "correct_term")),
+    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by"), array("binet", "exists_binet"), array("term", "correct_term")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : ""),
     "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));

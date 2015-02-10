@@ -17,7 +17,8 @@
 
   function select_request($request, $fields = array()) {
     $virtual_fields = array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state");
-    if (!empty(array_intersect($virtual_fields, $fields))) {
+    $present_virtual_fields = array_intersect($virtual_fields, $fields);
+    if (!is_empty($present_virtual_fields)) {
       $fields = array_merge($fields, array("id", "wave", "sent"));
     }
     $id = $request;
@@ -27,8 +28,7 @@
       $request,
       $fields
     );
-    if (!empty(array_intersect($virtual_fields, $fields))) {
-      // TODO : check no request without subsidy
+    if (!is_empty($present_virtual_fields)) {
       $subsidies = select_subsidies(array("request" => $request["id"]));
       $subsidy = select_subsidy($subsidies[0]["id"], array("budget", "explanation"));
       $budget = select_budget($subsidy["budget"], array("binet", "term"));

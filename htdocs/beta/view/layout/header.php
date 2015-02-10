@@ -13,8 +13,10 @@
       <i class="fa fa-plus-circle green-plus" id="operation-plus"></i> <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu">
-      <?php if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet") {
-          if (!empty(select_budgets(array("binet" => $binet, "term" => $term)))) {
+      <?php
+        if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
+          $budgets_for_checking_if_not_empty = select_budgets(array("binet" => $binet, "term" => $term));
+          if (!is_empty($budgets_for_checking_if_not_empty)) {
             ?>
               <li class="add-operation">
                 <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
@@ -22,10 +24,10 @@
             <?php
           }
         ?>
-          <li class="add-operation">
-            <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
-          </li >
-          <?php
+        <li class="add-operation">
+          <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
+        </li >
+        <?php
           if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
             ?>
             <li class = "divider"></li>
@@ -36,9 +38,9 @@
           }
         } else {
           ?>
-            <li class="add-operation">
-              <?php echo link_to(path("new", "operation"), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
-            </li>
+          <li class="add-operation">
+            <?php echo link_to(path("new", "operation"), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
+          </li>
           <?php
         }
         if (is_current_kessier()) {

@@ -2,8 +2,9 @@
 
   function check_admin() {
     header_if(!validate_input(array("admin")), 400);
-    header_if(empty(select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]))), 404);
-    $GLOBALS[$admin] = $_GET["admin"];
+    $terms = select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
+    header_if(is_empty($terms), 404);
+    $GLOBALS["admin"] = $_GET["admin"];
   }
 
   before_action("check_csrf_post", array("create"));
@@ -31,7 +32,7 @@
 
   case "create":
     add_admin_binet($_POST["student"], $binet, $_POST["term"]);
-    send_email($_POST["student"], "Nouveau binet", "new_admin", array("binet_term" => $binet."/".$_POST["term"]));	
+    send_email($_POST["student"], "Nouveau binet", "new_admin", array("binet_term" => $binet."/".$_POST["term"]));
     $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet($binet)." pour le mandat ".$_POST["term"].".";
     redirect_to_action("");
     break;

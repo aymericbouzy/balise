@@ -18,15 +18,15 @@
         ?>
         <li class="content-line-panel">
         <?php
-          $binet = select_binet($binet["id"], array("id", "name", "current_term"));
+          $binet = select_binet($binet["id"], array("id", "current_term"));
           if (is_current_kessier()) {
-            $binet["balance"] = select_term_binet($binet["id"]."/".$binet["current_term"], array("balance"))["balance"];
+            $binet["balance"] = select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance"))["real_balance"];
             $binet["state_color"] = $binet["balance"] > 0 ? "green" : "red";
           }
           ob_start();
           ?>
             <i class="fa fa-3x fa-group"></i>
-            <span class="name"><?php echo $binet["name"]; ?></span>
+            <span class="name"><?php echo pretty_binet($binet["id"], false); ?></span>
             <?php
               if (is_current_kessier()) {
                 ?>

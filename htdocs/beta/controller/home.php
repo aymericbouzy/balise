@@ -23,7 +23,7 @@
     } else {
       $auth = frankiz_get_response();
       $students = select_students(array("hruid" => $auth["hruid"]));
-      if (empty($students)) {
+      if (is_empty($students)) {
         $student = create_student($auth["hruid"], $auth["firstname"]." ".$auth["lastname"], $auth["email"]);
         $_SESSION["notice"][] =
           "Bienvenu sur le site balise ! Tu trouveras ici toutes les informations pour gérer la trésorerie de tes binets,

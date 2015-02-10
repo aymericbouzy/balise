@@ -2,7 +2,7 @@
 
   function before_action($function, $actions, $argument = NULL) {
     if (in_array($_GET["action"], $actions)) {
-      if (empty($argument)) {
+      if (is_empty($argument)) {
         call_user_func($function);
       } else {
         call_user_func($function, $argument);
@@ -58,10 +58,10 @@
   function check_binet_term() {
     header_if(!validate_input(array("binet", "term")), 400);
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
-    header_if(empty($binets), 404);
+    header_if(is_empty($binets), 404);
     $GLOBALS["binet"] = $binets[0]["id"];
     $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $_GET["term"]));
-    if (empty($binet_terms)) {
+    if (is_empty($binet_terms) && $_GET["controller"] != "admin") {
       $_SESSION["error"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
     }
     $GLOBALS["term"] = $_GET["term"];
@@ -72,7 +72,7 @@
     $criteria = $array;
     unset($criteria["model_name"]);
     $entry = call_user_func("select_".$array["model_name"], $_GET[$array["model_name"]], array_merge(array("id"), array_keys($criteria)));
-    header_if(empty($entry), 404);
+    header_if(is_empty($entry), 404);
     foreach ($criteria as $column => $value) {
       header_if($value != $entry[$column], 403);
     }
@@ -82,14 +82,15 @@
   function check_form_input($array) {
     $_SESSION[$array["model_name"]]["errors"] = array();
     $_SESSION[$array["model_name"]] = $_POST;
-    $array["str_fields"] = isset($array["str_fields"]) ? $array["str_fields"] : array();
-    $array["int_fields"] = isset($array["int_fields"]) ? $array["int_fields"] : array();
-    $array["amount_fields"] = isset($array["amount_fields"]) ? $array["amount_fields"] : array();
-    $array["other_fields"] = isset($array["other_fields"]) ? $array["other_fields"] : array();
+    set_if_not_set($array["str_fields"], array());
+    set_if_not_set($array["int_fields"], array());
+    set_if_not_set($array["amount_fields"], array());
+    set_if_not_set($array["date_fields"], array());
+    set_if_not_set($array["other_fields"], array());
 
-    foreach (array("str_fields", "int_fields", "amount_fields", "other_fields") as $fields_range) {
+    foreach (array("str_fields", "int_fields", "amount_fields", "other_fields", "date_fields") as $fields_range) {
       foreach ($array[$fields_range] as $index => $field) {
-        if (!isset($_POST[$field[0]]) || empty($_POST[$field[0]])) {
+        if (!isset($_POST[$field[0]]) || is_empty($_POST[$field[0]])) {
           if (!isset($array["optional"]) || !in_array($field[0], $array["optional"])) {
             $_SESSION[$array["model_name"]]["errors"][] = $field[0];
           } else {
@@ -99,7 +100,7 @@
       }
     }
 
-    if (!empty($_SESSION[$array["model_name"]]["errors"])) {
+    if (!is_empty($_SESSION[$array["model_name"]]["errors"])) {
       $string_error = "Vous n'avez pas rempli tous les champs obligatoires. Il manque ";
       $string_error .= count($_SESSION[$array["model_name"]]["errors"]) > 1 ? "les champs suivants" : "le champ suivant";
       $string_error .= " : ";
@@ -136,10 +137,21 @@
       }
     }
 
+    foreach ($array["date_fields"] as $field) {
+      $regex = "/^([0-9]{2})\/([0-9]{2})\/(2[0-9]{3})$/";
+      if (preg_does_match($regex, $_POST[$field[0]])) {
+        $_POST[$field[0]] = preg_replace($regex, "$3-$2-$1", $_POST[$field[0]]);
+      }
+      if (!($_POST[$field[0]] > $field[1])) {
+        $_SESSION["error"][] = "La valeur entrée pour le champ \"".translate_form_field($field[0])."\" n'est pas valide.";
+        $_SESSION[$array["model_name"]]["errors"][] = $field[0];
+      }
+    }
+
     foreach ($array["other_fields"] as $field) {
       if (!call_user_func($field[1], $_POST[$field[0]])) {
         $readable_field = translate_form_field($field[0]);
-        if (!empty($readable_field)) {
+        if (!is_empty($readable_field)) {
           $_SESSION["error"][] = "La valeur entrée pour le champ \"".$readable_field."\" n'est pas valide.";
         }
         $_SESSION[$array["model_name"]]["errors"][] = $field[0];
@@ -147,11 +159,11 @@
     }
 
     if (isset($array["tags_string"]) && $array["tags_string"]) {
-      if (!empty($_POST["tags_string"])) {
+      if (!is_empty($_POST["tags_string"])) {
         foreach (explode(";", $_POST["tags_string"]) as $tag_name) {
           $tag_name = remove_exterior_spaces($tag_name);
           $tags = select_tags(array("clean_name" => clean_string($tag_name)));
-          if (empty($tags)) {
+          if (is_empty($tags)) {
             $_SESSION["tag_to_create"] = $tag_name;
           } else {
             $GLOBALS["tags"][] = $tags[0]["id"];
@@ -162,12 +174,12 @@
       }
     }
 
-    if (!empty($_SESSION[$array["model_name"]]["errors"])) {
+    if (!is_empty($_SESSION[$array["model_name"]]["errors"])) {
       redirect_to_path($array["redirect_to"]);
     }
 
-    if (!empty($_SESSION["tag_to_create"])) {
-      $_SESSION["return_to"] = binet_prefix($GLOBALS["binet"], $GLOBALS["term"]);
+    if (!is_empty($_SESSION["tag_to_create"])) {
+      $_SESSION["return_to"] = $array["redirect_to"];
       redirect_to_path(path("new", "tag"));
     }
 
@@ -175,15 +187,19 @@
   }
 
   function has_viewing_rights($binet, $term) {
-    return status_admin_current_binet(KES_ID) ||
-      !empty(select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]))) ||
+    if (status_admin_current_binet(KES_ID)) {
+      return true;
+    } else {
+      $terms = select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]));
+      return !is_empty($terms) ||
       received_subsidy_request_from($binet);
+    }
   }
 
   function has_editing_rights($binet, $term) {
     $current_term = current_term($binet);
     $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => $_SESSION["student"]), "term");
-    if (empty($terms_admin)) {
+    if (is_empty($terms_admin)) {
       return false;
     }
     $term_admin = explode("/", $terms_admin[0]["id"])[1];
@@ -197,7 +213,14 @@
   }
 
   function check_editing_rights() {
-    header_if(!has_editing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+    if ($_GET["controller"] == "binet") {
+      $binet = $GLOBALS["binet"]["id"];
+      $term = current_term($binet);
+    } else {
+      $binet = $GLOBALS["binet"];
+      $term = $GLOBALS["term"];
+    }
+    header_if(!has_editing_rights($binet, $term), 401);
   }
 
   // useless
@@ -304,17 +327,20 @@
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
     $req->execute();
-    return !empty($req->fetch());
+    $result = $req->fetch();
+    return !is_empty($result);
   }
 
   function compute_query_array() {
     $query_array = array_intersect_key($_GET, array_flip(array("tags")));
-    if (!empty($query_array["tags"])) {
+    if (!is_empty($query_array["tags"])) {
       $tags_clean_names = explode(" ", $query_array["tags"]);
       $query_array["tags"] = array();
       foreach ($tags_clean_names as $clean_name) {
         $query_array["tags"][] = select_tags(array("clean_name" => $clean_name))[0]["id"];
       }
+    } else {
+      unset($query_array["tags"]);
     }
     return $query_array;
   }

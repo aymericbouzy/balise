@@ -23,8 +23,8 @@
             ?>
               <i class="fa fa-3x fa-money"></i>
               <span class="name"><?php echo pretty_wave($wave["id"], false); ?></span>
-              <span class="state <?php echo array("submission" => "green", "deliberation" => "orange", "distribution" => "grey", "closed" => "red")[$wave["state"]]; ?>-background">
-                <?php echo array("submission" => "Ouverte", "deliberation" => "Dépôt terminé", "distribution" => "En cours", "closed" => "Terminée")[$wave["state"]]; ?>
+              <span class="state <?php $state_to_color = array("submission" => "green", "deliberation" => "orange", "distribution" => "grey", "closed" => "red"); echo $state_to_color[$wave["state"]]; ?>-background">
+                <?php $state_to_caption = array("submission" => "Ouverte", "deliberation" => "Dépôt terminé", "distribution" => "En cours", "closed" => "Terminée"); echo $state_to_caption[$wave["state"]]; ?>
               </span>
               <span class="dates">
                 <span class="top green-background">
