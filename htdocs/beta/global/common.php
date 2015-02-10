@@ -148,6 +148,7 @@
       array("\040"),
       $string
     );
+  }
 
   function array_true_merge($array1, $array2) {
     foreach($array1 as $key => $value) {
