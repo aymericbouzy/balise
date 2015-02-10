@@ -1,6 +1,6 @@
 <form role="form" id="operation" action="/<?php echo path($form_action, "operation", $form_action == "create" ? "" : $operation["id"]); ?>" method="post">
   <?php echo form_group_select("Binet :", "binet", option_array(select_binets(), "id", "name", "binet"), $operation, "operation"); ?>
-  <?php echo form_group_checkbox("Proposer l'opération pour la promo suivante", "term", $operation, "operation"); ?>
+  <?php echo form_group_text("Mandat :", "term", $operation, "operation"); ?>
   <?php echo form_group_text("Description :", "comment", $operation, "operation"); ?>
   <?php echo form_group_text("Référence de facture :", "bill", $operation, "operation"); ?>
   <?php echo form_group_text("Référence de paiement :", "reference", $operation, "operation"); ?>
