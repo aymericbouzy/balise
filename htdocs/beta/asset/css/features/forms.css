@@ -6,12 +6,17 @@
 }
 .form-container {
   position: relative;
-  width: 100%;
   margin: auto;
   padding: 10px;
   background-color: #cbddff;
   color :#2e2e2e ;
   margin-bottom: 50px;
+}
+
+.form-container>h1 {
+  margin-top:10px;
+  padding-bottom:10px;
+  border-bottom:1px solid rgba(0,0,0,0.15);
 }
 
 @media (min-width:768px){
@@ -57,4 +62,8 @@ select {
 
 option {
   background-color:#cbddff;
+}
+
+.buttons> a {
+  margin-left:10px;
 }
