@@ -96,6 +96,9 @@
     foreach (select_waves(array("binet" => $binet["id"]), "submission_date") as $wave) {
       $waves[] = select_wave($wave["id"], array("id", "binet", "term", "submission_date", "expiry_date", "published"));
     }
+    if (is_empty($binet["current_term"])) {
+      $binet["state"] = "grey";
+    }
     break;
 
   case "change_term":
