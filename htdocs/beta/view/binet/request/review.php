@@ -88,7 +88,7 @@
       path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])) ?>
       <div class="panel light-blue-background opanel">
         <?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-                        "<div class=\"title\">".$budget["label"]."</div>",
+                        "<div class=\"title\">".$budget["label"]."<span>  Voir le budget</span></div>",
                         array("goto"=>true));?>
         <div class="content">
           <div class="infos">
