@@ -70,7 +70,7 @@
             }
           }
           echo link_to(
-            path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+            path("review", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
             "<div class=\"sh-wa-request opanel\">
               <p class=\"marker
                 ".(($request["sent"] != 1)? " red" : " green")."-background\" ></p>
