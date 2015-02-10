@@ -15,6 +15,10 @@
 
   function select_budget($budget, $fields = array()) {
     $id = $budget;
+    $present_virtual_fields = array_intersect($fields, array("real_amount"));
+    if (!is_empty($present_virtual_fields)) {
+      $fields = array_merge($fields, array("amount"));
+    }
     $budget = select_entry(
       "budget",
       array("id", "binet", "amount", "term", "label"),
@@ -24,7 +28,8 @@
     foreach ($fields as $field) {
       switch ($field) {
       case "real_amount":
-        $budget[$field] = get_real_amount_budget($id);
+        $sign = $budget["amount"] > 0 ? 1 : -1;
+        $budget[$field] = get_real_amount_budget($id) * $sign;
         break;
       case "subsidized_amount_requested":
         $budget[$field] = get_subsidized_amount_requested_budget($id);

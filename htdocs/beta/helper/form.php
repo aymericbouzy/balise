@@ -7,11 +7,17 @@
             </div>";
   }
 
-  function form_group_text($label, $field, $object, $object_name) {
+  function form_group_text($label, $field, $object, $object_name, $html_decoration = array()) {
+    set_if_not_set($html_decoration["class"], "");
+    $html_decoration["class"] .= " form-control";
+    $html_decoration_string = "";
+    foreach ($html_decoration as $property => $value) {
+      $html_decoration_string .= " ".$property."=\"".$value."\"";
+    }
     return form_group(
       $label,
       $field,
-      "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".(isset($object[$field]) ? $object[$field] : "")."\">",
+      "<input type=\"text\"".$html_decoration_string." id=\"".$field."\" name=\"".$field."\" value=\"".(isset($object[$field]) ? $object[$field] : "")."\">",
       $object_name
     );
   }
@@ -71,6 +77,21 @@
       $select_tag,
       $object_name
     );
+  }
+
+  function form_group_radio($field, $options, $object, $object_name) {
+    $form_group_radio = "";
+    $include_first = $object[$field] === "";
+    foreach ($options as $value => $label) {
+      $form_group_radio .= "<div class=\"radio\">
+        <label>
+          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($object[$field] === $value || $include_first ? " checked" : "").">
+          ".$label."
+        </label>
+      </div>";
+      $include_first = false;
+    }
+    return $form_group_radio;
   }
 
   function option_array($entries, $key_field, $value_field, $model_name) {
@@ -140,5 +161,9 @@
       return "date d'expiration";
       case "question":
       return "question à poser aux binets";
+      case "answer":
+      return "réponse";
+      case "total_amount_requested":
+      return "montant total demandé";
     }
   }

@@ -15,8 +15,6 @@
 </thead>
 <tbody>
   <?php
-    $sum_revenue = 0;
-    $sum_expenses = 0;
     foreach ($operations as $operation) {
       ob_start();
       ?>
@@ -30,12 +28,10 @@
           <?php echo $operation["date"]; ?>
         </td>
         <?php if ($operation["amount"] > 0) {
-          $sum_revenue += $operation["amount"];
           ?><td></td><td>
             <?php echo pretty_amount($operation["amount"]); ?>
           </td><?php
         } else {
-          $sum_expenses += $operation["amount"];
           ?><td>
             <?php echo pretty_amount($operation["amount"]); ?>
           </td><td></td>
@@ -54,12 +50,12 @@
 <tbody>
   <tr class="total">
     <td colspan="3">Total</td>
-    <td><?php echo pretty_amount($sum_expenses); ?></td>
-    <td><?php echo pretty_amount($sum_revenue); ?></td>
+    <td><?php echo pretty_amount(sum_array($operations, "amount", "negative")); ?></td>
+    <td><?php echo pretty_amount(sum_array($operations, "amount", "positive")); ?></td>
   </tr>
   <tr class="total">
     <td colspan="3">Solde</td>
-    <td colspan="2"><?php echo pretty_amount($sum_revenue + $sum_expenses); ?></td>
+    <td colspan="2"><?php echo pretty_amount(sum_array($operations, "amount")); ?></td>
   </tr>
 </tbody>
 <?php

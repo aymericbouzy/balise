@@ -10,7 +10,7 @@
     }
   }
 
-  function header_if($test, $status) {
+  function header_if($test, $status, $no_exit = false) {
     if ($test) {
       switch ($status) {
       case 400:
@@ -25,6 +25,9 @@
       case 404:
         $header = "404 Not Found";
         break;
+      case 500:
+        $header = "500 Server Error";
+        break;
       }
       header("HTTP/1.1 ".$header);
 
@@ -35,15 +38,20 @@
         var_dump($_SESSION);
         echo "\$_POST : ";
         var_dump($_POST);
-        echo "Appelé par : ";
-        var_dump(debug_backtrace()[1]["function"]);
+        $backtrace = debug_backtrace();
+        if (isset($backtrace[1])) {
+          echo "Appelé par : ";
+          var_dump($backtrace[1]["function"]);
+        }
       }
 
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
       include LAYOUT_PATH."application.php";
-      exit;
+      if (!$no_exit) {
+        exit;
+      }
     }
   }
 
@@ -258,7 +266,7 @@
         if (in_array($parameter, array_merge($required_parameters, $optional_parameters))) {
           switch ($parameter) {
           case "action":
-            $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
+            $valid = $valid && preg_does_match("/^[a-z_]+|[0-9]+$/", $value);
             break;
           case "controller":
             $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);

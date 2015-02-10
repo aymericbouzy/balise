@@ -4,6 +4,10 @@
 .red-background {
   background-color: rgb(173, 50, 39);
 }
+
+.white-text {
+  color : #fff;
+}
 .orange-background {
   background-color: rgb(255, 175, 36);
 }
