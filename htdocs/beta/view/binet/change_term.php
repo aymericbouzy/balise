@@ -12,7 +12,7 @@
     <?php
   } else {
     ?>
-    <h1>Faire la passation</h1>
+    <h1><i class="fa fa-fw fa-arrow-right"></i> Faire la passation</h1>
     <div class="buttons">
       <?php
         $new_term = $current_term + 1;
