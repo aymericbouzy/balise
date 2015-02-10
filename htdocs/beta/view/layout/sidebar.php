@@ -25,13 +25,15 @@
         $_GET["controller"] == "budget" || $_GET["controller"] == "operation"
       );
       $number_pending_validations = count_pending_validations($binet, $term);
-      echo li_link(
-        link_to(
-          path("", "validation", "", binet_prefix($binet, $term)),
-          "<i class=\"fa fa-fw fa-check\"></i> Validations".($number_pending_validations > 0 ? " <span class=\"counter\">".$number_pending_validations."</span>" : "")
-        ),
-        $_GET["controller"] == "validation"
-      );
+      if (has_editing_rights($binet, $term)) {
+        echo li_link(
+          link_to(
+            path("", "validation", "", binet_prefix($binet, $term)),
+            "<i class=\"fa fa-fw fa-check\"></i> Validations".($number_pending_validations > 0 ? " <span class=\"counter\">".$number_pending_validations."</span>" : "")
+          ),
+          $_GET["controller"] == "validation"
+        );
+      }
       echo li_link(
         link_to(path("", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Subventions"),
         $_GET["controller"] == "request"
