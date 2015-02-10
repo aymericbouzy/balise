@@ -95,7 +95,7 @@
     $sql = "SELECT DISTINCT binet_admin.student AS id
     FROM binet_admin
     INNER JOIN binet
-    WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term";
+    WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term AND binet_admin.binet = binet.id";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
