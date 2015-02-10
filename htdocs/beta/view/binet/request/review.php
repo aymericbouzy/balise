@@ -53,8 +53,16 @@
       </p>
     </div>
   </div>
-  <div class="sh-block-normal opanel">
-    <?php echo $binet_info["description"]; ?>
+  <div class="panel light-blue-background opanel">
+    <div class="content">
+      <?php echo $binet_info["description"]; ?>
+    </div>
+  </div>
+  <!-- Answer to the wave question -->
+  <div class="panel green-background opanel">
+    <div class="content white-text">
+      <?php echo $request_info["answer"]; ?>
+    </div>
   </div>
   <?php
   if (has_viewing_rights($binet, $term)) {
@@ -75,11 +83,19 @@
       echo minipane($subsidies_used_id, "Subventions utilisées", $binet_info["subsidized_amount_used"], NULL);
       ?>
     </div>
-    <div class="panel green-background opanel">
-      <div class="content white-text">
-        <?php echo $request_info["answer"]; ?>
+
+    <div class="panel light-blue-background opanel" id="wave-owner-subsidy">
+      <div class="content">
+        <?php
+          $wave_owner_binet = pretty_binet($request_info["wave"]["binet"],false);
+          // TODO calculer les montants
+          echo minipane("granted", "Subventions ".$wave_owner_binet." déjà accordées", $binet_info["real_income"], $binet_info["expected_income"]);
+          echo minipane("used", "Subventions ".$wave_owner_binet." utilisées", $binet_info["real_income"], $binet_info["expected_income"]);
+        ?>
       </div>
     </div>
+
+    <!-- Form -->
     <form role="form" id="request" action="/<?php echo path("grant", "request", $request["id"], binet_prefix($binet, $term)); ?>" method="post">
     <?php
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
@@ -122,6 +138,8 @@
     }
     ?>
     <?php echo form_csrf_token(); ?>
-    <?php echo form_submit_button("Enregistrer"); ?>
+    <div class="submit-button">
+      <?php echo form_submit_button("Enregistrer"); ?>
+    </div>
     </form>
   </div>

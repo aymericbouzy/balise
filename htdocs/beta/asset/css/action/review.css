@@ -58,3 +58,23 @@
   font-size:1em;
   font-weight:500;
 }
+
+#granted {
+  left:1%;
+  top:5px;
+  height:50px;
+  width:48%;
+  background-color:#AA00FF;
+}
+
+#used {
+  left:51%;
+  top:5px;
+  height:50px;
+  width:48%;
+  background-color:#3E2723;
+}
+
+#wave-owner-subsidy{
+  height:60px;
+}
