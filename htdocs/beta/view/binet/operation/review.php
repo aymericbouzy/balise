@@ -37,7 +37,7 @@
                   <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
                   <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>
                   <td><?php echo pretty_amount($budget["subsidized_amount_used"]); ?></td>
-                  <td class="light-blue-background"><?php echo form_group_text("", adds_amount_prefix($budget), $operation, "operation", array("onkeypress" => "total()", "onchange" => "total()", "class" => "amount-input")); ?></td>
+                  <td class="light-blue-background"><?php echo form_group_text("", adds_amount_prefix($budget), $operation, "operation", array("onkeyup" => "total()", "onchange" => "total()", "class" => "amount-input")); ?></td>
                 </tr>
               <?php
             }
