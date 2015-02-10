@@ -1,0 +1,25 @@
+.bigpanel {
+  background-color:#fff;
+  margin:10px;
+}
+
+.bigpanel>.title {
+  display:block;
+  padding:7px;
+  font-size:1.2em;
+  width:100%;
+  background-color:#2e2e2e;
+  color:#cbddff;
+  font-weight:700;
+}
+
+.panel-content {
+  display:block;
+  padding:5px;
+}
+
+.buttons{
+  display:block;
+  padding:7px;
+  width:100%;
+}
