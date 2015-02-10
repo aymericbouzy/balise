@@ -48,13 +48,14 @@
           $_GET["controller"] == "wave"
         );
       }
-      if ($binet == KES_ID) {
+      // TODO define and create administration link
+      if ($binet == KES_ID && false) {
         ?>
         <li class="divider"></li>
         <?php
         echo li_link(
-          link_to(path("", "admin", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-desktop\"></i> Administration"),
-          $_GET["controller"] == "admin"
+          link_to(path("admin", "binet"), "<i class=\"fa fa-fw fa-desktop\"></i> Administration"),
+          $_GET["controller"] == "binet" && $_GET["action"] == "admin"
         );
       }
     ?>
