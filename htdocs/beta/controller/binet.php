@@ -51,6 +51,9 @@
 
   case "new":
     $binet = initialise_for_form_from_session($binet_form_fields, "binet");
+    if (is_empty($binet["term"])) {
+      $binet["term"] = current_term(KES_ID);
+    }
     break;
 
   case "create":
