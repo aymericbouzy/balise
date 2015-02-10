@@ -107,6 +107,9 @@
       return $binet;
     }
     $binet = set_editable_entry_for_form("binet", $binet, $term_form_fields);
+    if (is_empty($binet["term"])) {
+      $binet["term"] = current_term(KES_ID);
+    }
     break;
 
   case "power_transfer":
