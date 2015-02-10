@@ -3,7 +3,7 @@
   function call_at_shutdown() {
     $error = error_get_last();
 
-    if ($error !== NULL) {
+    if ($error !== NULL && STATE != "development" && !isset($GLOBALS["error_already_sent"])) {
       send_error_by_mail($error);
     }
   }
@@ -44,7 +44,7 @@
   function exceptions_error_handler($severity, $message, $filename, $lineno) {
     ob_get_clean();
     if (STATE != "development") {
-      send_error_by_mail(array("type" => $severity, "file" => $filename, "line" => $lineno, "message" => $message));
+      $GLOBALS["error_already_sent"] = send_error_by_mail(array("type" => $severity, "file" => $filename, "line" => $lineno, "message" => $message));
     }
     header_if(true, 500, true);
     throw new ErrorException($message, 0, $severity, $filename, $lineno);
