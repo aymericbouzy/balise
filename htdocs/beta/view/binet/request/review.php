@@ -84,26 +84,31 @@
     <?php
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
-      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term"));
+      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term","real_amount","amount"));
       path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])) ?>
       <div class="panel light-blue-background opanel">
         <?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-                        "<div class=\"title\">".$budget["label"]."<span>  Voir le budget</span></div>",
+                        "<div class=\"title\">".$budget["label"]."<span><i class=\"fa fa-fw fa-eye\"></i>  Voir le budget</span></div>",
                         array("goto"=>true));?>
         <div class="content">
           <div class="infos">
-            <p class="amount">
+            <p class="amount-requested">
               <?php echo pretty_amount($subsidy["requested_amount"],false,true); ?></i>
             </p>
-            <p class="text">
-              <?php echo $subsidy["purpose"]?>
+            <p class="budget-summary">
+              <span class="minititle">Résumé du budget</span>
+              <span>Prévisionnel : <?php echo pretty_amount($budget["amount"])?></span>
+              <span> Réel : <?php echo pretty_amount($budget["real_amount"])?></span>
             </p>
           </div>
           <div class="granted-amount">
           <?php echo form_group_text("Montant accordé :", adds_amount_prefix($subsidy), $request, "request"); ?>
           </div>
+          <div class="purpose green-background white-text">
+            <?php echo $subsidy["purpose"]?>
+          </div>
           <div class="explanation">
-            <?php echo form_group_text("Explication pour le montant accordé à ".pretty_subsidy($subsidy["id"])." :", adds_explanation_prefix($subsidy), $request, "request",array(),true); ?>
+            <?php echo form_group_text("Explication :", adds_explanation_prefix($subsidy), $request, "request",array(),true); ?>
           </div>
         </div>
       </div>
