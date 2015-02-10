@@ -14,6 +14,17 @@
   <form role="form" id="operation" action="/<?php echo path("validate", "operation", $operation["id"], binet_prefix($binet, $term)); ?>" method="post">
     <div class="table-responsive panel-content" id="validations-table">
       <table class="table table-bordered table-hover table-small-char">
+        <thead>
+          <tr>
+            <td>Budget</td>
+            <td>Tags</td>
+            <td>Prévisionnel</td>
+            <td>Réel</td>
+            <td>Subventionné</td>
+            <td>Utilisé</td>
+            <td class="blue-background white-text" id="todo-user"><b>Remplissez le montant de l'opération se rapportant au budget</b></td>
+          </tr>
+        </thead>
         <tbody>
           <?php
             foreach ($binet_budgets as $budget) {
@@ -26,7 +37,7 @@
                   <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
                   <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>
                   <td><?php echo pretty_amount($budget["subsidized_amount_used"]); ?></td>
-                  <td><?php echo form_group_text(pretty_budget($budget["id"]), adds_amount_prefix($budget), $operation, "operation", array("onkeypress" => "total()", "onchange" => "total()", "class" => "amount-input")); ?></td>
+                  <td class="light-blue-background"><?php echo form_group_text("", adds_amount_prefix($budget), $operation, "operation", array("onkeypress" => "total()", "onchange" => "total()", "class" => "amount-input")); ?></td>
                 </tr>
               <?php
             }
@@ -37,10 +48,11 @@
             <td colspan="7"></td>
           </tr>
         </thead>
+        <?php echo "<script> var operation_amount = parseFloat(".pretty_amount($operation["amount"],false,false)."); </script>"; ?>
         <tbody>
-          <tr class="total">
-            <td colspan="5">Total</td>
-            <td id="amount-sum"><?php echo $operation["amount"]; ?></td>
+          <tr class="total" id="remaining_amount_line">
+            <td colspan="5">Montant restant à attribuer</td>
+            <td id="amount-sum"><?php echo pretty_amount($operation["amount"],false,false); ?></td>
           </tr>
         </tbody>
         <script>
@@ -54,7 +66,18 @@
                 s += parseFloat(inputs[i].value);
               }
             }
-            document.getElementById('amount-sum').innerHTML = parseInt(s*100)/100;
+            var total_remaining = document.getElementById('amount-sum');
+            var remaining = parseInt((operation_amount-s)*100)/100;
+            total_remaining.innerHTML = remaining;
+
+            var table_line = document.getElementById('remaining_amount_line');
+            table_line.style.color = "#FFFFFF";
+            if(remaining != 0){
+              table_line.style.backgroundColor = "#D32F2F";
+            }else{
+              table_line.style.backgroundColor = "#4CAF50";
+              document.getElementById('todo-user').backgroundColor = "#4CAF50";
+            }
           }
         </script>
         </tbody>
