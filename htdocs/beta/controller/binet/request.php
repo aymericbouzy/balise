@@ -82,10 +82,7 @@
 
   function check_exists_spending_budget() {
     $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)));
-    if (is_empty($budgets)) {
-      $_SESSION["warning"][] = "Avant de faire une demande de subventions, tu dois créer ton budget.";
-      redirect_to_path(path("", "budget", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
-    }
+    header_if(is_empty($budgets), 403);
   }
 
   function check_no_existing_request() {
