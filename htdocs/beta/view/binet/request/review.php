@@ -84,7 +84,7 @@
     <?php
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
-      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term","real_amount","amount"));
+      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used"));
       path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])) ?>
       <div class="panel light-blue-background opanel">
         <?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
@@ -93,12 +93,18 @@
         <div class="content">
           <div class="infos">
             <p class="amount-requested">
+              <span class="minititle">Montant demandé</span>
               <?php echo pretty_amount($subsidy["requested_amount"],false,true); ?></i>
             </p>
             <p class="budget-summary">
               <span class="minititle">Résumé du budget</span>
               <span>Prévisionnel : <?php echo pretty_amount($budget["amount"])?></span>
               <span> Réel : <?php echo pretty_amount($budget["real_amount"])?></span>
+            </p>
+            <p class="budget-summary">
+              <span class="minititle">Subventions</span>
+              <span>Reçues : <?php echo pretty_amount($budget["subsidized_amount_granted"])?></span>
+              <span>Utilisées : <?php echo pretty_amount($budget["subsidized_amount_used"])?></span>
             </p>
           </div>
           <div class="granted-amount">
