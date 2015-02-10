@@ -10,14 +10,26 @@
     return true;
   }
 
-  before_action("check_csrf_post", array("update", "create", "set_term"));
-  before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate"));
+  function check_is_deactivated() {
+    $current_term = current_term($GLOBALS["binet"]["id"]);
+    header_if(!is_empty($current_term), 403);
+  }
+
+  function check_is_activated() {
+    $current_term = current_term($GLOBALS["binet"]["id"]);
+    header_if(is_empty($current_term), 403);
+  }
+
+  before_action("check_csrf_post", array("update", "create", "reactivate"));
+  before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate", "power_transfer"));
   before_action(
     "check_entry",
-    array("edit", "update", "set_subsidy_provider", "show", "change_term", "set_term", "deactivate"),
+    array("edit", "update", "set_subsidy_provider", "show", "change_term", "reactivate", "deactivate", "power_transfer"),
     array("model_name" => "binet")
   );
-  before_action("current_kessier", array("new", "create", "set_term", "change_term", "deactivate", "set_subsidy_provider", "admin"));
+  before_action("check_is_activated", array("power_transfer", "deactivate"));
+  before_action("check_is_deactivated", array("reactivate"));
+  before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "set_subsidy_provider", "admin"));
   before_action("check_editing_rights", array("edit", "update"));
   before_action("check_form_input", array("create"), array(
     "model_name" => "binet",
@@ -32,10 +44,10 @@
     "redirect_to" => path("edit", "binet", $_GET["action"] == "update" ? $binet["id"] : ""),
     "optional" => array("description", "subsidy_steps")
   ));
-  before_action("check_form_input", array("set_term"), array(
+  before_action("check_form_input", array("reactivate"), array(
     "model_name" => "binet",
     "str_fields" => array(array("term", MAX_TERM)),
-    "redirect_to" => path("change_term", "binet", $_GET["action"] == "set_term" ? $binet["id"] : "")
+    "redirect_to" => path("change_term", "binet", $_GET["action"] == "reactivate" ? $binet["id"] : "")
   ));
   before_action("generate_csrf_token", array("new", "edit", "change_term", "show"));
 
@@ -97,9 +109,15 @@
     $binet = set_editable_entry_for_form("binet", $binet, $term_form_fields);
     break;
 
-  case "set_term":
+  case "power_transfer":
+    change_term_binet($binet["id"], current_term($binet["id"]) + 1);
+    $_SESSION["notice"][] = "La passation du binet ".pretty_binet($binet["id"])." s'est déroulée avec succès !";
+    redirect_to_action("show");
+    break;
+
+  case "reactivate":
     change_term_binet($binet["id"], $_POST["term"]);
-    $_SESSION["notice"][] = "Le mandat actuel du binet ".pretty_binet($binet["id"])." a été mis à jour.";
+    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." existe à nouveau avec la promotion ".$_POST["term"]." !";
     redirect_to_action("show");
     break;
 
