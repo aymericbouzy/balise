@@ -14,7 +14,17 @@
         <tbody>
           <?php
             foreach ($pending_validations_operations as $operation) {
-              echo validatable_operation_line($operation, true);
+              $operation = select_operation($operation["id"], array("id", "date", "comment", "created_by", "amount"));
+              ob_start();
+              ?>
+              <tr>
+                <td><?php echo pretty_date($operation["date"]); ?></td>
+                <td><?php echo $operation["comment"]; ?></td>
+                <td><?php echo pretty_student($operation["created_by"]); ?></td>
+                <td><?php echo pretty_amount($operation["amount"]); ?></td>
+              </tr>
+              <?php
+              echo link_to(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), ob_get_clean(), array("goto" => true));
             }
           ?>
         </tbody>
@@ -43,7 +53,17 @@
               <tbody>
                 <?php
                   foreach ($pending_validations_operations_kes as $operation) {
-                    echo validatable_operation_line($operation, true);
+                    $operation = select_operation($operation["id"], array("id", "date", "comment", "created_by", "amount", "binet", "term"));
+                    ob_start();
+                    ?>
+                    <tr>
+                      <td><?php echo pretty_date($operation["date"]); ?></td>
+                      <td><?php echo $operation["comment"]; ?></td>
+                      <td><?php echo pretty_student($operation["created_by"])." ".pretty_binet_term($operation["binet"]."/".$operation["term"]); ?></td>
+                      <td><?php echo pretty_amount($operation["amount"]); ?></td>
+                    </tr>
+                    <?php
+                    echo link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), ob_get_clean(), array("goto" => true));
                   }
                 ?>
               </tbody>

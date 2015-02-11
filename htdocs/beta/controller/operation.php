@@ -78,7 +78,7 @@
     foreach (select_admins($binet, $term) as $student) {
       send_email($student["id"], "Opération refusée par la Kès", "operation_rejected", array("operation" => $operation["id"], "kessier" => connected_student()));
     }
-    redirect_to_action("show");
+    redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
     break;
 
   default:
