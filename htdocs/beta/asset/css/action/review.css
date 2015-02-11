@@ -62,7 +62,7 @@
 #granted {
   left:1%;
   top:5px;
-  height:50px;
+  height:40px;
   width:48%;
   background-color:#AA00FF;
 }
@@ -70,11 +70,20 @@
 #used {
   left:51%;
   top:5px;
-  height:50px;
+  height:40px;
   width:48%;
   background-color:#3E2723;
 }
 
 #wave-owner-subsidy{
-  height:60px;
+  height:80px;
+}
+
+#current-term {
+  height:115px;
+}
+
+#previous-term {
+  height:115px;
+  -webkit-filter: sepia(0.6);
 }

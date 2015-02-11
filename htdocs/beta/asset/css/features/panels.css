@@ -25,6 +25,7 @@
 }
 
 .panel {
+  position:relative;
   margin: 5px;
   padding:0px;
   color:#2e2e2e;
@@ -42,6 +43,22 @@
   font-size:20px;
   background-color:#2e2e2e;
   color:#cbddff;
+}
+.panel>.info-right {
+  transform : rotate(90deg);
+  position:absolute;
+  height:20px;
+  width: 120px;
+  top:50px;
+  right:-70px;
+}
+.panel>.info-left {
+  transform : rotate(90deg);
+  position:absolute;
+  height:20px;
+  width: 120px;
+  top:50px;
+  left:-70px;
 }
 
 .panel>.content {
