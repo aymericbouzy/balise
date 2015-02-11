@@ -148,7 +148,7 @@
             <?php echo $subsidy["purpose"]?>
           </div>
           <div class="explanation">
-            <?php echo form_group_text("Explication :", adds_explanation_prefix($subsidy), $request, "request",array(),true); ?>
+            <?php echo form_group_textarea("Explication :", adds_explanation_prefix($subsidy), $request, "request"); ?>
           </div>
         </div>
       </div>
