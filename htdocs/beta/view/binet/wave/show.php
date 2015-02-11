@@ -14,7 +14,7 @@
             $publishable = true;
             break;
             case "distribution":
-            echo "Ouverte";
+            echo "Emise";
             break;
             case "closed":
             echo "Fermée";
@@ -31,7 +31,7 @@
             "Modifier","edit","blue");
           if($publishable){
             echo button(
-              path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
+              path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"]),array(),true),
               "Publier","share","green");
           }
         }
