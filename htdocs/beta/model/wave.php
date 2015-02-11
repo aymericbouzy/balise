@@ -18,7 +18,7 @@
     if (in_array("state", $fields)) {
       $fields = array_merge(array("submission_date", "expiry_date", "published"), $fields);
     }
-    $present_virtual_fields = array_intersect(array("requested_amount", "granted_amount", "used_amount"), $fields);
+    $present_virtual_fields = array_intersect(array("requested_amount", "granted_amount", "used_amount", "requests_received", "requests_reviewed"), $fields);
     if (!is_empty($present_virtual_fields)) {
       $fields = array_merge(array("id"), $fields);
     }
@@ -41,6 +41,12 @@
         break;
       case "state":
         $wave[$field] = $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed");
+        break;
+      case "requests_received":
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1)));
+        break;
+      case "requests_reviewed":
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => array("!=", "sent"))));
         break;
       }
     }

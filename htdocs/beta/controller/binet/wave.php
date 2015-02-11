@@ -5,7 +5,7 @@
   }
 
   function is_publishable($wave) {
-    $wave = select_wave(array("published", "requests_received", "requests_reviewed", "state"));
+    $wave = select_wave($wave, array("published", "requests_received", "requests_reviewed", "state"));
     return $wave["published"] != 1 && $wave["state"] == "deliberation" && $wave["requests_received"] == $wave["requests_reviewed"];
   }
 
@@ -71,7 +71,7 @@
     break;
 
   case "show":
-    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "requested_amount", "granted_amount","question"));
+    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "requested_amount", "granted_amount", "question", "requests_received", "requests_reviewed"));
     break;
 
   case "edit":

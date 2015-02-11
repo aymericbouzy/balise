@@ -65,13 +65,9 @@
     </div>
     <div id="requests">
       <?php
-        $total_reviewed_requests = 0;
         $requests = select_requests(array("wave" => $wave["id"]));
         foreach ($requests as $request) {
           $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
-          if($request["state"] == "reviewed"){
-            $total_reviewed_requests += 1;
-          }
           ob_start();
           $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red", "accepted" => "green", "rejected" => "red");
           echo "<p class=\"marker ".($state_to_color[$request["state"]])."-background\" ></p>";
@@ -97,7 +93,7 @@
           Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
         </div>
         <div class="item teal-background">
-          Demandes traitées : <br> <?php echo $total_reviewed_requests." / ".sizeOf($requests)." demandes";?>
+          Demandes traitées : <br> <?php echo $wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";?>
         </div>
       </div>
     </div>
