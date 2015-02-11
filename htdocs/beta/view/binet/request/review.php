@@ -14,7 +14,6 @@
         case "reviewed_rejected":
         echo "Refusée";
         break;
-        }
       }
       ?>
     </div>

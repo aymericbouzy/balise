@@ -75,8 +75,10 @@
             $total_reviewed_requests += 1;
           }
           ob_start();
-          echo "<p class=\"marker".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>";
-          echo "<p class=\"icon\">".(in_array($request["state"], array("reviewed","accepted","rejected")) ? "<i class=\"fa fa-fw fa-check\"></i>" : "<i class=\"fa fa-fw fa-times\"></i>")."</p>";
+          $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red", "accepted" => "green", "rejected" => "red");
+          echo "<p class=\"marker ".($state_to_color[$request["state"]])."-background\" ></p>";
+          $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times", "accepted" => "check", "rejected" => "times");
+          echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".($state_to_icon[$request["state"]])."\"></i></p>";
           echo "<p class=\"binet\">".link_to(
               path("", "binet", binet_term_id($request["binet"], $request["term"])),
               pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>";

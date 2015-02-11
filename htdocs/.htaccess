@@ -73,6 +73,7 @@
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/request/([0-9]+)/send/?$ ./beta/index.php?controller=request&action=send&request=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/request/([0-9]+)/review/?$ ./beta/index.php?controller=request&action=review&request=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/request/([0-9]+)/grant/?$ ./beta/index.php?controller=request&action=grant&request=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
+    RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/request/([0-9]+)/reject/?$ ./beta/index.php?controller=request&action=reject&request=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/validation/?$ ./beta/index.php?controller=validation&action=index&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/validation/index/?$ ./beta/index.php?controller=validation&action=index&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/?$ ./beta/index.php?controller=wave&action=index&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]

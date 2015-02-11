@@ -53,9 +53,8 @@
           $request["sent"] != 1 ?
             "rough_draft" :
             (in_array($wave["state"], array("deliberation", "submission")) ?
-              ($request["reviewed"] != 1 ? "sent" :
-                (($request["granted_amount"] > 0 ? "reviewed_accepted" : "reviewed_rejected") :
-                ($request["granted_amount"] > 0 ? "accepted" : "rejected"))));
+              ($request["reviewed"] != 1 ? "sent" : ($request["granted_amount"] > 0 ? "reviewed_accepted" : "reviewed_rejected")) :
+                ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
 
 
       }
