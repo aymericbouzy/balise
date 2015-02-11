@@ -43,7 +43,7 @@
   switch ($_GET["action"]) {
 
   case "index":
-    $waves = select_waves(array($_GET["binet"] => "binet",$_GET["term"] => "term"));
+    $waves = select_waves(array("binet" => $binet, "term" => $term), "submission_date");
     break;
 
   case "new":
@@ -66,7 +66,7 @@
     break;
 
   case "show":
-    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state"));
+    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "requested_amount", "granted_amount"));
     break;
 
   case "edit":

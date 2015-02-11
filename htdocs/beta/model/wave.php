@@ -124,7 +124,7 @@
   function get_used_amount_wave($wave) {
     $amount = 0;
     foreach(select_requests(array("wave" => $wave)) as $request) {
-      $amount += get_used_amount_request($request);
+      $amount += get_used_amount_request($request["id"]);
     }
     return $amount;
   }
@@ -135,4 +135,19 @@
       $amount += get_granted_amount_request($request["id"]);
     }
     return $amount;
+  }
+
+  function get_subsidized_amount_between($term, $binet) {
+    $used_amount = 0;
+    $granted_amount = 0;
+    $requested_amount = 0;
+    $term = select_term_binet($term, array("binet", "term"));
+    foreach (select_waves(array("binet" => $binet)) as $wave) {
+      foreach (select_requests(array("binet" => $term["binet"], "term" => $term["term"], "wave" => $wave["id"])) as $request) {
+        $used_amount += get_used_amount_request($request["id"]);
+        $granted_amount += get_granted_amount_request($request["id"]);
+        $requested_amount += get_requested_amount_request($request["id"]);
+      }
+    }
+    return array("used_amount" => $used_amount, "granted_amount" => $granted_amount, "requested_amount" => $requested_amount);
   }

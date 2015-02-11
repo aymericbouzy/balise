@@ -32,6 +32,9 @@
         $subsidy[$field] = select_request($subsidy["request"], array("wave"))["wave"];
       }
     }
+    if (in_array("granted_amount", $fields)) {
+      set_if_not_set($subsidy["granted_amount"], 0);
+    }
     return $subsidy;
   }
 
