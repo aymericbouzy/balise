@@ -102,7 +102,7 @@
   function get_used_amount_request($request) {
     $amount = 0;
     foreach(select_subsidies(array("request" => $request)) as $subsidy) {
-      $amount += get_used_amount_subsidy($subsidy);
+      $amount += get_used_amount_subsidy($subsidy["id"]);
     }
     return $amount;
   }
