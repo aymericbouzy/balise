@@ -32,7 +32,7 @@
             "Modifier","edit","blue");
           if($publishable){
             echo button(
-              path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
+              path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
               "Publier","share","green");
           }
         }
@@ -61,8 +61,8 @@
         <?php echo pretty_date($wave["expiry_date"]); ?>
       </span>
     </div>
-    <div class="panel green-background white-text opanel">
-      <div class="content">
+    <div class="panel green-background opanel">
+      <div class="content white-text">
         <?php echo $wave["question"]; ?>
       </div>
     </div>
