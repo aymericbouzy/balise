@@ -70,22 +70,17 @@
           if($request["state"] == "reviewed"){
             $total_reviewed_requests += 1;
           }
+          ob_start();
+
+          echo "<p class=\"marker".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>";
+          echo "<p class=\"icon\">".(in_array($request["state"], array("sent", "rejected")) ? "<i class=\"fa fa-fw fa-times\"></i>" : "<i class=\"fa fa-fw fa-check\"></i>")."</p>";
+          echo "<p class=\"binet\">".pretty_binet_term($request["binet"]."/".$request["term"])."</p>";
+          echo "<p class=\"amount\">".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i></p>";
+
           echo link_to(
             path(($wave["state"] == "deliberation" || $wave["state"] == "submission" )  ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
-            "<div class=\"sh-wa-request opanel\">
-              <p class=\"marker
-                ".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>
-              <p class=\"icon\">
-                ".(in_array($request["state"], array("sent", "rejected")) ? "<i class=\"fa fa-fw fa-times\"></i>" : "<i class=\"fa fa-fw fa-check\"></i>")."
-              </p>
-              <p class=\"binet\">
-                ".pretty_binet_term($request["binet"]."/".$request["term"])."
-              </p>
-              <p class=\"amount\">
-                ".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i>
-              </p>
-            </div>",
-            array("goto" => true)
+              "<div>".ob_get_clean()."</div>",
+              array("goto" => true,"class"=>"sh-wa-request opanel")
           );
         }
       ?>
