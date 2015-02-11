@@ -52,7 +52,7 @@
         $request["state"] =
           $request["sent"] != 1 ?
             "rough_draft" :
-            ($wave["state"] == "deliberation" ?
+            (in_array($wave["state"], array("deliberation", "submission")) ?
               (!isset($subsidy["explanation"]) ? "sent" : "reviewed") :
               ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
 
