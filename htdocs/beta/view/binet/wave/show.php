@@ -56,18 +56,11 @@
     </div>
     <div id="requests">
       <?php
-        $total_requested_amount = 0;
         $total_reviewed_requests = 0;
-        $total_granted_amount = 0;
         foreach (select_requests(array("wave" => $wave["id"])) as $request) {
           $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
-          $total_requested_amount += $request["requested_amount"];
           if($request["state"] == "reviewed"){
             $total_reviewed_requests += 1;
-
-            if($request["state"] == "accepted"){
-              $total_granted_amount += get_granted_amount_request($request["id"]);
-            }
           }
           echo link_to(
             path("review", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
@@ -90,10 +83,10 @@
       ?>
       <div class="sh-wa-stats opanel2">
         <div class="item teal-background">
-          Montant total demandé : <br> <?php echo pretty_amount($total_requested_amount,false,true);?>
+          Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"],false,true);?>
         </div>
         <div class="item purple-background">
-          Montant total accordé : <br> <?php echo pretty_amount($total_granted_amount,false,true);?>
+          Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
         </div>
         <div class="item green-background">
           Demandes traitées : <br> <?php echo $total_reviewed_requests;?>
