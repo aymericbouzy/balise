@@ -57,9 +57,9 @@
     ?>
     <div class="sh-bin-stats light-blue-background opanel">
       <?php
-      echo minipane("income", "Recettes", $binet_info["real_income"], $binet_info["expected_income"]);
-      echo minipane("spending", "Dépenses", $binet_info["real_spending"], $binet_info["expected_spending"]);
-      echo minipane("balance", "Equilibre", $binet_info["real_balance"], $binet_info["expected_balance"]);
+      echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
+      echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
+      echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
       $subsidies_granted_id = "subsidies_granted";
       $subsidies_used_id = "subsidies_used";
     } else {
@@ -67,8 +67,8 @@
       $subsidies_granted_id = "subsidies_granted_std";
       $subsidies_used_id = "subsidies_used_std";
     }
-    echo minipane($subsidies_granted_id, "Subventions accordées", $binet_info["subsidized_amount_granted"], NULL);
-    echo minipane($subsidies_used_id, "Subventions utilisées", $binet_info["subsidized_amount_used"], NULL);
+    echo minipane($subsidies_granted_id, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
+    echo minipane($subsidies_used_id, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
     ?>
   </div>
   <?php
