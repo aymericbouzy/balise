@@ -2,7 +2,7 @@
 
   function pretty_amount($amount, $sign = true, $symbol = false) {
     $amount *= 1/100;
-    $symbol = $symbol ? "<i class=\"fa fa-euro\"></i>" : "";
+    $symbol = $symbol ? "<i class=\"fa fa-fw fa-euro\"></i>" : "";
     if ($sign) {
       return ($amount > 0 ? "+" : "").$amount.$symbol;
     } else {
