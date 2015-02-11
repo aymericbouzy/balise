@@ -4,14 +4,12 @@
       <i class="fa fa-fw fa-<?php echo $wave["state"] == "closed" ? "times" : "check"; ?>"></i>
       <div class="text">
         <?php
-          $publishable = false;
           switch ($wave["state"]) {
             case "submission":
             echo "Demandes en cours";
             break;
             case "deliberation":
             echo "Etude des demandes";
-            $publishable = true;
             break;
             case "distribution":
             echo "Emise";
@@ -29,7 +27,7 @@
           echo button(
             path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
             "Modifier","edit","blue");
-          if($publishable){
+          if (is_publishable($wave["id"])) {
             echo button(
               path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"]),array(),true),
               "Publier","share","green");

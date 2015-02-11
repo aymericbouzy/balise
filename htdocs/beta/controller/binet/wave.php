@@ -1,7 +1,12 @@
 <?php
 
-  function not_published() {
-    header_if(select_wave($_GET["wave"], array("published"))["published"], 403);
+  function check_is_publishable() {
+    header_if(!is_publishable($_GET["wave"]), 403);
+  }
+
+  function is_publishable($wave) {
+    $wave = select_wave(array("published", "requests_received", "requests_reviewed", "state"));
+    return $wave["published"] != 1 && $wave["state"] == "deliberation" && $wave["requests_received"] == $wave["requests_reviewed"];
   }
 
   function subsidy_provider() {
@@ -35,7 +40,7 @@
     "other_fields" => array(array("laps_between_submission_and_expiry", "check_laps_is_positive")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "wave", $_GET["action"] == "update" ? $wave["id"] : "", binet_prefix($binet, $term))
   ));
-  before_action("not_published", array("publish"));
+  before_action("check_is_publishable", array("publish"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("submission_date", "expiry_date", "question");
