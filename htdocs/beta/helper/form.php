@@ -22,6 +22,21 @@
     );
   }
 
+  function form_group_textarea($label, $field, $object, $object_name, $html_decoration = array()) {
+    set_if_not_set($html_decoration["class"], "");
+    $html_decoration["class"] .= " form-control";
+    $html_decoration_string = "";
+    foreach ($html_decoration as $property => $value) {
+      $html_decoration_string .= " ".$property."=\"".$value."\"";
+    }
+    return form_group(
+    $label,
+    $field,
+    "<textarea ".$html_decoration_string." id=\"".$field."\" name=\"".$field."\">".(isset($object[$field]) ? $object[$field] : "")."</textarea>",
+    $object_name
+  );
+}
+
   function form_group_date($label, $field, $object, $object_name){
     set_if_not_set($object[$field], "");
     $regex = "/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/";

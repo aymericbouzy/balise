@@ -159,6 +159,8 @@
   case "show":
     $request = select_request($request["id"], array("id", "budget", "answer", "sent", "wave", "state"));
     $request["wave"] = select_wave($request["wave"], array("id", "binet", "term", "state"));
+    $current_binet = select_binet($binet, array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
+    $current_binet = array_merge(select_term_binet($current_binet["id"]."/".$current_binet["current_term"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $current_binet);
     break;
 
   case "edit":
@@ -208,12 +210,19 @@
     function request_to_form_fields($request) {
       foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
         $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation"));
-        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"];
+        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"]/100;
         $request[adds_explanation_prefix($subsidy)] = $subsidy["explanation"];
       }
       return $request;
     }
     $request = set_editable_entry_for_form("request", $request, $review_form_fields);
+    $request_info = select_request($request["id"], array("id", "budget", "answer", "sent", "wave", "state"));
+    $request_info["wave"] = select_wave($request_info["wave"], array("id", "binet", "term", "state"));
+    $current_binet = select_binet($binet, array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
+    $current_binet = array_merge(select_term_binet($current_binet["id"]."/".$current_binet["current_term"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $current_binet);
+    $previous_binet = select_term_binet($current_binet["id"]."/".($current_binet["current_term"] + 1), array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state"));
+    $existing_subsidies = get_subsidized_amount_between($current_binet["id"]."/".$current_binet["current_term"], $request_info["wave"]["binet"]);
+    $previous_subsidies = get_subsidized_amount_between($current_binet["id"]."/".($current_binet["current_term"] + 1), $request_info["wave"]["binet"]);
     break;
 
   case "grant":
