@@ -61,6 +61,11 @@
         <?php echo pretty_date($wave["expiry_date"]); ?>
       </span>
     </div>
+    <div class="panel green-background white-text opanel">
+      <div class="content">
+        <?php echo $wave["question"]; ?>
+      </div>
+    </div>
     <div id="requests">
       <?php
         $total_reviewed_requests = 0;
@@ -71,10 +76,11 @@
             $total_reviewed_requests += 1;
           }
           ob_start();
-
           echo "<p class=\"marker".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>";
-          echo "<p class=\"icon\">".(in_array($request["state"], array("sent", "rejected")) ? "<i class=\"fa fa-fw fa-times\"></i>" : "<i class=\"fa fa-fw fa-check\"></i>")."</p>";
-          echo "<p class=\"binet\">".pretty_binet_term($request["binet"]."/".$request["term"])."</p>";
+          echo "<p class=\"icon\">".(in_array($request["state"], array("reviewed","accepted","rejected")) ? "<i class=\"fa fa-fw fa-check\"></i>" : "<i class=\"fa fa-fw fa-times\"></i>")."</p>";
+          echo "<p class=\"binet\">".link_to(
+              path("", "binet", binet_term_id($request["binet"], $request["term"])),
+              pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>";
           echo "<p class=\"amount\">".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i></p>";
 
           echo link_to(
@@ -85,13 +91,13 @@
         }
       ?>
       <div class="sh-wa-stats opanel2">
-        <div class="item teal-background">
+        <div class="item blue-background">
           Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"],false,true);?>
         </div>
-        <div class="item purple-background">
+        <div class="item green-background">
           Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
         </div>
-        <div class="item green-background">
+        <div class="item teal-background">
           Demandes traitées : <br> <?php echo $total_reviewed_requests." / ".sizeOf($requests)." demandes";?>
         </div>
       </div>
