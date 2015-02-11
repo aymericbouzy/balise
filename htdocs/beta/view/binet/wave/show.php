@@ -4,14 +4,12 @@
       <i class="fa fa-fw fa-<?php echo $wave["state"] == "closed" ? "times" : "check"; ?>"></i>
       <div class="text">
         <?php
-          $publishable = false;
           switch ($wave["state"]) {
             case "submission":
             echo "Demandes en cours";
             break;
             case "deliberation":
             echo "Etude des demandes";
-            $publishable = true;
             break;
             case "distribution":
             echo "Emise";
@@ -29,7 +27,7 @@
           echo button(
             path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
             "Modifier","edit","blue");
-          if($publishable){
+          if (is_publishable($wave["id"])) {
             echo button(
               path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"]),array(),true),
               "Publier","share","green");
@@ -67,16 +65,14 @@
     </div>
     <div id="requests">
       <?php
-        $total_reviewed_requests = 0;
         $requests = select_requests(array("wave" => $wave["id"]));
         foreach ($requests as $request) {
           $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
-          if($request["state"] == "reviewed"){
-            $total_reviewed_requests += 1;
-          }
           ob_start();
-          echo "<p class=\"marker".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>";
-          echo "<p class=\"icon\">".(in_array($request["state"], array("reviewed","accepted","rejected")) ? "<i class=\"fa fa-fw fa-check\"></i>" : "<i class=\"fa fa-fw fa-times\"></i>")."</p>";
+          $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red", "accepted" => "green", "rejected" => "red");
+          echo "<p class=\"marker ".($state_to_color[$request["state"]])."-background\" ></p>";
+          $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times", "accepted" => "check", "rejected" => "times");
+          echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".($state_to_icon[$request["state"]])."\"></i></p>";
           echo "<p class=\"binet\">".link_to(
               path("", "binet", binet_term_id($request["binet"], $request["term"])),
               pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>";
@@ -97,7 +93,7 @@
           Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
         </div>
         <div class="item teal-background">
-          Demandes traitées : <br> <?php echo $total_reviewed_requests." / ".sizeOf($requests)." demandes";?>
+          Demandes traitées : <br> <?php echo $wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";?>
         </div>
       </div>
     </div>
