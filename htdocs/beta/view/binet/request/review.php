@@ -1,7 +1,7 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="show-container">
-  <div class="sh-plus <?php $state_to_color = array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
+  <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed" => "blue", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
     <i class="fa fa-fw fa-<?php $state_to_icon = array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times"); echo $state_to_icon[$request_info["state"]]; ?>"></i>
     <div class="text">
       <?php
