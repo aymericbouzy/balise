@@ -210,7 +210,7 @@
     function request_to_form_fields($request) {
       foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
         $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation"));
-        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"];
+        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"]/100;
         $request[adds_explanation_prefix($subsidy)] = $subsidy["explanation"];
       }
       return $request;
