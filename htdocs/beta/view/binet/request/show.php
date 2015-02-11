@@ -52,25 +52,23 @@
       </p>
     </div>
   </div>
-  <?php
-  if (has_viewing_rights($binet, $term)) {
-    ?>
-    <div class="sh-bin-stats light-blue-background opanel">
-      <?php
+    <?php
+    ob_start();
+    if (has_viewing_rights($current_binet["id"], $current_binet["current_term"])) {
       echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
       echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
       echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
-      $subsidies_granted_id = "subsidies_granted";
-      $subsidies_used_id = "subsidies_used";
+      $suffix = "";
     } else {
-      echo "<div class=\"sh-bin-stats-std light-blue-background opanel\">";
-      $subsidies_granted_id = "subsidies_granted_std";
-      $subsidies_used_id = "subsidies_used_std";
+      $suffix = "_std";
     }
-    echo minipane($subsidies_granted_id, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
-    echo minipane($subsidies_used_id, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
+    echo minipane("subsidies_granted".$suffix, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
+    echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
+    $content = ob_get_clean();
     ?>
-  </div>
+    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel" id="current_term">
+      <?php echo $content; ?>
+    </div>
   <?php
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));

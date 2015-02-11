@@ -76,7 +76,7 @@
 }
 
 #wave-owner-subsidy{
-  height:80px;
+  height:50px;
 }
 
 #current-term {
@@ -86,4 +86,8 @@
 #previous-term {
   height:115px;
   -webkit-filter: sepia(0.6);
+}
+
+.panel>.content {
+  position:relative;
 }

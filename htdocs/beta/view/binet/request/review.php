@@ -63,7 +63,7 @@
     echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
     $content = ob_get_clean();
     ?>
-    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel" id="current_term">
       <?php echo $content; ?>
     </div>
     <?php
@@ -81,17 +81,17 @@
       echo minipane("subsidies_used".$suffix, "Subventions utilisées", $previous_binet["subsidized_amount_used"], NULL);
       $content = ob_get_clean();
       ?>
-      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel" id="previous-term">
         <?php echo $content; ?>
       </div>
       <?php
     }
     ?>
-    <div class="panel light-blue-background opanel" id="wave-owner-subsidy">
+    <div class="panel light-blue-background opanel">
       <div class="title">
         Subventions <?php echo pretty_binet($request_info["wave"]["binet"],false); ?>
       </div>
-      <div class="content">
+      <div class="content" id="wave-owner-subsidy">
         <?php
           echo minipane("granted", "Utilisées / accordées cette année ", $existing_subsidies["used_amount"], $existing_subsidies["requested_amount"]);
           echo minipane("used", "Utilisées / accordées l'année dernière", $previous_subsidies["used_amount"], $previous_subsidies["requested_amount"]);
