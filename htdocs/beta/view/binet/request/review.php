@@ -1,4 +1,3 @@
-<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="show-container">
   <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed" => "blue", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
@@ -34,9 +33,7 @@
       }
     }
     if (status_admin_binet($request_info["wave"]["binet"], $request_info["wave"]["term"])) {
-      if (in_array($request_info["state"], array("sent", "reviewed"))) {
-        echo button(path("review", "request", $request_info["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
-      }
+      echo button(path("", "request", $request_info["id"], binet_prefix($binet, $term)), "Refuser", "times", "red");
     }
     ?>
   </div>
