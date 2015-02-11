@@ -63,7 +63,7 @@
             $total_reviewed_requests += 1;
           }
           echo link_to(
-            path($wave["state"] == "deliberation" ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+            path(($wave["state"] == "deliberation" || $wave["state"] == "submission" )  ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
             "<div class=\"sh-wa-request opanel\">
               <p class=\"marker
                 ".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>
