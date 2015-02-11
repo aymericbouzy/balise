@@ -19,7 +19,7 @@
     $virtual_fields = array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state");
     $present_virtual_fields = array_intersect($virtual_fields, $fields);
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_merge($fields, array("id", "wave", "sent"));
+      $fields = array_merge($fields, array("id", "wave", "sent", "granted_amount"));
     }
     $id = $request;
     $request = select_entry(
@@ -52,7 +52,7 @@
         $request["state"] =
           $request["sent"] != 1 ?
             "rough_draft" :
-            ($wave["state"] == "submission" ?
+            ($wave["state"] == "deliberation" ?
               (!isset($subsidy["explanation"]) ? "sent" : "reviewed") :
               ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
 
@@ -102,7 +102,7 @@
   function get_used_amount_request($request) {
     $amount = 0;
     foreach(select_subsidies(array("request" => $request)) as $subsidy) {
-      $amount += get_used_amount_subsidy($subsidy);
+      $amount += get_used_amount_subsidy($subsidy["id"]);
     }
     return $amount;
   }
