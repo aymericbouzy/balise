@@ -18,7 +18,7 @@
       $label,
       $field,
       "<input type=\"text\"".$html_decoration_string." id=\"".$field."\" name=\"".$field."\" value=\""
-      .(isset($object[$field]) ? ( strstr($field,"amount")? $object[$field]/100 : $object[$field] ): "")."\">",
+      .(isset($object[$field]) ? $object[$field]: "")."\">",
       $object_name
     );
   }
