@@ -1,22 +1,19 @@
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="show-container">
-  <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed" => "blue", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
-    <i class="fa fa-fw fa-<?php $state_to_icon = array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times"); echo $state_to_icon[$request_info["state"]]; ?>"></i>
+  <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times"); echo $state_to_icon[$request_info["state"]]; ?>"></i>
     <div class="text">
       <?php
       switch ($request_info["state"]) {
-        case "rough_draft":
-        echo "Brouillon";
+        case "sent":
+        echo "Non traitée";
         break;
-        case "accepted":
+        case "reviewed_accepted":
         echo "Acceptée";
         break;
-        case "rejected":
+        case "reviewed_rejected":
         echo "Refusée";
         break;
-        default:
-        if (in_array($request_info["state"], array("sent", "reviewed"))) {
-          echo "Envoyée";
         }
       }
       ?>
@@ -25,15 +22,7 @@
   <div class="sh-actions">
     <?php
     if (has_editing_rights($binet, $term)) {
-      switch ($request_info["state"]) {
-        case "rough_draft":
-        echo button(path("edit", "request", $request_info["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
-        echo button(path("send", "request", $request_info["id"], binet_prefix($binet, $term), array(), true), "Soumettre", "paper-plane", "green");
-        break;
-      }
-    }
-    if (status_admin_binet($request_info["wave"]["binet"], $request_info["wave"]["term"])) {
-      echo button(path("", "request", $request_info["id"], binet_prefix($binet, $term)), "Refuser", "times", "red");
+      echo button(path("reject", "request", $request_info["id"], binet_prefix($binet, $term), array(), true), "Refuser", "times", "red");
     }
     ?>
   </div>
