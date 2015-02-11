@@ -38,6 +38,10 @@ body {
         padding-left: 225px;
     }
 
+    .sidebar-present{
+        padding-left: 225px;
+    }
+
     #page-wrapper {
         padding: 10px;
         padding-top:60px;
@@ -83,14 +87,22 @@ body {
     box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
-.top-nav>.open>.dropdown-menu>li>a {
+.top-nav>.open>.dropdown-menu>li>a , .top-nav>.open>.dropdown-menu>li>span {
     white-space: normal;
 }
 
-.top-nav>.open>.dropdown-menu>li>a:hover {
+.top-nav>.open>.dropdown-menu>li>a:hover , .top-nav>.open>.dropdown-menu>li>span:hover {
     background-color: #BABABA;
 }
 
+.dropdown-menu>li>span {
+  display:block;
+  padding: 3px 20px;
+  clear:both;
+  line-height:1.42857143;
+  color:#333;
+  box-sizing:none;
+}
 
 
 .top-nav>li>ul .add-operation {

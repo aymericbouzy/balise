@@ -190,7 +190,7 @@
     if (status_admin_current_binet(KES_ID)) {
       return true;
     } else {
-      $terms = select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]));
+      $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term), "student" => $_SESSION["student"]));
       return !is_empty($terms) ||
       received_subsidy_request_from($binet);
     }

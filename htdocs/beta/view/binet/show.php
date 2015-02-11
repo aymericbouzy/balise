@@ -42,21 +42,7 @@
         ?>
       </span>
       <!-- Modal to choose a different term -->
-      <span class="sub opanel0" id="choose-term" data-toggle="modal" data-target="#terms">
-        <?php echo is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"]; ?><i class="fa fa-fw fa-caret-square-o-down"></i>
-      </span>
-      <div class="balise-modal fade" id="terms" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-content balise-modal-container">
-            <div class="modal-body">
-              <?php echo close_button("modal"); ?>
-              <span class="header">Voir l'activité d'un autre mandat</span>
-              <div class="content">
-                <?php echo pretty_terms_list($binet["id"]); ?>
-              </div>
-            </div>
-          </div>
-      </div>
-      <!-- Modal -->
+      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","sub opanel0","terms"); ?>
     </div>
   </div>
   <?php
@@ -145,3 +131,4 @@
     }
   ?>
 </div>
+<? echo modal("terms","Voir l'activité d'un autre mandat",pretty_terms_list($binet["id"]));?>
