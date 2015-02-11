@@ -1,7 +1,6 @@
-<script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="show-container">
-  <div class="sh-plus <?php $state_to_color = array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
+  <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed" => "blue", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
     <i class="fa fa-fw fa-<?php $state_to_icon = array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times"); echo $state_to_icon[$request_info["state"]]; ?>"></i>
     <div class="text">
       <?php
@@ -34,9 +33,7 @@
       }
     }
     if (status_admin_binet($request_info["wave"]["binet"], $request_info["wave"]["term"])) {
-      if (in_array($request_info["state"], array("sent", "reviewed"))) {
-        echo button(path("review", "request", $request_info["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
-      }
+      echo button(path("", "request", $request_info["id"], binet_prefix($binet, $term)), "Refuser", "times", "red");
     }
     ?>
   </div>
@@ -67,7 +64,7 @@
   <?php
   if (has_viewing_rights($binet, $term)) {
     ?>
-    <div class="sh-bin-stats light-blue-background opanel">
+    <div class="panel light-blue-background opanel" id="current-term">
       <?php
       echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
       echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
@@ -84,31 +81,37 @@
       ?>
     </div>
   <?php
-    if (has_viewing_rights($binet, $term)) {
-    ?>
-    <div class="sh-bin-stats light-blue-background opanel">
-      <?php
-      echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
-      echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
-      echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
-      $subsidies_granted_id = "subsidies_granted";
-      $subsidies_used_id = "subsidies_used";
-      } else {
-      echo "<div class=\"sh-bin-stats-std light-blue-background opanel\">";
-      $subsidies_granted_id = "subsidies_granted_std";
-      $subsidies_used_id = "subsidies_used_std";
+    if($previous_binet){
+      if (has_viewing_rights($binet, $term)) {
+      ?>
+      <div class="panel light-blue-background opanel" id="previous-term">
+        <div class="info-right"> Mandat précédent </div>
+        <?php
+        echo minipane("income", "Recettes", $previous_binet["real_income"], $previous_binet["expected_income"]);
+        echo minipane("spending", "Dépenses", $previous_binet["real_spending"], $previous_binet["expected_spending"]);
+        echo minipane("balance", "Equilibre", $previous_binet["real_balance"], $previous_binet["expected_balance"]);
+        $subsidies_granted_id = "subsidies_granted";
+        $subsidies_used_id = "subsidies_used";
+        } else {
+        echo "<div class=\"sh-bin-stats-std light-blue-background opanel\">";
+        $subsidies_granted_id = "subsidies_granted_std";
+        $subsidies_used_id = "subsidies_used_std";
+      }
+      echo minipane($subsidies_granted_id, "Subventions accordées", $previous_binet["subsidized_amount_granted"], NULL);
+      echo minipane($subsidies_used_id, "Subventions utilisées", $previous_binet["subsidized_amount_used"], NULL);
+      ?>
+      </div>
+    <?php
     }
-    echo minipane($subsidies_granted_id, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
-    echo minipane($subsidies_used_id, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
     ?>
-    </div>
-
     <div class="panel light-blue-background opanel" id="wave-owner-subsidy">
+      <div class="title">
+        Subventions <?php echo pretty_binet($request_info["wave"]["binet"],false); ?>
+      </div>
       <div class="content">
         <?php
-          $wave_owner_binet = pretty_binet($request_info["wave"]["binet"],false);
-          echo minipane("granted", "Subventions ".$wave_owner_binet." déjà accordées", $existing_subsidies["used_amount"], $existing_subsidies["requested_amount"]);
-          echo minipane("used", "Subventions ".$wave_owner_binet." utilisées", $previous_subsidies["used_amount"], $previous_subsidies["requested_amount"]);
+          echo minipane("granted", "Utilisées / accordées cette année ", $existing_subsidies["used_amount"], $existing_subsidies["requested_amount"]);
+          echo minipane("used", "Utilisées / accordées l'année dernière", $previous_subsidies["used_amount"], $previous_subsidies["requested_amount"]);
         ?>
       </div>
     </div>

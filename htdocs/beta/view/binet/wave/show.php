@@ -1,19 +1,20 @@
 <div class = "sidebar-present">
-  <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
   <div class="show-container">
     <div class="sh-plus <?php echo $wave["state"] == "closed" ? "red" : "green"; ?>-background opanel">
       <i class="fa fa-fw fa-<?php echo $wave["state"] == "closed" ? "times" : "check"; ?>"></i>
       <div class="text">
         <?php
+          $publishable = false;
           switch ($wave["state"]) {
             case "submission":
             echo "Demandes en cours";
             break;
             case "deliberation":
             echo "Etude des demandes";
+            $publishable = true;
             break;
             case "distribution":
-            echo "Ouverte";
+            echo "Emise";
             break;
             case "closed":
             echo "Fermée";
@@ -28,6 +29,11 @@
           echo button(
             path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
             "Modifier","edit","blue");
+          if($publishable){
+            echo button(
+              path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"]),array(),true),
+              "Publier","share","green");
+          }
         }
       ?>
   	</div>
@@ -54,42 +60,44 @@
         <?php echo pretty_date($wave["expiry_date"]); ?>
       </span>
     </div>
+    <div class="panel green-background opanel">
+      <div class="content white-text">
+        <?php echo $wave["question"]; ?>
+      </div>
+    </div>
     <div id="requests">
       <?php
         $total_reviewed_requests = 0;
-        foreach (select_requests(array("wave" => $wave["id"])) as $request) {
+        $requests = select_requests(array("wave" => $wave["id"]));
+        foreach ($requests as $request) {
           $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
           if($request["state"] == "reviewed"){
             $total_reviewed_requests += 1;
           }
+          ob_start();
+          echo "<p class=\"marker".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>";
+          echo "<p class=\"icon\">".(in_array($request["state"], array("reviewed","accepted","rejected")) ? "<i class=\"fa fa-fw fa-check\"></i>" : "<i class=\"fa fa-fw fa-times\"></i>")."</p>";
+          echo "<p class=\"binet\">".link_to(
+              path("", "binet", binet_term_id($request["binet"], $request["term"])),
+              pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>";
+          echo "<p class=\"amount\">".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i></p>";
+
           echo link_to(
-            path($wave["state"] == "deliberation" ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
-            "<div class=\"sh-wa-request opanel\">
-              <p class=\"marker
-                ".(in_array($request["state"], array("sent", "rejected")) ? " red" : " green")."-background\" ></p>
-              <p class=\"icon\">
-                ".(in_array($request["state"], array("sent", "rejected")) ? "<i class=\"fa fa-fw fa-times\"></i>" : "<i class=\"fa fa-fw fa-check\"></i>")."
-              </p>
-              <p class=\"binet\">
-                ".pretty_binet_term($request["binet"]."/".$request["term"])."
-              </p>
-              <p class=\"amount\">
-                ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i>
-              </p>
-            </div>",
-            array("goto" => true)
+            path(($wave["state"] == "deliberation" || $wave["state"] == "submission" )  ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+              "<div>".ob_get_clean()."</div>",
+              array("goto" => true,"class"=>"sh-wa-request opanel")
           );
         }
       ?>
       <div class="sh-wa-stats opanel2">
-        <div class="item teal-background">
+        <div class="item blue-background">
           Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"],false,true);?>
         </div>
-        <div class="item purple-background">
+        <div class="item green-background">
           Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
         </div>
-        <div class="item green-background">
-          Demandes traitées : <br> <?php echo $total_reviewed_requests;?>
+        <div class="item teal-background">
+          Demandes traitées : <br> <?php echo $total_reviewed_requests." / ".sizeOf($requests)." demandes";?>
         </div>
       </div>
     </div>

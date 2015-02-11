@@ -75,22 +75,20 @@
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
       $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term"));
+      ob_start();
+      echo "<div class=\"header\"><span class=\"name\">".$budget["label"]."</span></div>";
+      echo "<div class=\"content\">
+        <p class=\"amount\">
+        ".pretty_amount($subsidy["requested_amount"])." <i class=\"fa fa-fw fa-euro\"></i>
+        </p>
+        <p class=\"text\">
+        ".$subsidy["purpose"]."
+        </p>
+        </div>";
       echo link_to(
         path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-        "<div class=\"sh-req-budget opanel\">
-          <div class=\"header\">
-            <span class=\"name\">".$budget["label"]."</span>
-          </div>
-          <div class=\"content\">
-            <p class=\"amount\">
-              ".pretty_amount($subsidy["requested_amount"])." <i class=\"fa fa-fw fa-euro\"></i>
-            </p>
-            <p class=\"text\">
-              ".$subsidy["purpose"]."
-            </p>
-          </div>
-        </div>",
-        array("goto"=>true)
+        "<div>".ob_get_clean()."</div>",
+        array("goto"=>true,"class"=>"sh-req-budget opanel")
       );
     }
   ?>

@@ -17,7 +17,8 @@
     return form_group(
       $label,
       $field,
-      "<input type=\"text\"".$html_decoration_string." id=\"".$field."\" name=\"".$field."\" value=\"".(isset($object[$field]) ? $object[$field] : "")."\">",
+      "<input type=\"text\"".$html_decoration_string." id=\"".$field."\" name=\"".$field."\" value=\""
+      .(isset($object[$field]) ? $object[$field]: "")."\">",
       $object_name
     );
   }
