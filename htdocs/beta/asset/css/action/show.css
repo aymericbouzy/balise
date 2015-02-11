@@ -599,11 +599,12 @@
 }
 .sh-wa-request>.amount {
   display: table-cell;
-  width: 100px;
+  width: 250px;
   font-size: 20px;
   text-align: center;
   vertical-align: middle;
 }
+
 .sh-wa-request>.binet> a {
   color:#2e2e2e;
   text-decoration:none;

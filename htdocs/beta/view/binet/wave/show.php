@@ -57,7 +57,8 @@
     <div id="requests">
       <?php
         $total_reviewed_requests = 0;
-        foreach (select_requests(array("wave" => $wave["id"])) as $request) {
+        $requests = select_requests(array("wave" => $wave["id"]));
+        foreach ($requests as $request) {
           $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
           if($request["state"] == "reviewed"){
             $total_reviewed_requests += 1;
@@ -74,7 +75,7 @@
                 ".pretty_binet_term($request["binet"]."/".$request["term"])."
               </p>
               <p class=\"amount\">
-                ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i>
+                ".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i>
               </p>
             </div>",
             array("goto" => true)
@@ -89,7 +90,7 @@
           Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
         </div>
         <div class="item green-background">
-          Demandes traitées : <br> <?php echo $total_reviewed_requests;?>
+          Demandes traitées : <br> <?php echo $total_reviewed_requests." / ".sizeOf($requests)." demandes";?>
         </div>
       </div>
     </div>
