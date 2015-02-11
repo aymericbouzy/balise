@@ -51,46 +51,41 @@
     </div>
   </div>
   <?php
-  if (has_viewing_rights($binet, $term)) {
-    ?>
-    <div class="panel light-blue-background opanel" id="current-term">
-      <?php
+    ob_start();
+    if (has_viewing_rights($current_binet["id"], $current_binet["current_term"])) {
       echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
       echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
       echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
-      $subsidies_granted_id = "subsidies_granted";
-      $subsidies_used_id = "subsidies_used";
+      $suffix = "";
     } else {
-      echo "<div class=\"sh-bin-stats-std light-blue-background opanel\">";
-        $subsidies_granted_id = "subsidies_granted_std";
-        $subsidies_used_id = "subsidies_used_std";
-      }
-      echo minipane($subsidies_granted_id, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
-      echo minipane($subsidies_used_id, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
-      ?>
+      $suffix = "_std";
+    }
+    echo minipane("subsidies_granted".$suffix, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
+    echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
+    $content = ob_get_clean();
+    ?>
+    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+      <?php echo $content; ?>
     </div>
-  <?php
-    if($previous_binet){
-      if (has_viewing_rights($binet, $term)) {
-      ?>
-      <div class="panel light-blue-background opanel" id="previous-term">
-        <div class="info-right"> Mandat précédent </div>
-        <?php
+    <?php
+    if (!is_empty($previous_binet)) {
+      ob_start();
+      if (has_viewing_rights($current_binet["id"], $current_binet["current_term"] - 1)) {
         echo minipane("income", "Recettes", $previous_binet["real_income"], $previous_binet["expected_income"]);
         echo minipane("spending", "Dépenses", $previous_binet["real_spending"], $previous_binet["expected_spending"]);
-        echo minipane("balance", "Equilibre", $previous_binet["real_balance"], $previous_binet["expected_balance"]);
-        $subsidies_granted_id = "subsidies_granted";
-        $subsidies_used_id = "subsidies_used";
-        } else {
-        echo "<div class=\"sh-bin-stats-std light-blue-background opanel\">";
-        $subsidies_granted_id = "subsidies_granted_std";
-        $subsidies_used_id = "subsidies_used_std";
+        echo minipane("balance", "Equilibre", $current_binet["real_balance"], $previous_binet["expected_balance"]);
+        $suffix = "";
+      } else {
+        $suffix = "_std";
       }
-      echo minipane($subsidies_granted_id, "Subventions accordées", $previous_binet["subsidized_amount_granted"], NULL);
-      echo minipane($subsidies_used_id, "Subventions utilisées", $previous_binet["subsidized_amount_used"], NULL);
+      echo minipane("subsidies_granted".$suffix, "Subventions accordées", $previous_binet["subsidized_amount_granted"], NULL);
+      echo minipane("subsidies_used".$suffix, "Subventions utilisées", $previous_binet["subsidized_amount_used"], NULL);
+      $content = ob_get_clean();
       ?>
+      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+        <?php echo $content; ?>
       </div>
-    <?php
+      <?php
     }
     ?>
     <div class="panel light-blue-background opanel" id="wave-owner-subsidy">
