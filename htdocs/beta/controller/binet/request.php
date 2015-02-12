@@ -59,19 +59,9 @@
   }
 
   function check_granting_rights() {
-    $sql = "SELECT *
-    FROM binet_admin
-    INNER JOIN wave
-    ON wave.binet = binet_admin.binet AND binet_admin.term = wave.term
-    INNER JOIN request
-    ON request.wave = wave.id
-    WHERE request.id = :request AND binet_admin.student = :student";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':request', $GLOBALS["request"]["id"], PDO::PARAM_INT);
-    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->execute();
-    $result = $req->fetch();
-    return !is_empty($result);
+    $request = select_request($GLOBALS["request"]["id"], array("wave"));
+    $wave = select_wave($request["wave"], array("binet", "term"));
+    header_if(!has_editing_rights($wave["binet"], $wave["term"]), 401);
   }
 
   function check_wave_parameter() {
