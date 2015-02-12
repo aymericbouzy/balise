@@ -123,6 +123,33 @@
     return $returned_array;
   }
 
+  function print_flash($class) {
+    if (!is_empty($_SESSION[$class])) {
+      foreach ($_SESSION[$class] as $flash) {
+        ?>
+        <div class="flashcard <?php echo $class;?> alert alert-dismissible fade in">
+          <button class="close" data-dismiss="alert">
+            <i class="fa fa-fw fa-close"></i>
+          </button>
+          <?php echo $flash; ?>
+        </div>
+        <?php
+      }
+      unset($_SESSION[$class]);
+    }
+  }
+
+  function array_to_string($array) {
+    ob_start();
+    var_dump($array);
+    $string = ob_get_clean();
+    return str_replace(
+      array(" "),
+      array("\040"),
+      $string
+    );
+  }
+
   function array_true_merge($array1, $array2) {
     foreach($array1 as $key => $value) {
       $array2[$key] = $value;

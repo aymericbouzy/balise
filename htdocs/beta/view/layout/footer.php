@@ -6,7 +6,7 @@
 <?php
 
   $reference = substr(md5(rand()), 0, 10);
-	$url = isset($_SERVER["REDIRECT_URL"]) ? $_SERVER["REDIRECT_URL"] : $_SERVER["REQUEST_URI"];
+  $url = isset($_SERVER["REDIRECT_URL"]) ? $_SERVER["REDIRECT_URL"] : $_SERVER["REQUEST_URI"];
 	$browser = $_SERVER["HTTP_USER_AGENT"];
   $email = connected_student() ? select_student($_SESSION["student"], array("email"))["email"] : "";
   $post = array_to_string($_POST);
