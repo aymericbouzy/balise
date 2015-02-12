@@ -17,7 +17,7 @@
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "budget",
     "str_fields" => array(array("label", 100), array("tags_string", MAX_TAG_STRING_LENGTH)),
-    "amount_fields" => array(array("amount", MAX_AMOUNT)),
+    "amount_fields" => array(array("amount", MAX_AMOUNT), array("subsidized_amount", MAX_AMOUNT)),
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
     "tags_string" => true,
     "redirect_to" => path($_GET["action"] == "create" ? "new" : "edit", "budget", $_GET["action"] == "update" ? $budget["id"] : "", binet_prefix($binet, $term)),
@@ -26,7 +26,7 @@
   before_action("check_budget_is_alone", array("edit", "update", "delete"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
-  $form_fields = array("label", "tags_string", "amount");
+  $form_fields = array("label", "tags_string", "amount", "subsidized_amount");
   if (in_array($_GET["action"], array("new", "create"))) {
     $form_fields[] = "sign";
   }
@@ -45,7 +45,8 @@
     break;
 
   case "create":
-    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
+    $subsidized_amount = $_POST["sign"] == 1 ? $_POST["subsidized_amount"] : NULL;
+    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"], $subsidized_amount);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
