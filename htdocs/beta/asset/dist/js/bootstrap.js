@@ -965,8 +965,6 @@ if (typeof jQuery === 'undefined') {
     this.escape()
 
     this.$element.on('click.dismiss.bs.modal', '[data-dismiss="modal"]', $.proxy(this.hide, this))
-    /* WARNING : this has been added , the class modal-over-all is in css/features/modals.css */
-    this.$element.addClass('modal-over-all')
     this.backdrop(function () {
       var transition = $.support.transition && that.$element.hasClass('fade')
 

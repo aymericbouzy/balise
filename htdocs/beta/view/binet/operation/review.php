@@ -1,4 +1,3 @@
-
 <div class="bigpanel opanel">
   <span class="title">Opération</span>
   <div class="table-responsive panel-content" id="validations-table">

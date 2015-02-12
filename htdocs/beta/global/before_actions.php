@@ -60,11 +60,13 @@
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(is_empty($binets), 404);
     $GLOBALS["binet"] = $binets[0]["id"];
-    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $_GET["term"]));
-    if (is_empty($binet_terms) && $_GET["controller"] != "admin") {
-      $_SESSION["error"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
-    }
     $GLOBALS["term"] = $_GET["term"];
+    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
+    $binet_term = $GLOBALS["binet"]."/".$GLOBALS["term"];
+    if (is_empty($binet_terms) && $_GET["controller"] != "admin" && (!isset($_SESSION["aware_no_admins_for"]) || !in_array($binet_term, $_SESSION["aware_no_admins_for"]))) {
+      $_SESSION["error"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
+      $_SESSION["aware_no_admins_for"][] = $binet_term;
+    }
   }
 
   function check_entry($array) {
@@ -190,7 +192,7 @@
     if (status_admin_current_binet(KES_ID)) {
       return true;
     } else {
-      $terms = select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]));
+      $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term), "student" => $_SESSION["student"]));
       return !is_empty($terms) ||
       received_subsidy_request_from($binet);
     }

@@ -146,7 +146,8 @@ CREATE TABLE `request` (
   `id` int(11) NOT NULL,
   `wave` int(11) NOT NULL,
   `answer` text NOT NULL,
-  `sent` tinyint(1) NOT NULL DEFAULT '0'
+  `sent` tinyint(1) NOT NULL DEFAULT '0',
+  `reviewed` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

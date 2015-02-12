@@ -59,19 +59,9 @@
   }
 
   function check_granting_rights() {
-    $sql = "SELECT *
-    FROM binet_admin
-    INNER JOIN wave
-    ON wave.binet = binet_admin.binet AND binet_admin.term = wave.term
-    INNER JOIN request
-    ON request.wave = wave.id
-    WHERE request.id = :request AND binet_admin.student = :student";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':request', $GLOBALS["request"]["id"], PDO::PARAM_INT);
-    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->execute();
-    $result = $req->fetch();
-    return !is_empty($result);
+    $request = select_request($GLOBALS["request"]["id"], array("wave"));
+    $wave = select_wave($request["wave"], array("binet", "term"));
+    header_if(!has_editing_rights($wave["binet"], $wave["term"]), 401);
   }
 
   function check_wave_parameter() {
@@ -82,7 +72,10 @@
 
   function check_exists_spending_budget() {
     $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)));
-    header_if(is_empty($budgets), 403);
+    if (is_empty($budgets)) {
+      $_SESSION["warning"][] = "Avant de faire une demande de subventions, tu dois créer ton budget.";
+      redirect_to_path(path("", "budget", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
+    }
   }
 
   function check_no_existing_request() {
@@ -97,10 +90,10 @@
   before_action("check_no_existing_request", array("new"));
   before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
-  before_action("check_csrf_get", array("delete", "send"));
-  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant"), array("model_name" => "request", "binet" => $binet, "term" => $term));
+  before_action("check_csrf_get", array("delete", "send", "reject"));
+  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject"), array("model_name" => "request", "binet" => $binet, "term" => $term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
-  before_action("check_granting_rights", array("review", "grant"));
+  before_action("check_granting_rights", array("review", "grant", "reject"));
   before_action("setup_for_editing", array("new", "create", "edit", "update"));
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "request",
@@ -119,7 +112,7 @@
     "optional" => $granted_amount_array
   ));
   before_action("not_sent", array("send", "edit", "update", "delete"));
-  before_action("sent_and_not_published", array("review", "grant"));
+  before_action("sent_and_not_published", array("review", "grant", "reject"));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
   switch ($_GET["action"]) {
@@ -159,6 +152,8 @@
   case "show":
     $request = select_request($request["id"], array("id", "budget", "answer", "sent", "wave", "state"));
     $request["wave"] = select_wave($request["wave"], array("id", "binet", "term", "state"));
+    $current_binet = select_binet($binet, array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
+    $current_binet = array_merge(select_term_binet($current_binet["id"]."/".$current_binet["current_term"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $current_binet);
     break;
 
   case "edit":
@@ -170,7 +165,7 @@
           $request[adds_purpose_prefix($budget)] = "";
         } else {
           $subsidy = select_subsidy($subsidies[0]["id"], array("requested_amount", "purpose"));
-          $request[adds_amount_prefix($budget)] = $subsidy["requested_amount"]/100;
+          $request[adds_amount_prefix($budget)] = $subsidy["requested_amount"] / 100;
           $request[adds_purpose_prefix($budget)] = $subsidy["purpose"];
         }
       }
@@ -208,12 +203,19 @@
     function request_to_form_fields($request) {
       foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
         $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation"));
-        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"];
+        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"] / 100;
         $request[adds_explanation_prefix($subsidy)] = $subsidy["explanation"];
       }
       return $request;
     }
     $request = set_editable_entry_for_form("request", $request, $review_form_fields);
+    $request_info = select_request($request["id"], array("id", "budget", "answer", "sent", "wave", "state"));
+    $request_info["wave"] = select_wave($request_info["wave"], array("id", "binet", "term", "state"));
+    $current_binet = select_binet($binet, array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
+    $current_binet = array_merge(select_term_binet($current_binet["id"]."/".$current_binet["current_term"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $current_binet);
+    $previous_binet = select_term_binet($current_binet["id"]."/".($current_binet["current_term"] - 1), array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state"));
+    $existing_subsidies = get_subsidized_amount_between($current_binet["id"]."/".$current_binet["current_term"], $request_info["wave"]["binet"]);
+    $previous_subsidies = get_subsidized_amount_between($current_binet["id"]."/".($current_binet["current_term"] -  1), $request_info["wave"]["binet"]);
     break;
 
   case "grant":
@@ -229,10 +231,22 @@
           break;
       }
     }
-    $request = select_request($request["id"], array("id", "wave", "binet", "term"));
+    review_request($request["id"]);
+    $request = select_request($request["id"], array("id", "wave"));
     $wave = select_wave($request["wave"], array("id", "binet", "term"));
-    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet($request["binet"], $request["term"])." a été étudiée.";
-    redirect_to_path(path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])));
+    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet($binet, $term)." a été étudiée.";
+    redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
+    break;
+
+  case "reject":
+    foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
+      update_subsidy($subsidy["id"], array("granted_amount" => 0));
+    }
+    review_request($request["id"]);
+    $request = select_request($request["id"], array("id", "wave"));
+    $wave = select_wave($request["wave"], array("id", "binet", "term"));
+    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet($binet, $term)." a été marquée refusée. Nous vous conseillons tout de même de rajouter un commentaire explicatif.";
+    redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
     break;
 
   case "delete":

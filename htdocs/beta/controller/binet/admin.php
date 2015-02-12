@@ -13,9 +13,10 @@
   before_action("current_kessier", array("new", "create", "delete"));
   before_action("check_form_input", array("create"), array(
     "model_name" => "admin",
-    "int_fields" => array(array("term", 10000)),
+    "int_fields" => array(array("term", 1)),
     "other_fields" => array(array("student", "exists_student")),
-    "redirect_to" => path("new", "admin", "", binet_prefix($binet, $term))
+    "redirect_to" => path("new", "admin", "", binet_prefix($binet, $term)),
+    "optional" => array("term")
   ));
   before_action("generate_csrf_token", array("new", "index"));
 
@@ -31,9 +32,10 @@
     break;
 
   case "create":
-    add_admin_binet($_POST["student"], $binet, $_POST["term"]);
-    send_email($_POST["student"], "Nouveau binet", "new_admin", array("binet_term" => $binet."/".$_POST["term"]));
-    $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet($binet)." pour le mandat ".$_POST["term"].".";
+    $admin_term = current_term($binet) + $_POST["term"];
+    add_admin_binet($_POST["student"], $binet, $admin_term);
+    send_email($_POST["student"], "Nouveau binet", "new_admin", array("binet_term" => $binet."/".$admin_term));
+    $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet($binet)." pour le mandat ".$admin_term.".";
     redirect_to_action("");
     break;
 

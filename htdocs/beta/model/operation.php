@@ -28,17 +28,16 @@
     );
     if (in_array("needs_validation", $fields)) {
       $operation["needs_validation"] = false;
-      $subsidies = select_subsidies(array("operation" => $operation["id"]));
-      if (!is_empty($subsidies)) {
-        $requests = array();
-        foreach ($subsidies as $subsidy) {
+      $requests = array();
+      foreach (select_budgets_operation($operation["id"]) as $budget) {
+        foreach (select_subsidies(array("budget" => $budget["id"])) as $subsidy) {
           $subsidy = select_subsidy($subsidy["id"], array("request"));
           $requests[$subsidy["request"]] = true;
         }
-        foreach ($requests as $request => $present) {
-          $request = select_request($request, array("state"));
-          $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
-        }
+      }
+      foreach ($requests as $request => $present) {
+        $request = select_request($request, array("state"));
+        $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
       }
     }
     if (in_array("state", $fields)) {

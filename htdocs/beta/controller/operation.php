@@ -5,10 +5,6 @@
     header_if(!(($operation["created_by"] == $_SESSION["student"] && $operation["state"] == "suggested") || (is_current_kessier() && $operation["state"] == "waiting_validation")), 401);
   }
 
-  function correct_term($term) {
-    return !isset($_POST["binet"]) || exists_term_binet($_POST["binet"]."/".$term);
-  }
-
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("validate", "reject"));
   before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation"));
@@ -17,10 +13,11 @@
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
+    "int_fields" => array(array("term", 1)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by"), array("binet", "exists_binet"), array("term", "correct_term")),
+    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by"), array("binet", "exists_binet")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : ""),
-    "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
+    "optional" => array_merge(array("paid_by", "bill", "reference", "comment", "term"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
@@ -37,7 +34,8 @@
     break;
 
   case "create":
-    $operation["id"] = create_operation($_POST["binet"], $_POST["term"], (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
+    $term = current_term($_POST["binet"]) + $_POST["term"];
+    $operation["id"] = create_operation($_POST["binet"], $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
     foreach (select_admins($_POST["binet"], $_POST["term"]) as $student) {
       send_email($student["id"], "Nouvelle opération", "new_operation", array("operation" => $operation["id"], "student" => connected_student(), "binet" => $_POST["binet"], "term" => $_POST["term"]));

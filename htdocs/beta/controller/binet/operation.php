@@ -112,6 +112,7 @@
       send_email($operation["created_by"], "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
     }
     delete_operation($operation["id"]);
+    remove_budgets_operation($operation["id"]);
     $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
     redirect_to_action("index");
     break;
