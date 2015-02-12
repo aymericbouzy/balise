@@ -1,8 +1,11 @@
 <?php $subsidizer_can_study = in_array($wave["state"],array("deliberation","submission")) ;?>
 <div class = "sidebar-present">
   <div class="show-container">
-    <div class="sh-plus <?php echo $wave["state"] == "closed" ? "red" : "green"; ?>-background opanel">
-      <i class="fa fa-fw fa-<?php echo $wave["state"] == "closed" ? "times" : "check"; ?>"></i>
+    <?php $wave_state_to_color = array("submission" => "blue", "deliberation" => "teal", "distribution" => "green", "closed" => "grey");
+          $wave_state_to_icon = array("submission" => "crosshairs", "deliberation" => "cogs", "distribution" => "money", "closed" => "times");
+    ?>
+    <div class="sh-plus <?php echo $wave_state_to_color[$wave["state"]]; ?>-background opanel">
+      <i class="fa fa-fw fa-<?php echo $wave_state_to_icon[$wave["state"]]; ?>"></i>
       <div class="text">
         <?php
           switch ($wave["state"]) {
@@ -80,7 +83,7 @@
           echo "<p class=\"amount\">".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i></p>";
 
           echo link_to(
-            path(($wave["state"] == "deliberation" || $wave["state"] == "submission" )  ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+            path( $subsidizer_can_study? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
               "<div>".ob_get_clean()."</div>",
               array("goto" => true,"class"=>"sh-wa-request opanel")
           );
