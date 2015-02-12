@@ -117,3 +117,21 @@
 .panel>.content {
   position:relative;
 }
+
+
+#description>div>::-webkit-input-placeholder { /* WebKit browsers */
+  color:    #fff;
+  opacity:  0.7;
+}
+#description>div>:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #fff;
+  opacity:  0.7;
+}
+#description>div>::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #fff;
+  opacity:  0.7;
+}
+#description>div>:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:    #fff;
+  opacity:  0.7;
+}

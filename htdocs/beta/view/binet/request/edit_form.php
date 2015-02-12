@@ -1,7 +1,7 @@
 <form role="form" id="request" action="/<?php echo path($form_action, "request", $form_action == "create" ? "" : $request["id"], binet_prefix($binet, $term)); ?>" method="post">
   <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
   <div class="panel green-background opanel">
-    <div class="content white-text">
+    <div class="content white-text" id="description">
       <?php echo form_group_text($request["wave"]["question"], "answer", $request, "request",array("placeholder" => "Justifiez votre demande","style"=>"color:#fff")); ?>
     </div>
   </div>
