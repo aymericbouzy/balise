@@ -66,6 +66,7 @@ CREATE TABLE `budget` (
   `id` int(11) NOT NULL,
   `binet` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
+  `subsidized_amount` int(11) DEFAULT NULL,
   `term` smallint(11) NOT NULL,
   `label` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

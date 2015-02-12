@@ -1,10 +1,13 @@
 <?php
 
-  function create_budget($binet, $term, $amount, $label) {
+  function create_budget($binet, $term, $amount, $label, $subsidized_amount = NULL) {
     $values["binet"] = $binet;
     $values["term"] = $term;
     $values["amount"] = $amount;
     $values["label"] = $label;
+    if (isset($subsidized_amount)) {
+      $values["subsidized_amount"] = $subsidized_amount;
+    }
     return create_entry(
       "budget",
       array("binet", "term", "amount"),
@@ -21,7 +24,7 @@
     }
     $budget = select_entry(
       "budget",
-      array("id", "binet", "amount", "term", "label"),
+      array("id", "binet", "amount", "term", "label", "subsidized_amount"),
       $budget,
       $fields
     );
@@ -53,7 +56,7 @@
   function select_budgets($criteria, $order_by = NULL, $ascending = true) {
     return select_entries(
       "budget",
-      array("binet", "amount", "term"),
+      array("binet", "amount", "term", "subsidized_amount"),
       array(),
       array("real_amount", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used"),
       $criteria,
@@ -88,7 +91,7 @@
   }
 
   function get_subsidized_amount_granted_budget($budget) {
-    $sql = "SELECT SUM(subsidy.granted_amount) as subsidized_amount
+    $sql = "SELECT SUM(subsidy.granted_amount) as sum_granted_amount
             FROM subsidy
             INNER JOIN request
             ON request.id = subsidy.request
@@ -98,11 +101,11 @@
     $req = Database::get()->prepare($sql);
     $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC)["subsidized_amount"];
+    return $req->fetch(PDO::FETCH_ASSOC)["sum_granted_amount"];
   }
 
   function get_subsidized_amount_requested_budget($budget) {
-    $sql = "SELECT SUM(subsidy.requested_amount) as subsidized_amount
+    $sql = "SELECT SUM(subsidy.requested_amount) as sum_requested_amount
             FROM subsidy
             INNER JOIN request
             ON request.id = subsidy.request
@@ -112,7 +115,7 @@
     $req = Database::get()->prepare($sql);
     $req->bindValue(':budget', $budget, PDO::PARAM_INT);
     $req->execute();
-    return $req->fetch(PDO::FETCH_ASSOC)["subsidized_amount"];
+    return $req->fetch(PDO::FETCH_ASSOC)["sum_requested_amount"];
   }
 
   // To order subsidies in get_subsidized_amount_used_details_budget
