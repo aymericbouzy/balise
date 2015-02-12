@@ -48,6 +48,8 @@
       case "requests_reviewed":
         $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => array("!=", "sent"))));
         break;
+      case "requests_accepted":
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => "accepted")));
       }
     }
     return $wave;

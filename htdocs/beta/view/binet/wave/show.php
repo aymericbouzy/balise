@@ -86,14 +86,35 @@
         }
       ?>
       <div class="sh-wa-stats opanel2">
-        <div class="item blue-background">
-          Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"],false,true);?>
-        </div>
+        <?php if(in_array($wave["state"],array("deliberation","submission")) && has_editing_rights($binet, $term)) { ?>
+          <div class="item blue-background">
+            Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"],false,true);?>
+          </div>
+        <?php } ?>
         <div class="item green-background">
           Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
         </div>
         <div class="item teal-background">
-          Demandes traitées : <br> <?php echo $wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";?>
+          <?php if(has_editing_rights($binet, $term)) {
+            if(in_array($wave["state"],array("deliberation","submission"))){
+              echo "Demandes traitées : <br> ".$wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";
+            }
+            else
+            {
+              echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+            }
+          }
+          else
+          {
+            if(in_array($wave["state"],array("deliberation","submission"))){
+              echo "Demandes reçues : <br> ".$wave["requests_received"];
+            }
+            else
+            {
+              echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+            }
+          }
+          ?>
         </div>
       </div>
     </div>

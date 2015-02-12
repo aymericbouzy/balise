@@ -71,7 +71,7 @@
     break;
 
   case "show":
-    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "requested_amount", "granted_amount", "question", "requests_received", "requests_reviewed"));
+    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "requested_amount", "granted_amount", "question", "requests_received", "requests_reviewed","requests_accepted"));
     break;
 
   case "edit":
