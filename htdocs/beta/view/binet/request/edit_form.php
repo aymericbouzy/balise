@@ -1,40 +1,3 @@
-<!-- <form role="form" id="request" action="/<?php echo path($form_action, "request", $form_action == "create" ? "" : $request["id"], binet_prefix($binet, $term)); ?>" method="post">
-  <table>
-    <tr>
-      <th>
-        Budget
-      </th>
-      <th>
-        Montant demandé
-      </th>
-      <th>
-        Commentaire
-      </th>
-    </tr>
-    <?php
-      foreach ($budgets_involved as $budget) {
-        ?>
-        <tr>
-          <td>
-            <?php echo pretty_budget($budget["id"]); ?>
-          </td>
-          <td>
-            <?php echo form_group_text("", adds_amount_prefix($budget), $request, "request"); ?>
-          </td>
-          <td>
-            <?php echo form_group_text("", adds_purpose_prefix($budget), $request, "request"); ?>
-          </td>
-        </tr>
-        <?php
-      }
-    ?>
-  </table>
-
-  <?php echo form_group_text($request["wave"]["question"], "answer", $request, "request"); ?>
-  <?php echo form_hidden("wave", $request["wave"]["id"]); ?>
-  <?php echo form_csrf_token(); ?>
-  <?php echo form_submit_button($submit_label); ?>
-</form> -->
 <form role="form" id="request" action="/<?php echo path($form_action, "request", $form_action == "create" ? "" : $request["id"], binet_prefix($binet, $term)); ?>" method="post">
   <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
   <div class="panel green-background opanel">
@@ -48,8 +11,8 @@
     path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])) ?>
     <div class="panel light-blue-background opanel">
       <?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-      "<div class=\"title\">".$budget["label"]."<span><i class=\"fa fa-fw fa-eye\"></i>  Voir le budget</span></div>",
-      array("goto"=>true));?>
+        "<div class=\"title\">".$budget["label"]."<span><i class=\"fa fa-fw fa-eye\"></i>  Voir le budget</span></div>",
+        array("goto"=>true));?>
       <div class="content">
         <div class="edit-infos">
           <p class="budget-summary">
