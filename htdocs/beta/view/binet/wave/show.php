@@ -1,3 +1,4 @@
+<?php $subsidizer_can_study = in_array($wave["state"],array("deliberation","submission")) ;?>
 <div class = "sidebar-present">
   <div class="show-container">
     <div class="sh-plus <?php echo $wave["state"] == "closed" ? "red" : "green"; ?>-background opanel">
@@ -73,9 +74,7 @@
           echo "<p class=\"marker ".($state_to_color[$request["state"]])."-background\" ></p>";
           $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times", "accepted" => "check", "rejected" => "times");
           echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".($state_to_icon[$request["state"]])."\"></i></p>";
-          echo "<p class=\"binet\">".link_to(
-              path("", "binet", binet_term_id($request["binet"], $request["term"])),
-              pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>";
+          echo "<p class=\"binet\">".$subsidizer_can_study? : (link_to(path("", "binet", binet_term_id($request["binet"], $request["term"])),pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>") : pretty_binet_term($request["binet"]."/".$request["term"],false) ;
           echo "<p class=\"amount\">".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i></p>";
 
           echo link_to(
@@ -86,31 +85,33 @@
         }
       ?>
       <div class="sh-wa-stats opanel2">
-        <?php if(in_array($wave["state"],array("deliberation","submission")) && has_editing_rights($binet, $term)) { ?>
           <div class="item blue-background">
             Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"],false,true);?>
           </div>
-        <?php } ?>
         <div class="item green-background">
-          Montant total accordé : <br> <?php echo pretty_amount($wave["granted_amount"],false,true);?>
+          <?php
+          if(($subsidizer_can_study && has_editing_rights($binet, $term)) ||
+                (!$subsidizer_can_study && !has_editing_rights($binet, $term)) ) {
+            echo "Montant total accordé : <br> ".pretty_amount($wave["granted_amount"],false,true);
+          } else if (has_editing_rights($binet, $term)) {
+            // TODO : used amount
+            echo "Montant total utilisé : <br> ".pretty_amount($wave["granted_amount"],false,false)." / ".pretty_amount($wave["granted_amount"],false,true)." accordé.";
+          }
+          ?>
         </div>
         <div class="item teal-background">
-          <?php if(has_editing_rights($binet, $term)) {
-            if(in_array($wave["state"],array("deliberation","submission"))){
+          <?php
+          if(has_editing_rights($binet, $term)) {
+            if($subsidizer_can_study){
               echo "Demandes traitées : <br> ".$wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";
-            }
-            else
-            {
+            } else {
               echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
             }
           }
-          else
-          {
-            if(in_array($wave["state"],array("deliberation","submission"))){
+          else {
+            if($subsidizer_can_study)){
               echo "Demandes reçues : <br> ".$wave["requests_received"];
-            }
-            else
-            {
+            } else {
               echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
             }
           }
