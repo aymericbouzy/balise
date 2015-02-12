@@ -19,13 +19,13 @@
           break;
         }
         echo button(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
-        echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term)), "Supprimer", "trash", "red");
+        echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
       }
       if (is_current_kessier()) {
         switch ($operation["state"]) {
           case "waiting_validation":
-          echo button(path("validate", "operation", $operation["id"], binet_prefix($binet, $term)), "Valider", "check", "green");
-          echo button(path("reject", "operation", $operation["id"], binet_prefix($binet, $term)), "Refuser", "times", "red");
+          echo button(path("validate", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Valider", "check", "green");
+          echo button(path("reject", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Refuser", "times", "red");
           break;
         }
       }
