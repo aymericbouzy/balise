@@ -43,11 +43,11 @@
   }
 
   function exceptions_error_handler($severity, $message, $filename, $lineno) {
-    ob_get_clean();
     if (STATE != "development") {
+      ob_get_clean();
       $GLOBALS["error_already_sent"] = send_error_by_mail(array("type" => $severity, "file" => $filename, "line" => $lineno, "message" => $message));
+      header_if(true, 500, true);
     }
-    header_if(true, 500, true);
     throw new ErrorException($message, 0, $severity, $filename, $lineno);
   }
 
