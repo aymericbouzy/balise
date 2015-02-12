@@ -5,6 +5,11 @@
     header_if(!(($operation["created_by"] == $_SESSION["student"] && $operation["state"] == "suggested") || (is_current_kessier() && $operation["state"] == "waiting_validation")), 401);
   }
 
+  function check_not_validated() {
+    $operation = select_operation($GLOBALS["operation"]["id"], array("state"));
+    header_if($operation["state"] != "waiting_validation", 403);
+  }
+
   before_action("check_csrf_post", array("update", "create"));
   before_action("check_csrf_get", array("validate", "reject"));
   before_action("check_entry", array("show", "edit", "update", "validate", "reject"), array("model_name" => "operation"));
@@ -19,6 +24,7 @@
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : ""),
     "optional" => array_merge(array("paid_by", "bill", "reference", "comment", "term"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
+  before_action("check_not_validated", array("validate", "reject"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign", "binet", "term");
@@ -73,8 +79,9 @@
 
   case "reject":
     kes_reject_operation($operation["id"]);
+    $operation = select_operation($operation["id"], array("id", "binet", "term"));
     $_SESSION["notice"][] = "Tu as refusé l'opération. Elle apparaitra à nouveau dans les validations des administrateurs du binet. Tu peux leur envoyer un mail pour expliquer la raison du refus.";
-    foreach (select_admins($binet, $term) as $student) {
+    foreach (select_admins($operation["binet"], $operation["term"]) as $student) {
       send_email($student["id"], "Opération refusée par la Kès", "operation_rejected", array("operation" => $operation["id"], "kessier" => connected_student()));
     }
     redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));

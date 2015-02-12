@@ -126,6 +126,7 @@
       $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave"));
       $subsidies[$index]["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
       $subsidies[$index]["used_amount"] = 0;
+      $subsidies[$index]["granted_amount"] = $subsidy["granted_amount"];
       set_if_not_set($subsidies[$index]["granted_amount"], 0);
     }
     usort($subsidies, "sort_by_date");
@@ -134,7 +135,7 @@
       $i = 0;
       while(isset($subsidies[$i]) && $operation["amount"] < 0) {
         if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
-          $amount = min($operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
+          $amount = min(-$operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
           $operation["amount"] -= $amount;
           $subsidies[$i]["used_amount"] += $amount;
         }
