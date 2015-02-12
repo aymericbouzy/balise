@@ -24,15 +24,15 @@
     return $tag_string;
   }
 
-  function pretty_binet($binet, $link = true) {
+  function pretty_binet($binet, $link = true, $kes_special = true) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
-    $caption = $binet["id"] == KES_ID ? "<i class=\"icon-logo-kes fa-2x\" alt=\"Kès\"></i>" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
+    $caption = $binet["id"] == KES_ID && $kes_special ? "<i class=\"icon-logo-kes fa-2x\" alt=\"Kès\"></i>" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
     return $link ? link_to(path("show", "binet", $binet["id"]), $caption) : $caption;
   }
 
-  function pretty_binet_term($binet_term, $link = true) {
+  function pretty_binet_term($binet_term, $link = true, $kes_special = true) {
     $binet_term = select_term_binet($binet_term, array("binet", "term"));
-    $caption = pretty_binet($binet_term["binet"], false)." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
+    $caption = pretty_binet($binet_term["binet"], false, $kes_special)." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
     if ($link) {
       return link_to(path("show", "binet", $binet_term["binet"]), $caption);
     } else {
@@ -40,7 +40,7 @@
     }
   }
 
-  function pretty_budget($budget , $link= true, $show_tags = true) {
+  function pretty_budget($budget , $link = true, $show_tags = true) {
     $budget = select_budget($budget, array("id", "label","binet","term"));
     $label = $link ? link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),$budget["label"]) : $budget["label"];
     return $show_tags? $label." \t".pretty_tags(select_tags_budget($budget["id"])) : $label;
