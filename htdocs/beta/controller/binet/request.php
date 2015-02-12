@@ -59,19 +59,9 @@
   }
 
   function check_granting_rights() {
-    $sql = "SELECT *
-    FROM binet_admin
-    INNER JOIN wave
-    ON wave.binet = binet_admin.binet AND binet_admin.term = wave.term
-    INNER JOIN request
-    ON request.wave = wave.id
-    WHERE request.id = :request AND binet_admin.student = :student";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':request', $GLOBALS["request"]["id"], PDO::PARAM_INT);
-    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
-    $req->execute();
-    $result = $req->fetch();
-    return !is_empty($result);
+    $request = select_request($GLOBALS["request"]["id"], array("wave"));
+    $wave = select_wave($request["wave"], array("binet", "term"));
+    header_if(!has_editing_rights($wave["binet"], $wave["term"]), 401);
   }
 
   function check_wave_parameter() {
@@ -82,7 +72,10 @@
 
   function check_exists_spending_budget() {
     $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0)));
-    header_if(is_empty($budgets), 403);
+    if (is_empty($budgets)) {
+      $_SESSION["warning"][] = "Avant de faire une demande de subventions, tu dois créer ton budget.";
+      redirect_to_path(path("", "budget", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
+    }
   }
 
   function check_no_existing_request() {

@@ -27,7 +27,7 @@
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("label", "tags_string", "amount");
-  if ($_GET["action"] == "new") {
+  if (in_array($_GET["action"], array("new", "create"))) {
     $form_fields[] = "sign";
   }
 

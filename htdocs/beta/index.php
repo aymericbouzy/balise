@@ -24,13 +24,14 @@
     $content .= "<tr valign='top'><td><b>Trace</b></td><td><pre>$trace</pre></td></tr>";
     $content .= "</tbody></table>";
 
-    return mail_with_headers(WEBMASTER_EMAIL, "Error ".$errno." : ".$errstr, $content);
+    return mail_with_headers(WEBMASTER_EMAIL, "Error ".$errno." : '".$errstr."'", $content);
   }
 
   function mail_with_headers($to, $subject, $message) {
     $headers  = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type: text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From:         Projet Balise <balise.bugreport@gmail.com>" . "\r\n";
+    $headers .= "From:         Projet Balise <no-reply@balise.bin>" . "\r\n";
+    $headers .= "Reply-To:     Projet Balise <balise.bugreport@gmail.com>" . "\r\n";
 
     $subject = "[Projet balise] ".$subject;
 
@@ -42,11 +43,11 @@
   }
 
   function exceptions_error_handler($severity, $message, $filename, $lineno) {
-    ob_get_clean();
     if (STATE != "development") {
+      ob_get_clean();
       $GLOBALS["error_already_sent"] = send_error_by_mail(array("type" => $severity, "file" => $filename, "line" => $lineno, "message" => $message));
+      header_if(true, 500, true);
     }
-    header_if(true, 500, true);
     throw new ErrorException($message, 0, $severity, $filename, $lineno);
   }
 
