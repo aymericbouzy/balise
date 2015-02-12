@@ -1,5 +1,5 @@
 <p>
-  L'opération <?php echo pretty_operation($paramaters["operation"]); ?> a été validée par la Kès !
+  L'opération <?php echo pretty_operation($parameters["operation"]); ?> a été validée par la Kès !
 </p>
 <p>
   Elle apparaît désormais dans les <?php echo link_to("", "operation", "", binet_prefix($parameters["binet"], $parameters["term"]), "opérations"); ?>

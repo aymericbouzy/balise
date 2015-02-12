@@ -133,7 +133,7 @@
       return $operation;
     }
     $operation = set_editable_entry_for_form("operation", $operation, $amount_array);
-    $operation = array_merge($operation, select_operation($id, array("id", "amount", "binet_validation_by")));
+    $operation = array_merge($operation, select_operation($id, array("id", "amount", "created_by", "comment", "date", "binet", "term")));
     break;
 
   case "validate":
