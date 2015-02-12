@@ -145,3 +145,29 @@
 .content-line-panel:hover>.actions {
   visibility:visible;
 }
+
+.content-line-panel-small {
+  display:block;
+  margin:5px;
+  margin-right:-70px;
+  font-size:15px;
+}
+
+.content-line-panel-small>.clickable-main{
+  height:30px;
+  width:534px;;
+}
+
+.content-line-panel-small>.clickable-main>.name{
+  font-size:15px;
+}
+
+.content-line-panel-small>.clickable-main>.state {
+  font-size:14px;
+  width:30px;
+}
+
+.content-line-panel-small>.clickable-main>.dates {
+  font-size:12px;
+  width:30px;
+}

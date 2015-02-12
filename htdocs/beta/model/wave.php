@@ -18,7 +18,7 @@
     if (in_array("state", $fields)) {
       $fields = array_merge(array("submission_date", "expiry_date", "published"), $fields);
     }
-    $present_virtual_fields = array_intersect(array("requested_amount", "granted_amount", "used_amount"), $fields);
+    $present_virtual_fields = array_intersect(array("requested_amount", "granted_amount", "used_amount", "requests_received", "requests_reviewed"), $fields);
     if (!is_empty($present_virtual_fields)) {
       $fields = array_merge(array("id"), $fields);
     }
@@ -42,6 +42,14 @@
       case "state":
         $wave[$field] = $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed");
         break;
+      case "requests_received":
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1)));
+        break;
+      case "requests_reviewed":
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => array("!=", "sent"))));
+        break;
+      case "requests_accepted":
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => "accepted")));
       }
     }
     return $wave;
@@ -124,7 +132,7 @@
   function get_used_amount_wave($wave) {
     $amount = 0;
     foreach(select_requests(array("wave" => $wave)) as $request) {
-      $amount += get_used_amount_request($request);
+      $amount += get_used_amount_request($request["id"]);
     }
     return $amount;
   }
@@ -135,4 +143,19 @@
       $amount += get_granted_amount_request($request["id"]);
     }
     return $amount;
+  }
+
+  function get_subsidized_amount_between($term, $binet) {
+    $used_amount = 0;
+    $granted_amount = 0;
+    $requested_amount = 0;
+    $term = select_term_binet($term, array("binet", "term"));
+    foreach (select_waves(array("binet" => $binet)) as $wave) {
+      foreach (select_requests(array("binet" => $term["binet"], "term" => $term["term"], "wave" => $wave["id"])) as $request) {
+        $used_amount += get_used_amount_request($request["id"]);
+        $granted_amount += get_granted_amount_request($request["id"]);
+        $requested_amount += get_requested_amount_request($request["id"]);
+      }
+    }
+    return array("used_amount" => $used_amount, "granted_amount" => $granted_amount, "requested_amount" => $requested_amount);
   }
