@@ -10,7 +10,7 @@
     }
     return create_entry(
       "budget",
-      array("binet", "term", "amount"),
+      array("binet", "term", "amount", "subsidized_amount"),
       array("label"),
       $values
     );
