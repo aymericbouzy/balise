@@ -74,7 +74,9 @@
           echo "<p class=\"marker ".($state_to_color[$request["state"]])."-background\" ></p>";
           $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times", "accepted" => "check", "rejected" => "times");
           echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".($state_to_icon[$request["state"]])."\"></i></p>";
-          echo "<p class=\"binet\">".$subsidizer_can_study? : (link_to(path("", "binet", binet_term_id($request["binet"], $request["term"])),pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>") : pretty_binet_term($request["binet"]."/".$request["term"],false) ;
+          echo "<p class=\"binet\">".($subsidizer_can_study?
+            (link_to(path("", "binet", binet_term_id($request["binet"], $request["term"])),pretty_binet_term($request["binet"]."/".$request["term"],false)))
+            : pretty_binet_term($request["binet"]."/".$request["term"],false))."</p>";
           echo "<p class=\"amount\">".pretty_amount($request["granted_amount"],false)." / ".pretty_amount($request["requested_amount"],false)." <i class=\"fa fa-euro\"></i></p>";
 
           echo link_to(
@@ -109,7 +111,7 @@
             }
           }
           else {
-            if($subsidizer_can_study)){
+            if($subsidizer_can_study){
               echo "Demandes reçues : <br> ".$wave["requests_received"];
             } else {
               echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
