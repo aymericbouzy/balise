@@ -34,6 +34,7 @@
     break;
 
   case "create":
+    set_if_not_set($_POST["sign"], 0);
     $term = current_term($_POST["binet"]) + $_POST["term"];
     $operation["id"] = create_operation($_POST["binet"], $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
