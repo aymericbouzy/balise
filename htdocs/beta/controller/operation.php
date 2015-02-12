@@ -63,9 +63,10 @@
 
   case "validate":
     kes_validate_operation($operation["id"]);
+    $operation = select_operation($operation["id"], array("id", "binet", "term"));
     $_SESSION["notice"][] = "L'opération a été validée avec succès.";
-    foreach (select_admins($binet, $term) as $student) {
-      send_email($student["id"], "Opération validée", "operation_validated", array("operation" => $operation["id"], "binet" => $binet, "term" => $term));
+    foreach (select_admins($operation["binet"], $operation["term"]) as $student) {
+      send_email($student["id"], "Opération validée", "operation_validated", array("operation" => $operation["id"], "binet" => $operation["binet"], "term" => $operation["term"]));
     }
     redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
     break;
