@@ -55,6 +55,7 @@
       echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
       echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
       echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
+      echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du binet </span>";
       $suffix = "";
     } else {
       $suffix = "_std";
@@ -62,17 +63,17 @@
     echo minipane("subsidies_granted".$suffix, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
     echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
     $content = ob_get_clean();
-    ?>
-    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel" id="current_term">
-      <?php echo $content; ?>
-    </div>
-    <?php
+    echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"])),
+      "<div>".$content."</div>",
+      array("class" => "light-blue-background opanel sh-bin-stats".clean_string($suffix),"id" => "current-term", "goto" => true));
+
     if (!is_empty($previous_binet)) {
       ob_start();
       if (has_viewing_rights($current_binet["id"], $current_binet["current_term"] - 1)) {
         echo minipane("income", "Recettes", $previous_binet["real_income"], $previous_binet["expected_income"]);
         echo minipane("spending", "Dépenses", $previous_binet["real_spending"], $previous_binet["expected_spending"]);
         echo minipane("balance", "Equilibre", $current_binet["real_balance"], $previous_binet["expected_balance"]);
+        echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du mandat précédent </span>";
         $suffix = "";
       } else {
         $suffix = "_std";
@@ -80,11 +81,9 @@
       echo minipane("subsidies_granted".$suffix, "Subventions accordées", $previous_binet["subsidized_amount_granted"], NULL);
       echo minipane("subsidies_used".$suffix, "Subventions utilisées", $previous_binet["subsidized_amount_used"], NULL);
       $content = ob_get_clean();
-      ?>
-      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel" id="previous-term">
-        <?php echo $content; ?>
-      </div>
-      <?php
+      echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"] - 1)),
+          "<div>".$content."</div>",
+          array("class" => "light-blue-background opanel sh-bin-stats".clean_string($suffix),"id" => "previous-term", "goto" => true));
     }
     ?>
     <div class="panel light-blue-background opanel">
