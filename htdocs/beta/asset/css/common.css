@@ -248,6 +248,21 @@ body {
     background-color:#B2B2B2;
 }
 
+/* Containers */
+.show-container {
+  position: relative;
+  width:auto;
+  margin: auto;
+  color: #2e2e2e;
+}
+@media(min-width:543px){
+  .show-container {
+    position: relative;
+    width:543px;
+    margin: auto;
+  }
+}
+
 #login-container {
     display: block;
     position:absolute;

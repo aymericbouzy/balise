@@ -44,6 +44,25 @@
   background-color:#2e2e2e;
   color:#cbddff;
 }
+
+.title:hover{
+  background-color:#1e1e1e;
+  color:#fff;
+}
+
+.title>span {
+  font-size:10px;
+  margin:5px;
+  float:right;
+  visibility:hidden;
+}
+.title:hover>span{
+  visibility:visible;
+}
+.content>.infos {
+  display:inline-block;
+  width:70%;
+}
 .panel>.info-right {
   transform : rotate(90deg);
   position:absolute;
