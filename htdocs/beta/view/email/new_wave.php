@@ -6,9 +6,9 @@
 </p>
 <ul>
   <?php
-    foreach ($parameters["binets"] as $binet) {
+    foreach ($parameters["binets"] as $binet_administred) {
       ?>
-      <li><?php echo link_to(path("new", "request", "", binet_prefix($binet, current_term($binet))), pretty_binet($binet, false)); ?></li>
+      <li><?php echo link_to(path("new", "request", "", binet_prefix($binet_administred, current_term($binet_administred)), array("wave" => $parameters["wave"])), pretty_binet($binet_administred, false)); ?></li>
       <?php
     }
   ?>
