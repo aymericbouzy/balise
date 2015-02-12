@@ -32,7 +32,7 @@
           </div>"
         );
         echo link_to(
-        path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
+          path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
           "<div class=\"round-button grey-background opanel\">
             <i class=\"fa fa-fw fa-bookmark-o anim\"></i>
             <span>Statistiques</span>

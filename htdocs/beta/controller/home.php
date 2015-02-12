@@ -12,7 +12,7 @@
     header_if(REAL_FRANKIZ_CONNECTION, 403);
   }
 
-  before_action("no_useless_connection", array("login"));
+  before_action("no_useless_connection", array("login", "welcome"));
   before_action("check_fake_auth", array("chose_identity"));
 
   switch ($_GET["action"]) {
