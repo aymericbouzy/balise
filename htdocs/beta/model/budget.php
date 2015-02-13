@@ -131,15 +131,17 @@
     }
     usort($subsidies, "sort_by_date");
     foreach(select_operations_budget($budget) as $operation) {
-      $operation = select_operation($operation["id"], array("date", "amount"));
-      $i = 0;
-      while(isset($subsidies[$i]) && $operation["amount"] < 0) {
-        if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
-          $amount = min(-$operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
-          $operation["amount"] -= $amount;
-          $subsidies[$i]["used_amount"] += $amount;
+      $operation = select_operation($operation["id"], array("date", "amount", "state"));
+      if ($operation["state"] == "validated") {
+        $i = 0;
+        while(isset($subsidies[$i]) && $operation["amount"] < 0) {
+          if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
+            $amount = min(-$operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
+            $operation["amount"] -= $amount;
+            $subsidies[$i]["used_amount"] += $amount;
+          }
+          $i++;
         }
-        $i++;
       }
     }
     return $subsidies;
