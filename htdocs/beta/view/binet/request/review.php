@@ -73,7 +73,7 @@
         echo minipane("income", "Recettes", $previous_binet["real_income"], $previous_binet["expected_income"]);
         echo minipane("spending", "Dépenses", $previous_binet["real_spending"], $previous_binet["expected_spending"]);
         echo minipane("balance", "Equilibre", $current_binet["real_balance"], $previous_binet["expected_balance"]);
-        echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du mandat précédent </span>";
+        echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du binet de la promotion précédente </span>";
         $suffix = "";
       } else {
         $suffix = "_std";

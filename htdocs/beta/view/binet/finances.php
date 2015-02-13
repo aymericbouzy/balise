@@ -9,7 +9,7 @@
         <div class="modal-body">
           <?php
           echo close_button("modal");?>
-          <span class="header">Voir l'activité d'un autre mandat</span>
+          <span class="header">Voir l'activité d'une autre promotion du binet</span>
           <div class="content">
             <?php echo pretty_terms_list($binet);?>
           </div>

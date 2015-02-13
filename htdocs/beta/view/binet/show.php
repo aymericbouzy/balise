@@ -131,4 +131,4 @@
     }
   ?>
 </div>
-<? echo modal("terms","Voir l'activité d'un autre mandat",pretty_terms_list($binet["id"]));?>
+<?php echo modal("terms", "Toutes les promotions du binet", pretty_terms_list($binet["id"])); ?>
