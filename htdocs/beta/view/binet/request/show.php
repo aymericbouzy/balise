@@ -32,7 +32,7 @@
           break;
         }
       }
-      if (status_admin_binet($request["wave"]["binet"], $request["wave"]["term"])) {
+      if (has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])) {
         if (in_array($request["state"], array("sent", "reviewed"))) {
           echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
         }
@@ -83,11 +83,14 @@
         ".$subsidy["purpose"]."
         </p>
         </div>";
-      echo link_to(
-        path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-        "<div>".ob_get_clean()."</div>",
-        array("goto"=>true,"class"=>"sh-req-budget opanel")
-      );
+      $caption = "<div class=\"sh-req-budget opanel\">".ob_get_clean()."</div>";
+      echo has_viewing_rights($binet, $term) ?
+        link_to(
+          path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
+          $caption,
+          array("goto" => true)
+        ) :
+        $caption;
     }
   ?>
 </div>
