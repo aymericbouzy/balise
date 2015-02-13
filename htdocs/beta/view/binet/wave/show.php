@@ -89,7 +89,7 @@
           pretty_amount($request["requested_amount"], false)." <i class=\"fa fa-euro\"></i></p>";
 
           echo link_to(
-            path($subsidizer_can_study && has_viewing_rights($binet, $term) ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
+            path($subsidizer_can_study && has_editing_rights($binet, $term) ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
             "<div>".ob_get_clean()."</div>",
             array("goto" => true, "class"=> "sh-wa-request opanel")
           );
@@ -112,7 +112,7 @@
         </div>
         <div class="item teal-background">
           <?php
-          if(has_editing_rights($binet, $term)) {
+          if(has_viewing_rights($binet, $term)) {
             if($subsidizer_can_study){
               echo "Demandes traitées : <br> ".$wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";
             } else {
