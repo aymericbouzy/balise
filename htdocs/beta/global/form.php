@@ -6,11 +6,19 @@
   }
 
   function check_form($form_name) {
+    // get form
     $form = $GLOBALS[$form_name."_form"];
+    // check for presence of input
     $sanitized_input = sanitize_input($form);
+    // save input in case of error
     $_SESSION[$form_name."_form"] = $sanitized_input;
+    // put input to the right format for treatment
     $formatted_input = format_input_forward($sanitized_input, $form);
+    // validate input correctness; redirects if not valid
     validate_formatted_input($formatted_input, $form);
+    // unset now useless session variable
+    unset($_SESSION[$form_name."_form"]);
+    // return input nicely structured
     return structured_input($formatted_input, $form);
   }
 
@@ -121,6 +129,10 @@
     }
   }
 
-  function structured_input($formatted_input, $form) {
-    return call_user_func($form["structured_input_maker"], $formatted_input);
+  function structured_input($validated_input, $form) {
+    if (isset($form["structured_input_maker"])) {
+      return call_user_func($form["structured_input_maker"], $validated_input);
+    } else {
+      return $validated_input;
+    }
   }
