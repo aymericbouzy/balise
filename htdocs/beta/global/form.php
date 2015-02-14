@@ -6,20 +6,20 @@
   }
 
   function check_form($form_name) {
-    $sanitized_input = sanitize_input($form_name);
+    $form = $GLOBALS[$form_name."_form"];
+    $sanitized_input = sanitize_input($form);
     $_SESSION[$form_name."_form"] = $sanitized_input;
-    $translated_input = translate_input_forward($sanitized_input, $form_name);
-    validate_input($translated_input, $form_name);
-    return structured_input($translated_input, $form_name);
+    $formatted_input = format_input_forward($sanitized_input, $form);
+    validate_formatted_input($formatted_input, $form);
+    return structured_input($formatted_input, $form);
   }
 
-  function sanitize_input($form_name) {
-    $form = $GLOBALS[$form_name."_form"];
+  function sanitize_input($form) {
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
       if (!isset($_POST[$name]) && !$field["optionnal"]) {
         $_SESSION["error"][] = "Tu n'as pas rempli ".$field["human_name"].".";
-        $_SESSION[$form_name."_errors"][] = $name;
+        $_SESSION[$form["name"]."_errors"][] = $name;
         $sanitized_input[$name] = default_value_for_type($name);
       } else {
         $sanitized_input[$name] = $_POST[$name];
@@ -28,16 +28,17 @@
     return $sanitized_input;
   }
 
-  function translate_input_forward($sanitized_input, $form_name) {
-    $form = $GLOBALS[$form_name."_form"];
+  function format_input_forward($sanitized_input, $form) {
     $translated_input = $sanitized_input;
     foreach ($sanitized_input as $name => $value) {
       $field = $form["fields"][$name];
       $valid = false;
       switch ($field["type"]) {
         case "amount":
-        $translated_input[$name] = $value / 100;
-        $valid = true;
+        if (is_numeric($value)) {
+          $translated_input[$name] = floor($value * 100);
+          $valid = true;
+        }
         break;
         case "date";
         $regex = "/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/";
@@ -63,22 +64,63 @@
           }
         }
         break;
+        case "boolean":
+        $valid = in_array($value, array(0, 1));
+        if (!$valid) {
+          $sanitized_input = default_value_for_type("boolean");
+        }
+        break;
+        case "id":
+        $valid = is_numeric($value);
+        if (!$valid) {
+          $sanitized_input = default_value_for_type("id");
+        }
+        break;
       }
       if (!$valid) {
-        $_SESSION["error"][] = ucfirst($field["human_name"])." n'est pas au bon format".
+        $_SESSION["error"][] = ucfirst($field["human_name"])." n'est pas au bon format";
+        $_SESSION[$form["name"]."_errors"][] = $name;
       }
     }
     return $sanitized_input;
   }
 
-  function validate_input($input, $form_name) {
-    $form = $GLOBALS[$form_name."_form"];
+  function validate_formatted_input($input, $form) {
     foreach ($input as $name => $value) {
       $field = $form["fields"][$name];
       switch ($field["type"]) {
-        case "boolean":
-
-
+        case "id":
+        if (!call_user_func("exists_".$field["model"], $value)) {
+          $_SESSION[$form["name"]."_errors"][] = $name;
+        }
+        break;
+        case "amount":
+        if ($value < 0 || $value > MAX_AMOUNT) {
+          $_SESSION[$form["name"]."_errors"][] = $name;
+          $_SESSION["error"][] = ucfirst($field["human_name"])." doit être compris entre 0 et ".(MAX_AMOUNT / 100).".";
+        }
+        break;
+        case "text":
+        if (strlen($value) > MAX_TEXT_LENGTH) {
+          $_SESSION[$form["name"]."_errors"][] = $name;
+          $_SESSION["error"][] = ucfirst($field["human_name"])." ne peut pas avoir plus de ".MAX_TEXT_LENGTH." caractères.";
+        }
+        break;
+        case "name":
+        if (strlen($value) > MAX_NAME_LENGTH) {
+          $_SESSION[$form["name"]."_errors"][] = $name;
+          $_SESSION["error"][] = ucfirst($field["human_name"])." ne peut pas avoir plus de ".MAX_NAME_LENGTH." caractères.";
+        }
       }
     }
+    foreach ($form["validations"] as $validation) {
+      call_user_func($validation, $input);
+    }
+    if (!is_empty($_SESSION["error"]) || !is_empty($_SESSION[$form["name"]."_errors"])) {
+      redirect_to_path($form["redirect_to_if_error"]);
+    }
+  }
+
+  function structured_input($formatted_input, $form) {
+    return call_user_func($form["structured_input_maker"], $formatted_input);
   }
