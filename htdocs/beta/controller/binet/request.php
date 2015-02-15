@@ -133,7 +133,9 @@
       $request = select_request($request["id"], array("id", "answer","sent", "wave", "state","requested_amount", "granted_amount", "used_amount"));
       $requests_count_by_state[$request["state"]]++;
       $total_requested_amount_by_state[$request["state"]] += $request["requested_amount"];
-      if($request["state"] == "granted") $total_granted += $request["granted_amount"];
+      if($request["state"] == "accepted"){
+        $total_granted += $request["granted_amount"];
+      }
       $total_used += $request["used_amount"];
       $requests[] = $request;
     }
