@@ -9,17 +9,18 @@
     $destination_action = "update";
     $id = $GLOBALS["request"]["id"];
   }
-  $form["redirect_to_if_error"] = path($origin_action, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
-  $form["destination_path"] = path($destination_cation, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
+  $query_array = isset($_POST["wave"]) ? array("wave" => $_POST["wave"]) : array();
+  $form["redirect_to_if_error"] = path($origin_action, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]), $query_array);
+  $form["destination_path"] = path($destination_action, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
   $form["html_form_path"] = VIEW_PATH."binet/request/edit_form.php";
 
   foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
-    $budget = select_budget($budget["id"], array("id", "name"));
-    $form["fields"]["amount_".$budget["id"]] = create_amount_field("le montant demandé pour le budget \"".$budget["name"]."\"", array("optional" => 1));
-    $form["fields"]["purpose_".$budget["id"]] = create_text_field("l'explication pour le montant demandé pour le budget \"".$budget["name"]."\"", array("optional" => 1));
+    $budget = select_budget($budget["id"], array("id", "label"));
+    $form["fields"]["amount_".$budget["id"]] = create_amount_field("le montant demandé pour le budget \"".$budget["label"]."\"", array("optional" => 1));
+    $form["fields"]["purpose_".$budget["id"]] = create_text_field("l'explication pour le montant demandé pour le budget \"".$budget["label"]."\"", array("optional" => 1));
   }
   $form["fields"]["wave"] = create_id_field("la vague de subvention", "wave");
-  $form["fields"]["wave"] = create_text_field("la réponse à la question du binet subventionneur");
+  $form["fields"]["answer"] = create_text_field("la réponse à la question du binet subventionneur");
 
   function check_total_amount_positive($input) {
     $sum = 0;
@@ -29,8 +30,9 @@
       }
     }
     if ($sum <= 0) {
-      add_form_error($form["name"], "", "Tu n'as pas demandé d'argent dans ta demande de subventions.");
+      return "Tu n'as pas demandé d'argent dans ta demande de subventions.";
     }
+    return "";
   }
   $form["validations"] = array("check_total_amount_positive");
 
@@ -51,12 +53,15 @@
   $form["structured_input_maker"] = "structured_request_maker";
 
   function initialise_request_form() {
-    $request = $GLOBALS["request"]["id"];
-    $initial_input = select_request($request, array("wave", "answer"));
-    foreach (select_subsidies(array("request" => $request)) as $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("budget", "id", "amount", "purpose"));
-      $initial_input["amount_".$subsidy["budget"]] = $subsidy["amount"];
-      $initial_input["purpose_".$subsidy["budget"]] = $subsidy["purpose"];
+    $initial_input = array();
+    if (isset($GLOBALS["request"]["id"])) {
+      $request = $GLOBALS["request"]["id"];
+      $initial_input = select_request($request, array("wave", "answer"));
+      foreach (select_subsidies(array("request" => $request)) as $subsidy) {
+        $subsidy = select_subsidy($subsidy["id"], array("budget", "id", "amount", "purpose"));
+        $initial_input["amount_".$subsidy["budget"]] = $subsidy["amount"];
+        $initial_input["purpose_".$subsidy["budget"]] = $subsidy["purpose"];
+      }
     }
     return $initial_input;
   }

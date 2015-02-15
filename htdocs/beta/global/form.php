@@ -21,15 +21,15 @@
     // unset now useless session variable
     unset($_SESSION[$form_name."_form"]);
     // return input nicely structured
-    return structured_input($formatted_input, $form);
+    $GLOBALS[$form_name."_input"] = structured_input($formatted_input, $form);
   }
 
   function sanitize_input($form) {
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
-      if (!isset($_POST[$name]) && is_empty($field["optional"])) {
+      if (is_empty($_POST[$name]) && is_empty($field["optional"])) {
         add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
-        $sanitized_input[$name] = default_value_for_type($name);
+        $sanitized_input[$name] = default_value_for_type($field["type"]);
       } else {
         $sanitized_input[$name] = $_POST[$name];
       }
@@ -44,6 +44,7 @@
       $valid = false;
       switch ($field["type"]) {
         case "amount":
+        var_dump($value);
         if (is_numeric($value)) {
           $translated_input[$name] = floor($value * 100);
           $valid = true;
@@ -84,6 +85,9 @@
         if (!$valid) {
           $sanitized_input = default_value_for_type("id");
         }
+        break;
+        default:
+        $valid = true;
         break;
       }
       if (!$valid) {
@@ -128,7 +132,10 @@
       }
     }
     foreach ($form["validations"] as $validation) {
-      call_user_func($validation, $input);
+      add_form_error($form["name"], "", call_user_func($validation, $input));
+    }
+    if (!isset($_POST["csrf_token"]) || !valid_csrf_token($_POST["csrf_token"])) {
+      $_SESSION["error"][] = "Une erreur s'est produite. Tu peux réessayer de soumettre le formulaire.";
     }
     if (!is_empty($_SESSION["error"]) || !is_empty($_SESSION[$form["name"]."_errors"])) {
       redirect_to_path($form["redirect_to_if_error"]);
@@ -166,7 +173,7 @@
 
   function get_html_form($form_name) {
     $form = $GLOBALS[$form_name."_form"];
-
+    $GLOBALS["form"] = $form;
     if (!is_empty($_SESSION[$form_name."_form"])) {
       $prefill_form_values = $_SESSION[$form_name."_form"];
       unset($_SESSION[$form_name."_form"]);
@@ -185,6 +192,7 @@
       <?php include $form["html_form_path"]; ?>
     </form>
     <?php
+    unset($_SESSION[$form_name."_errors"]);
     return ob_get_clean();
   }
 

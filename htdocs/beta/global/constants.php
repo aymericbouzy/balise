@@ -25,6 +25,7 @@
   define("IMG_PATH", ASSET_PATH."img/");
   define("LAYOUT_PATH", VIEW_PATH."layout/");
   define("EMAIL_PATH", VIEW_PATH."email/");
+  define("FORM_PATH", "form/");
 
   define("KES_ID", 1);
 
