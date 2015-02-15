@@ -25,9 +25,8 @@
   function sanitize_input($form) {
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
-      if (!isset($_POST[$name]) && !$field["optionnal"]) {
-        $_SESSION["error"][] = "Tu n'as pas rempli ".$field["human_name"].".";
-        $_SESSION[$form["name"]."_errors"][] = $name;
+      if (!isset($_POST[$name]) && !$field["optional"]) {
+        add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
         $sanitized_input[$name] = default_value_for_type($name);
       } else {
         $sanitized_input[$name] = $_POST[$name];
@@ -86,8 +85,7 @@
         break;
       }
       if (!$valid) {
-        $_SESSION["error"][] = ucfirst($field["human_name"])." n'est pas au bon format";
-        $_SESSION[$form["name"]."_errors"][] = $name;
+        add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format");
       }
     }
     return $sanitized_input;
@@ -99,26 +97,32 @@
       switch ($field["type"]) {
         case "id":
         if (!call_user_func("exists_".$field["model"], $value)) {
-          $_SESSION[$form["name"]."_errors"][] = $name;
+          add_form_error($form["name"], $name);
         }
         break;
         case "amount":
-        if ($value < 0 || $value > MAX_AMOUNT) {
-          $_SESSION[$form["name"]."_errors"][] = $name;
-          $_SESSION["error"][] = ucfirst($field["human_name"])." doit être compris entre 0 et ".(MAX_AMOUNT / 100).".";
+        if ($value < $field["min"] || $value > $field["max"]) {
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être compris entre ".pretty_amount($field["min"])." et ".pretty_amount($field["max"]).".");
         }
         break;
         case "text":
-        if (strlen($value) > MAX_TEXT_LENGTH) {
-          $_SESSION[$form["name"]."_errors"][] = $name;
-          $_SESSION["error"][] = ucfirst($field["human_name"])." ne peut pas avoir plus de ".MAX_TEXT_LENGTH." caractères.";
+        if (strlen($value) > $field["max"]) {
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." ne peut pas avoir plus de ".$field["max"]." caractères.");
         }
         break;
         case "name":
-        if (strlen($value) > MAX_NAME_LENGTH) {
-          $_SESSION[$form["name"]."_errors"][] = $name;
-          $_SESSION["error"][] = ucfirst($field["human_name"])." ne peut pas avoir plus de ".MAX_NAME_LENGTH." caractères.";
+        if (strlen($value) > $field["max"]) {
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." ne peut pas avoir plus de ".$field["max"]." caractères.");
         }
+        break;
+        case "date":
+        if (isset($field["min"]) && $value < $field["min"]) {
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être après le ".pretty_date($field["min"]).".");
+        }
+        if (isset($field["max"]) && $value > $field["max"]) {
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être avant le ".pretty_date($field["max"]).".");
+        }
+        break;
       }
     }
     foreach ($form["validations"] as $validation) {
@@ -126,6 +130,15 @@
     }
     if (!is_empty($_SESSION["error"]) || !is_empty($_SESSION[$form["name"]."_errors"])) {
       redirect_to_path($form["redirect_to_if_error"]);
+    }
+  }
+
+  function add_form_error($form_name, $field_name, $message = "") {
+    if (!is_empty($field_name)) {
+      $_SESSION[$form_name."_errors"][] = $field_name;
+    }
+    if (!is_empty($message)) {
+      $_SESSION["error"][] = $message;
     }
   }
 
@@ -157,6 +170,7 @@
     } else {
       $GLOBALS["prefill_form_values"] = call_user_func($form["initialise_form"]);
     }
+    extract($GLOBALS, EXTR_SKIP);
     ob_start();
     ?>
     <form role="form" id="<?php echo $form["name"]; ?>" action="/<?php echo $form["destination_path"]; ?>" method="post">
@@ -165,4 +179,40 @@
     </form>
     <?php
     return ob_get_clean();
+  }
+
+  function create_form_field($type, $human_name, $properties) {
+    return array_merge($properties, array(
+      "type" => $type,
+      "human_name" => $human_name
+    ));
+  }
+
+  function create_amount_field($human_name, $properties = array()) {
+    set_if_not_set($properties["min"], 0);
+    set_if_not_set($properties["max"], MAX_AMOUNT);
+    return create_form_field("amount", $human_name, $properties);
+  }
+
+  function create_id_field($human_name, $model, $properties = array()) {
+    $properties["model"] = $model;
+    return create_form_field("id", $human_name, $properties);
+  }
+
+  function create_date_field($human_name, $properties = array()) {
+    return create_form_field("date", $human_name, $properties);
+  }
+
+  function create_text_field($human_name, $properties = array()) {
+    set_if_not_set($properties["max"], MAX_TEXT_LENGTH);
+    return create_form_field("text", $human_name, $properties);
+  }
+
+  function create_name_field($human_name, $properties = array()) {
+    set_if_not_set($properties["max"], MAX_NAME_LENGTH);
+    return create_form_field("name", $human_name, $properties);
+  }
+
+  function create_boolean_field($human_name, $properties = array()) {
+    return create_form_field("boolean", $human_name, $properties);
   }
