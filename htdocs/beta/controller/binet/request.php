@@ -135,7 +135,7 @@
       delete_subsidy($subsidy["id"]);
     }
     foreach ($request_entry_input["subsidies"] as $subsidy) {
-      create_subsidy($subsidy["budget"], $request["id"], $subsidy["amount"], $subsidy["optional_values"]);
+      create_subsidy($subsidy["budget"], $request["id"], $subsidy["requested_amount"], $subsidy["optional_values"]);
     }
     $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès.";
     redirect_to_action("show");

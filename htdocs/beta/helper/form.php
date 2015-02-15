@@ -1,14 +1,41 @@
 <?php
 
-  function form_group($label, $field, $content) {
-    $form_name = $GLOBALS["form"]["name"];
+  function form_input($label, $field_name, $form, $parameters = array()) {
+    set_if_not_set($parameters["html_decoration"], array());
+    $field = $form["fields"][$field_name];
+    switch ($field["type"]) {
+      case "amount":
+      return form_group_text($label, $field_name, $field["value"] / 100, $form["name"], $parameters["html_decoration"]);
+      case "id":
+      if (is_empty($form_field["hidden"])) {
+        return form_group_select($label, $field_name, option_array($field["options"], $field["key"], $field["label"], $field["model"]), $field["value"], $form["name"]);
+      } else {
+        return form_hidden($field_name, $field["value"]);
+      }
+      case "date":
+      return form_group_date($label, $field_name, $field["value"], $form["name"]);
+      case "boolean":
+      switch ($field["selection_method"]) {
+        case "radio":
+        return form_group_radio($field_name, $label, $field["value"], $form["name"]);
+        default:
+        return form_group_checkbox($label, $field_name, $field["value"], $form["name"]);
+      }
+      case "name":
+      return form_group_text($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
+      case "text":
+      return form_group_textarea($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
+    }
+  }
+
+  function form_group($label, $field, $content, $form_name) {
     return "<div class=\"form-group".(isset($_SESSION[$form_name."_errors"]) && in_array($field, $_SESSION[$form_name."_errors"]) ? " has-error" : "")."\">
               <label for=\"".$field."\">".$label."</label>
               ".$content."
             </div>";
   }
 
-  function form_group_text($label, $field, $html_decoration = array()) {
+  function form_group_text($label, $field, $prefill_value, $form_name, $html_decoration = array()) {
     set_if_not_set($html_decoration["class"], "");
     $html_decoration["class"] .= " form-control";
     $html_decoration_string = "";
@@ -19,11 +46,12 @@
       $label,
       $field,
       "<input type=\"text\"".$html_decoration_string." id=\"".$field."\" name=\"".$field."\" value=\""
-      .$GLOBALS["prefill_form_values"][$field]."\">"
+      .$prefill_value."\">",
+      $form_name
     );
   }
 
-  function form_group_textarea($label, $field, $html_decoration = array()) {
+  function form_group_textarea($label, $field, $prefill_value, $form_name, $html_decoration = array()) {
     set_if_not_set($html_decoration["class"], "");
     $html_decoration["class"] .= " form-control";
     $html_decoration_string = "";
@@ -33,27 +61,28 @@
     return form_group(
       $label,
       $field,
-      "<textarea ".$html_decoration_string." id=\"".$field."\" name=\"".$field."\">".$GLOBALS["prefill_form_values"][$field]."</textarea>"
+      "<textarea ".$html_decoration_string." id=\"".$field."\" name=\"".$field."\">".$prefill_value."</textarea>",
+      $form_name
     );
   }
 
-  function form_group_date($label, $field) {
-    $value = $GLOBALS["prefill_form_values"][$field];
+  function form_group_date($label, $field, $prefill_value, $form_name) {
     $regex = "/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/";
-    if (preg_does_match($regex, $value)) {
-      $value = preg_replace($regex, "$3/$2/$1", $value);
+    if (preg_does_match($regex, $prefill_value)) {
+      $prefill_value = preg_replace($regex, "$3/$2/$1", $prefill_value);
     }
     return form_group(
       $label,
       $field,
-      "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".$value."\">
+      "<input type=\"text\" class=\"form-control\" id=\"".$field."\" name=\"".$field."\" value=\"".$prefill_value."\">
       <script type=\"text/javascript\">
       $(function () {
         $('#".$field."').datetimepicker({
           format: 'DD/MM/YYYY'
         });
       });
-      </script>"
+      </script>",
+      $form_name
     );
   }
 
@@ -65,11 +94,11 @@
     return "<input type=\"hidden\" name=\"".$field."\" value=\"".$value."\">";
   }
 
-  function form_group_checkbox($label, $field) {
+  function form_group_checkbox($label, $field, $prefill_value, $form_name) {
     return "<div class=\"checkbox".(isset($_SESSION[$form_name."_errors"]) && in_array($field, $_SESSION[$form_name."_errors"]) ? " has-error" : "")."\">
               <label>
                 <input type=\"hidden\" name=\"".$field."\" value=\"0\">
-                <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(is_empty($GLOBALS["prefill_form_values"][$field]) ? "" : " checked").">
+                <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(is_empty($prefill_value) ? "" : " checked").">
                 ".$label."
               </label>
             </div>";
@@ -79,26 +108,27 @@
     return "<input type=\"submit\" class=\"btn btn-default\" value=\"".$label."\">";
   }
 
-  function form_group_select($label, $field, $options) {
+  function form_group_select($label, $field, $options, $prefill_value, $form_name) {
     $select_tag = "<select class=\"form-control\" id=\"".$field."\" name=\"".$field."\">";
     foreach ($options as $value => $option_label) {
-      $select_tag .= "<option value=\"".$value."\"".($GLOBALS["prefill_form_values"][$field] == $value ? " selected=\"selected\"" : "").">".$option_label."</option>";
+      $select_tag .= "<option value=\"".$value."\"".($prefill_value == $value ? " selected=\"selected\"" : "").">".$option_label."</option>";
     }
     $select_tag .= "</select>";
     return form_group(
       $label,
       $field,
-      $select_tag
+      $select_tag,
+      $form_name
     );
   }
 
-  function form_group_radio($field, $options) {
+  function form_group_radio($field, $options, $prefill_value, $form_name) {
     $form_group_radio = "";
-    $check_first = $GLOBALS["prefill_form_values"][$field] == "";
+    $check_first = $prefill_value == "";
     foreach ($options as $value => $label) {
-      $form_group_radio .= "<div class=\"radio\">
+      $form_group_radio .= "<div class=\"radio".(isset($_SESSION[$form_name."_errors"]) && in_array($field, $_SESSION[$form_name."_errors"]) ? " has-error" : "")."\">
         <label>
-          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($GLOBALS["prefill_form_values"][$field] == $value || $include_first ? " checked" : "").">
+          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($prefill_value == $value || $include_first ? " checked" : "").">
           ".$label."
         </label>
       </div>";

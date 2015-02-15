@@ -20,7 +20,7 @@
     validate_formatted_input($formatted_input, $form);
     // unset now useless session variable
     unset($_SESSION[$form_name."_form"]);
-    // return input nicely structured
+    // create global variable with input nicely structured
     $GLOBALS[$form_name."_input"] = structured_input($formatted_input, $form);
   }
 
@@ -44,9 +44,11 @@
       $valid = false;
       switch ($field["type"]) {
         case "amount":
-        var_dump($value);
+        // $_SESSION["notice"][] = array_to_string($_POST);
         if (is_numeric($value)) {
           $translated_input[$name] = floor($value * 100);
+          $valid = true;
+        } elseif (is_empty($value)) {
           $valid = true;
         }
         break;
@@ -77,13 +79,13 @@
         case "boolean":
         $valid = in_array($value, array(0, 1));
         if (!$valid) {
-          $sanitized_input = default_value_for_type("boolean");
+          $translated_input[$name] = default_value_for_type("boolean");
         }
         break;
         case "id":
         $valid = is_numeric($value);
         if (!$valid) {
-          $sanitized_input = default_value_for_type("id");
+          $translated_input[$name] = default_value_for_type("id");
         }
         break;
         default:
@@ -94,7 +96,7 @@
         add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format");
       }
     }
-    return $sanitized_input;
+    return $translated_input;
   }
 
   function validate_formatted_input($input, $form) {
@@ -107,8 +109,11 @@
         }
         break;
         case "amount":
-        if ($value < $field["min"] || $value > $field["max"]) {
-          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être compris entre ".pretty_amount($field["min"])." et ".pretty_amount($field["max"]).".");
+        if ($value < $field["min"]) {
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être supérieur à ".pretty_amount($field["min"]).".");
+        }
+        if ($value > $field["max"]) {
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être inférieur à ".pretty_amount($field["max"]).".");
         }
         break;
         case "text":
@@ -153,6 +158,8 @@
 
   function structured_input($validated_input, $form) {
     if (isset($form["structured_input_maker"])) {
+      var_dump($form["structured_input_maker"], $validated_input);
+      var_dump(call_user_func($form["structured_input_maker"], $validated_input));
       return call_user_func($form["structured_input_maker"], $validated_input);
     } else {
       return $validated_input;
@@ -181,9 +188,8 @@
       $prefill_form_values = call_user_func($form["initialise_form"]);
     }
     foreach ($form["fields"] as $name => $field) {
-      set_if_not_set($prefill_form_values[$name], "");
+      $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? $prefill_form_values[$name] : "";
     }
-    $GLOBALS["prefill_form_values"] = $prefill_form_values;
     extract($GLOBALS, EXTR_SKIP);
     ob_start();
     ?>

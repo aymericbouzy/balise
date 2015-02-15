@@ -48,6 +48,7 @@
         $structured_input[$name] = $value;
       }
     }
+    return $structured_input;
   }
 
   $form["structured_input_maker"] = "structured_request_maker";
@@ -58,8 +59,8 @@
       $request = $GLOBALS["request"]["id"];
       $initial_input = select_request($request, array("wave", "answer"));
       foreach (select_subsidies(array("request" => $request)) as $subsidy) {
-        $subsidy = select_subsidy($subsidy["id"], array("budget", "id", "amount", "purpose"));
-        $initial_input["amount_".$subsidy["budget"]] = $subsidy["amount"];
+        $subsidy = select_subsidy($subsidy["id"], array("budget", "id", "requested_amount", "purpose"));
+        $initial_input["amount_".$subsidy["budget"]] = $subsidy["requested_amount"];
         $initial_input["purpose_".$subsidy["budget"]] = $subsidy["purpose"];
       }
     }

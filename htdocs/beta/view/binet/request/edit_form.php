@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="panel green-background opanel">
   <div class="content white-text" id="description">
-    <?php echo form_group_text($request["wave"]["question"], "answer", array("placeholder" => "Justifiez votre demande", "style" => "color:#fff")); ?>
+    <?php echo form_input($request["wave"]["question"], "answer", $form, array("placeholder" => "Justifiez votre demande", "style" => "color:#fff")); ?>
   </div>
 </div>
 <?php
@@ -26,10 +26,10 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
         </p>
       </div>
       <div class="requested-amount">
-        <?php echo form_group_text("", "amount_".$budget["id"], array("placeholder" => "Montant demandé pour ce budget")); ?>
+        <?php echo form_input("", "amount_".$budget["id"], $form, array("placeholder" => "Montant demandé pour ce budget")); ?>
       </div>
       <div class="explanation">
-        <?php echo form_group_textarea("", "purpose_".$budget["id"], array("placeholder" => "Explication pour ce budget")); ?>
+        <?php echo form_input("", "purpose_".$budget["id"], $form, array("placeholder" => "Explication pour ce budget")); ?>
       </div>
     </div>
   </div>
