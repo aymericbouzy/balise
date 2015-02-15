@@ -25,13 +25,14 @@ a {
 }
 
 .spot {
-  width : 100px;
-  height: 100px;
-  border-radius: 50px;
+  position:relative;
+  width : 130px;
+  height: 130px;
+  border-radius: 75px;
   display: inline-block;
   background-color:#3e3e3e;
   color:#cbddff;
-  margin :37px;
+  margin :23px;
   margin-bottom: 5px;
 }
 
@@ -47,22 +48,25 @@ a {
 
 .binet-name {
   display:block;
-  position: relative;
-  width:90px;
+  position:absolute;
+  width:120px;
   height:60px;
   overflow:hidden;
   margin:auto;
   text-align:center;
   font-weight:900;
-  top:25px;
+  top:35px;
+  left:5px;
 }
 .binet-term {
-  position:relative;
+  position:absolute;
   display:block;
   width:40px;
   text-align:center;
   margin:auto;
-  top:10%;
+  top:95px;
+  left:45px;
+  border-top:2px solid #cbddff;
 }
 
 #homelinks {
