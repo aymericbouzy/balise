@@ -99,16 +99,3 @@
                 </div>
               </div>";
   }
-
-  function auto_font_size($string){
-    $longest_word = max(array_map("strlen",explode(" ",$string)));
-    if($longest_word > 0 && $longest_word < 10){
-        return "17px";
-    } else if ($longest_word >= 10 && $longest_word < 20){
-        return "15px";
-    } else if ($longest_word >= 20 && $longest_word < 30){
-      return "13px";
-    } else if ($longest_word >= 30){
-      return "11px";
-    }
-  }
