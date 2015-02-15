@@ -183,3 +183,11 @@
   vertical-align:middle;
   width:30%;
 }
+
+#show-request {
+  position:absolute;
+  top:0px;
+  right:0px;
+  font-size:11px;
+  padding:4px;
+}
