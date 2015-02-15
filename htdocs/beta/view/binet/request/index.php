@@ -4,7 +4,25 @@
       Informations générales
     </div>
     <div class="content">
-      TODO
+      <div id="request-count">
+        <!-- Requêtes non-envoyées -->
+        <span class="orange-background">
+           <?php echo text_tune_with_amount($requests_count_by_state["rough_draft"],"non-envoyée"); ?>
+        </span>
+        <!-- Requêtes envoyées : en traitement par le binet subventionneur -->
+        <span class="blue-background white-text">
+           <?php $sum = 0;
+            foreach(array("reviewed","reviewed_accepted","reviewed_rejected","sent") as $property){ $sum +=$requests_count_by_state[$property];}
+            echo text_tune_with_amount($sum,"envoyée");?>
+        </span>
+        <!-- Requêtes acceptées / requêtes traitées -->
+        <span class="green-background">
+          <?php echo text_tune_with_amount($requests_count_by_state["accepted"],"acceptée")." / ";
+            $sum = 0;
+            foreach(array("accepted","rejected") as $property){ $sum +=$requests_count_by_state[$property];}
+            echo $sum;?> au total
+        </span>
+      </div>
     </div>
   </div>
   <?php

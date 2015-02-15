@@ -125,8 +125,11 @@
 
   case "index":
     $requests = array();
+    $requests_count_by_state = array("accepted"=>0,"rejected"=>0,"rough_draft"=>0,"reviewed_accepted"=>0,"reviewed_rejected"=>0,"sent"=>0,"reviewed"=>0);
     foreach(select_requests(array("binet" => $binet, "term" => $term)) as $request){
-      $requests[] = select_request($request["id"], array("id", "answer","sent", "wave", "state","requested_amount", "granted_amount", "used_amount"));
+      $request = select_request($request["id"], array("id", "answer","sent", "wave", "state","requested_amount", "granted_amount", "used_amount"));
+      $requests_count_by_state[$request["state"]]++;
+      $requests[] = $request;
     }
     break;
 
