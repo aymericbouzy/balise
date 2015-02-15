@@ -135,3 +135,51 @@
   color:    #fff;
   opacity:  0.7;
 }
+
+/* --------------------------------------------------------------------------*/
+/* Request index */
+
+.state-indicator{
+  position:absolute;
+  display:inline-block;
+  padding:5px;
+  padding-left:0px;
+  padding-right:0px;
+  margin:-5px;
+  width:20px;
+  text-align:center;
+}
+
+.request-infos{
+  display:table;
+  margin-left:20px;
+  width:100%;
+}
+
+.request-infos>span{
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  width:30%;
+  border-left:1px solid rgba(0,0,0,0.3);
+}
+
+.panel.subsidies {
+  margin-top:10px;
+  margin-left:-5px;
+  margin-right:-5px;
+  margin-bottom:-5px;
+  font-size:11px;
+}
+
+.subsidy {
+  display:table;
+  width:100%;
+}
+
+.subsidy>span{
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  width:30%;
+}

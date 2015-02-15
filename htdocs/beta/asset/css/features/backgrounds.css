@@ -15,8 +15,18 @@
 .transparent-background {
   background-color: rgba(0,0,0,0);
 }
+
+/* Greys */
 .grey-background {
   background-color: rgb(150, 150, 150);
+}
+
+.grey-300-background {
+  background-color:#E0E0E0;
+}
+
+.grey-400-background {
+  background-color:#BDBDBD;
 }
 
 .light-blue-background {

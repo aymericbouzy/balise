@@ -124,6 +124,10 @@
   switch ($_GET["action"]) {
 
   case "index":
+    $requests = array();
+    foreach(select_requests(array("binet" => $binet, "term" => $term)) as $request){
+      $requests[] = select_request($request["id"], array("id", "answer","sent", "wave", "state","requested_amount", "granted_amount", "used_amount"));
+    }
     break;
 
   case "new":
