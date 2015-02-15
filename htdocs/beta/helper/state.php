@@ -16,7 +16,6 @@ function request_state($state){
     case "rejected":
     return array("name"=>"Refusée","color"=>"red","icon"=>"times");
     break;
-    default:
     case "sent":
     return array("name"=>"Envoyée","color"=>"blue","icon"=>"send");
     break;
