@@ -5,7 +5,8 @@
     $field = $form["fields"][$field_name];
     switch ($field["type"]) {
       case "amount":
-      return form_group_text($label, $field_name, $field["value"] / 100, $form["name"], $parameters["html_decoration"]);
+      $value = is_numeric($field["value"]) ? $field["value"] / 100 :  $field["value"];
+      return form_group_text($label, $field_name, $value, $form["name"], $parameters["html_decoration"]);
       case "id":
       if (is_empty($form_field["hidden"])) {
         return form_group_select($label, $field_name, option_array($field["options"], $field["key"], $field["label"], $field["model"]), $field["value"], $form["name"]);

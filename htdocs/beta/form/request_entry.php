@@ -40,7 +40,7 @@
     $structured_input = array();
     foreach ($validated_input as $name => $value) {
       $matched_groups = array();
-      if (preg_match("/^amount_([0-9]*)$/", $name, $matched_groups)) {
+      if ($value > 0 && preg_match("/^amount_([0-9]*)$/", $name, $matched_groups)) {
         $budget = $matched_groups[1];
         $optional_values = isset($validated_input["purpose_".$budget]) ? array("purpose" => $validated_input["purpose_".$budget]) : array();
         $structured_input["subsidies"][] = array("budget" => $budget, "requested_amount" => $value, "optional_values" => $optional_values);

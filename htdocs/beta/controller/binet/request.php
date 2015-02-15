@@ -1,41 +1,5 @@
 <?php
 
-  define("amount_prefix", "amount_");
-  define("purpose_prefix", "purpose_");
-  define("explanation_prefix", "explanation_");
-
-  $purpose_array = array();
-  $requested_amount_array = array();
-  $explanation_array = array();
-  $granted_amount_array = array();
-
-  function adds_amount_prefix($object) {
-    return amount_prefix.$object["id"];
-  }
-
-  function adds_purpose_prefix($object) {
-    return purpose_prefix.$object["id"];
-  }
-
-  function adds_explanation_prefix($object) {
-    return explanation_prefix.$object["id"];
-  }
-
-  function setup_for_review() {
-    $GLOBALS["subsidies_involved"] = select_subsidies(array("request" => $GLOBALS["request"]["id"]));
-    $GLOBALS["granted_amount_array"] = array_map("adds_amount_prefix", $GLOBALS["subsidies_involved"]);
-    $GLOBALS["explanation_array"] = array_map("adds_explanation_prefix", $GLOBALS["subsidies_involved"]);
-    $GLOBALS["review_form_fields"] = array_merge($GLOBALS["granted_amount_array"], $GLOBALS["explanation_array"]);
-  }
-
-  function adds_max_amount($amount) {
-    return array($amount, MAX_AMOUNT);
-  }
-
-  function adds_max_length_purpose($purpose) {
-    return array($purpose, 128);
-  }
-
   function not_sent() {
     header_if(select_request($_GET["request"], array("sent"))["sent"], 403);
   }
@@ -90,14 +54,8 @@
   before_action("check_granting_rights", array("review", "grant", "reject"));
   before_action("create_form", array("new", "create", "edit", "update"), "request_entry");
   before_action("check_form", array("create", "update"), "request_entry");
-  before_action("setup_for_review", array("review", "grant"));
-  before_action("check_form_input", array("grant"), array(
-    "model_name" => "request",
-    "str_fields" => array_map("adds_max_length_purpose", $explanation_array),
-    "amount_fields" => array_map("adds_max_amount", $granted_amount_array),
-    "redirect_to" => path("review", "request", $_GET["action"] == "grant" ? $request["id"] : "", binet_prefix($binet, $term)),
-    "optional" => $granted_amount_array
-  ));
+  before_action("create_form", array("review", "grant"), "request_review");
+  before_action("check_form", array("grant"), "request_review");
   before_action("not_sent", array("send", "edit", "update", "delete"));
   before_action("sent_and_not_published", array("review", "grant", "reject"));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
@@ -142,15 +100,6 @@
     break;
 
   case "review":
-    function request_to_form_fields($request) {
-      foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
-        $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation"));
-        $request[adds_amount_prefix($subsidy)] = $subsidy["granted_amount"] / 100;
-        $request[adds_explanation_prefix($subsidy)] = $subsidy["explanation"];
-      }
-      return $request;
-    }
-    $request = set_editable_entry_for_form("request", $request, $review_form_fields);
     $request_info = select_request($request["id"], array("id", "budget", "answer", "sent", "wave", "state"));
     $request_info["wave"] = select_wave($request_info["wave"], array("id", "binet", "term", "state"));
     $current_binet = select_binet($binet, array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
@@ -161,17 +110,8 @@
     break;
 
   case "grant":
-    // TODO : check fields of POST can only be in $rewiew_form_fields
-    foreach ($_POST as $field => $value) {
-      $field_elements = explode("_", $field);
-      switch ($field_elements[0]."_") {
-        case amount_prefix:
-          update_subsidy($field_elements[1], array("granted_amount" => $value));
-          break;
-        case explanation_prefix:
-          update_subsidy($field_elements[1], array("explanation" => $value));
-          break;
-      }
+    foreach ($request_review_input as $subsidy => $values) {
+      update_subsidy($subsidy, $values);
     }
     review_request($request["id"]);
     $request = select_request($request["id"], array("id", "wave"));
