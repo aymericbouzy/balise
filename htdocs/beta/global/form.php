@@ -136,3 +136,33 @@
       return $validated_input;
     }
   }
+
+  function default_value_for_type($type) {
+    $default_value = array(
+      "amount" => 0,
+      "date" => "",
+      "id" => 1,
+      "boolean" => 0,
+      "text" => "",
+      "name" => ""
+    );
+    return $default_value[$type];
+  }
+
+  function get_html_form($form_name) {
+    $form = $GLOBALS[$form_name."_form"];
+    if (!is_empty($_SESSION[$form_name."_form"])) {
+      $GLOBALS["prefill_form_values"] = $_SESSION[$form_name."_form"];
+      unset($_SESSION[$form_name."_form"]);
+    } else {
+      $GLOBALS["prefill_form_values"] = call_user_func($form["initialise_form"]);
+    }
+    ob_start();
+    ?>
+    <form role="form" id="<?php echo $form["name"]; ?>" action="/<?php echo $form["destination_path"]; ?>" method="post">
+      <?php echo form_csrf_token(); ?>
+      <?php include $form["html_form_path"]; ?>
+    </form>
+    <?php
+    return ob_get_clean();
+  }
