@@ -149,7 +149,28 @@
   text-align:center;
 }
 
+#amounts {
+  position:relative;
+  height:50px;
+  width:100%;
+}
 
+#total{
+  height:40px;
+  width:160px;
+  background-color:#795548;
+  color:#fff;
+  top:5px;
+  left:0px;
+}
+#use{
+  height:40px;
+  width:160px;
+  background-color:#795548;
+  color:#fff;
+  top:5px;
+  left:165px;
+}
 .state-indicator{
   position:absolute;
   display:inline-block;

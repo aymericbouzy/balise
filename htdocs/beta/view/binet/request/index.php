@@ -23,6 +23,12 @@
             echo $sum;?> au total
         </span>
       </div>
+      <div id="amounts">
+        <?php
+          echo minipane("total","Subventions reçues / demandées", $total_granted, $total_requested);
+          echo minipane("use","Subventions utilisées / reçues", $total_used, $total_granted);
+        ?>
+      </div>
     </div>
   </div>
   <?php
@@ -30,7 +36,6 @@
       $request_state = request_state($request["state"]);
       $subsidies = select_subsidies(array("request" => $request["id"]));
       ?>
-      <!-- !"id", "budget", !"answer", !"sent", !"wave", !"state",!"requested_amount", !"granted_amount", !"used_amount" -->
       <div class="panel opanel light-blue-background">
         <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
         "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"btn","id"=>"show-request"));?>
