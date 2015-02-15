@@ -4,27 +4,28 @@
     set_if_not_set($parameters["html_decoration"], array());
     $field = $form["fields"][$field_name];
     switch ($field["type"]) {
-      case "amount":
+    case "amount":
       $value = is_numeric($field["value"]) ? $field["value"] / 100 :  $field["value"];
       return form_group_text($label, $field_name, $value, $form["name"], $parameters["html_decoration"]);
-      case "id":
-      if (is_empty($form_field["hidden"])) {
-        return form_group_select($label, $field_name, option_array($field["options"], $field["key"], $field["label"], $field["model"]), $field["value"], $form["name"]);
+    case "id":
+      if (is_empty($parameters["hidden"])) {
+        return form_group_select($label, $field_name, $parameters["options"], $field["value"], $form["name"]);
       } else {
         return form_hidden($field_name, $field["value"]);
       }
-      case "date":
+    case "date":
       return form_group_date($label, $field_name, $field["value"], $form["name"]);
-      case "boolean":
-      switch ($field["selection_method"]) {
+    case "boolean":
+      set_if_not_set($parameters["selection_method"], "checkbox");
+      switch ($parameters["selection_method"]) {
         case "radio":
         return form_group_radio($field_name, $label, $field["value"], $form["name"]);
         default:
         return form_group_checkbox($label, $field_name, $field["value"], $form["name"]);
       }
-      case "name":
+    case "name":
       return form_group_text($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
-      case "text":
+    case "text":
       return form_group_textarea($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
     }
   }
