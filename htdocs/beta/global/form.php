@@ -1,6 +1,8 @@
 <?php
 
   function create_form($form_name) {
+    $form = array();
+    $form["name"] = $form_name;
     include FORM_PATH.$form_name.".php";
     $GLOBALS[$form_name."_form"] = $form;
   }
@@ -25,7 +27,7 @@
   function sanitize_input($form) {
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
-      if (!isset($_POST[$name]) && !$field["optional"]) {
+      if (!isset($_POST[$name]) && is_empty($field["optional"])) {
         add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
         $sanitized_input[$name] = default_value_for_type($name);
       } else {
@@ -164,12 +166,17 @@
 
   function get_html_form($form_name) {
     $form = $GLOBALS[$form_name."_form"];
+
     if (!is_empty($_SESSION[$form_name."_form"])) {
-      $GLOBALS["prefill_form_values"] = $_SESSION[$form_name."_form"];
+      $prefill_form_values = $_SESSION[$form_name."_form"];
       unset($_SESSION[$form_name."_form"]);
     } else {
-      $GLOBALS["prefill_form_values"] = call_user_func($form["initialise_form"]);
+      $prefill_form_values = call_user_func($form["initialise_form"]);
     }
+    foreach ($form["fields"] as $name => $field) {
+      set_if_not_set($prefill_form_values[$name], "");
+    }
+    $GLOBALS["prefill_form_values"] = $prefill_form_values;
     extract($GLOBALS, EXTR_SKIP);
     ob_start();
     ?>
