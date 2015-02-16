@@ -290,7 +290,7 @@
   case "send":
     send_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été envoyée avec succès.";
-    redirect_to_action("show");
+    redirect_to_path(path("", "request", "", binet_prefix($binet, $term)));
     break;
 
   default:
