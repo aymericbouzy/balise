@@ -27,13 +27,13 @@
         <td>
           <?php echo $operation["date"]; ?>
         </td>
-        <?php if ($operation["amount"] > 0) {
+        <?php if ($operation["amount"] < 0) {
           ?><td></td><td>
-            <?php echo pretty_amount($operation["amount"]); ?>
+            <?php echo pretty_amount($operation["amount"],false); ?>
           </td><?php
         } else {
           ?><td>
-            <?php echo pretty_amount($operation["amount"]); ?>
+            <?php echo pretty_amount($operation["amount"],false); ?>
           </td><td></td>
       <?php
         }
