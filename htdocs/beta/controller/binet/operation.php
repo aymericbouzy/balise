@@ -78,8 +78,14 @@
   case "create":
     set_if_not_set($_POST["sign"], 0);
     $operation["id"] = create_operation($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
-    $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
-    redirect_to_action("review");
+    $_SESSION["notice"][] = "L'opération a été créée avec succès. Il te reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
+    $budgets = select_budgets(array("binet" => $binet, "term" => $term, "amount" => array($_POST["sign"] ? "<" : ">", 0)));
+    if (is_empty($budgets)) {
+      $_SESSION["warning"][] = "Avant de pouvoir faire apparaître cette opération dans ta trésorerie, tu dois créer un budget auquel l'associer.";
+      redirect_to_path(path("", "validation", "", binet_prefix($binet, $term)));
+    } else {
+      redirect_to_action("review");
+    }
     break;
 
   case "show":
