@@ -228,18 +228,15 @@
   width:30%;
 }
 
-#show-request {
+.actions {
   position:absolute;
   top:0px;
   right:0px;
+}
+.action-on-request {
+  position:relative;
   max-width:120px;
   font-size:10px;
   padding:4px;
-}
-#send-request {
-  position:absolute;
-  top:0px;
-  right:100px;
-  font-size:10px;
-  padding:4px;
+  margin-left:5px;
 }

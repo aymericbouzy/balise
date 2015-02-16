@@ -45,10 +45,16 @@
       $subsidies = select_subsidies(array("request" => $rough_draft["id"]));
       ?>
       <div class="panel opanel light-blue-background">
-        <?php echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
-        "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"btn","id"=>"show-request"));
-        echo link_to(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true),
-        "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"btn-success btn","id"=>"send-request"));?>
+        <div class="actions">
+          <?php
+            echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
+              "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"action-on-request btn"));
+            echo link_to(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true),
+              "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
+            echo link_to(path("delete", "request", $request["id"], binet_prefix($binet, $term), array(), true),
+              "<i class=\"fa fa-fw fa-trash\"></i> Supprimer",array("class"=>"action-on-request btn-danger btn"));
+          ?>
+        </div>
         <div class="title-small">
           <?php echo pretty_wave($rough_draft["wave"]);?>
         </div>
@@ -90,8 +96,10 @@
       $subsidies = select_subsidies(array("request" => $request["id"]));
       ?>
       <div class="panel opanel light-blue-background">
-        <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
-        "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"btn","id"=>"show-request"));?>
+        <div class="actions">
+          <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
+            "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"btn action-on-request"));?>
+        </div>
         <div class="title-small">
           <?php echo pretty_wave($request["wave"]); ?>
         </div>
