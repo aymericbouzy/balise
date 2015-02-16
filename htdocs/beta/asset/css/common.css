@@ -42,6 +42,10 @@ body {
         padding-left: 225px;
     }
 
+    .sidebar-not-present{
+      margin-left: -225px;
+    }
+
     #page-wrapper {
         padding: 10px;
         padding-top:60px;
