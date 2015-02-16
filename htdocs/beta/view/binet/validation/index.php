@@ -1,6 +1,6 @@
-<div class="row-centered">
-  <div class="col-max">
-    <h2 class="tabtitle">Opérations à valider</h2>
+<div class="panel">
+  <div class="title">Opérations à valider</div>
+  <div class="content">
     <div class="table-responsive" id="validations-table">
       <table class="table table-bordered table-hover table-small-char">
         <thead>
