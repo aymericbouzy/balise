@@ -49,9 +49,9 @@
           <?php
             echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
               "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"action-on-request btn"));
-            echo link_to(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true),
+            echo link_to(path("send", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
               "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
-            echo link_to(path("delete", "request", $request["id"], binet_prefix($binet, $term), array(), true),
+            echo link_to(path("delete", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
               "<i class=\"fa fa-fw fa-trash\"></i> Supprimer",array("class"=>"action-on-request btn-danger btn"));
           ?>
         </div>
