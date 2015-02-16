@@ -72,13 +72,10 @@
         $requests = select_requests(array("wave" => $wave["id"]));
         foreach ($requests as $request) {
           $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
+          $request_state = request_state($request["state"],has_viewing_rights($binet, $term));
           ob_start();
-          $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red", "accepted" => "green", "rejected" => "red");
-          $color = !has_viewing_rights($binet, $term) && $subsidizer_can_study ? "grey" : $state_to_color[$request["state"]];
-          echo "<p class=\"marker ".$color."-background\" ></p>";
-          $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times", "accepted" => "check", "rejected" => "times");
-          $icon = !has_viewing_rights($binet, $term) && $subsidizer_can_study ? "cogs" : $state_to_icon[$request["state"]];
-          echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".$icon."\"></i></p>";
+          echo "<p class=\"marker ".$request_state["color"]."-background\" ></p>";
+          echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".$request_state["icon"]."\"></i></p>";
           echo "<p class=\"binet\">".
           ($subsidizer_can_study && has_viewing_rights($request["binet"], $request["term"]) ?
             link_to(path("", "binet", binet_term_id($request["binet"], $request["term"])), pretty_binet_term($request["binet"]."/".$request["term"], false)) :
