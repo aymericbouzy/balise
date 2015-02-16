@@ -1,5 +1,5 @@
 /* -- Wrapper --*/
-#public-index-wrapper {
+#public-index-wrapper,#index-wrapper {
   position: relative;
   width:auto;
   margin: auto;
@@ -7,10 +7,14 @@
 }
 
 @media(min-width:768px){
-  #public-index-wrapper {
+  #public-index-wrapper, #index-wrapper {
     margin:auto;
     width:768px;
     padding-top:155px;
+  }
+
+  #index-wrapper {
+    padding-top:0px;
   }
 }
 
