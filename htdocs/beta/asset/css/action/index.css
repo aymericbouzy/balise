@@ -178,14 +178,19 @@
 }
 #select-term {
   display:inline-block;
-  width:18%;
+  width:10%;
+}
+#view-binet {
+  display:inline-block;
+  width:10%;
 }
 #choose-term {
   padding:5px;
 }
 #fuzzy-input {
   display:inline-block;
-  width:60%;
+  text-align:center;
+  width:55%;
 }
 #switch-operations-budgets {
   margin-top:0px;

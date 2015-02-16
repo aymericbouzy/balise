@@ -2,8 +2,10 @@
   <div class="panel transparent-background">
     <div class="content" id="controlbar">
       <div id="select-term">
-        <!-- Select term modal -->
-        <?php echo modal_toggle("choose-term",$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","opanel0","terms"); ?>
+        <?php echo modal_toggle("choose-term",$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","opanel0 blue-background white-text","terms"); ?>
+      </div>
+      <div id="view-binet">
+        <?php echo link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")); ?>
       </div>
       <div id="fuzzy-input">
         <?php echo fuzzy_input();?>
