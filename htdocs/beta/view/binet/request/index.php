@@ -23,7 +23,7 @@
         <?php
           echo minipane("total", "Subventions reçues / demandées", $binet_term["subsidized_amount_granted"], $binet_term["subsidized_amount_requested"]);
           echo minipane("use", "Subventions utilisées / reçues", $binet_term["subsidized_amount_used"], $binet_term["subsidized_amount_granted"]);
-          echo minipane("requested", "Demandé sur brouillon / envoyé", $binet_term["amount_requested_in_rough_drafts"], $binet_term["subsidized_amount_requested"]);
+          echo minipane("requested", "Demandé sur brouillon / en attente", $binet_term["amount_requested_in_rough_drafts"], $binet_term["subsidized_amount_requested"]);
         ?>
       </div>
     </div>
