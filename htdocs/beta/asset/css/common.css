@@ -280,8 +280,8 @@ footer>.btn {
   display: inline-block;
   margin-top: 2px;
   float: right;
-  width: 150px;
-  height: 28px;
+  width: 160px;
+  height: 25px;
   background-color: #cbddff;
   border-radius:0px;
 }
@@ -289,12 +289,12 @@ footer>.btn {
   display: inline-block;
   text-align: center;
   width: 50%;
+  height:100%;
   padding: 2px;
-  color: #3399ff;
 }
 
 .switch>.component:hover {
-  background-color: #3399ff;
+  background-color: #2288dd;
   color: #fff;
 }
 .switch>.left {
@@ -304,12 +304,16 @@ footer>.btn {
   float: right;
 }
 .switch>.active {
-  background-color: #cbddff;
-  color: #5b5b5b;
+  background-color: #3399FF;
 }
 .switch>.inactive {
   background-color: #afafaf;
   color: #8b8b8b;
+}
+
+.switch>.component>a{
+  color:#fff;
+  font-weight:bold;
 }
 
 /*--------------------------------------------------------------------------*/
