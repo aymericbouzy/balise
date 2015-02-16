@@ -73,10 +73,12 @@
     $collection_actions = array_merge(array_diff(array("index", "new", "create"), $hash["except"]), $hash["action_on_collection"]);
     $member_actions = array_merge(array_diff(array("show", "edit", "update", "delete"), $hash["except"]), $hash["action_on_member"]);
 
-    write_path_rule(
-      path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
-      true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
-    );
+    if (!in_array("index", $hash["except"])) {
+      write_path_rule(
+        path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
+        true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
+      );
+    }
     foreach ($collection_actions as $action) {
       write_path_rule(
         path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
@@ -119,6 +121,7 @@
     write_controller_rules(array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
     write_controller_rules(array("controller" => "tag", "except" => array("edit", "update", "delete")));
     write_controller_rules(array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete", "show")));
+    write_controller_rules(array("controller" => "student", "except" => array("new", "create", "edit", "update", "delete", "index")));
 
     write_path_rule(path("", "binet", "([a-z-]+)/([0-9]+)"), true_path("", "budget", "", "binet/$1/$2"));
     write_controller_rules(array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));

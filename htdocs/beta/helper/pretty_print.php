@@ -54,9 +54,9 @@
   }
 
   function pretty_student($student, $link = true) {
-    $student = select_student($student, array("name", "email"));
+    $student = select_student($student, array("name", "id"));
     if ($link) {
-      return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+      return link_to(path("show", "student", $student["id"]), $student["name"]);
     } else {
       return $student["name"];
     }
