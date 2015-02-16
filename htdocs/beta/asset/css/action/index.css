@@ -171,3 +171,22 @@
   font-size:12px;
   width:30px;
 }
+
+/* Finances.php */
+#controlbar{
+  margin-bottom:10px;
+}
+#select-term {
+  display:inline-block;
+  width:18%;
+}
+#choose-term {
+  padding:5px;
+}
+#fuzzy-input {
+  display:inline-block;
+  width:60%;
+}
+#switch-operations-budgets {
+  margin-top:0px;
+}
