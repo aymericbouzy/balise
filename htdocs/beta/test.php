@@ -2,5 +2,7 @@
 
   include "global/initialisation.php";
 
-  $test = mail("aymeric.bouzy@gmail.com", "test", "test");
-  var_dump($test);
+  $requests = select_requests(array("state" => "rough_draft"));
+  var_dump($requests);
+  $request = select_request(2, array("state", "sent"));
+  var_dump($request);

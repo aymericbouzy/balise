@@ -4,7 +4,7 @@
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
       <div class="sh-plus <?php echo $binet["state"]; ?>-background opanel">
-        <i class="fa fa-fw fa-<?php $color_to_icon = array("green" => "check", "orange" => "warning", "red" => "minus-circle"); echo $color_to_icon[$binet["state"]]; ?>"></i>
+        <i class="fa fa-fw fa-<?php $color_to_icon = array("green" => "check", "orange" => "warning", "red" => "minus-circle", "grey" => "moon-o"); echo $color_to_icon[$binet["state"]]; ?>"></i>
         <span class="text">Etat du binet</span>
       </div>
       <?php
@@ -20,7 +20,7 @@
         if ($binet["subsidy_provider"] == 0) {
           echo button(path("set_subsidy_provider", "binet", $binet["id"], "", array(), true), "Ajouter les droits de subventionneur", "money", "blue");
         }
-        echo button(path("change_term", "binet", $binet["id"]),"Faire la passation","forward","green");
+        echo button(path("change_term", "binet", $binet["id"]), is_empty($binet["current_term"]) ? "Réactiver le binet" : "Faire la passation", "forward", "green");
       }
     ?>
   </div>
@@ -32,7 +32,7 @@
       <span class="main">
         <?php
           echo pretty_binet($binet["id"], false);
-          if (has_viewing_rights($binet["id"], $binet["current_term"])) {
+          if (has_viewing_rights($binet["id"], $binet["current_term"]) && $binet["state"] != "grey") {
             echo link_to(
               path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),
               "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
@@ -42,28 +42,17 @@
         ?>
       </span>
       <!-- Modal to choose a different term -->
-      <span class="sub opanel0" id="choose-term" data-toggle="modal" data-target="#terms">
-        <?php echo $binet["current_term"]; ?><i class="fa fa-fw fa-caret-square-o-down"></i>
-      </span>
-      <div class="balise-modal fade" id="terms" tabindex="-1" role="dialog" aria-hidden="true">
-          <div class="modal-content balise-modal-container">
-            <div class="modal-body">
-              <?php echo close_button("modal"); ?>
-              <span class="header">Voir l'activité d'un autre mandat</span>
-              <div class="content">
-                <?php echo pretty_terms_list($binet["id"]); ?>
-              </div>
-            </div>
-          </div>
-      </div>
-      <!-- Modal -->
+      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub opanel0", "terms"); ?>
     </div>
   </div>
-  <div class="sh-bin-admins opanel">
-    <span class="title">
-      Administrateurs
-    </span>
-    <?php
+  <?php
+  if (!is_empty($binet["current_term"])) {
+    ?>
+    <div class="sh-bin-admins opanel">
+      <span class="title">
+        Administrateurs
+      </span>
+      <?php
       $admins = select_current_admins($binet["id"]);
       if (!empty($admins)) {
         foreach ($admins as $admin) {
@@ -83,39 +72,43 @@
       if (is_current_kessier()) {
         ?>
         <div class="add">
-          <?php echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
+          <?php
+          echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
           if (!empty($admins)){
-              echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
-            }
+            echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
+          }
           ?>
         </div>
         <?php
       }
-    ?>
-  </div>
+      ?>
+    </div>
+    <?php
+  }
+  ?>
   <div class="sh-block-normal opanel">
     <?php echo $binet["description"]; ?>
   </div>
   <?php
-    if (has_viewing_rights($binet["id"], $binet["current_term"])) {
+    if ($binet["state"] != "grey") {
+      ob_start();
+      if (has_viewing_rights($binet["id"], $binet["current_term"])) {
+        echo minipane("income", "Recettes", $binet["real_income"], $binet["expected_income"]);
+        echo minipane("spending", "Dépenses", $binet["real_spending"], $binet["expected_spending"]);
+        echo minipane("balance", "Equilibre", $binet["real_balance"], $binet["expected_balance"]);
+        $suffix = "";
+      } else {
+        $suffix = "_std";
+      }
+      echo minipane("subsidies_granted".$suffix, "Subventions accordées", $binet["subsidized_amount_granted"], NULL);
+      echo minipane("subsidies_used".$suffix, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
+      $content = ob_get_clean();
       ?>
-      <div class="sh-bin-stats light-blue-background opanel">
-        <?php
-          echo minipane("income", "Recettes", $binet["real_income"], $binet["expected_income"]);
-          echo minipane("spending", "Dépenses", $binet["real_spending"], $binet["expected_spending"]);
-          echo minipane("balance", "Equilibre", $binet["real_balance"], $binet["expected_balance"]);
-          $subsidies_granted_id= "subsidies_granted";
-          $subsidies_used_id= "subsidies_used";
-        } else {
-          echo "<div class=\"sh-bin-stats-std light-blue-background opanel\">";
-          $subsidies_granted_id= "subsidies_granted_std";
-          $subsidies_used_id= "subsidies_used_std";
-        }
-        echo minipane($subsidies_granted_id, "Subventions accordées", $binet["subsidized_amount_granted"], NULL);
-        echo minipane($subsidies_used_id, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
-        ?>
+      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+        <?php echo $content; ?>
       </div>
       <?php
+    }
     if (!empty($waves)) {
       ?>
       <div class="sh-bin-resume light-blue-background opanel">
@@ -138,3 +131,4 @@
     }
   ?>
 </div>
+<?php echo modal("terms", "Toutes les promotions du binet", pretty_terms_list($binet["id"])); ?>

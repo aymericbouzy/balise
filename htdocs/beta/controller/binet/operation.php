@@ -43,7 +43,7 @@
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
     "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student")),
+    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
@@ -76,6 +76,7 @@
     break;
 
   case "create":
+    set_if_not_set($_POST["sign"], 0);
     $operation["id"] = create_operation($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("review");
@@ -112,6 +113,7 @@
       send_email($operation["created_by"], "Opération refusée", "operation_refused", array("operation" => $operation["id"], "binet" => $operation["binet"]));
     }
     delete_operation($operation["id"]);
+    remove_budgets_operation($operation["id"]);
     $_SESSION["notice"][] = "L'opération a été supprimée avec succès.";
     redirect_to_action("index");
     break;
@@ -131,7 +133,7 @@
       return $operation;
     }
     $operation = set_editable_entry_for_form("operation", $operation, $amount_array);
-    $operation = array_merge($operation, select_operation($id, array("id", "amount", "binet_validation_by")));
+    $operation = array_merge($operation, select_operation($id, array("id", "amount", "created_by", "comment", "date", "binet", "term")));
     break;
 
   case "validate":

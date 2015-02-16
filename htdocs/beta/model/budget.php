@@ -15,6 +15,10 @@
 
   function select_budget($budget, $fields = array()) {
     $id = $budget;
+    $present_virtual_fields = array_intersect($fields, array("real_amount"));
+    if (!is_empty($present_virtual_fields)) {
+      $fields = array_merge($fields, array("amount"));
+    }
     $budget = select_entry(
       "budget",
       array("id", "binet", "amount", "term", "label"),
@@ -24,7 +28,8 @@
     foreach ($fields as $field) {
       switch ($field) {
       case "real_amount":
-        $budget[$field] = get_real_amount_budget($id);
+        $sign = $budget["amount"] > 0 ? 1 : -1;
+        $budget[$field] = get_real_amount_budget($id) * $sign;
         break;
       case "subsidized_amount_requested":
         $budget[$field] = get_subsidized_amount_requested_budget($id);
@@ -121,19 +126,22 @@
       $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave"));
       $subsidies[$index]["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
       $subsidies[$index]["used_amount"] = 0;
+      $subsidies[$index]["granted_amount"] = $subsidy["granted_amount"];
       set_if_not_set($subsidies[$index]["granted_amount"], 0);
     }
     usort($subsidies, "sort_by_date");
     foreach(select_operations_budget($budget) as $operation) {
-      $operation = select_operation($operation["id"], array("date", "amount"));
-      $i = 0;
-      while(isset($subsidies[$i]) && $operation["amount"] < 0) {
-        if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
-          $amount = min($operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
-          $operation["amount"] -= $amount;
-          $subsidies[$i]["used_amount"] += $amount;
+      $operation = select_operation($operation["id"], array("date", "amount", "state"));
+      if ($operation["state"] == "validated") {
+        $i = 0;
+        while(isset($subsidies[$i]) && $operation["amount"] < 0) {
+          if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
+            $amount = min(-$operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
+            $operation["amount"] -= $amount;
+            $subsidies[$i]["used_amount"] += $amount;
+          }
+          $i++;
         }
-        $i++;
       }
     }
     return $subsidies;

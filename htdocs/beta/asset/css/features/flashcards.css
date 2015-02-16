@@ -42,6 +42,10 @@
   background-color: rgb(173, 50, 39);
   color : #000;
 }
+.warning {
+  background-color: rgb(255, 175, 36);
+  color : #000;
+}
 
 .news {
   background-color: #cbddff;

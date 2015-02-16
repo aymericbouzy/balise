@@ -1,7 +1,7 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <div class="sh-plus <?php $state_to_color = array("rough_draft" => "grey", "sent" => "orange", "reviewed" => "orange", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request["state"]]; ?>-background opanel">
-    <i class="fa fa-fw fa-<?php $state_to_icon = array("rough_draft" => "question", "sent" => "question", "reviewed" => "question", "accepted" => "check", "rejected" => "times"); echo $state_to_icon[$request["state"]]; ?>"></i>
+  <div class="sh-plus <?php $state_to_color = array("rough_draft" => "grey", "sent" => "orange", "reviewed_accepted" => "orange", "reviewed_rejected" => "orange", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request["state"]]; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php $state_to_icon = array("rough_draft" => "question", "sent" => "question", "reviewed_accepted" => "question", "reviewed_rejected" => "question", "accepted" => "check", "rejected" => "times"); echo $state_to_icon[$request["state"]]; ?>"></i>
     <div class="text">
       <?php
         switch ($request["state"]) {
@@ -32,7 +32,7 @@
           break;
         }
       }
-      if (status_admin_binet($request["wave"]["binet"], $request["wave"]["term"])) {
+      if (has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])) {
         if (in_array($request["state"], array("sent", "reviewed"))) {
           echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
         }
@@ -52,26 +52,45 @@
       </p>
     </div>
   </div>
+    <?php
+    ob_start();
+    if (has_viewing_rights($current_binet["id"], $current_binet["current_term"])) {
+      echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
+      echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
+      echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
+      $suffix = "";
+    } else {
+      $suffix = "_std";
+    }
+    echo minipane("subsidies_granted".$suffix, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
+    echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
+    $content = ob_get_clean();
+    ?>
+    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel" id="current_term">
+      <?php echo $content; ?>
+    </div>
   <?php
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
       $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term"));
-      echo link_to(
-        path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-        "<div class=\"sh-req-budget opanel\">
-          <div class=\"header\">
-            <span class=\"name\">".$budget["label"]."</span>
-          </div>
-          <div class=\"content\">
-            <p class=\"amount\">
-              ".pretty_amount($subsidy["requested_amount"])." <i class=\"fa fa-fw fa-euro\"></i>
-            </p>
-            <p class=\"text\">
-              ".$subsidy["purpose"]."
-            </p>
-          </div>
-        </div>"
-      );
+      ob_start();
+      echo "<div class=\"header\"><span class=\"name\">".$budget["label"]."</span></div>";
+      echo "<div class=\"content\">
+        <p class=\"amount\">
+        ".pretty_amount($subsidy["requested_amount"])." <i class=\"fa fa-fw fa-euro\"></i>
+        </p>
+        <p class=\"text\">
+        ".$subsidy["purpose"]."
+        </p>
+        </div>";
+      $caption = "<div class=\"sh-req-budget opanel\">".ob_get_clean()."</div>";
+      echo has_viewing_rights($binet, $term) ?
+        link_to(
+          path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
+          $caption,
+          array("goto" => true)
+        ) :
+        $caption;
     }
   ?>
 </div>

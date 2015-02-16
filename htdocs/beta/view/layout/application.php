@@ -17,6 +17,8 @@
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/piechart.css" type="text/css">
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/buttons.css" type="text/css">
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/modals.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/forms.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/panels.css" type="text/css">
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/table.css" type="text/css">
       <!--- Datetimepicker -->
       <link href="<?php echo ASSET_PATH; ?>css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
@@ -32,6 +34,7 @@
      	<script src="<?php echo ASSET_PATH; ?>dist/js/bootstrap.js"></script>
       <script src="<?php echo ASSET_PATH; ?>js/moment.js"></script>
       <script src="<?php echo ASSET_PATH; ?>js/bootstrap-datetimepicker.min.js"></script>
+      <script src = "<?php echo ASSET_PATH; ?>js/jquery.textfill.min.js"></script>
    	<!--[if IE]>
       	<script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
       	<script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
@@ -59,9 +62,7 @@
   <body>
     <div id="wrapper">
       <?php
-        if ($_GET["controller"] == "error" || $_GET["controller"] == "home" && in_array($_GET["action"], array("welcome", "chose_identity"))) {
-
-        } else {
+        if (!($_GET["controller"] == "error" || $_GET["controller"] == "home" && in_array($_GET["action"], array("welcome", "chose_identity")))) {
           include LAYOUT_PATH."structure.php";
         }
       ?>

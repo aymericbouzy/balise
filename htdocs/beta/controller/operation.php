@@ -5,8 +5,9 @@
     header_if(!(($operation["created_by"] == $_SESSION["student"] && $operation["state"] == "suggested") || (is_current_kessier() && $operation["state"] == "waiting_validation")), 401);
   }
 
-  function correct_term($term) {
-    return !isset($_POST["binet"]) || exists_term_binet($_POST["binet"]."/".$term);
+  function check_not_validated() {
+    $operation = select_operation($GLOBALS["operation"]["id"], array("state"));
+    header_if($operation["state"] != "waiting_validation", 403);
   }
 
   before_action("check_csrf_post", array("update", "create"));
@@ -17,11 +18,13 @@
   before_action("check_form_input", array("create", "update"), array(
     "model_name" => "operation",
     "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
+    "int_fields" => array(array("term", 1)),
     "amount_fields" => array(array("amount", MAX_AMOUNT)),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_student"), array("binet", "exists_binet"), array("term", "correct_term")),
+    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by"), array("binet", "exists_binet")),
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : ""),
-    "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
+    "optional" => array_merge(array("paid_by", "bill", "reference", "comment", "term"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
+  before_action("check_not_validated", array("validate", "reject"));
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign", "binet", "term");
@@ -37,7 +40,9 @@
     break;
 
   case "create":
-    $operation["id"] = create_operation($_POST["binet"], $_POST["term"], (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
+    set_if_not_set($_POST["sign"], 0);
+    $term = current_term($_POST["binet"]) + $_POST["term"];
+    $operation["id"] = create_operation($_POST["binet"], $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il faut à présent qu'elle soit validée par un administrateur du binet.";
     foreach (select_admins($_POST["binet"], $_POST["term"]) as $student) {
       send_email($student["id"], "Nouvelle opération", "new_operation", array("operation" => $operation["id"], "student" => connected_student(), "binet" => $_POST["binet"], "term" => $_POST["term"]));
@@ -65,20 +70,22 @@
 
   case "validate":
     kes_validate_operation($operation["id"]);
+    $operation = select_operation($operation["id"], array("id", "binet", "term"));
     $_SESSION["notice"][] = "L'opération a été validée avec succès.";
-    foreach (select_admins($binet, $term) as $student) {
-      send_email($student["id"], "Opération validée", "operation_validated", array("operation" => $operation["id"], "binet" => $binet, "term" => $term));
+    foreach (select_admins($operation["binet"], $operation["term"]) as $student) {
+      send_email($student["id"], "Opération validée", "operation_validated", array("operation" => $operation["id"], "binet" => $operation["binet"], "term" => $operation["term"]));
     }
     redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
     break;
 
   case "reject":
     kes_reject_operation($operation["id"]);
+    $operation = select_operation($operation["id"], array("id", "binet", "term"));
     $_SESSION["notice"][] = "Tu as refusé l'opération. Elle apparaitra à nouveau dans les validations des administrateurs du binet. Tu peux leur envoyer un mail pour expliquer la raison du refus.";
-    foreach (select_admins($binet, $term) as $student) {
+    foreach (select_admins($operation["binet"], $operation["term"]) as $student) {
       send_email($student["id"], "Opération refusée par la Kès", "operation_rejected", array("operation" => $operation["id"], "kessier" => connected_student()));
     }
-    redirect_to_action("show");
+    redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
     break;
 
   default:

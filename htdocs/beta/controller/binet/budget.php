@@ -27,7 +27,7 @@
   before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("label", "tags_string", "amount");
-  if ($_GET["action"] == "new") {
+  if (in_array($_GET["action"], array("new", "create"))) {
     $form_fields[] = "sign";
   }
 
@@ -45,6 +45,7 @@
     break;
 
   case "create":
+    set_if_not_set($_POST["sign"], 0);
     $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);

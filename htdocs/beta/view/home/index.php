@@ -28,14 +28,16 @@
   <?php
     $binet_admins = binet_admins_current_student();
     foreach($binet_admins as $binet_admin) {
+      $id = "binet".$binet_admin["binet"];
       echo link_to(
         path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])),
         "<div class=\"spot opanel\">
-          <div class=\"binet-name\">".pretty_binet($binet_admin["binet"], false)."</div>
+          <div class=\"binet-name\" id=\"".$id."\"><span>".pretty_binet($binet_admin["binet"], false)."</span></div>
           <div class=\"binet-term\">".$binet_admin["term"]."</div>
         </div>",
         array("goto"=>true)
       );
+      echo initialize_textfill($id,array("minFontPixels"=>"10","maxFontPixels"=>"20"));
     }
     if (is_empty($binet_admins)) {
     echo "<p>

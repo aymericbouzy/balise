@@ -10,7 +10,7 @@
     }
   }
 
-  function header_if($test, $status) {
+  function header_if($test, $status, $no_exit = false) {
     if ($test) {
       switch ($status) {
       case 400:
@@ -25,6 +25,9 @@
       case 404:
         $header = "404 Not Found";
         break;
+      case 500:
+        $header = "500 Server Error";
+        break;
       }
       header("HTTP/1.1 ".$header);
 
@@ -35,15 +38,20 @@
         var_dump($_SESSION);
         echo "\$_POST : ";
         var_dump($_POST);
-        echo "Appelé par : ";
-        var_dump(debug_backtrace()[1]["function"]);
+        $backtrace = debug_backtrace();
+        if (isset($backtrace[1])) {
+          echo "Appelé par : ";
+          var_dump($backtrace[1]["function"]);
+        }
       }
 
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
       include LAYOUT_PATH."application.php";
-      exit;
+      if (!$no_exit) {
+        exit;
+      }
     }
   }
 
@@ -52,11 +60,13 @@
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(is_empty($binets), 404);
     $GLOBALS["binet"] = $binets[0]["id"];
-    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $_GET["term"]));
-    if (is_empty($binet_terms) && $_GET["controller"] != "admin") {
-      $_SESSION["error"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
-    }
     $GLOBALS["term"] = $_GET["term"];
+    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
+    $binet_term = $GLOBALS["binet"]."/".$GLOBALS["term"];
+    if (is_empty($binet_terms) && $_GET["controller"] != "admin" && (!isset($_SESSION["aware_no_admins_for"]) || !in_array($binet_term, $_SESSION["aware_no_admins_for"]))) {
+      $_SESSION["error"][] = "Il n'y a aucun administrateur pour cette promotion du binet ".pretty_binet($GLOBALS["binet"]).".";
+      $_SESSION["aware_no_admins_for"][] = $binet_term;
+    }
   }
 
   function check_entry($array) {
@@ -182,7 +192,7 @@
     if (status_admin_current_binet(KES_ID)) {
       return true;
     } else {
-      $terms = select_terms(array("binet" => $binet, "term" => array(">=", current_term($binet)), "student" => $_SESSION["student"]));
+      $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term), "student" => $_SESSION["student"]));
       return !is_empty($terms) ||
       received_subsidy_request_from($binet);
     }
@@ -258,7 +268,7 @@
         if (in_array($parameter, array_merge($required_parameters, $optional_parameters))) {
           switch ($parameter) {
           case "action":
-            $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);
+            $valid = $valid && preg_does_match("/^[a-z_]+|[0-9]+$/", $value);
             break;
           case "controller":
             $valid = $valid && preg_does_match("/^[a-z_]+$/", $value);

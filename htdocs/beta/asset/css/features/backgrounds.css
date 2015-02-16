@@ -4,6 +4,10 @@
 .red-background {
   background-color: rgb(173, 50, 39);
 }
+
+.white-text {
+  color : #fff;
+}
 .orange-background {
   background-color: rgb(255, 175, 36);
 }
@@ -21,4 +25,12 @@
 
 .blue-background {
   background-color:#3399FF;
+}
+
+.purple-background{
+  background-color:#EA80FC;
+}
+
+.teal-background {
+  background-color:#26A69A;
 }

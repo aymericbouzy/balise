@@ -19,17 +19,16 @@
     $virtual_fields = array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state");
     $present_virtual_fields = array_intersect($virtual_fields, $fields);
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_merge($fields, array("id", "wave", "sent"));
+      $fields = array_merge($fields, array("id", "wave", "sent", "granted_amount", "reviewed"));
     }
     $id = $request;
     $request = select_entry(
       "request",
-      array("id", "wave", "answer", "sent"),
+      array("id", "wave", "answer", "sent", "reviewed"),
       $request,
       $fields
     );
     if (!is_empty($present_virtual_fields)) {
-      // TODO : check no request without subsidy
       $subsidies = select_subsidies(array("request" => $request["id"]));
       $subsidy = select_subsidy($subsidies[0]["id"], array("budget", "explanation"));
       $budget = select_budget($subsidy["budget"], array("binet", "term"));
@@ -53,9 +52,10 @@
         $request["state"] =
           $request["sent"] != 1 ?
             "rough_draft" :
-            ($wave["state"] == "submission" ?
-              (!isset($subsidy["explanation"]) ? "sent" : "reviewed") :
-              ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
+            (in_array($wave["state"], array("deliberation", "submission")) ?
+              ($request["reviewed"] != 1 ? "sent" : ($request["granted_amount"] > 0 ? "reviewed_accepted" : "reviewed_rejected")) :
+                ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
+
 
       }
     }
@@ -76,12 +76,12 @@
   }
 
   function select_requests($criteria, $order_by = NULL, $ascending = true) {
-    if (!isset($criteria["sent"])) {
+    if (!isset($criteria["sent"]) && !isset($criteria["state"])) {
       $criteria["sent"] = 1;
     }
     return select_entries(
       "request",
-      array("wave", "requested_amount", "granted_amount", "used_amount"),
+      array("wave", "sent", "reviewed"),
       array(),
       array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state"),
       $criteria,
@@ -100,10 +100,20 @@
     $req->execute();
   }
 
+  function review_request($request) {
+    $sql = "UPDATE request
+            SET reviewed = 1
+            WHERE id = :request
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':request', $request, PDO::PARAM_INT);
+    $req->execute();
+  }
+
   function get_used_amount_request($request) {
     $amount = 0;
     foreach(select_subsidies(array("request" => $request)) as $subsidy) {
-      $amount += get_used_amount_subsidy($subsidy);
+      $amount += get_used_amount_subsidy($subsidy["id"]);
     }
     return $amount;
   }
