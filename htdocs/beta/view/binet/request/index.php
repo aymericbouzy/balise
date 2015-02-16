@@ -27,6 +27,9 @@
         <?php
           echo minipane("total","Subventions reçues / demandées", $total_granted, $total_requested);
           echo minipane("use","Subventions utilisées / reçues", $total_used, $total_granted);
+          $total_sent = 0;
+          foreach(array("reviewed","reviewed_accepted","reviewed_rejected","sent") as $property){ $total_sent +=$total_requested_amount_by_state[$property];}
+          echo minipane("requested","Demandé sur brouillon / envoyé", $total_requested_amount_by_state["rough_draft"],$total_sent)
         ?>
       </div>
     </div>

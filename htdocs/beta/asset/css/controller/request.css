@@ -157,7 +157,7 @@
 
 #total{
   height:40px;
-  width:160px;
+  width:30%;
   background-color:#3399FF;
   color:#fff;
   top:5px;
@@ -165,11 +165,19 @@
 }
 #use{
   height:40px;
-  width:160px;
+  width:30%;
   background-color:#795548;
   color:#fff;
   top:5px;
-  left:165px;
+  left:35%;
+}
+#requested{
+  height:40px;
+  width:30%;
+  background-color:#9E9E9E;
+  color:#fff;
+  top:5px;
+  left:70%;
 }
 
 .panel>.title-small{
