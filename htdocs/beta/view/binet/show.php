@@ -1,5 +1,5 @@
 <div class="show-container">
-  <?php echo button(path("","binet"),"Retour à l'index binet","chevron-left","blue",true,"","left"); ?>
+  <?php echo button(path("","binet"),"Aller à l'index binet","bars","blue",true,"","left"); ?>
   <?php
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
