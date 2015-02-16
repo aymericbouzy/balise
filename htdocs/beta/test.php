@@ -2,5 +2,7 @@
 
   include "global/initialisation.php";
 
-  $term = select_term_binet("8/2014", array("subsidized_amount_used"));
-  var_dump($term["subsidized_amount_used"]);
+  $requests = select_requests(array("state" => "rough_draft"));
+  var_dump($requests);
+  $request = select_request(2, array("state", "sent"));
+  var_dump($request);
