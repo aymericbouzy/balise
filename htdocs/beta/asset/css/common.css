@@ -324,3 +324,10 @@ footer>.btn {
   border:none;
   border-bottom:2px solid #1566cc;
 }
+
+.search{
+  background-color:rgba(255,255,255,0.00);
+  width:90%;
+  border:none;
+  border-bottom:2px solid #1566cc;
+}

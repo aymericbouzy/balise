@@ -187,11 +187,11 @@
 #choose-term {
   padding:5px;
 }
-#fuzzy-input {
-  display:inline-block;
-  text-align:center;
-  width:55%;
-}
+
 #switch-operations-budgets {
   margin-top:0px;
+}
+
+input.search {
+  margin : 10px;
 }

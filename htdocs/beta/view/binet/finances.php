@@ -7,9 +7,6 @@
       <div id="view-binet">
         <?php echo link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")); ?>
       </div>
-      <div id="fuzzy-input">
-        <?php echo fuzzy_input();?>
-      </div>
       <div class="switch opanel" id="switch-operations-budgets">
         <?php
         $active = "active";
@@ -34,7 +31,8 @@
   <div class="panel opanel">
     <div class="title"><?php echo $table_title; ?></div>
     <div class="content">
-      <div>
+      <div id="searchlist">
+        <?php echo search_input();?>
         <table class="table table-bordered table-hover table-small-char">
           <?php echo $table; ?>
         </table>
@@ -43,4 +41,5 @@
   </div>
 </div>
 <?php echo modal("terms","Voir l'activité d'une autre promotion du binet",pretty_terms_list($binet)); ?>
-<?php echo fuzzy_load_scripts("",""); ?>
+<script src = "<?php echo ASSET_PATH; ?>js/list.js"></script>
+<?php echo initialize_tablefilter("searchlist",array("element_name","tags")); ?>

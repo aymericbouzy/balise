@@ -13,15 +13,15 @@
     <th>-</th>
   </tr>
 </thead>
-<tbody>
+<tbody class="list">
   <?php
     foreach ($operations as $operation) {
       ob_start();
       ?>
-        <td>
+        <td class="element_name">
           <?php echo $operation["comment"]; ?>
         </td>
-        <td>
+        <td class="tags">
           <?php echo pretty_tags(select_tags_operation($operation["id"]), true); ?>
         </td>
         <td>
