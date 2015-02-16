@@ -35,13 +35,13 @@
     $admin_term = current_term($binet) + $_POST["term"];
     add_admin_binet($_POST["student"], $binet, $admin_term);
     send_email($_POST["student"], "Nouveau binet", "new_admin", array("binet_term" => $binet."/".$admin_term));
-    $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet($binet)." pour le mandat ".$admin_term.".";
+    $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet($binet)." pour la promotion ".$admin_term.".";
     redirect_to_action("");
     break;
 
   case "delete":
     remove_admin_binet($admin, $binet, $term);
-    $_SESSION["notice"][] = "Les droits d'administration de ".pretty_student($admin)." pour le mandat ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
+    $_SESSION["notice"][] = "Les droits d'administration de ".pretty_student($admin)." pour la promotion ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
     redirect_to_action("");
     break;
 

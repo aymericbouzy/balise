@@ -76,7 +76,7 @@
   }
 
   function select_requests($criteria, $order_by = NULL, $ascending = true) {
-    if (!isset($criteria["sent"])) {
+    if (!isset($criteria["sent"]) && !isset($criteria["state"])) {
       $criteria["sent"] = 1;
     }
     return select_entries(

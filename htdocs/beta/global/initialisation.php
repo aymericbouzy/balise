@@ -42,3 +42,4 @@
   include HELPER_PATH."form.php";
   include HELPER_PATH."fuzzy_finder.php";
   include HELPER_PATH."state.php";
+  include HELPER_PATH."common_js.php";
