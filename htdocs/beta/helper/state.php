@@ -1,14 +1,7 @@
 <?php
 function request_state($state , $can_view_pseudo_state = false){
-  if(!$can_view_pseudo_state){
-    switch ($state){
-      case "reviewed_accepted":
-        $state = "reviewed";
-      break;
-      case "reviewed_rejected":
-        $state = "reviewed";
-      break;
-    }
+  if (!$can_view_pseudo_state && in_array($state, array("reviewed_accepted", "reviewed_rejected"))) {
+    $state = "reviewed";
   }
   switch ($state) {
     case "rough_draft":
@@ -31,7 +24,5 @@ function request_state($state , $can_view_pseudo_state = false){
     break;
     case "reviewed":
     return array("name"=>"Traitée","color"=>"blue","icon"=>"check");
-    default:
-    return "Erreur : état de la requête inconnu !";
-    }
+  }
 }
