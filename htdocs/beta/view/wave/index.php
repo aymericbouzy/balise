@@ -49,7 +49,7 @@
                 ?>
               </span>
             <?php
-            echo link_to(path("show", "wave", $wave["id"],binet_prefix($wave["binet"],$wave["term"])), "<div>".ob_get_clean()."</div>\n", array("class" => "opanel clickable-main", "goto" => true));
+            echo link_to(path("show", "wave", $wave["id"], binet_prefix($wave["binet"],$wave["term"])), "<div>".ob_get_clean()."</div>\n", array("class" => "opanel clickable-main", "goto" => true));
 
             if (in_array($wave["state"], array("submission", "deliberation"))) {
               ?>
@@ -60,7 +60,7 @@
                   ob_start();
                   foreach(binet_admins_current_student() as $binet_admin) {
                     $binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
-                    echo link_to(path("new", "request", "", binet_prefix($binet_admin["binet"],$binet_admin["term"]), array("wave" => $wave["id"])), 
+                    echo link_to(path("new", "request", "", binet_prefix($binet_admin["binet"],$binet_admin["term"]), array("wave" => $wave["id"])),
                       pretty_binet_term($binet_admin["binet"]."/".$binet_admin["term"], false) ,
                       array("class" => "modal-list-element opanel0"));
                   }
