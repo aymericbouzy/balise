@@ -1,4 +1,4 @@
-<div id="finances">
+<div id="index-wrapper">
   <div class="panel transparent-background">
     <div class="content" id="controlbar">
       <div id="select-term">
