@@ -286,7 +286,7 @@
   case "delete":
     delete_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été supprimée de tes brouillons.";
-    redirect_to_action("index");
+    redirect_to_path(path("", "request", "", binet_prefix($binet, $term)));
     break;
 
   case "send":
