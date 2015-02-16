@@ -129,6 +129,7 @@
     $sent_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => array("IN", array("sent", "reviewed_accepted", "reviewed_rejected"))));
     $accepted_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => "accepted"));
     $published_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => array("IN", array("accepted", "rejected"))));
+    $binet_term = select_term_binet($binet."/".$term, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested"));
     break;
 
   case "new":

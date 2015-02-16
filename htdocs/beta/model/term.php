@@ -58,21 +58,21 @@
       }
       if (in_array("amount_requested_in_sent", $fields)) {
         $sum = 0;
-        foreach (select_requests(array("sent" => 1, "binet" => $term_binet["binet"], => "term" => $term_binet["term"])) as $request) {
+        foreach (select_requests(array("sent" => 1, "binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $request) {
           $sum += get_requested_amount_request($request["id"]);
         }
         $term_binet["amount_requested_in_sent"] = $sum;
       }
       if (in_array("amount_requested_in_rough_drafts", $fields)) {
         $sum = 0;
-        foreach (select_requests(array("sent" => 0, "binet" => $term_binet["binet"], => "term" => $term_binet["term"])) as $request) {
+        foreach (select_requests(array("sent" => 0, "binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $request) {
           $sum += get_requested_amount_request($request["id"]);
         }
         $term_binet["amount_requested_in_rough_drafts"] = $sum;
       }
       if (in_array("amount_requested_in_published", $fields)) {
         $sum = 0;
-        foreach (select_requests(array("state" => array("IN", array("accepted", "rejected")), "binet" => $term_binet["binet"], => "term" => $term_binet["term"])) as $request) {
+        foreach (select_requests(array("state" => array("IN", array("accepted", "rejected")), "binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $request) {
           $sum += get_requested_amount_request($request["id"]);
         }
         $term_binet["amount_requested_in_published"] = $sum;

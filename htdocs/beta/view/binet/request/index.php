@@ -7,22 +7,22 @@
       <div id="request-count">
         <!-- Requêtes non-envoyées -->
         <span class="<?php echo request_state("rough_draft")["color"];?>-background">
-           <?php echo text_tune_with_amount(count($rough_drafts) / 2,"brouillon"); ?>
+           <?php echo text_tune_with_amount(count($rough_drafts),"brouillon"); ?>
         </span>
         <!-- Requêtes envoyées : en traitement par le binet subventionneur -->
         <span class="<?php echo request_state("sent")["color"];?>-background white-text">
-           <?php echo text_tune_with_amount(count($sent_requests) / 2,"envoyée"); ?>
+           <?php echo count($sent_requests); ?> en attente
         </span>
         <!-- Requêtes acceptées / requêtes traitées -->
         <span class="<?php echo request_state("accepted")["color"];?>-background">
-          <?php echo text_tune_with_amount(count($accepted_requests) / 2,"acceptée"); ?> /
+          <?php echo text_tune_with_amount(count($accepted_requests),"acceptée"); ?> /
           <?php echo count($published_requests); ?> au total
         </span>
       </div>
       <div id="amounts">
         <?php
-          echo minipane("total", "Subventions reçues / demandées", $term["subsidized_amount_granted"], $term["subsidized_amount_requested"]);
-          echo minipane("use", "Subventions utilisées / reçues", $term["subsidized_amount_used"], $term["subsidized_amount_granted"]);
+          echo minipane("total", "Subventions reçues / demandées", $binet_term["subsidized_amount_granted"], $binet_term["subsidized_amount_requested"]);
+          echo minipane("use", "Subventions utilisées / reçues", $binet_term["subsidized_amount_used"], $binet_term["subsidized_amount_granted"]);
         ?>
       </div>
     </div>
@@ -90,7 +90,7 @@
     </div>
   </div>
   <?php
-    foreach(array_merge($sent_requests, $published_requests) as $request) {
+    foreach(select_requests(array("binet" => $binet, "term" => $term)) as $request) {
       $request = select_request($request["id"], array("id", "state", "wave", "requested_amount", "used_amount", "granted_amount"));
       $request_state = request_state($request["state"]);
       ?>
@@ -111,33 +111,32 @@
               pretty_amount($request["requested_amount"],false)." demandés." ?></span>
             <span><?php echo ($request["state"] == "accepted" ? pretty_amount($request["used_amount"],false)." utilisés." : ($request["state"] == "rejected" ? "Subventions refusées" : "")); ?></span>
           </div>
-        <?php
-          if ($request["state"] != "rejected") {
-            ?>
-            <div class="subsidies panel inside">
-              <div class="title-small">
-                Budgets subventionnés
+          <?php
+            if ($request["state"] != "rejected") {
+              ?>
+              <div class="subsidies panel inside">
+                <div class="title-small">
+                  Budgets subventionnés
+                </div>
+                <div class="content light-blue-background">
+                  <?php
+                    foreach(select_subsidies(array("request" => $request["id"])) as $subsidy){
+                      $subsidy = select_subsidy($subsidy["id"],array("id","budget","purpose","requested_amount","used_amount","granted_amount"));
+                      ?>
+                      <div class="subsidy">
+                        <span><?php echo pretty_budget($subsidy["budget"], true, false); ?></span>
+                        <span class="grey-400-background"><?php echo pretty_amount($subsidy["granted_amount"])."/".pretty_amount($subsidy["requested_amount"]); ?></span>
+                        <span><?php echo $subsidy["used_amount"] > 0 ? pretty_amount($subsidy["used_amount"], false) : ""; ?></span>
+                      </div>
+                      <?php
+                    }
+                  ?>
+                </div>
               </div>
-              <div class="content light-blue-background">
-                <?php
-                  foreach(select_subsidies(array("request" => $request["id"])) as $subsidy){
-                    $subsidy = select_subsidy($subsidy["id"],array("id","budget","purpose","requested_amount","used_amount","granted_amount"));
-                    ob_start();
-                    ?>
-                    <div class="subsidy">
-                      <span><?php echo pretty_budget($subsidy["budget"], true, false); ?></span>
-                      <span class="grey-400-background"><?php echo pretty_amount($subsidy["granted_amount"])."/".pretty_amount($subsidy["requested_amount"]); ?></span>
-                      <span><?php echo $subsidy["used_amount"] > 0 ? pretty_amount($subsidy["used_amount"], false) : ""; ?></span>
-                    </div>
-                    <?php
-                    echo ob_get_clean();
-                  }
-                ?>
-              </div>
-            </div>
-            <?php
-          }
-        ?>
+              <?php
+            }
+          ?>
+        </div>
       </div>
       <?php
     }
