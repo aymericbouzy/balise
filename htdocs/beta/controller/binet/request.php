@@ -125,33 +125,6 @@
   switch ($_GET["action"]) {
 
   case "index":
-    $requests = array();
-    $rough_drafts = array();
-    $requests_count_by_state = array("accepted" => 0,"rejected" => 0,"rough_draft" => 0,"reviewed_accepted" => 0,"reviewed_rejected" => 0,"sent" => 0,"reviewed" => 0);
-    $total_requested_amount_by_state = $requests_count_by_state ;
-    $total_granted = 0;
-    $total_used = 0;
-    // Select requests and compute total granted amount, total used amount end total requested amount by state
-    foreach(select_requests(array("binet" => $binet, "term" => $term)) as $request){
-      $request = select_request($request["id"], array("id", "answer","sent", "wave", "state","requested_amount", "granted_amount", "used_amount"));
-      $requests_count_by_state[$request["state"]]++;
-      $total_requested_amount_by_state[$request["state"]] += $request["requested_amount"];
-      if($request["state"] == "accepted"){
-        $total_granted += $request["granted_amount"];
-      }
-      $total_used += $request["used_amount"];
-      $requests[] = $request;
-    }
-    $total_requested = 0;
-    foreach( $total_requested_amount_by_state as $requested_amount ){
-      $total_requested += $requested_amount;
-    }
-    // Select rough drafts and compute total requested amount for rough_drafts
-    foreach(select_requests(array("state" => "rough_draft", "binet" => $binet, "term" => $term)) as $rough_draft){
-      $rough_draft = select_request($rough_draft["id"], array("id", "answer", "wave", "state","requested_amount"));
-      $total_requested_amount_by_state["rough_draft"] += $rough_draft["requested_amount"];
-      $rough_drafts[] = $rough_draft ;
-    }
     break;
 
   case "new":

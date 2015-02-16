@@ -16,7 +16,7 @@
     $term_binet["id"] = $id[0]."/".$id[1];
     $term_binet["binet"] = $id[0];
     $term_binet["term"] = $id[1];
-    $present_virtual_fields = array_intersect($fields, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state"));
+    $present_virtual_fields = array_intersect($fields, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state", "amount_requested_in_sent", "amount_requested_in_rough_drafts", "amount_requested_in_published"));
     if (!is_empty($present_virtual_fields)) {
       $budgets = array();
       foreach (select_budgets(array("binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $budget) {
@@ -56,6 +56,27 @@
       if (in_array("state", $fields)) {
         $term_binet["state"] = $term_binet["real_balance"] >= 0 ? "green" : ($term_binet["expected_balance"] >= 0 ? "orange" : "red");
       }
+      if (in_array("amount_requested_in_sent", $fields)) {
+        $sum = 0;
+        foreach (select_requests(array("sent" => 1, "binet" => $term_binet["binet"], => "term" => $term_binet["term"])) as $request) {
+          $sum += get_requested_amount_request($request["id"]);
+        }
+        $term_binet["amount_requested_in_sent"] = $sum;
+      }
+      if (in_array("amount_requested_in_rough_drafts", $fields)) {
+        $sum = 0;
+        foreach (select_requests(array("sent" => 0, "binet" => $term_binet["binet"], => "term" => $term_binet["term"])) as $request) {
+          $sum += get_requested_amount_request($request["id"]);
+        }
+        $term_binet["amount_requested_in_rough_drafts"] = $sum;
+      }
+      if (in_array("amount_requested_in_published", $fields)) {
+        $sum = 0;
+        foreach (select_requests(array("state" => array("IN", array("accepted", "rejected")), "binet" => $term_binet["binet"], => "term" => $term_binet["term"])) as $request) {
+          $sum += get_requested_amount_request($request["id"]);
+        }
+        $term_binet["amount_requested_in_published"] = $sum;
+      }
     }
     return $term_binet;
   }
@@ -82,7 +103,7 @@
     return filter_entries(
       $terms,
       "term_binet_direct",
-      array("balance", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used", "spent_amount", "earned_amount"),
+      array("balance", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used", "spent_amount", "earned_amount", "amount_requested_in_published", "amount_requested_in_rough_drafts", "amount_requested_in_sent"),
       $criteria,
       $order_by,
       $ascending
