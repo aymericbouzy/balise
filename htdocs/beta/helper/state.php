@@ -1,5 +1,15 @@
 <?php
-function request_state($state){
+function request_state($state , $can_view_pseudo_state = false){
+  if(!$can_view_pseudo_state){
+    switch ($state){
+      case "reviewed_accepted":
+        $state = "reviewed";
+      break;
+      case "reviewed_rejected":
+        $state = "reviewed";
+      break;
+    }
+  }
   switch ($state) {
     case "rough_draft":
     return array("name"=>"Brouillon","color"=>"grey","icon"=>"question");

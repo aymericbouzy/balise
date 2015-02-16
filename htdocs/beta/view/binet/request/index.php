@@ -93,7 +93,8 @@
   <?php
     foreach(select_requests(array("binet" => $binet, "term" => $term)) as $request) {
       $request = select_request($request["id"], array("id", "state", "wave", "requested_amount", "used_amount", "granted_amount"));
-      $request_state = request_state($request["state"]);
+      $wave = select_wave($request["wave"],array("id","binet","term"));
+      $request_state = request_state($request["state"],has_editing_rights($wave["binet"], $wave["term"]));
       ?>
       <div class="panel opanel light-blue-background">
         <div class="actions">

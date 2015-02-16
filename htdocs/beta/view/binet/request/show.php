@@ -1,6 +1,6 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <?php $request_state = request_state($request["state"]); ?>
+  <?php $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
   <div class="sh-plus <?php echo $request_state["color"]; ?>-background opanel">
     <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
     <div class="text">
