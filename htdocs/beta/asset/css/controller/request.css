@@ -157,19 +157,27 @@
 
 #total{
   height:40px;
-  width:160px;
-  background-color:#3399FF;
+  width:30%;
+  background-color:#26A69A;
   color:#fff;
   top:5px;
   left:0px;
 }
 #use{
   height:40px;
-  width:160px;
-  background-color:#795548;
+  width:30%;
+  background-color:#607D8B;
   color:#fff;
   top:5px;
-  left:165px;
+  left:35%;
+}
+#requested{
+  height:40px;
+  width:30%;
+  background-color:#9E9E9E;
+  color:#fff;
+  top:5px;
+  left:70%;
 }
 
 .panel>.title-small{

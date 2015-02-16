@@ -86,7 +86,7 @@
   <!-- Requests -->
   <div class="panel opanel">
     <div class="title">
-      Subventions précédentes
+      Requêtes par vague de subvention
     </div>
   </div>
   <?php
