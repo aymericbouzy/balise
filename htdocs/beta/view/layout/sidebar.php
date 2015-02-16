@@ -22,7 +22,7 @@
     <?php
       if (has_viewing_rights($binet, $term)) {
         echo li_link(
-          link_to(path("", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-home\"></i> Accueil"),
+          link_to(path("", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-database\"></i> Trésorerie"),
           $_GET["controller"] == "budget" || $_GET["controller"] == "operation"
         );
       }
