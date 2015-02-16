@@ -55,7 +55,16 @@
               ?>
               <span class="actions">
                 <?php
-                  echo button(path("", ""), "Demander des subventions", "question", "green");
+                  echo modal_toggle("ask_for_subsidies".$wave["id"],"<i class=\"fa fa-fw fa-question anim\"></i> <span class=\"olabel\"> Demander des subventions </span>",
+                    "round-button green-background opanel2","choose_binet".$wave["id"]);
+                  ob_start();
+                  foreach(binet_admins_current_student() as $binet_admin) {
+                    $binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
+                    echo link_to(path("new", "request", "", binet_prefix($binet_admin["binet"],$binet_admin["term"]), array("wave" => $wave["id"])), 
+                      pretty_binet_term($binet_admin["binet"]."/".$binet_admin["term"], false) ,
+                      array("class" => "modal-list-element opanel0"));
+                  }
+                  echo modal("choose_binet".$wave["id"],"Choisir un binet pour lequel faire une demande",ob_get_clean());
                 ?>
               </span>
               <?php
