@@ -90,6 +90,13 @@
     );
   }
 
+  function delete_request($request) {
+    foreach (select_subsidies(array("request" => $request)) as $subsidy) {
+      delete_subsidy($subsidy["id"]);
+    }
+    delete_entry("request", $request);
+  }
+
   function send_request($request) {
     $sql = "UPDATE request
             SET sent = 1

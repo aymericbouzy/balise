@@ -33,32 +33,67 @@
   border:none;
   shadow:none;
 }
+.panel.inside {
+  border: 1px solid rgba(0,0,0,0.3);
+}
 
-.panel>.title {
+/*------------------------------------------------------*/
+/* Titles */
+
+.panel>.title, .panel>.title-small{
   display:block;
   margin:0px;
   width:100%;
   padding:2px;
   padding-left:15px;
-  font-size:20px;
   background-color:#2e2e2e;
   color:#cbddff;
 }
 
-.title:hover{
+.panel>.title {
+  font-size:20px;
+}
+.panel>.title-small {
+  font-size:13px;
+}
+
+.title:hover, .title-small:hover{
   background-color:#1e1e1e;
   color:#fff;
 }
 
-.title>span {
+.title>span .title-small>span {
   font-size:10px;
   margin:5px;
   float:right;
   visibility:hidden;
 }
-.title:hover>span{
+.title:hover>span .title-small>span{
   visibility:visible;
 }
+
+.title>a, .title-small>a {
+  text-decoration: none;
+  color:#cbddff;
+}
+.title>a, .title-small>a {
+  text-decoration: none;
+  color:#cbddff;
+}
+.title>a:hover, .title-small>a:hover {
+  text-decoration: none;
+  color:#baccdd;
+}
+
+/* Titles for panel inside panels */
+.panel.inside>.title-small, .panel.inside>.title{
+  background-color:#3399FF !important;
+  color:#fff !important;
+}
+
+/*------------------------------------------------------*/
+/* Info : text outside the panel */
+
 .content>.infos {
   display:inline-block;
   width:70%;
@@ -80,11 +115,16 @@
   left:-70px;
 }
 
+/*------------------------------------------------------*/
+/* Content */
 .panel>.content {
   display:block;
   position:relative;
   padding:5px;
 }
+
+/*------------------------------------------------------*/
+/* Minipane */
 
 .minipane {
   text-align:center;
@@ -104,4 +144,25 @@
   background-color:#2e2e2e;
   color:#cbddff;
   font-weight:500;
+}
+
+/*------------------------------------------------------*/
+/* Pill */
+.pill {
+  padding:3px;
+  margin:3px;
+  font-size:12px;
+  border: 1px solid rgba(0,0,0,0.4);
+  border-radius:2px;
+  background-color: rgba(0,0,0,0.3);
+  color:#fff;
+}
+.pill>a {
+  color: #fff;
+}
+
+.pill>i{
+  color:#BF360C;
+  font-weight:bold;
+  padding-left:5px;
 }

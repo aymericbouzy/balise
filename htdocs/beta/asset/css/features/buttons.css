@@ -131,3 +131,11 @@
 .btn-danger:hover{
   background-color:#B71C1C;
 }
+
+.btn-success{
+  background-color:rgb(50, 173, 39);
+}
+
+.btn-success:hover{
+  background-color:#388E3C;
+}
