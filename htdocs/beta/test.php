@@ -10,6 +10,6 @@
   }
   echo "<br>Operations du budget fontaine de chocolat : <br>";
   foreach (select_operations_budget(10) as $operation) {
-    var_dump(select_operation($operation["id"], array("state", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used")));
+    var_dump(select_operation($operation["id"], array("state", "subsidized_amount_requested", "subsidized_amount_granted", "subsidized_amount_used", "amount")));
     echo "<br>";
   }
