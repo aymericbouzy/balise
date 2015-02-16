@@ -4,6 +4,7 @@
     header_if(!validate_input(array("admin")), 400);
     $terms = select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
     header_if(is_empty($terms), 404);
+    header_if($GLOBALS["binet"] == KES_ID && $_GET["admin"] == connected_student(), 401);
     $GLOBALS["admin"] = $_GET["admin"];
   }
 
