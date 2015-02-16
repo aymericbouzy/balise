@@ -171,6 +171,18 @@
   top:5px;
   left:165px;
 }
+
+.panel>.title-small{
+  background-color:#B0BEC5;
+  color:#000;
+}
+.title-small>a{
+  color:#2e2e2e;
+}
+.title-small>a:hover{
+  color:#000;
+}
+
 .state-indicator{
   position:absolute;
   display:inline-block;
@@ -220,6 +232,14 @@
   position:absolute;
   top:0px;
   right:0px;
-  font-size:11px;
+  max-width:120px;
+  font-size:10px;
+  padding:4px;
+}
+#send-request {
+  position:absolute;
+  top:0px;
+  right:100px;
+  font-size:10px;
   padding:4px;
 }

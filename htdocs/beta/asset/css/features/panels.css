@@ -145,3 +145,23 @@
   color:#cbddff;
   font-weight:500;
 }
+
+/*------------------------------------------------------*/
+/* Pill */
+.pill {
+  padding:3px;
+  font-size:12px;
+  border: 1px solid rgba(0,0,0,0.4);
+  border-radius:2px;
+  background-color: rgba(0,0,0,0.3);
+  color:#fff;
+}
+.pill>a {
+  color: #fff;
+}
+
+.pill>i{
+  color:#BF360C;
+  font-weight:bold;
+  padding-left:5px;
+}
