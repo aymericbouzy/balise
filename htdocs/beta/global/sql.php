@@ -45,7 +45,7 @@
               }
               break;
             case "IN":
-              $keep_entry = $keep_entry && in_array($virtual_entry[$column], $value);
+              $keep_entry = $keep_entry && in_array($virtual_entry[$column], $value[1]);
               break;
             }
           } else {
