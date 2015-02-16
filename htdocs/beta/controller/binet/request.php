@@ -68,7 +68,7 @@
   function check_wave_parameter() {
     header_if(!validate_input(array("wave")), 400);
     header_if(!exists_wave($_GET["wave"]), 404);
-    header_if(select_wave($_GET["wave"], array("state"))["state"] != "submission", 403);
+    header_if(!in_array(select_wave($_GET["wave"], array("state"))["state"], array("submission", "deliberation")), 403);
   }
 
   function check_exists_spending_budget() {

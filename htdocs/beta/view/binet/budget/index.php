@@ -20,14 +20,14 @@
       <td colspan="6">Dépenses</td>
     </tr>
   </thead>
-  <tbody>
+  <tbody class="list">
     <?php
       foreach ($budgets as $budget) {
         if ($budget["amount"] < 0) {
           ?>
           <tr>
-            <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
-            <td><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
+            <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
+            <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>
@@ -50,14 +50,14 @@
           <td colspan="6">Recettes</td>
       </tr>
   </thead>
-  <tbody>
+  <tbody class="list">
     <?php
       foreach ($budgets as $budget) {
         if ($budget["amount"] > 0) {
           ?>
           <tr>
-            <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
-            <td><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
+            <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
+            <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>

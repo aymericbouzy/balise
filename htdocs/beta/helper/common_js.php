@@ -15,5 +15,15 @@ function initialize_textfill($id,$options = array() ){
   foreach($options as $property => $value){
     $options_str.= $property." : ".$value. "," ;
   }
+  $options_str = substr($options_str,0,-1);
   return "<script>\n$('#".$id."').textfill({".$options_str."});\n</script>";
+}
+
+function initialize_tablefilter($container_id,$options = array()){
+    $options_str = "";
+    foreach($options as $option){
+      $options_str .= "'".$option."' ,";
+    }
+    $options_str = substr($options_str,0,-1);
+    return "\n<script>\n var options = { valueNames: [ ".$options_str." ]};\n var userList = new List('".$container_id."', options); \n</script>\n" ;
 }
