@@ -24,6 +24,12 @@ a {
   text-decoration:none;
 }
 
+/*---------------------------------------------------------------------*/
+  #mybinets {
+    text-align:center;
+    margin-bottom:30px;
+  }
+
 .spot {
   position:relative;
   width : 130px;
@@ -70,7 +76,7 @@ a {
 }
 
 #homelinks {
-  margin-top:50px;
+  margin-top:10px;
   height: 50px;
   background-color:#cbddff;
 }
