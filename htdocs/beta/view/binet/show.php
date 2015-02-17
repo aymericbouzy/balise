@@ -1,5 +1,5 @@
 <div class="show-container">
-  <?php echo button(path("","binet"),"Aller à la liste des binet","bars","blue",true,"","left"); ?>
+  <?php echo button(path("","binet"),"Aller à la liste des binets","bars","blue",true,"","left"); ?>
   <?php
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
@@ -32,15 +32,20 @@
       <span class="main">
         <?php
           echo pretty_binet($binet["id"], false);
-          if (has_viewing_rights($binet["id"], $binet["current_term"]) && $binet["state"] != "grey") {
-            echo link_to(
-              path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),
-              "<i class=\"fa fa-fw fa-eye\"></i><span> Voir l'activité du binet </span>",
-              array("class" => "sh-bin-eye opanel0")
-            );
-          }
         ?>
       </span>
+      <?php
+        if (has_viewing_rights($binet["id"], $binet["current_term"]) && $binet["state"] != "grey") {
+            echo insert_tooltip(
+                link_to(
+                  path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),
+                    "<i class=\"fa fa-fw fa-eye\"></i>",
+                    array("class" => "opanel0","id" =>"sh-bin-eye")
+                  ),
+              "Voir l'activité du binet",
+              "left");
+        }
+      ?>
       <!-- Modal to choose a different term -->
       <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub opanel0", "terms"); ?>
     </div>

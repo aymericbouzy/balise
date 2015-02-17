@@ -136,7 +136,7 @@
   background-color:#64B5F6;
 }
 
-.sh-bin-eye {
+#sh-bin-eye {
   position:absolute;
   width:50px;
   height:50px;
@@ -148,16 +148,10 @@
   padding:5px;
   padding-right:10px;
   border-radius:5px;
-  -webkit-transition: width 0.2s, background-color 0.2s;
-  transition: width 0.2s , background-color 0.2s;
+  font-size:30px;
 }
-.sh-bin-eye:hover {
+#sh-bin-eye:hover {
   background-color:#64B5F6;
-  width:auto;
-}
-.sh-bin-eye>span{
-  font-size:10px;
-  color:#2e2e2e;
 }
 
 .sh-bin-admins {
