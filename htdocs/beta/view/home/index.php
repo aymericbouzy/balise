@@ -31,20 +31,21 @@
   </div>
   <div id="mybinets">
     <?php
-      $binet_admins = binet_admins_current_student();
-      foreach($binet_admins as $binet_admin) {
-        $id = "binet".$binet_admin["binet"];
+      $term_admins = select_terms(array("student"=>$_SESSION["student"]));
+      foreach($term_admins as $term_admin) {
+        $term_admin = select_term_binet($term_admin["id"],array("id","binet","term"));
+        $id = "binet".$term_admin["binet"];
         echo link_to(
-          path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])),
+          path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"])),
           "<div class=\"spot opanel\">
-            <div class=\"binet-name\" id=\"".$id."\"><span>".pretty_binet($binet_admin["binet"], false)."</span></div>
-            <div class=\"binet-term\">".$binet_admin["term"]."</div>
+            <div class=\"binet-name\" id=\"".$id."\"><span>".pretty_binet($term_admin["binet"], false)."</span></div>
+            <div class=\"binet-term\">".$term_admin["term"]."</div>
           </div>",
           array("goto"=>true)
         );
         echo initialize_textfill($id,array("minFontPixels"=>"10","maxFontPixels"=>"20"));
       }
-      if (is_empty($binet_admins)) {
+      if (is_empty($term_admins)) {
       echo "<p>
         Vous n'avez pas de binets pour le moment ...
         </p>";

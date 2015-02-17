@@ -147,7 +147,42 @@
 }
 
 /*------------------------------------------------------*/
-/* Pill */
+/* ELements inside panels */
+.panel-list-element {
+  display:block;
+  width:90%;
+  margin:auto;
+  margin-top:3px;
+  padding:3px;
+  text-align:center;
+  color:#fff;
+  background-color:#AD1457;
+  text-decoration:none;
+}
+
+.panel-list-element:hover{
+  color:#cbddff;
+  background-color:#BD1457;
+}
+
+.panel-list-element>i.icon {
+  float:left;
+  padding:3px;
+  padding-left:10px;
+  color:#fff;
+}
+
+.panel-list-element>a {
+  text-decoration:none;
+  color:#fff;
+}
+
+.panel-list-element>a:hover {
+  text-decoration:underline;
+  color:#ccc;
+
+/*------------------------------------------------------*/
+/* Pills */
 .pill {
   padding:3px;
   margin:3px;
@@ -165,4 +200,5 @@
   color:#BF360C;
   font-weight:bold;
   padding-left:5px;
+>>>>>>> 45a44ebf79575b4447661415a09979eef7596ec4
 }
