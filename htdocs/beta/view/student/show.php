@@ -20,7 +20,9 @@
       <div class="content">
         <?php foreach(select_terms(array("student"=>$student["id"])) as $term){
           $term = select_term_binet($term["id"],array("binet"));
-          echo "<div class=\"panel-list-element opanel0\"><i class=\"icon fa fa-fw fa-group\"></i>".pretty_binet($term["binet"])."</div>";
+          echo link_to(path("show", "binet", $term["binet"]),
+            "<div><i class=\"icon fa fa-fw fa-group\"></i>".pretty_binet($term["binet"],false)."</div>",
+            array("class" => "panel-list-element opanel0","goto" => "true"));
         } ?>
       </div>
     </div>

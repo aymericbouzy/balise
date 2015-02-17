@@ -155,9 +155,14 @@
   margin-top:3px;
   padding:3px;
   text-align:center;
-  color:#cbddff;
+  color:#fff;
   background-color:#AD1457;
   text-decoration:none;
+}
+
+.panel-list-element:hover{
+  color:#cbddff;
+  background-color:#BD1457;
 }
 
 .panel-list-element>i.icon {
