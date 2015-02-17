@@ -18,8 +18,9 @@
         Binet administrés
       </div>
       <div class="content">
-        <?php foreach($binets as $binet){
-          echo "<div class=\"panel-list-element opanel0\"><i class=\"icon fa fa-fw fa-group\"></i>".pretty_binet($binet["binet"])."</div>";
+        <?php foreach(select_terms(array("student"=>$student["id"])) as $term){
+          $term = select_term_binet($term["id"],array("binet"));
+          echo "<div class=\"panel-list-element opanel0\"><i class=\"icon fa fa-fw fa-group\"></i>".pretty_binet($term["binet"])."</div>";
         } ?>
       </div>
     </div>
