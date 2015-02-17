@@ -16,7 +16,7 @@ function initialize_textfill($id,$options = array() ){
     $options_str.= $property." : ".$value. "," ;
   }
   $options_str = substr($options_str,0,-1);
-  return "<script>\n$('#".$id."').textfill({".$options_str."});\n</script>";
+  return "\n<script>\n$('#".$id."').textfill({".$options_str."});\n</script>\n";
 }
 
 function initialize_tablefilter($container_id,$options = array()){
@@ -26,4 +26,17 @@ function initialize_tablefilter($container_id,$options = array()){
     }
     $options_str = substr($options_str,0,-1);
     return "\n<script>\n var options = { valueNames: [ ".$options_str." ]};\n var userList = new List('".$container_id."', options); \n</script>\n" ;
+}
+
+/* Use initialize tooltips once in a page using tooltips */
+function initialize_tooltips(){
+  return "\n<script>\n $(function () { $('[data-toggle=\"tooltip\"]').tooltip() })\n</script>\n";
+}
+
+function insert_tooltip($html_tag, $tooltip_content, $placement = "top") {
+  return insert_properties_in_html_tag($html_tag, array(
+    "data-toggle" => "tooltip",
+    "data-placement" => $placement,
+    "title" => $tooltip_content
+  ));
 }
