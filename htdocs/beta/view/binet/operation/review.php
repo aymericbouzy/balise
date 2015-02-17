@@ -3,7 +3,12 @@
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-small-char">
       <tbody>
-        <?php echo validatable_operation_line($operation, false); ?>
+        <tr>
+          <td><?php echo pretty_date($operation["date"]); ?></td>
+          <td><?php echo $operation["comment"]; ?></td>
+          <td><?php echo pretty_student($operation["created_by"])." ".pretty_binet_term($operation["binet"]."/".$operation["term"]); ?></td>
+          <td><?php echo pretty_amount($operation["amount"]); ?></td>
+        </tr>
       </tbody>
     </table>
   </div>

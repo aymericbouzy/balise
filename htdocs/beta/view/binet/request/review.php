@@ -73,7 +73,7 @@
         echo minipane("income", "Recettes", $previous_binet["real_income"], $previous_binet["expected_income"]);
         echo minipane("spending", "Dépenses", $previous_binet["real_spending"], $previous_binet["expected_spending"]);
         echo minipane("balance", "Equilibre", $current_binet["real_balance"], $previous_binet["expected_balance"]);
-        echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du mandat précédent </span>";
+        echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du binet de la promotion précédente </span>";
         $suffix = "";
       } else {
         $suffix = "_std";
@@ -104,7 +104,7 @@
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
       $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used"));
-      path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])) ?>
+      ?>
       <div class="panel light-blue-background opanel">
         <?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
                         "<div class=\"title\">".$budget["label"]."<span><i class=\"fa fa-fw fa-eye\"></i>  Voir le budget</span></div>",

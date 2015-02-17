@@ -13,27 +13,27 @@
     <th>-</th>
   </tr>
 </thead>
-<tbody>
+<tbody class="list">
   <?php
     foreach ($operations as $operation) {
       ob_start();
       ?>
-        <td>
+        <td class="element_name">
           <?php echo $operation["comment"]; ?>
         </td>
-        <td>
+        <td class="tags">
           <?php echo pretty_tags(select_tags_operation($operation["id"]), true); ?>
         </td>
         <td>
           <?php echo $operation["date"]; ?>
         </td>
-        <?php if ($operation["amount"] > 0) {
+        <?php if ($operation["amount"] < 0) {
           ?><td></td><td>
-            <?php echo pretty_amount($operation["amount"]); ?>
+            <?php echo pretty_amount($operation["amount"],false); ?>
           </td><?php
         } else {
           ?><td>
-            <?php echo pretty_amount($operation["amount"]); ?>
+            <?php echo pretty_amount($operation["amount"],false); ?>
           </td><td></td>
       <?php
         }

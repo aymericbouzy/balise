@@ -24,8 +24,8 @@
       if (is_current_kessier()) {
         switch ($operation["state"]) {
           case "waiting_validation":
-          echo button(path("validate", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Valider", "check", "green");
-          echo button(path("reject", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Refuser", "times", "red");
+          echo button(path("validate", "operation", $operation["id"], "", array(), true), "Valider", "check", "green");
+          echo button(path("reject", "operation", $operation["id"], "", array(), true), "Refuser", "times", "red");
           break;
         }
       }

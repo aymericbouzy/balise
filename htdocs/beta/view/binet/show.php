@@ -1,5 +1,5 @@
 <div class="show-container">
-  <?php echo button(path("","binet"),"Retour à l'index binet","chevron-left","blue",true,"","left"); ?>
+  <?php echo button(path("","binet"),"Aller à la liste des binet","bars","blue",true,"","left"); ?>
   <?php
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
@@ -131,4 +131,4 @@
     }
   ?>
 </div>
-<? echo modal("terms","Voir l'activité d'un autre mandat",pretty_terms_list($binet["id"]));?>
+<?php echo modal("terms", "Toutes les promotions du binet", pretty_terms_list($binet["id"])); ?>

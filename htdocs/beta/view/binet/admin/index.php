@@ -13,8 +13,12 @@ if (!empty($admins)) {
     <span class="admin opanel">
       <i class="fa fa-fw fa-user logo"></i>
       <i class="fa fa-fw fa-send logo"></i>
-      <?php echo pretty_student($admin["id"]);
-        echo button(path("delete", "admin", $admin["id"], binet_prefix($binet, $term), array(), true),"Retirer cet administrateur","times","red",true,"small");?>
+      <?php
+        echo pretty_student($admin["id"]);
+        if ($binet != KES_ID || $admin["id"] != connected_student()) {
+          echo button(path("delete", "admin", $admin["id"], binet_prefix($binet, $term), array(), true),"Retirer cet administrateur","times","red",true,"small");
+        }
+      ?>
     </span>
     <?php
   }

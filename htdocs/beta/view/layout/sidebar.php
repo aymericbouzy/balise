@@ -20,10 +20,12 @@
     </li>
     <!-- Accueil : links to budget/operations page -->
     <?php
-      echo li_link(
-        link_to(path("", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-home\"></i> Accueil"),
-        $_GET["controller"] == "budget" || $_GET["controller"] == "operation"
-      );
+      if (has_viewing_rights($binet, $term)) {
+        echo li_link(
+          link_to(path("", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-database\"></i> Trésorerie"),
+          $_GET["controller"] == "budget" || $_GET["controller"] == "operation"
+        );
+      }
       $number_pending_validations = count_pending_validations($binet, $term);
       if (has_editing_rights($binet, $term)) {
         echo li_link(

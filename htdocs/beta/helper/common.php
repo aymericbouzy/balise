@@ -19,7 +19,7 @@
     $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
 
     if ($options["goto"]) {
-      return preg_replace("/^(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\" style=\"cursor:pointer\" >\n $3", str_replace("\n", "", $caption));
+      return preg_replace("/^\s*(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\" style=\"cursor:pointer\" >\n $3", str_replace("\n", "", $caption));
     } else {
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
     }
@@ -98,4 +98,8 @@
                   </div>
                 </div>
               </div>";
+  }
+
+  function text_tune_with_amount($amount,$text){
+    return $amount." ".$text.($amount > 1 ? "s":"");
   }

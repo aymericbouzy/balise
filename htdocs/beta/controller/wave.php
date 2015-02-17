@@ -8,9 +8,6 @@
     $waves = select_waves();
     break;
 
-  case "show":
-    break;
-
   default:
     header_if(true, 403);
     exit;

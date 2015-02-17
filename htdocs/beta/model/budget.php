@@ -126,22 +126,26 @@
   function get_subsidized_amount_used_details_budget($budget) {
     $subsidies = select_subsidies(array("budget" => $budget));
     foreach($subsidies as $index => $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave"));
+      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave", "request"));
+      $subsidies[$index]["accepted"] = select_request($subsidy["request"], array("state"))["state"] == "accepted";
       $subsidies[$index]["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
       $subsidies[$index]["used_amount"] = 0;
+      $subsidies[$index]["granted_amount"] = $subsidy["granted_amount"];
       set_if_not_set($subsidies[$index]["granted_amount"], 0);
     }
     usort($subsidies, "sort_by_date");
     foreach(select_operations_budget($budget) as $operation) {
-      $operation = select_operation($operation["id"], array("date", "amount"));
-      $i = 0;
-      while(isset($subsidies[$i]) && $operation["amount"] < 0) {
-        if ($operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
-          $amount = min($operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
-          $operation["amount"] -= $amount;
-          $subsidies[$i]["used_amount"] += $amount;
+      $operation = select_operation($operation["id"], array("date", "amount", "state"));
+      if ($operation["state"] == "validated") {
+        $i = 0;
+        while(isset($subsidies[$i]) && $operation["amount"] < 0) {
+          if ($subsidies[$i]["accepted"] && $operation["date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
+            $amount = min(-$operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
+            $operation["amount"] -= $amount;
+            $subsidies[$i]["used_amount"] += $amount;
+          }
+          $i++;
         }
-        $i++;
       }
     }
     return $subsidies;

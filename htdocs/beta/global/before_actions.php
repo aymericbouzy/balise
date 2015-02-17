@@ -64,7 +64,7 @@
     $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
     $binet_term = $GLOBALS["binet"]."/".$GLOBALS["term"];
     if (is_empty($binet_terms) && $_GET["controller"] != "admin" && (!isset($_SESSION["aware_no_admins_for"]) || !in_array($binet_term, $_SESSION["aware_no_admins_for"]))) {
-      $_SESSION["error"][] = "Il n'y a aucun administrateur pour ce mandat et ce binet.";
+      $_SESSION["error"][] = "Il n'y a aucun administrateur pour cette promotion du binet ".pretty_binet($GLOBALS["binet"]).".";
       $_SESSION["aware_no_admins_for"][] = $binet_term;
     }
   }
