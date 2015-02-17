@@ -20,8 +20,7 @@
         <?php
           $binet = select_binet($binet["id"], array("id", "current_term"));
           if (is_current_kessier()) {
-            $binet["balance"] = select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance"))["real_balance"];
-            $binet["state_color"] = $binet["balance"] > 1 ? "green" : "red";
+            $binet = array_merge(select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance", "state")), $binet);
           }
           ob_start();
           ?>
@@ -39,7 +38,7 @@
             <?php
               if (is_current_kessier()) {
                 ?>
-                <span class="amount <?php echo $binet["state_color"]; ?>-background"><?php echo pretty_amount($binet["balance"]); ?></span>
+                <span class="amount <?php echo $binet["state"]; ?>-background"><?php echo pretty_amount($binet["real_balance"]); ?></span>
                 <?php
               }
           echo link_to(path("show", "binet", $binet["id"]), "<div>".ob_get_clean()."</div>\n", array("class"=>"opanel clickable-main","goto"=>true));
