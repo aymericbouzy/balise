@@ -35,9 +35,13 @@
       foreach($term_admins as $term_admin) {
         $term_admin = select_term_binet($term_admin["id"],array("id","binet","term"));
         $id = "binet".$term_admin["binet"];
+        $number_pending_validations = count_pending_validations($term_admin["binet"], $term_admin["term"]);
         echo link_to(
           path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"])),
-          "<div class=\"spot opanel\">
+          "<div class=\"spot opanel\">".
+            ($number_pending_validations > 0 ?
+                insert_tooltip("<div class=\"validations opanel0\">".$number_pending_validations."</div>","Validations en attente") 
+                : "")."
             <div class=\"binet-name\" id=\"".$id."\"><span>".pretty_binet($term_admin["binet"], false)."</span></div>
             <div class=\"binet-term\">".$term_admin["term"]."</div>
           </div>",
