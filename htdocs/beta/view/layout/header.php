@@ -59,7 +59,7 @@
   </li>
 
   <li>
-    <span><i class="fa fa-user"></i> <?php echo pretty_student(connected_student(), false); ?></span>
+    <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
   <li style="padding-right:20px;">
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>

@@ -58,6 +58,8 @@
 	      }
       ?>
 
+      <?php echo initialize_tooltips(); ?>
+
   </head>
   <body>
     <div id="wrapper">

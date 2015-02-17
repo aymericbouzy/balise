@@ -1,7 +1,5 @@
 <?php
 
-  before_action("check_entry", array("show"), array("model_name" => "wave"));
-
   switch ($_GET["action"]) {
 
   case "index":
