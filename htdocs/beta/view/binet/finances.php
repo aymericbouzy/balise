@@ -1,3 +1,4 @@
+<?php echo initialize_tooltips(); ?>
 <div id="index-wrapper">
   <div class="panel transparent-background">
     <div class="content" id="controlbar">
@@ -5,7 +6,10 @@
         <?php echo modal_toggle("choose-term",$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","opanel0 blue-background white-text","terms"); ?>
       </div>
       <div id="view-binet">
-        <?php echo link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")); ?>
+        <?php echo insert_tooltip(
+            link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")),
+            "Voir le binet",
+            "right"); ?>
       </div>
       <div class="switch opanel" id="switch-operations-budgets">
         <?php
