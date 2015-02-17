@@ -105,3 +105,33 @@
   color:#cbddff;
   font-weight:500;
 }
+
+/* ELements inside panels */
+.panel-list-element {
+  display:block;
+  width:90%;
+  margin:auto;
+  margin-top:3px;
+  padding:3px;
+  text-align:center;
+  color:#cbddff;
+  background-color:#AD1457;
+  text-decoration:none;
+}
+
+.panel-list-element>i.icon {
+  float:left;
+  padding:3px;
+  padding-left:10px;
+  color:#fff;
+}
+
+.panel-list-element>a {
+  text-decoration:none;
+  color:#fff;
+}
+
+.panel-list-element>a:hover {
+  text-decoration:underline;
+  color:#ccc;
+}

@@ -103,11 +103,15 @@
   }
 
   function binet_admins_current_student() {
+    return student_admins_binets($_SESSION["student"]);
+  }
+
+  function student_admins_binets($student) {
     $sql = "SELECT binet, term
-            FROM binet_admin
-            WHERE student = :student";
+    FROM binet_admin
+    WHERE student = :student";
     $req = Database::get()->prepare($sql);
-    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->bindValue(':student', $student, PDO::PARAM_INT);
     $req->execute();
     return $req->fetchAll();
   }

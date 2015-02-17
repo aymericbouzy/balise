@@ -6,6 +6,7 @@
 
   case "show":
     $student = select_student($student["id"], array("id", "name", "email"));
+    $binets = student_admins_binets($student["id"]);
     break;
 
   default:
