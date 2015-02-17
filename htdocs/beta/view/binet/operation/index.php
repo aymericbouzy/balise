@@ -55,7 +55,7 @@
   </tr>
   <tr class="total">
     <td colspan="3">Solde</td>
-    <td colspan="2"><?php echo pretty_amount(sum_array($operations, "amount")); ?></td>
+    <td colspan="2"><b><?php echo pretty_amount(sum_array($operations, "amount")); ?></b></td>
   </tr>
 </tbody>
 <?php
