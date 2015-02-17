@@ -53,10 +53,10 @@
     return $link ? link_to(path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])), $caption) : $caption;
   }
 
-  function pretty_student($student, $link = true) {
+  function pretty_student($student, $link = true, $icon = false) {
     $student = select_student($student, array("name", "id"));
     if ($link) {
-      return link_to(path("show", "student", $student["id"]), $student["name"]);
+      return link_to(path("show", "student", $student["id"]), ( $icon ? "<i class=\"fa fa-user\"></i> " : "").$student["name"]);
     } else {
       return $student["name"];
     }
