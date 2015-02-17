@@ -12,10 +12,10 @@
     $form = $GLOBALS[$form_name."_form"];
     // check for presence of input
     $sanitized_input = sanitize_input($form);
-    // save input in case of error
-    $_SESSION[$form_name."_form"] = $sanitized_input;
     // put input to the right format for treatment
     $formatted_input = format_input_forward($sanitized_input, $form);
+    // save input in case of error
+    $_SESSION[$form_name."_form"] = $formatted_input;
     // validate input correctness; redirects if not valid
     validate_formatted_input($formatted_input, $form);
     // unset now useless session variable
@@ -27,11 +27,13 @@
   function sanitize_input($form) {
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
-      if (is_empty($_POST[$name]) && is_empty($field["optional"])) {
-        add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
-        $sanitized_input[$name] = default_value_for_type($field["type"]);
-      } else {
-        $sanitized_input[$name] = $_POST[$name];
+      if (is_empty($field["disabled"])) {
+        if (is_empty($_POST[$name]) && is_empty($field["optional"])) {
+          add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
+          $sanitized_input[$name] = default_value_for_type($field["type"]);
+        } else {
+          $sanitized_input[$name] = $_POST[$name];
+        }
       }
     }
     return $sanitized_input;
@@ -92,7 +94,7 @@
         break;
       }
       if (!$valid) {
-        add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format");
+        add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format.");
       }
     }
     return $translated_input;

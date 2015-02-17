@@ -6,28 +6,39 @@
     switch ($field["type"]) {
     case "amount":
       $value = is_numeric($field["value"]) ? $field["value"] / 100 :  $field["value"];
-      return form_group_text($label, $field_name, $value, $form["name"], $parameters["html_decoration"]);
+      $form_input = form_group_text($label, $field_name, $value, $form["name"], $parameters["html_decoration"]);
+      break;
     case "id":
       if (is_empty($parameters["hidden"])) {
-        return form_group_select($label, $field_name, $parameters["options"], $field["value"], $form["name"]);
+        $form_input = form_group_select($label, $field_name, $parameters["options"], $field["value"], $form["name"]);
       } else {
-        return form_hidden($field_name, $field["value"]);
+        $form_input = form_hidden($field_name, $field["value"]);
       }
+      break;
     case "date":
-      return form_group_date($label, $field_name, $field["value"], $form["name"]);
+      $form_input = form_group_date($label, $field_name, $field["value"], $form["name"]);
+      break;
     case "boolean":
       set_if_not_set($parameters["selection_method"], "checkbox");
       switch ($parameters["selection_method"]) {
         case "radio":
-        return form_group_radio($field_name, $label, $field["value"], $form["name"]);
+        $form_input = form_group_radio($field_name, $label, $field["value"], $form["name"]);
+        break;
         default:
-        return form_group_checkbox($label, $field_name, $field["value"], $form["name"]);
+        $form_input = form_group_checkbox($label, $field_name, $field["value"], $form["name"]);
       }
+      break;
     case "name":
-      return form_group_text($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
+      $form_input = form_group_text($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
+      break;
     case "text":
-      return form_group_textarea($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
+      $form_input = form_group_textarea($label, $field_name, $field["value"], $form["name"], $parameters["html_decoration"]);
+      break;
     }
+    if (!is_empty($field["disabled"])) {
+      return "<fieldset disabled>".$form_input."</fieldset>";
+    }
+    return $form_input;
   }
 
   function form_group($label, $field, $content, $form_name) {
@@ -130,7 +141,7 @@
     foreach ($options as $value => $label) {
       $form_group_radio .= "<div class=\"radio".(isset($_SESSION[$form_name."_errors"]) && in_array($field, $_SESSION[$form_name."_errors"]) ? " has-error" : "")."\">
         <label>
-          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($prefill_value == $value || $include_first ? " checked" : "").">
+          <input type=\"radio\" name=\"".$field."\" id=\"".$field.$value."\" value=\"".$value."\"".($prefill_value == $value || $check_first ? " checked" : "").">
           ".$label."
         </label>
       </div>";
