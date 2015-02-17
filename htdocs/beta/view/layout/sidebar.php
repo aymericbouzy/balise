@@ -30,7 +30,7 @@
         echo li_link(
           link_to(
             path("", "validation", "", binet_prefix($binet, $term)),
-            "<i class=\"fa fa-fw fa-check\"></i> Validations".($number_pending_validations > 0 ? " <span class=\"counter\">".$number_pending_validations."</span>" : "")
+            "<i class=\"fa fa-fw fa-check\"></i> Validations".($number_pending_validations > 0 ? " <span class=\"badge counter\">".$number_pending_validations."</span>" : "")
           ),
           $_GET["controller"] == "validation"
         );
