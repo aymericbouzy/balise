@@ -46,7 +46,7 @@
           ?>
           <span class="actions">
             <?php
-            if(has_editing_rights($binet["id"],$binet["current_term"])){
+            if(has_viewing_rights($binet["id"],$binet["current_term"])){
               echo button(path("",binet_prefix($binet["id"],$binet["current_term"])), "Voir l'activité du binet", "eye", "blue");
             } else {
             echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
