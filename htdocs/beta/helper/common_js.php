@@ -33,6 +33,10 @@ function initialize_tooltips(){
   return "\n<script>\n $(function () { $('[data-toggle=\"tooltip\"]').tooltip() })\n</script>\n";
 }
 
-function insert_tooltip($html_code, $tooltip_content, $placement = "top"){
-  return preg_replace("/^\s*(<[^>]*)(>)(.*)$/", "$1 data-toggle=\"tooltip\" data-placement=\"".$placement."\" title=\"".$tooltip_content."\" >\n $3" , $html_code);
+function insert_tooltip($html_tag, $tooltip_content, $placement = "top") {
+  return insert_properties_in_html_tag($html_tag, array(
+    "data-toggle" => "tooltip",
+    "data-placement" => $placement,
+    "title" => $tooltip_content
+  ));
 }
