@@ -56,38 +56,43 @@
   <div class="sh-bu-tags opanel">
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
   </div>
-  <div class="sh-piechart-panel opanel">
-  <?php
-    $operations = select_operations_budget($budget["id"]);
-    if (!is_empty($operations) && sizeOf($operations)>1) {
-      ?>
-        <div class="pieID pie">
-        </div>
-        <ul class="pieID legend">
-          <?php
-            foreach ($operations as $operation) {
-              ?>
-              <li>
-                <em><?php echo pretty_operation($operation["id"],true,true); ?></em>
-                <span><?php echo pretty_amount($operation["amount"],false,false); ?></span>
-              </li>
-              <?php
-            }
-          ?>
-        </ul>
-        <script>createPie(".pieID.legend", ".pieID.pie");</script>
+  <div class="panel opanel light-blue-background">
+    <div class="title">
+      Répartition des opérations sur le budget
+    </div>
+    <div class="content">
       <?php
-    }
-    else{
-      if(!is_empty($operations)){
-        echo pretty_operation($operations[0]["id"],true);
-      }
-      else{
-        ?>
-        Vous n'avez aucune opération associée à ce budget !
-        <?php
-      }
-    }
-  ?>
+        $operations = select_operations_budget($budget["id"]);
+        if (!is_empty($operations) && sizeOf($operations)>1) {
+          ?>
+            <div class="pieID pie">
+            </div>
+            <ul class="pieID legend">
+              <?php
+                foreach ($operations as $operation) {
+                  ?>
+                  <li>
+                    <em><?php echo pretty_operation($operation["id"],true,true); ?></em>
+                    <span><?php echo pretty_amount($operation["amount"],false,false); ?></span>
+                  </li>
+                  <?php
+                }
+              ?>
+            </ul>
+            <script>createPie(".pieID.legend", ".pieID.pie");</script>
+          <?php
+        }
+        else{
+          if(!is_empty($operations)){
+            echo pretty_operation($operations[0]["id"],true);
+          }
+          else{
+            ?>
+            Vous n'avez aucune opération associée à ce budget !
+            <?php
+          }
+        }
+      ?>
+    </div>
   </div>
 </div>

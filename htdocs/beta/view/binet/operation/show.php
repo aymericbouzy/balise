@@ -75,34 +75,39 @@
     <div class="content">
     </div>
   </div>
-  <div class="sh-piechart-panel opanel">
-    <?php
-    $budgets = select_budgets_operation($operation["id"]);
-    if (!is_empty($budgets) && sizeOf($budgets) > 1) {
-      ?>
-      <div class="pieID pie">
-      </div>
-      <ul class="pieID legend">
-        <?php
-        foreach ($budgets as $budget) {
-          ?>
-          <li>
-            <em><?php echo pretty_budget($budget["id"], true, false); ?></em>
-            <span><?php echo pretty_amount($budget["amount"], false); ?></span>
-          </li>
-          <?php
-        }
+  <div class="panel opanel light-blue-background">
+    <div class="title-small">
+      Répartition sur les budgets
+    </div>
+    <div class="content">
+      <?php
+      $budgets = select_budgets_operation($operation["id"]);
+      if (!is_empty($budgets) && sizeOf($budgets) > 1) {
         ?>
-      </ul>
-      <script>createPie(".pieID.legend", ".pieID.pie");</script>
-      <?php
-    } elseif (!is_empty($budgets)) {
-      echo pretty_budget($budgets[0]["id"], true);
-    } else {
+        <div class="pieID pie">
+        </div>
+        <ul class="pieID legend">
+          <?php
+          foreach ($budgets as $budget) {
+            ?>
+            <li>
+              <em><?php echo pretty_budget($budget["id"], true, false); ?></em>
+              <span><?php echo pretty_amount($budget["amount"], false); ?></span>
+            </li>
+            <?php
+          }
+          ?>
+        </ul>
+        <script>createPie(".pieID.legend", ".pieID.pie");</script>
+        <?php
+      } elseif (!is_empty($budgets)) {
+        echo pretty_budget($budgets[0]["id"], true);
+      } else {
+        ?>
+        <i>Vous n'avez aucun budget associé à cette opération ?</i>
+        <?php
+      }
       ?>
-      <i>Vous n'avez aucun budget associé à cette opération ?</i>
-      <?php
-    }
-    ?>
+    </div>
   </div>
 </div>
