@@ -67,6 +67,11 @@ a {
   background-color:red;
 }
 
+.validations:hover{
+  text-decoration:none;
+  background-color:rgb(173, 50, 39);
+}
+
 .binet-name {
   display:block;
   position:absolute;

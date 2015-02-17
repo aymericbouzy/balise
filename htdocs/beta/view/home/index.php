@@ -40,7 +40,10 @@
           path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"])),
           "<div class=\"spot opanel\">".
             ($number_pending_validations > 0 ?
-                insert_tooltip("<div class=\"validations opanel0\">".$number_pending_validations."</div>","Validations en attente") 
+                insert_tooltip(
+                  link_to(path("", "validation", "", binet_prefix($term_admin["binet"], $term_admin["term"])),
+                    $number_pending_validations,array("class"=>"validations opanel0")),
+                  "Validations en attente")
                 : "")."
             <div class=\"binet-name\" id=\"".$id."\"><span>".pretty_binet($term_admin["binet"], false)."</span></div>
             <div class=\"binet-term\">".$term_admin["term"]."</div>
