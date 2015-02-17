@@ -51,7 +51,7 @@
       add_tag_budget($tag, $budget["id"]);
     }
     $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
-    redirect_to_action("show");
+    redirect_to_action("index");
     break;
 
   case "show":

@@ -24,9 +24,9 @@
     return $tag_string;
   }
 
-  function pretty_binet($binet, $link = true, $kes_special = true) {
+  function pretty_binet($binet, $link = true, $special = true) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
-    $caption = $binet["id"] == KES_ID && $kes_special ? "<i class=\"icon-logo-kes fa-2x\" alt=\"Kès\"></i>" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
+    $caption = $binet["id"] == KES_ID && $special ? "<i class=\"icon-logo-kes fa-2x\" alt=\"Kès\"></i>" : $binet["name"].($special && $binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
     return $link ? link_to(path("show", "binet", $binet["id"]), $caption) : $caption;
   }
 

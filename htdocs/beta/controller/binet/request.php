@@ -158,7 +158,7 @@
     }
     $request["id"] = create_request($_POST["wave"], $subsidies, $_POST["answer"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
-    redirect_to_action("show");
+    redirect_to_action("index");
     break;
 
   case "show":
