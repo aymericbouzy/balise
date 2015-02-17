@@ -1,4 +1,3 @@
-<?php echo initialize_tooltips(); ?>
 <div id="index-wrapper">
   <div class="panel transparent-background">
     <div class="content" id="controlbar">
