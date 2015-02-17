@@ -34,6 +34,15 @@
     }
   }
 
+  function check_exists_budget() {
+    $operation = select_operation($GLOBALS["operation"]["id"], array("amount"));
+    $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($operation["amount"] > 0 ? ">" : "<", 0)));
+    if (is_empty($budgets)) {
+      $_SESSION["warning"][] = "Avant de pouvoir faire apparaître cette opération dans ta trésorerie, tu dois créer un budget auquel l'associer.";
+      redirect_to_path(path("", "validation", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
+    }
+  }
+
   before_action("check_csrf_post", array("update", "create", "validate"));
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete", "validate", "review"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
@@ -47,6 +56,7 @@
     "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
     "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
   ));
+  before_action("check_exists_budget", array("review", "validate"));
   before_action("setup_for_validation", array("validate", "review"));
   before_action("check_form_input", array("validate"), array(
     "model_name" => "operation",
@@ -80,12 +90,7 @@
     $operation["id"] = create_operation($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il te reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     $budgets = select_budgets(array("binet" => $binet, "term" => $term, "amount" => array($_POST["sign"] ? "<" : ">", 0)));
-    if (is_empty($budgets)) {
-      $_SESSION["warning"][] = "Avant de pouvoir faire apparaître cette opération dans ta trésorerie, tu dois créer un budget auquel l'associer.";
-      redirect_to_path(path("", "validation", "", binet_prefix($binet, $term)));
-    } else {
-      redirect_to_action("review");
-    }
+    redirect_to_action("review");
     break;
 
   case "show":
@@ -107,10 +112,17 @@
     break;
 
   case "update":
+    $operation = select_operation($operation["id"], array("id", "amount"));
     $_POST["amount"] = (1 - 2*$_POST["sign"])*$_POST["amount"];
     update_operation($operation["id"], $_POST);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
-    redirect_to_action("show");
+    if ($operation["amount"] != $_POST["amount"]) {
+      $_SESSION["notice"][] = "Le montant de l'opération a changé : tu dois donc l'attribuer à nouveau à ton budget.";
+      remove_budgets_operation($operation["id"]);
+      redirect_to_action("review");
+    } else {
+      redirect_to_action("show");
+    }
     break;
 
   case "delete":
@@ -156,7 +168,7 @@
     if ($operation["created_by"] != connected_student()) {
       send_email($operation["created_by"], "Opération acceptée", "operation_accepted", array("operation" => $operation["id"], "binet" => $binet));
     }
-    $_SESSION["notice"][] = "L'opération a été acceptée.".($operation["state"] == "waiting_validation" ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    $_SESSION["notice"][] = "L'opération a été ajoutée dans ton budget.".($operation["state"] == "waiting_validation" ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;
 
