@@ -6,12 +6,11 @@
     	<a href="javascript:;" data-target="#binets" data-toggle="collapse"><?php echo pretty_binet($binet, false); ?> </a>
 				<ul id="binets" class="collapse">
 					<?php
-            foreach(binet_admins_current_student() as $binet_admin) {
-  						$binet_admin["binet_name"] = select_binet($binet_admin["binet"], array("name"))["name"];
-              // TODO : use pretty_binet_term below
+            foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
+  						$term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
   						?>
   						<li>
-  							<?php echo link_to(path("", "binet", binet_term_id($binet_admin["binet"], $binet_admin["term"])), pretty_binet_term($binet_admin["binet"]."/".$binet_admin["term"], false)); ?>
+  							<?php echo link_to(path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"])), pretty_binet_term($term_admin["id"], false)); ?>
   						</li>
   						<?php
 						}
