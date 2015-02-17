@@ -36,7 +36,7 @@
   case "index":
     $budgets = array();
     foreach (select_budgets(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $budget) {
-      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+      $budgets[] = select_budget($budget["id"], array("id", "label", "amount","subsidized_amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     }
     break;
 
@@ -55,7 +55,7 @@
     break;
 
   case "show":
-    $budget = select_budget($budget["id"], array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+    $budget = select_budget($budget["id"], array("id", "label", "binet", "amount", "term", "real_amount","subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     break;
 
   case "edit":

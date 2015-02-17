@@ -7,17 +7,23 @@
  <!-- TODO : DRY it up -->
   <thead>
     <tr>
-      <th>Budget</th>
-      <th>Tags</th>
+      <th colspan=2 >Budget</th>
+      <th colspan=2 >Montant</th>
+      <th colspan=3 >Subventions</th>
+    </tr>
+    <tr>
+      <th>Nom</th>
+      <th>Mot clés</th>
       <th>Prévisionnel</th>
       <th>Réel</th>
-      <th>Subventionné (accordé)</th>
-      <th>Subventionné (utilisé)</th>
+      <th>Attendues</th>
+      <th>Accordées</th>
+      <th>Utilisées</th>
     </tr>
   </thead>
   <thead class="separator">
     <tr>
-      <td colspan="6">Dépenses</td>
+      <td colspan="7">Dépenses</td>
     </tr>
   </thead>
   <tbody class="list">
@@ -30,6 +36,7 @@
             <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
+            <td><?php echo pretty_amount($budget["subsidized_amount"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount_used"]); ?></td>
           </tr>
@@ -41,13 +48,14 @@
       <td colspan="2">Total des dépenses</td>
       <td><?php echo pretty_amount(sum_array($budgets, "amount", "negative")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "real_amount", "negative")); ?></td>
+      <td><?php echo pretty_amount(sum_array($budget,"subsidized_amount","negative")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted", "negative")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used", "negative")); ?></td>
     </tr>
   </tbody>
   <thead class="separator">
       <tr>
-          <td colspan="6">Recettes</td>
+          <td colspan="7">Recettes</td>
       </tr>
   </thead>
   <tbody class="list">
@@ -60,6 +68,7 @@
             <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
+            <td><?php echo pretty_amount($budget["subsidized_amount"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount_used"]); ?></td>
           </tr>
@@ -71,6 +80,7 @@
       <td colspan="2">Total des recettes</td>
       <td><?php echo pretty_amount(sum_array($budgets, "amount", "positive")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "real_amount", "positive")); ?></td>
+      <td><td><?php echo pretty_amount(sum_array($budget,"subsidized_amount","positive")); ?></td></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted", "positive")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used", "positive")); ?></td>
     </tr>
@@ -85,6 +95,7 @@
           <td colspan="2">Total</td>
           <td><?php echo pretty_amount(sum_array($budgets, "amount")); ?></td>
           <td><?php echo pretty_amount(sum_array($budgets, "real_amount")); ?></td>
+          <td></td>
           <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted")); ?></td>
           <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used")); ?></td>
       </tr>
