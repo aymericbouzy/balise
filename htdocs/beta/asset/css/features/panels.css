@@ -148,6 +148,9 @@
 
 /*------------------------------------------------------*/
 /* ELements inside panels */
+.panel-article {
+  padding:5px;
+}
 .panel-line {
   display:table;
   width:100%;

@@ -91,8 +91,18 @@
     <?php
   }
   ?>
-  <div class="sh-block-normal opanel">
-    <?php echo $binet["description"]; ?>
+  <div class="panel opanel light-blue-background">
+    <div class="content">
+      <div class="panel-article">
+        <?php
+          if($binet["description"]!=""){
+            echo $binet["description"];
+          } else {
+            echo "<i> Aucune description. </i>";
+          }
+        ?>
+      </div>
+    </div>
   </div>
   <?php
     if ($binet["state"] != "grey") {

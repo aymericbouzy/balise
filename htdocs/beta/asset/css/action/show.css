@@ -37,13 +37,6 @@
   text-decoration:none;
 }
 
-.sh-block-normal {
-  padding:10px;
-  margin: 5px;
-  background-color: #cbddff;
-  color:#2e2e2e;
-}
-
 
 @media(min-width:543px){
   .sh-title>.text>.main {
