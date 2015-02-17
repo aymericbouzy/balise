@@ -70,7 +70,7 @@
     break;
 
   case "create":
-    $request["id"] = create_request($request_entry_input["wave"], $request_entry_input["subsidies"], $request_entry_input["answer"]);
+    $request["id"] = create_request($_POST["wave"], $_POST["subsidies"], $_POST["answer"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
     redirect_to_action("show");
     break;
@@ -88,11 +88,11 @@
     break;
 
   case "update":
-    update_request($request["id"], array("answer" => $request_entry_input["answer"]));
+    update_request($request["id"], array("answer" => $_POST["answer"]));
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       delete_subsidy($subsidy["id"]);
     }
-    foreach ($request_entry_input["subsidies"] as $subsidy) {
+    foreach ($_POST["subsidies"] as $subsidy) {
       create_subsidy($subsidy["budget"], $request["id"], $subsidy["requested_amount"], $subsidy["optional_values"]);
     }
     $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès.";
@@ -110,7 +110,7 @@
     break;
 
   case "grant":
-    foreach ($request_review_input as $subsidy => $values) {
+    foreach ($_POST as $subsidy => $values) {
       update_subsidy($subsidy, $values);
     }
     review_request($request["id"]);

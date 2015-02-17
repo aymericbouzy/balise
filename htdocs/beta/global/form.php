@@ -20,8 +20,8 @@
     validate_formatted_input($formatted_input, $form);
     // unset now useless session variable
     unset($_SESSION[$form_name."_form"]);
-    // create global variable with input nicely structured
-    $GLOBALS[$form_name."_input"] = structured_input($formatted_input, $form);
+    // replace $_POST variable with input nicely structured
+    $_POST = structured_input($formatted_input, $form);
   }
 
   function sanitize_input($form) {
@@ -44,7 +44,6 @@
       $valid = false;
       switch ($field["type"]) {
         case "amount":
-        // $_SESSION["notice"][] = array_to_string($_POST);
         if (is_numeric($value)) {
           $translated_input[$name] = floor($value * 100);
           $valid = true;
@@ -136,8 +135,10 @@
         break;
       }
     }
-    foreach ($form["validations"] as $validation) {
-      add_form_error($form["name"], "", call_user_func($validation, $input));
+    if (isset($form["validations"])) {
+      foreach ($form["validations"] as $validation) {
+        add_form_error($form["name"], "", call_user_func($validation, $input));
+      }
     }
     if (!isset($_POST["csrf_token"]) || !valid_csrf_token($_POST["csrf_token"])) {
       $_SESSION["error"][] = "Une erreur s'est produite. Tu peux réessayer de soumettre le formulaire.";
@@ -158,8 +159,6 @@
 
   function structured_input($validated_input, $form) {
     if (isset($form["structured_input_maker"])) {
-      var_dump($form["structured_input_maker"], $validated_input);
-      var_dump(call_user_func($form["structured_input_maker"], $validated_input));
       return call_user_func($form["structured_input_maker"], $validated_input);
     } else {
       return $validated_input;
@@ -184,8 +183,10 @@
     if (!is_empty($_SESSION[$form_name."_form"])) {
       $prefill_form_values = $_SESSION[$form_name."_form"];
       unset($_SESSION[$form_name."_form"]);
-    } else {
+    } elseif (isset($form["initialise_form"])) {
       $prefill_form_values = call_user_func($form["initialise_form"]);
+    } else {
+      $prefill_form_values = array();
     }
     foreach ($form["fields"] as $name => $field) {
       $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? $prefill_form_values[$name] : "";

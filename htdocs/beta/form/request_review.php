@@ -14,8 +14,6 @@
     $form["fields"]["explanation_".$subsidy["id"]] = create_text_field("l'explication pour le montant accordé au budget \"".$budget["label"]."\"", array("optional" => 1));
   }
 
-  $form["validations"] = array();
-
   function structured_review_maker($validated_input) {
     $structured_input = array();
     foreach ($validated_input as $name => $value) {
