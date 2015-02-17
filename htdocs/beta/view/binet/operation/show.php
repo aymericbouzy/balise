@@ -53,11 +53,27 @@
     <?php echo $operation["bill"] ?: "Aucune facture associée"; ?> </br>
     <?php echo pretty_operation_type($operation["type"])." ".($operation["reference"] ?: "Aucune référence de paiement associée"); ?>
   </div>
-  <div class="sh-op-info opanel">
-    <?php echo $operation["comment"]; ?>
+  <div class="panel opanel blue-background">
+    <div class="content">
+      <?php
+        if($operation["comment"] != ""){
+          echo "<div class=\"panel-important-element light-blue-background\">".$operation["comment"]."</div>";
+        }
+      ?>
+      <div class="panel-important-element light-blue-background"><i class="fa fa-fw fa-user"></i>
+        <?php echo $operation["paid_by"] ? paid_by_to_caption($operation["paid_by"]) : "Aucun payeur enregistré";?>
+      </div>
+      <div class="panel-important-element light-blue-background">
+        <?php echo pretty_tags(select_tags_operation($operation["id"]), true); ?>
+      </div>
+    </div>
   </div>
-  <div class="sh-op-payer opanel">
-    <i class="fa fa-fw fa-user"></i> <?php echo $operation["paid_by"] ? paid_by_to_caption($operation["paid_by"]) : "Aucun payeur enregistré"; ?>
+  <div class="panel opanel light-blue-background">
+    <div class="title-small">
+      Utilisation de subventions
+    </div>
+    <div class="content">
+    </div>
   </div>
   <div class="sh-piechart-panel opanel">
     <?php
