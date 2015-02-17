@@ -53,7 +53,11 @@
           ?>
           <span class="actions">
             <?php
+            if(has_editing_rights($binet["id"],$binet["current_term"])){
+              echo button(path("",binet_prefix($binet["id"],$binet["current_term"])), "Voir son activité", "eye", "blue");
+            } else {
             echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
+            }
             ?>
           </span>
         </li>
