@@ -49,7 +49,8 @@
   }
 
   function not_sent() {
-    header_if(select_request($_GET["request"], array("sent"))["sent"], 403);
+    $request = select_request($_GET["request"], array("sent"));
+    header_if($request["sent"] == 1, 403);
   }
 
   function sent_and_not_published() {
@@ -97,7 +98,7 @@
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send", "reject"));
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject"), array("model_name" => "request", "binet" => $binet, "term" => $term));
-  before_action("check_rough_draft_viewing_rights", array("show"));
+  before_action("check_rough_draft_viewing_rights", array("show", "delete"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant", "reject"));
   before_action("setup_for_editing", array("new", "create", "edit", "update"));
@@ -119,11 +120,16 @@
   ));
   before_action("not_sent", array("send", "edit", "update", "delete"));
   before_action("sent_and_not_published", array("review", "grant", "reject"));
-  before_action("generate_csrf_token", array("new", "edit", "show", "review"));
+  before_action("generate_csrf_token", array("new", "edit", "show", "review", "index"));
 
   switch ($_GET["action"]) {
 
   case "index":
+    $rough_drafts = select_requests(array("binet" => $binet, "term" => $term, "sent" => 0));
+    $sent_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => array("IN", array("sent", "reviewed_accepted", "reviewed_rejected"))));
+    $accepted_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => "accepted"));
+    $published_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => array("IN", array("accepted", "rejected"))));
+    $binet_term = select_term_binet($binet."/".$term, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "amount_requested_in_rough_drafts", "amount_requested_in_sent"));
     break;
 
   case "new":
@@ -256,14 +262,15 @@
     break;
 
   case "delete":
+    delete_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été supprimée de tes brouillons.";
-    redirect_to_action("index");
+    redirect_to_path(path("", "request", "", binet_prefix($binet, $term)));
     break;
 
   case "send":
     send_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été envoyée avec succès.";
-    redirect_to_action("show");
+    redirect_to_path(path("", "request", "", binet_prefix($binet, $term)));
     break;
 
   default:

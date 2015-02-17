@@ -99,3 +99,7 @@
                 </div>
               </div>";
   }
+
+  function text_tune_with_amount($amount,$text){
+    return $amount." ".$text.($amount > 1 ? "s":"");
+  }

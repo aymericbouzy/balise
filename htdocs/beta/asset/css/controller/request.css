@@ -135,3 +135,116 @@
   color:    #fff;
   opacity:  0.7;
 }
+
+/* --------------------------------------------------------------------------*/
+/* Request index */
+
+#request-count{
+  width:100%;
+  display:table;
+}
+#request-count>span{
+  display:table-cell;
+  width:30%;
+  text-align:center;
+}
+
+#amounts {
+  position:relative;
+  height:50px;
+  width:100%;
+}
+
+#total{
+  height:40px;
+  width:30%;
+  background-color:#26A69A;
+  color:#fff;
+  top:5px;
+  left:0px;
+}
+#use{
+  height:40px;
+  width:30%;
+  background-color:#607D8B;
+  color:#fff;
+  top:5px;
+  left:35%;
+}
+#requested{
+  height:40px;
+  width:30%;
+  background-color:#9E9E9E;
+  color:#fff;
+  top:5px;
+  left:70%;
+}
+
+.panel>.title-small{
+  background-color:#B0BEC5;
+  color:#000;
+}
+.title-small>a{
+  color:#2e2e2e;
+}
+.title-small>a:hover{
+  color:#000;
+}
+
+.state-indicator{
+  position:absolute;
+  display:inline-block;
+  padding:5px;
+  padding-left:0px;
+  padding-right:0px;
+  margin:-5px;
+  width:20px;
+  text-align:center;
+}
+
+.request-infos{
+  display:table;
+  margin-left:20px;
+  width:100%;
+}
+
+.request-infos>span{
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  width:30%;
+  border-left:1px solid rgba(0,0,0,0.3);
+}
+
+.panel.subsidies {
+  margin-top:10px;
+  margin-left:-5px;
+  margin-right:-5px;
+  margin-bottom:-5px;
+  font-size:11px;
+}
+
+.subsidy {
+  display:table;
+  width:100%;
+}
+
+.subsidy>span{
+  display:table-cell;
+  text-align:center;
+  vertical-align:middle;
+  width:30%;
+}
+
+.actions {
+  position:absolute;
+  top:0px;
+  right:0px;
+}
+.action-on-request {
+  position:relative;
+  max-width:120px;
+  font-size:10px;
+  padding:4px;
+  margin-left:5px;
+}
