@@ -16,7 +16,6 @@
   before_action("create_form", array("new", "create", "edit", "update"), "budget");
   before_action("check_form", array("create", "update"), "budget");
   before_action("check_budget_is_alone", array("edit", "update", "delete"));
-  before_action("generate_csrf_token", array("new", "edit", "show"));
 
   switch ($_GET["action"]) {
 

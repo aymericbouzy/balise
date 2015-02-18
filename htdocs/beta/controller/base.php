@@ -25,5 +25,6 @@
   }
 
   if (!(STATE == "development" && ob_get_length() != 0)) {
+    generate_csrf_token();
     include LAYOUT_PATH."application.php";
   }

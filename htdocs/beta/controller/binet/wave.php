@@ -20,7 +20,6 @@
   before_action("create_form", array("new", "create", "edit", "update"), "wave");
   before_action("check_form", array("create", "update"), "wave");
   before_action("check_is_publishable", array("publish"));
-  before_action("generate_csrf_token", array("new", "edit", "show"));
 
   $form_fields = array("submission_date", "expiry_date", "question");
 

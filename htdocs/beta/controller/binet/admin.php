@@ -11,7 +11,6 @@
   before_action("check_admin", array("delete"));
   before_action("current_kessier", array("new", "create", "delete"));
   before_action("create_form", array("new", "create"), "admin");
-  before_action("generate_csrf_token", array("new", "index"));
 
   switch ($_GET["action"]) {
 

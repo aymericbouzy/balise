@@ -58,7 +58,6 @@
   before_action("check_form", array("grant"), "request_review");
   before_action("not_sent", array("send", "edit", "update", "delete"));
   before_action("sent_and_not_published", array("review", "grant", "reject"));
-  before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
   switch ($_GET["action"]) {
 

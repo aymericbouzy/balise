@@ -1,15 +1,5 @@
 <?php
 
-  function check_unique_clean_name() {
-    $binets = select_binets(array("clean_name" => clean_string($_POST["name"])));
-    if (!is_empty($binets)) {
-      $_SESSION["binet"]["errors"][] = "name";
-      $_SESSION["error"][] = "Ce nom de binet est déjà utilisé par le binet ".pretty_binet($binets[0]["id"]).". Veuillez en choisir un autre.";
-      return false;
-    }
-    return true;
-  }
-
   function check_is_deactivated() {
     $current_term = current_term($GLOBALS["binet"]["id"]);
     header_if(!is_empty($current_term), 403);
@@ -20,7 +10,7 @@
     header_if(is_empty($current_term), 403);
   }
 
-  before_action("check_csrf_post", array("update", "create", "reactivate"));
+  before_action("check_csrf_post", array("reactivate"));
   before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate", "power_transfer"));
   before_action(
     "check_entry",
@@ -31,28 +21,14 @@
   before_action("check_is_deactivated", array("reactivate"));
   before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "set_subsidy_provider", "admin"));
   before_action("check_editing_rights", array("edit", "update"));
-  before_action("check_form_input", array("create"), array(
-    "model_name" => "binet",
-    "str_fields" => array(array("name", 30)),
-    "other_fields" => array(array("name", "check_unique_clean_name")),
-    "int_fields" => array(array("term", MAX_TERM)),
-    "redirect_to" => path("new", "binet", "")
-  ));
-  before_action("check_form_input", array("update"), array(
-    "model_name" => "binet",
-    "str_fields" => array(array("description", 10000), array("subsidy_steps", 50000)),
-    "redirect_to" => path("edit", "binet", $_GET["action"] == "update" ? $binet["id"] : ""),
-    "optional" => array("description", "subsidy_steps")
-  ));
+  before_action("create_form", array("new", "create", "edit", "update"), "binet");
+  before_action("check_form", array("create", "update"), "binet");
   before_action("check_form_input", array("reactivate"), array(
     "model_name" => "binet",
     "str_fields" => array(array("term", MAX_TERM)),
     "redirect_to" => path("change_term", "binet", $_GET["action"] == "reactivate" ? $binet["id"] : "")
   ));
-  before_action("generate_csrf_token", array("new", "edit", "change_term", "show"));
 
-  $binet_form_fields = array("name", "term");
-  $description_form_fields = array("name", "description", "subsidy_steps");
   $term_form_fields = array("term");
 
   switch ($_GET["action"]) {
@@ -62,10 +38,6 @@
     break;
 
   case "new":
-    $binet = initialise_for_form_from_session($binet_form_fields, "binet");
-    if (is_empty($binet["term"])) {
-      $binet["term"] = current_term(KES_ID);
-    }
     break;
 
   case "create":
@@ -75,10 +47,6 @@
     break;
 
   case "edit":
-    function binet_to_form_fields($binet) {
-      return $binet;
-    }
-    $binet = set_editable_entry_for_form("binet", $binet, $description_form_fields);
     break;
 
   case "update":

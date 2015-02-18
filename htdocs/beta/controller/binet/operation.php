@@ -33,7 +33,6 @@
   before_action("create_form", array("review", "validate"), "operation_review");
   before_action("check_form", array("validate"), "operation_review");
   before_action("check_exists_budget", array("review", "validate"));
-  before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
   switch ($_GET["action"]) {
 
