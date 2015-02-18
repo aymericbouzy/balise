@@ -18,6 +18,9 @@
     $term_binet["term"] = $id[1];
     $present_virtual_fields = array_intersect($fields, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state", "amount_requested_in_sent", "amount_requested_in_rough_drafts", "amount_requested_in_published"));
     if (!is_empty($present_virtual_fields)) {
+      if (in_array("state", $fields)) {
+        $fields = array_merge($fields, array("real_balance", "expected_balance"));
+      }
       $budgets = array();
       foreach (select_budgets(array("binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $budget) {
         $budgets[] = select_budget($budget["id"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "amount"));
