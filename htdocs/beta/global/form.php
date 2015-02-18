@@ -28,7 +28,7 @@
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
       if (is_empty($field["disabled"])) {
-        if (is_empty($_POST[$name]) && is_empty($field["optional"])) {
+        if (!isset($_POST[$name]) && is_empty($field["optional"])) {
           add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
           $sanitized_input[$name] = default_value_for_type($field["type"]);
         } else {

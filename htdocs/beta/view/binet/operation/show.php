@@ -21,6 +21,9 @@
         echo button(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
         echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
       }
+      if (has_editing_rights_for_suggested_operation($operation["id"])) {
+        echo button(path("edit", "operation", $operation["id"]), "Modifier", "edit", "grey");
+      }
       if (is_current_kessier()) {
         switch ($operation["state"]) {
           case "waiting_validation":

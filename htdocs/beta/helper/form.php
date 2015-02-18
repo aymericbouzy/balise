@@ -110,8 +110,8 @@
   function form_group_checkbox($label, $field, $prefill_value, $form_name) {
     return "<div class=\"checkbox".(isset($_SESSION[$form_name."_errors"]) && in_array($field, $_SESSION[$form_name."_errors"]) ? " has-error" : "")."\">
               <label>
-                <input type=\"hidden\" name=\"".$field."\" value=\"0\">
                 <input type=\"checkbox\" id=\"".$field."\" name=\"".$field."\" value=\"1\"".(is_empty($prefill_value) ? "" : " checked").">
+                <input type=\"hidden\" name=\"".$field."\" value=\"0\">
                 ".$label."
               </label>
             </div>";

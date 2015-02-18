@@ -57,7 +57,7 @@
     $initial_input = array();
     if (isset($GLOBALS["request"]["id"])) {
       $request = $GLOBALS["request"]["id"];
-      $initial_input = select_request($request, array("wave", "answer"));
+      $initial_input = select_request($request);
       foreach (select_subsidies(array("request" => $request)) as $subsidy) {
         $subsidy = select_subsidy($subsidy["id"], array("budget", "id", "requested_amount", "purpose"));
         $initial_input["amount_".$subsidy["budget"]] = $subsidy["requested_amount"];

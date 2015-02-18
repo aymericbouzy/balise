@@ -64,7 +64,7 @@
     $initial_input = array();
     if (isset($GLOBALS["budget"]["id"])) {
       $budget = $GLOBALS["budget"]["id"];
-      $initial_input = select_budget($budget, array("label", "amount"));
+      $initial_input = select_budget($budget);
       $initial_input["sign"] = $initial_input["amount"] > 0 ? 0 : 1;
       if ($initial_input["sign"]) {
         $initial_input["amount"] *= -1;

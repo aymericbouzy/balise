@@ -34,19 +34,22 @@
     }
   }
 
-  before_action("check_csrf_post", array("update", "create", "validate"));
+  function check_viewing_operation_rights() {
+    header_if(!(has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]) || has_editing_rights_for_suggested_operation($GLOBALS["operation"]["id"])), 401);
+  }
+
+  function has_editing_rights_for_suggested_operation($operation) {
+    $operation = select_operation($operation, array("created_by", "state"));
+    return $operation["created_by"] == connected_student() && $operation["state"] == "suggested";
+  }
+  
+  before_action("check_csrf_post", array("validate"));
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete", "validate", "review"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "validate", "review"));
-  before_action("check_form_input", array("create", "update"), array(
-    "model_name" => "operation",
-    "str_fields" => array(array("bill", 30), array("reference", 30), array("comment", 255)),
-    "amount_fields" => array(array("amount", MAX_AMOUNT)),
-    "int_fields" => ($_GET["action"] == "create" ? array(array("sign", 1)) : array()),
-    "other_fields" => array(array("type", "exists_operation_type"), array("paid_by", "exists_paid_by")),
-    "redirect_to" => path($_GET["action"] == "update" ? "edit" : "new", "operation", $_GET["action"] == "update" ? $operation["id"] : "", binet_prefix($binet, $term)),
-    "optional" => array_merge(array("sign", "paid_by", "bill", "reference", "comment"), $_GET["action"] == "update" ? array("type", "amount") : array())
-  ));
+  before_action("check_viewing_operation_rights", array("show"));
+  before_action("create_form", array("new", "create", "edit", "update"), "operation_entry");
+  before_action("check_form", array("create", "update"), "operation_entry");
   before_action("setup_for_validation", array("validate", "review"));
   before_action("check_form_input", array("validate"), array(
     "model_name" => "operation",
@@ -56,11 +59,6 @@
     "optional" => $amount_array
   ));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
-
-  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign");
-  if ($_GET["action"] == "new") {
-    $form_fields[] = "sign";
-  }
 
   switch ($_GET["action"]) {
 
@@ -72,12 +70,10 @@
     break;
 
   case "new":
-    $operation = initialise_for_form_from_session($form_fields, "operation");
     break;
 
   case "create":
-    set_if_not_set($_POST["sign"], 0);
-    $operation["id"] = create_operation($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["type"], $_POST);
+    $operation["id"] = create_operation($binet, $term, $_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("review");
     break;
@@ -91,17 +87,9 @@
     break;
 
   case "edit":
-    function operation_to_form_fields($operation) {
-      $operation["sign"] = $operation["amount"] > 0 ? 0 : 1;
-      $operation["amount"] *= $operation["sign"] ? -1 : 1;
-      $operation["amount"] *= 1/100;
-      return $operation;
-    }
-    $operation = set_editable_entry_for_form("operation", $operation, $form_fields);
     break;
 
   case "update":
-    $_POST["amount"] = (1 - 2*$_POST["sign"])*$_POST["amount"];
     update_operation($operation["id"], $_POST);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
     redirect_to_action("show");
