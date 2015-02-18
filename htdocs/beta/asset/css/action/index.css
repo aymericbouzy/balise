@@ -106,7 +106,7 @@
   padding-left:15px;
   padding-right:15px;
 }
-.name{
+.name {
   display:table-cell;
   font-size:15px;
   padding:5px;
@@ -115,7 +115,9 @@
 }
 
 .state {
-  width:150px;
+  display:table-cell;
+  font-size:13px;
+  width:120px;
 }
 
 .dates, .users {
@@ -123,6 +125,9 @@
 }
 .users {
   width:200px;
+}
+.dates{
+  width:150px;
 }
 .dates>.top , .dates>.bottom {
   text-align:center;
