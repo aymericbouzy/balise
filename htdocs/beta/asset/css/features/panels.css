@@ -206,6 +206,7 @@
 /*------------------------------------------------------*/
 /* Pills */
 .pill {
+  display:inline-block;
   padding:3px;
   margin:3px;
   font-size:12px;
