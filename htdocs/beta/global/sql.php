@@ -125,9 +125,8 @@
         }
       }
     }
-    $ordered = !is_empty($order_by) && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields));
-    if ($ordered) {
-      $sql .= " ORDER BY :order_by".($ascending ? " ASC" : " DESC");
+    if (!is_empty($order_by) && in_array($order_by, array_merge($selectable_int_fields, $selectable_str_fields))) {
+      $sql .= " ORDER BY ".$order_by.($ascending ? " ASC" : " DESC");
     }
     $req = Database::get()->prepare($sql);
     foreach ($criteria as $column => $value) {
@@ -154,9 +153,6 @@
           }
         }
       }
-    }
-    if ($ordered) {
-      $req->bindValue(':order_by', $order_by, PDO::PARAM_STR);
     }
     $req->execute();
     return $req->fetchAll();
