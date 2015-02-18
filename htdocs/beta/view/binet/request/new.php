@@ -4,9 +4,5 @@
     <h1><i class="fa fa-fw fa-plus-square"></i> Nouvelle demande de subvention</h1>
   </div>
   </div>
-  <?php
-    $form_action = "create";
-    $submit_label = "Sauvegarder";
-    include "edit_form.php";
-  ?>
+  <?php echo get_html_form("request_entry"); ?>
 </div>

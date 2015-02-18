@@ -1,12 +1,5 @@
-<form role="form" id="budget" action="/<?php echo path($form_action, "budget", $form_action == "create" ? "" : $budget["id"], binet_prefix($binet, $term)); ?>" method="post">
-  <?php
-    if ($_GET["action"] == "new") {
-      echo form_group_radio("sign", array("1" => "Sortie d'argent", "0" => "Rentrée d'argent"), $budget, "budget");
-    }
-  ?>
-  <?php echo form_group_text("Nom :", "label", $budget, "budget"); ?>
-  <?php echo form_group_text("Tags (séparés par des ';') :", "tags_string", $budget, "budget"); ?>
-  <?php echo form_group_text("Montant prévisionnel :", "amount", $budget, "budget"); ?>
-  <?php echo form_csrf_token(); ?>
-  <?php echo form_submit_button($submit_label); ?>
-</form>
+<?php echo form_input(array("1" => "Dépense", "0" => "Recette"), "sign", $form, array("disabled" => $_GET["action"] == "edit" ? 1 : 0, "selection_method" => "radio")); ?>
+<?php echo form_input("Nom :", "label", $form); ?>
+<?php echo form_input("Tags (séparés par des ';') :", "tags", $form); ?>
+<?php echo form_input("Montant prévisionnel :", "amount", $form); ?>
+<?php echo form_submit_button($_GET["action"] == "new" ? "Sauvegarder" : "Enregistrer"); ?>

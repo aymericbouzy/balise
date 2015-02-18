@@ -1,7 +1,4 @@
-<form role="form" id="wave" action="/<?php echo path($form_action, "wave", $form_action == "create" ? "" : $wave["id"], binet_prefix($binet, $term)); ?>" method="post">
-  <?php echo form_group_date("Les binets peuvent soumettre leur demande de subvention jusqu'au :", "submission_date", $wave, "wave"); ?>
-  <?php echo form_group_date("Les subventions seront valables jusqu'au :", "expiry_date", $wave, "wave"); ?>
-  <?php echo form_group_textarea("Question à poser aux binets :", "question", $wave, "wave"); ?>
-  <?php echo form_csrf_token(); ?>
-  <?php echo form_submit_button($submit_label); ?>
-</form>
+<?php echo form_input("Les binets peuvent soumettre leur demande de subvention jusqu'au :", "submission_date", $form); ?>
+<?php echo form_input("Les subventions seront valables jusqu'au :", "expiry_date", $form); ?>
+<?php echo form_input("Question à poser aux binets :", "question", $form); ?>
+<?php echo form_submit_button($_GET["action"] == "edit" ? "Mettre à jour" : "Créer"); ?>
