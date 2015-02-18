@@ -1,39 +1,5 @@
 <?php
 
-  define("amount_prefix", "amount_");
-
-  function adds_amount_prefix($object) {
-    return amount_prefix.$object["id"];
-  }
-
-  function adds_max_amount($amount) {
-    return array($amount, MAX_AMOUNT);
-  }
-
-  $amount_array = array();
-
-  function setup_for_validation() {
-    $total_amount = select_operation($GLOBALS["operation"]["id"], array("amount"))["amount"];
-    $GLOBALS["binet_budgets"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($total_amount > 0 ? ">" : "<", 0)));
-    $GLOBALS["amount_array"] = array_map("adds_amount_prefix", $GLOBALS["binet_budgets"]);
-    $amounts_sum = 0;
-    foreach ($GLOBALS["amount_array"] as $key) {
-      if (isset($_POST[$key])) {
-        $amounts_sum += $_POST[$key];
-      }
-    }
-    $_POST["amounts_sum"] = $amounts_sum;
-  }
-
-  function equals_operation_amount($sum_amount) {
-    if ($sum_amount == abs(select_operation($GLOBALS["operation"]["id"], array("amount"))["amount"])) {
-      return true;
-    } else {
-      $_SESSION["error"][] = "La somme des montants indiqués n'est pas égale au montant de l'opération.";
-      return false;
-    }
-  }
-
   function check_viewing_operation_rights() {
     header_if(!(has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]) || has_editing_rights_for_suggested_operation($GLOBALS["operation"]["id"])), 401);
   }
@@ -42,22 +8,22 @@
     $operation = select_operation($operation, array("created_by", "state"));
     return $operation["created_by"] == connected_student() && $operation["state"] == "suggested";
   }
-  
+
+  function define_binet_budgets() {
+    $operation = select_operation($GLOBALS["operation"]["id"], array("amount"));
+    $GLOBALS["binet_budgets"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($operation["amount"] > 0 ? ">" : "<", 0)));
+  }
+
   before_action("check_csrf_post", array("validate"));
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete", "validate", "review"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
+  before_action("define_binet_budgets", array("validate", "review"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "validate", "review"));
   before_action("check_viewing_operation_rights", array("show"));
   before_action("create_form", array("new", "create", "edit", "update"), "operation_entry");
   before_action("check_form", array("create", "update"), "operation_entry");
-  before_action("setup_for_validation", array("validate", "review"));
-  before_action("check_form_input", array("validate"), array(
-    "model_name" => "operation",
-    "amount_fields" => array_map("adds_max_amount", array_merge($amount_array, array("amounts_sum"))),
-    "other_fields" => array(array("amounts_sum", "equals_operation_amount")),
-    "redirect_to" => path("review", "operation", $_GET["action"] == "validate" ? $operation["id"] : "", binet_prefix($binet, $term)),
-    "optional" => $amount_array
-  ));
+  before_action("create_form", array("review", "validate"), "operation_review");
+  before_action("check_form", array("validate"), "operation_review");
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
   switch ($_GET["action"]) {
@@ -107,32 +73,12 @@
     break;
 
   case "review":
-    if (!isset($_SESSION["operation"])) {
-      $_SESSION["operation"] = array();
-    }
-    $id = $operation["id"];
-    function operation_to_form_fields($operation) {
-      foreach ($GLOBALS["binet_budgets"] as $budget) {
-        $operation[adds_amount_prefix($budget)] = "";
-      }
-      foreach (select_budgets_operation($operation["id"]) as $budget) {
-        $operation[adds_amount_prefix($budget)] = $budget["amount"];
-      }
-      return $operation;
-    }
-    $operation = set_editable_entry_for_form("operation", $operation, $amount_array);
-    $operation = array_merge($operation, select_operation($id, array("id", "amount", "created_by", "comment", "date", "binet", "term")));
+    $operation = select_operation($operation["id"], array("id", "amount", "created_by", "comment", "date", "binet", "term"));
     break;
 
   case "validate":
-    $budget_amounts_array = array();
-    foreach ($_POST as $key => $amount) {
-      if (in_array($key, $amount_array) && $amount > 0) {
-        $budget_amounts_array[substr($key, strlen(amount_prefix))] = $amount;
-      }
-    }
     remove_budgets_operation($operation["id"]);
-    add_budgets_operation($operation["id"], $budget_amounts_array);
+    add_budgets_operation($operation["id"], $_POST);
     validate_operation($operation["id"]);
     $operation = select_operation($operation["id"], array("id", "created_by", "state"));
     if ($operation["created_by"] != connected_student()) {
