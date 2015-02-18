@@ -73,3 +73,9 @@ option {
 .buttons> a {
   margin-left:10px;
 }
+
+.hidden-element {
+  display:none;
+  visiblity:hidden;
+  height:0px;
+}

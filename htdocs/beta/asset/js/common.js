@@ -26,3 +26,11 @@ function ratiobar (spending, ratio, elementId) {
 function goto (str) {
   window.location.href = str;
 }
+
+function hide_form_element(id) {
+  document.getElementById(id).className ='hidden-element';
+}
+
+function show_hidden_form_element(id) {
+    document.getElementById(id).className ='';
+}
