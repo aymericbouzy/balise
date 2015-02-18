@@ -20,7 +20,8 @@
         $sum += $value;
       }
     }
-    if ($sum != select_operation($GLOBALS["operation"]["id"], array("amount"))["amount"]) {
+    $operation = select_operation($GLOBALS["operation"]["id"], array("amount"));
+    if ($sum != abs($operation["amount"])) {
       return "La somme des montants indiqués n'est pas égale au montant total de l'opération.";
     }
     return "";

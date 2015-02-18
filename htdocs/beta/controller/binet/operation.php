@@ -14,7 +14,15 @@
     $GLOBALS["binet_budgets"] = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($operation["amount"] > 0 ? ">" : "<", 0)));
   }
 
-  before_action("check_csrf_post", array("validate"));
+  function check_exists_budget() {
+    $operation = select_operation($GLOBALS["operation"]["id"], array("amount"));
+    $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($operation["amount"] > 0 ? ">" : "<", 0)));
+    if (is_empty($budgets)) {
+      $_SESSION["warning"][] = "Avant de pouvoir faire apparaître cette opération dans ta trésorerie, tu dois créer un budget auquel l'associer.";
+      redirect_to_path(path("", "validation", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
+    }
+  }
+
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete", "validate", "review"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
   before_action("define_binet_budgets", array("validate", "review"));
@@ -24,6 +32,7 @@
   before_action("check_form", array("create", "update"), "operation_entry");
   before_action("create_form", array("review", "validate"), "operation_review");
   before_action("check_form", array("validate"), "operation_review");
+  before_action("check_exists_budget", array("review", "validate"));
   before_action("generate_csrf_token", array("new", "edit", "show", "review"));
 
   switch ($_GET["action"]) {
@@ -58,7 +67,13 @@
   case "update":
     update_operation($operation["id"], $_POST);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
-    redirect_to_action("show");
+    if ($operation["amount"] != $_POST["amount"]) {
+      $_SESSION["notice"][] = "Le montant de l'opération a changé : tu dois donc l'attribuer à nouveau à ton budget.";
+      remove_budgets_operation($operation["id"]);
+      redirect_to_action("review");
+    } else {
+      redirect_to_action("show");
+    }
     break;
 
   case "delete":
@@ -84,7 +99,7 @@
     if ($operation["created_by"] != connected_student()) {
       send_email($operation["created_by"], "Opération acceptée", "operation_accepted", array("operation" => $operation["id"], "binet" => $binet));
     }
-    $_SESSION["notice"][] = "L'opération a été acceptée.".($operation["state"] == "waiting_validation" ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    $_SESSION["notice"][] = "L'opération a été ajoutée dans ton budget.".($operation["state"] == "waiting_validation" ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
     redirect_to_action("show");
     break;
 
