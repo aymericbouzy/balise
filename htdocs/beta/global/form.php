@@ -54,7 +54,7 @@
         }
         break;
         case "date";
-        $regex = "/^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/";
+        $regex = "/^([0-9]{2})\/([0-9]{2})\/([0-9]{4})$/";
         $matched_groups = array();
         if (preg_match($regex, $value, $matched_groups)) {
           $days_in_month = array(
@@ -101,6 +101,7 @@
   }
 
   function validate_formatted_input($input, $form) {
+    $no_format_error = is_empty($_SESSION[$form["name"]."_errors"]);
     foreach ($input as $name => $value) {
       $field = $form["fields"][$name];
       switch ($field["type"]) {
@@ -137,7 +138,7 @@
         break;
       }
     }
-    if (isset($form["validations"])) {
+    if (isset($form["validations"]) && $no_format_error) {
       foreach ($form["validations"] as $validation) {
         add_form_error($form["name"], "", call_user_func($validation, $input));
       }
