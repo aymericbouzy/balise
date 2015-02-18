@@ -5,16 +5,23 @@
     $destination_action = "create";
     $id = "";
   } else {
-    $origin_action = "edit";
-    $destination_action = "update";
     $id = $GLOBALS["binet"]["id"];
-    $binet = select_binet($id, array("subsidy_provider"));
+    if (in_array($_GET["action"], array("edit", "update"))) {
+      $origin_action = "edit";
+      $destination_action = "update";
+      $binet = select_binet($id, array("subsidy_provider"));
+    } else {
+      $origin_action = "change_term";
+      $destination_action = "reactivate";
+    }
   }
   $form["redirect_to_if_error"] = path($origin_action, "binet", $id);
   $form["destination_path"] = path($destination_action, "binet", $id);
   $form["html_form_path"] = VIEW_PATH."binet/form.php";
-  $form["fields"]["name"] = create_name_field("le nom du binet");
-  if ($origin_action == "new") {
+  if ($origin_action != "change_term") {
+    $form["fields"]["name"] = create_name_field("le nom du binet");
+  }
+  if (in_array($origin_action, array("new", "change_term"))) {
     $form["fields"]["term"] = create_name_field("la promotion");
   } else {
     $form["fields"]["description"] = create_text_field("la description publique du binet");
@@ -24,7 +31,7 @@
   }
 
   function check_term_is_numeric($input) {
-    if ($_GET["action"] == "create" && (!is_numeric($input["term"]) || floor($input["term"]) != $input["term"])) {
+    if (in_array($_GET["action"], array("create", "reactivate")) && (!is_numeric($input["term"]) || floor($input["term"]) != $input["term"])) {
       $fields = $GLOBALS["binet_form"]["fields"];
       return ucfirst($fields["term"]["human_name"])." doit être une année valide.";
     }
@@ -32,13 +39,15 @@
   }
 
   function check_unique_clean_name($input) {
-    $criteria["clean_name"] = clean_string($input["name"]);
-    if (isset($GLOBALS["binet"]["id"])) {
-      $criteria["id"] = array("!=", $GLOBALS["binet"]["id"]);
-    }
-    $binets = select_binets($criteria);
-    if (!is_empty($binets)) {
-      return "Ce nom de binet est déjà utilisé par le binet ".pretty_binet($binets[0]["id"]).". Tu dois en choisir un autre.";
+    if ($_GET["action"] != "reactivate") {
+      $criteria["clean_name"] = clean_string($input["name"]);
+      if (isset($GLOBALS["binet"]["id"])) {
+        $criteria["id"] = array("!=", $GLOBALS["binet"]["id"]);
+      }
+      $binets = select_binets($criteria);
+      if (!is_empty($binets)) {
+        return "Ce nom de binet est déjà utilisé par le binet ".pretty_binet($binets[0]["id"]).". Tu dois en choisir un autre.";
+      }
     }
     return "";
   }
@@ -47,7 +56,7 @@
 
   function initialise_binet_form() {
     $initial_input = array();
-    if (isset($GLOBALS["binet"]["id"])) {
+    if ($_GET["action"] == "edit") {
       $binet = $GLOBALS["binet"]["id"];
       $initial_input = select_binet($binet);
     } else {

@@ -10,7 +10,6 @@
     header_if(is_empty($current_term), 403);
   }
 
-  before_action("check_csrf_post", array("reactivate"));
   before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate", "power_transfer"));
   before_action(
     "check_entry",
@@ -21,13 +20,8 @@
   before_action("check_is_deactivated", array("reactivate"));
   before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "set_subsidy_provider", "admin"));
   before_action("check_editing_rights", array("edit", "update"));
-  before_action("create_form", array("new", "create", "edit", "update"), "binet");
-  before_action("check_form", array("create", "update"), "binet");
-  before_action("check_form_input", array("reactivate"), array(
-    "model_name" => "binet",
-    "str_fields" => array(array("term", MAX_TERM)),
-    "redirect_to" => path("change_term", "binet", $_GET["action"] == "reactivate" ? $binet["id"] : "")
-  ));
+  before_action("create_form", array("new", "create", "edit", "update", "change_term", "reactivate"), "binet");
+  before_action("check_form", array("create", "update", "reactivate"), "binet");
 
   $term_form_fields = array("term");
 
@@ -73,14 +67,6 @@
     break;
 
   case "change_term":
-    function binet_to_form_fields($binet) {
-      $binet["term"] = $binet["current_term"];
-      return $binet;
-    }
-    $binet = set_editable_entry_for_form("binet", $binet, $term_form_fields);
-    if (is_empty($binet["term"])) {
-      $binet["term"] = current_term(KES_ID);
-    }
     break;
 
   case "power_transfer":

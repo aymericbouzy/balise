@@ -4,11 +4,7 @@
   if (is_empty($current_term)) {
     ?>
     <h1>Réactiver le binet</h1>
-    <form role="form" id="change_term_binet" action="/<?php echo path("reactivate", "binet", $binet["id"], ""); ?>" method="post">
-      <?php echo form_group_text("Promotion :", "term", $binet, "binet"); ?>
-      <?php echo form_csrf_token(); ?>
-      <?php echo form_submit_button("Réactiver"); ?>
-    </form>
+    <?php echo get_html_form("binet"); ?>
     <?php
   } else {
     ?>
