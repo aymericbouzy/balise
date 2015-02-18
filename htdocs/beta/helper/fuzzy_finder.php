@@ -14,3 +14,8 @@
     return "<input type=\"search\" class=\"fuzzy-search\">
     <i class=\"fa fa-fw fa-search\"></i>";
   }
+
+  function search_input(){
+    return "<input type=\"search\" class=\"search\" placeholder=\"Rechercher\">
+    <i class=\"fa fa-fw fa-search\"></i>";
+  }

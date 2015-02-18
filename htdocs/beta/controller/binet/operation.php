@@ -48,7 +48,7 @@
 
   case "create":
     $operation["id"] = create_operation($binet, $term, $_POST["amount"], $_POST["type"], $_POST);
-    $_SESSION["notice"][] = "L'opération a été créée avec succès. Il vous reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
+    $_SESSION["notice"][] = "L'opération a été créée avec succès. Il te reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
     redirect_to_action("review");
     break;
 

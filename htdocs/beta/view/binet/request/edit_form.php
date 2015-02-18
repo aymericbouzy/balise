@@ -1,7 +1,13 @@
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
+<div class="panel light-blue-background opanel">
+  <div class="content">
+    <?php echo pretty_wave($request["wave"]["id"]);?>
+  </div>
+</div>
 <div class="panel green-background opanel">
   <div class="content white-text" id="description">
     <?php echo form_input($request["wave"]["question"], "answer", $form, array("placeholder" => "Justifiez votre demande", "style" => "color:#fff")); ?>
+  </div>
   </div>
 </div>
 <?php

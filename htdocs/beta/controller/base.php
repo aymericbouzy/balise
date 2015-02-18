@@ -9,7 +9,7 @@
   } else {
     $full_controller = $_GET["controller"];
   }
-  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/validation", "binet/wave", "error")), 404);
+  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "student", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/validation", "binet/wave", "error")), 404);
 
   $query_array = compute_query_array();
 

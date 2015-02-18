@@ -1,10 +1,7 @@
 <?php
 
   function link_to($path, $caption, $options = array()) {
-    set_if_not_set($options["class"], "");
-    set_if_not_set($options["id"], "");
     set_if_not_set($options["goto"], false);
-    set_if_not_set($options["title"], false);
 
     if (!in_array(substr($path, 0, 7), array("mailto:", "http://")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
@@ -14,13 +11,16 @@
       $path = full_path($path);
     }
 
-    $parameters = is_empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
-    $parameters .= is_empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
-    $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
-
     if ($options["goto"]) {
-      return preg_replace("/^\s*(<[^>]*)(>)(.*)$/", "$1".$parameters." onclick=\"goto('".$path."')\" style=\"cursor:pointer\" >\n $3", str_replace("\n", "", $caption));
+      $parameters = array_intersect_key($options, array_flip(array("class", "id", "title")));
+      return insert_properties_in_html_tag(str_replace("\n", "", $caption), array_merge($parameters, array(
+        "onclick" => "goto('".$path."')",
+        "style" => "cursor:pointer"
+      )));
     } else {
+      $parameters = is_empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
+      $parameters .= is_empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
+      $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
       return "<a href=\"".$path."\"".$parameters.">".$caption."</a>";
     }
   }
@@ -98,4 +98,16 @@
                   </div>
                 </div>
               </div>";
+  }
+
+  function text_tune_with_amount($amount,$text){
+    return $amount." ".$text.($amount > 1 ? "s":"");
+  }
+
+  function insert_properties_in_html_tag($html_tag, $properties) {
+    $properties_string = "";
+    foreach ($properties as $property => $value) {
+      $properties_string .= " ".$property."=\"".$value."\"";
+    }
+    return preg_replace("/^\s*(<[^>]*)(>)(.*)$/", "$1".$properties_string.">\n$3" , $html_tag);
   }

@@ -1,0 +1,42 @@
+/*------------------------------------------------------------------*/
+/*Custom rules for the table*/
+
+.row-centered {
+  margin:auto;
+  max-width: 1000px;
+}
+
+#main-table {
+  margin: auto;
+}
+
+.col-max {
+  max-width: 1000px;
+}
+
+.tabtitle {
+  padding-left:10px;
+  background-color: #5CADFF;
+  padding-bottom: 2px;
+  padding-top: 2px;
+  font-size: 1.2em;
+  box-shadow: 3px;
+}
+
+.table-small-char {
+  font-size: 0.8em;
+}
+
+.separator {
+  border-collapse: collapse;
+  background-image: -webkit-linear-gradient(#fff 80%,#5CADFF 10%);
+}
+
+.total {
+  background-color:#D7EBFF;
+}
+
+.cell-centered{
+  vertical-align:middle;
+  text-align:center;
+}

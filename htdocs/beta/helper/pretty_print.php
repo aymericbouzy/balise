@@ -24,9 +24,9 @@
     return $tag_string;
   }
 
-  function pretty_binet($binet, $link = true, $kes_special = true) {
+  function pretty_binet($binet, $link = true, $special = true) {
     $binet = select_binet($binet, array("id", "name", "clean-name", "subsidy_provider"));
-    $caption = $binet["id"] == KES_ID && $kes_special ? "<i class=\"icon-logo-kes fa-2x\" alt=\"Kès\"></i>" : $binet["name"].($binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
+    $caption = $binet["id"] == KES_ID && $special ? "<i class=\"icon-logo-kes fa-2x\" alt=\"Kès\"></i>" : $binet["name"].($special && $binet["subsidy_provider"] == 1 ? "<span class=\"label\">s</span>" : "");
     return $link ? link_to(path("show", "binet", $binet["id"]), $caption) : $caption;
   }
 
@@ -53,10 +53,10 @@
     return $link ? link_to(path("show", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])), $caption) : $caption;
   }
 
-  function pretty_student($student, $link = true) {
-    $student = select_student($student, array("name", "email"));
+  function pretty_student($student, $link = true, $icon = false) {
+    $student = select_student($student, array("name", "id"));
     if ($link) {
-      return link_to("mailto:".$student["name"]." <".$student["email"].">", $student["name"]);
+      return link_to(path("show", "student", $student["id"]), ( $icon ? "<i class=\"fa fa-user\"></i> " : "").$student["name"]);
     } else {
       return $student["name"];
     }
