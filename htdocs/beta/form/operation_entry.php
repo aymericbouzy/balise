@@ -28,9 +28,11 @@
   function structured_operation_maker($validated_input) {
     if (isset($GLOBALS["operation"])) {
       $existing_operation = select_operation($GLOBALS["operation"]["id"], array("amount"));
-      $validated_input["sign"] = $existing_operation["amount"] < 0 ? 1 : 0;
+      $validated_input["sign"] = $existing_operation["amount"] > 0 ? 1 : 0;
     }
-    $validated_input["amount"] = (2*$validated_input["sign"] - 1)*$validated_input["amount"];
+    if (!$validated_input["sign"]) {
+      $validated_input["amount"] *= -1;
+    }
     unset($validated_input["sign"]);
     return $validated_input;
   }

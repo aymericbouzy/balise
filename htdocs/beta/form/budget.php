@@ -14,7 +14,7 @@
   $form["html_form_path"] = VIEW_PATH."binet/budget/form.php";
   $form["fields"]["label"] = create_name_field("le nom du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["tags"] = create_text_field("la liste des tags", array("optional" => 1));
-  $form["fields"]["amount"] = create_amount_field("le montant du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
+  $form["fields"]["amount"] = create_amount_field("le montant du budget", array("optional" => $origin_action == "edit" ? 1 : 0, "min" => 1));
   $form["fields"]["sign"] = create_boolean_field("le choix recette/dépense", array("disabled" => $origin_action == "edit" ? 1 : 0));
 
   function check_all_tags_exist($input) {
@@ -51,9 +51,11 @@
     }
     if (isset($GLOBALS["budget"])) {
       $existing_budget = select_budget($GLOBALS["budget"]["id"], array("amount"));
-      $validated_input["sign"] = $existing_budget["amount"] < 0 ? 1 : 0;
+      $validated_input["sign"] = $existing_budget["amount"] > 0 ? 1 : 0;
     }
-    $validated_input["amount"] = (1 - 2*$validated_input["sign"])*$validated_input["amount"];
+    if (!$validated_input["sign"]) {
+      $validated_input["amount"] *= -1;
+    }
     unset($validated_input["sign"]);
     return $validated_input;
   }
@@ -65,8 +67,8 @@
     if (isset($GLOBALS["budget"]["id"])) {
       $budget = $GLOBALS["budget"]["id"];
       $initial_input = select_budget($budget);
-      $initial_input["sign"] = $initial_input["amount"] > 0 ? 0 : 1;
-      if ($initial_input["sign"]) {
+      $initial_input["sign"] = $initial_input["amount"] > 0 ? 1 : 0;
+      if (!$initial_input["sign"]) {
         $initial_input["amount"] *= -1;
       }
       $tags_string = "";
