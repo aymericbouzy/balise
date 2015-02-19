@@ -10,7 +10,7 @@
     return create_entry(
       "operation",
       array("binet", "term", "amount", "created_by", "paid_by", "type"),
-      array("date", "bill", "payment_ref", "comment"),
+      array("date", "bill", "payment_ref", "comment", "bill_date", "payment_date"),
       array_merge($optional_values, $values)
     );
   }
@@ -92,7 +92,7 @@
   function update_operation($operation, $hash) {
     update_entry("operation",
                   array("amount", "paid_by", "binet", "term", "type"),
-                  array("bill", "payment_ref", "comment"),
+                  array("bill", "payment_ref", "comment", "bill_date", "payment_date"),
                   $operation,
                   $hash);
   }

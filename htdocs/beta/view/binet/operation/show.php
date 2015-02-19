@@ -47,13 +47,21 @@
       </div>
     </div>
   </div>
-  <div class="sh-op-amount opanel">
-    <?php echo pretty_amount($operation["amount"]); ?> <i class="fa fa-euro"></i>
-  </div>
-  <div class="sh-op-refs opanel">
-    <i class="fa fa-fw fa-folder-o"></i>
-    <?php echo $operation["bill"] ?: "Aucune facture associée"; ?> </br>
-    <?php echo pretty_operation_type($operation["type"])." ".($operation["payment_ref"] ?: "Aucune référence de paiement associée"); ?>
+  <div class="sh-split-container">
+    <div class="sh-split-left">
+      <div class="sh-op-amount opanel">
+        <?php echo pretty_amount($operation["amount"]); ?> <i class="fa fa-euro"></i>
+      </div>
+    </div>
+    <div class="sh-split-right">
+      <div class="sh-op-refs opanel">
+        <i class="fa fa-fw fa-folder-o"></i>
+        <?php echo $operation["bill"] ?: "Aucune facture associée"; ?><br>
+        <span class="side-information"><?php echo $operation["bill_date"] ?: ""; ?></span></br>
+        <?php echo pretty_operation_type($operation["type"])." ".($operation["payment_ref"] ?: "Aucune référence de paiement associée"); ?><br>
+        <span class="side-information"><?php echo $operation["payment_date"] ?: ""; ?></span>
+      </div>
+    </div>
   </div>
   <div class="sh-op-info opanel">
     <?php echo $operation["comment"]; ?>

@@ -375,9 +375,23 @@
 /*------------------------------------------------------------------------*/
 /* Operation classes */
 
+.sh-split-container {
+  min-height: 100px;
+  display: inline-block;
+}
+
+.sh-split-left {
+  float: left;
+  overflow: hidden;
+}
+
+.sh-split-right {
+  float: right;
+  overflow: hidden;
+}
+
 .sh-op-amount {
   margin:5px;
-  height:100px;
   padding : 20px;
   background-color: #3399FF;
   /* Text properties */
@@ -388,7 +402,6 @@
 
 .sh-op-refs {
   margin: 5px;
-  height: 100px;
   padding: 25px;
   background-color: #2e2e2e;
   /* Text properties */
