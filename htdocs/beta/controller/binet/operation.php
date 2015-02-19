@@ -64,9 +64,10 @@
     break;
 
   case "update":
+    $operation = select_operation($operation["id"], array("id", "amount", "binet_validation_by"));
     update_operation($operation["id"], $_POST);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
-    if ($operation["amount"] != $_POST["amount"]) {
+    if ($operation["amount"] != $_POST["amount"] && !is_empty($operation["binet_validation_by"])) {
       $_SESSION["notice"][] = "Le montant de l'opération a changé : tu dois donc l'attribuer à nouveau à ton budget.";
       remove_budgets_operation($operation["id"]);
       redirect_to_action("review");
