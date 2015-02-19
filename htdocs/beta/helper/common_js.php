@@ -40,3 +40,16 @@ function insert_tooltip($html_tag, $tooltip_content, $placement = "top") {
     "title" => $tooltip_content
   ));
 }
+
+function initialize_popovers(){
+  return "\n<script>\n $(function () { $('[data-toggle=\"popover\"]').popover() })\n</script>\n";
+}
+
+function insert_popover($html_tag, $popover_content, $popover_title, $placement = "top") {
+  return insert_properties_in_html_tag($html_tag, array(
+    "data-toggle" => "popover",
+    "data-placement" => $placement,
+    "title" => $popover_title,
+    "data-content" => $popover_content
+  ));
+}

@@ -1,4 +1,5 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
+<?php echo initialize_popovers(); ?>
 <div class="show-container">
   <div class="sh-plus <?php echo $operation["amount"] > 0 ? "green" : "red" ?>-background opanel">
     <i class="fa fa-fw fa-<?php echo $operation["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
@@ -76,6 +77,18 @@
       Utilisation de subventions
     </div>
     <div class="content">
+      <?php foreach(select_subsidies_and_requests_operation($operation["id"]) as $request => $subsidies){
+        echo pretty_wave(select_request($request,array("wave"))["wave"]);
+        echo "<div>";
+        foreach($subsidies as $subsidy){
+          $subsidy = select_subsidy($subsidy,array("budget","purpose"));
+          $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"],false,false)." </button>";
+          $popover_title = "Justification de la demande";
+          $popover_content = $subsidy["purpose"];
+          echo insert_popover($html_button,$popover_content,$popover_title,"left");
+        }
+        echo "</div>";
+      }?>
     </div>
   </div>
   <div class="panel opanel light-blue-background">
