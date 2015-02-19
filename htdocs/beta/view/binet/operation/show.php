@@ -53,7 +53,7 @@
   <div class="sh-op-refs opanel">
     <i class="fa fa-fw fa-folder-o"></i>
     <?php echo $operation["bill"] ?: "Aucune facture associée"; ?> </br>
-    <?php echo pretty_operation_type($operation["type"])." ".($operation["reference"] ?: "Aucune référence de paiement associée"); ?>
+    <?php echo pretty_operation_type($operation["type"])." ".($operation["payment_ref"] ?: "Aucune référence de paiement associée"); ?>
   </div>
   <div class="sh-op-info opanel">
     <?php echo $operation["comment"]; ?>

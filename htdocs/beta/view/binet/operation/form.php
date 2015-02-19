@@ -6,7 +6,9 @@
 ?>
 <?php echo form_input("Description :", "comment", $form); ?>
 <?php echo form_input("Référence de facture :", "bill", $form); ?>
-<?php echo form_input("Référence de paiement :", "reference", $form); ?>
+<?php echo form_input("Date de la facture :", "bill_date", $form); ?>
+<?php echo form_input("Référence de paiement :", "payment_ref", $form); ?>
+<?php echo form_input("Date du paiement :", "payment_date", $form); ?>
 <?php echo form_input("Montant :", "amount", $form); ?>
 <?php echo form_input(array("1" => "Dépense", "0" => "Recette"), "sign", $form, array("disabled" => $_GET["action"] == "edit" ? 1 : 0, "selection_method" => "radio")); ?>
 <?php echo form_input("Type de transaction :", "type", $form, array("options" => option_array(select_operation_types(), "id", "name", "operation_type"))); ?>

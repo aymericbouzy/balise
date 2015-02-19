@@ -18,7 +18,7 @@
   before_action("check_form", array("create", "update"), "operation_entry");
   before_action("check_not_validated", array("validate", "reject"));
 
-  $form_fields = array("comment", "bill", "reference", "amount", "type", "paid_by", "sign", "binet", "term");
+  $form_fields = array("comment", "bill", "payment_ref", "amount", "type", "paid_by", "sign", "binet", "term");
 
   switch ($_GET["action"]) {
 
