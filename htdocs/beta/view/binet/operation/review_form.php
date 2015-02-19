@@ -20,7 +20,7 @@
       </tbody>
     </table>
   </div>
-  <div class="panel">
+  <div class="panel" id="review_form_info">
     <div class="title-small">
       Informations complémentaires
     </div>
