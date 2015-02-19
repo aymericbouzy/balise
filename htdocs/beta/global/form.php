@@ -88,6 +88,10 @@
         if (!$valid) {
           $translated_input[$name] = default_value_for_type("id");
         }
+        case "text":
+        case "name":
+        $translated_input[$name] = nl2br(htmlspecialchars($sanitized_input[$name], ENT_IGNORE));
+        $valid = true;
         break;
         default:
         $valid = true;
@@ -192,7 +196,7 @@
       $prefill_form_values = array();
     }
     foreach ($form["fields"] as $name => $field) {
-      $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? $prefill_form_values[$name] : "";
+      $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? htmlspecialchars_decode(preg_replace("/<br \/>/", "", $prefill_form_values[$name])) : "";
     }
     extract($GLOBALS, EXTR_SKIP);
     ob_start();
