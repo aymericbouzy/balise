@@ -10,7 +10,7 @@
     return create_entry(
       "operation",
       array("binet", "term", "amount", "created_by", "paid_by", "type"),
-      array("date", "bill", "reference", "comment"),
+      array("date", "bill", "payment_ref", "comment"),
       array_merge($optional_values, $values)
     );
   }
@@ -22,7 +22,7 @@
     }
     $operation = select_entry(
       "operation",
-      array("id", "binet", "term", "amount", "created_by", "paid_by", "type", "date", "bill", "reference", "comment", "binet_validation_by", "kes_validation_by"),
+      array("id", "binet", "term", "amount", "created_by", "paid_by", "type", "date", "bill", "payment_ref", "comment", "binet_validation_by", "kes_validation_by"),
       $operation,
       $fields
     );
@@ -92,7 +92,7 @@
   function update_operation($operation, $hash) {
     update_entry("operation",
                   array("amount", "paid_by", "binet", "term", "type"),
-                  array("bill", "reference", "comment"),
+                  array("bill", "payment_ref", "comment"),
                   $operation,
                   $hash);
   }
@@ -102,7 +102,7 @@
     return select_entries(
       "operation",
       array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),
-      array("bill", "date", "reference"),
+      array("bill", "date", "payment_ref"),
       array("state", "needs_validation"),
       $criteria,
       $order_by,

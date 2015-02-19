@@ -47,7 +47,7 @@
       switch ($field["type"]) {
         case "amount":
         if (is_numeric($value)) {
-          $translated_input[$name] = floor($value * 100);
+          $translated_input[$name] = ceil($value * 100);
           $valid = true;
         } elseif (is_empty($value)) {
           $valid = true;
@@ -75,6 +75,9 @@
             $translated_input[$name] = $matched_groups[3]."-".$matched_groups[2]."-".$matched_groups[1];
             $valid = true;
           }
+        }
+        if ($value == "") {
+          $valid = true;
         }
         break;
         case "boolean":
@@ -116,10 +119,10 @@
         break;
         case "amount":
         if ($value < $field["min"]) {
-          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être supérieur à ".pretty_amount($field["min"]).".");
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être supérieur à ".pretty_amount($field["min"], false).".");
         }
         if ($value > $field["max"]) {
-          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être inférieur à ".pretty_amount($field["max"]).".");
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être inférieur à ".pretty_amount($field["max"], false).".");
         }
         break;
         case "text":
