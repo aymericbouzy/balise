@@ -4,9 +4,5 @@
     <i class="fa fa-fw fa-edit"></i> Modifier la demande de subvention
     </div>
   </div>
-  <?php
-    $form_action = "update";
-    $submit_label = "Sauvegarder";
-    include "edit_form.php";
-  ?>
+  <?php echo get_html_form("request_entry"); ?>
 </div>

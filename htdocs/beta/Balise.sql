@@ -95,7 +95,7 @@ CREATE TABLE `operation` (
   `term` smallint(6) NOT NULL,
   `type` tinyint(4) NOT NULL,
   `bill` varchar(30) DEFAULT NULL,
-  `reference` varchar(30) DEFAULT NULL,
+  `payment_ref` varchar(30) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `binet_validation_by` int(11) DEFAULT NULL,
   `kes_validation_by` int(11) DEFAULT NULL,

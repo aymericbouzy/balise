@@ -25,11 +25,11 @@
   define("IMG_PATH", ASSET_PATH."img/");
   define("LAYOUT_PATH", VIEW_PATH."layout/");
   define("EMAIL_PATH", VIEW_PATH."email/");
+  define("FORM_PATH", "form/");
 
   define("KES_ID", 1);
 
   define("MAX_AMOUNT", 1000000000);
-  define("MAX_TAG_STRING_LENGTH", 1000);
-  define("MAX_DATE_LENGTH", 10);
-  define("MAX_TERM", 10000);
   define("MAX_TEXT_LENGTH", 65000);
+  define("MAX_NAME_LENGTH", 127);
+  define("MAX_TERM", 2100);

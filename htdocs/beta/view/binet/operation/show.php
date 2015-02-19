@@ -22,6 +22,9 @@
         echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier la répartition sur les budgets", "bar-chart", "teal");
         echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
       }
+      if (has_editing_rights_for_suggested_operation($operation["id"]) && !has_editing_rights($binet, $term)) {
+        echo button(path("edit", "operation", $operation["id"]), "Modifier", "edit", "grey");
+      }
       if (is_current_kessier()) {
         switch ($operation["state"]) {
           case "waiting_validation":
@@ -51,7 +54,7 @@
   <div class="sh-op-refs opanel">
     <i class="fa fa-fw fa-folder-o"></i>
     <?php echo $operation["bill"] ?: "Aucune facture associée"; ?> </br>
-    <?php echo pretty_operation_type($operation["type"])." ".($operation["reference"] ?: "Aucune référence de paiement associée"); ?>
+    <?php echo pretty_operation_type($operation["type"])." ".($operation["payment_ref"] ?: "Aucune référence de paiement associée"); ?>
   </div>
   <div class="panel opanel blue-background">
     <div class="content">
