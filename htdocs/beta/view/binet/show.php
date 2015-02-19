@@ -40,7 +40,7 @@
                 link_to(
                   path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),
                     "<i class=\"fa fa-fw fa-eye\"></i>",
-                    array("class" => "opanel0","id" =>"sh-bin-eye")
+                    array("class" => "opanel0 btn btn-success","id" =>"sh-bin-eye")
                   ),
               "Voir l'activité du binet",
               "left");
