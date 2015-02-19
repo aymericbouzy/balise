@@ -74,7 +74,7 @@
   </div>
   <div class="panel opanel light-blue-background">
     <div class="title-small">
-      Utilisation de subventions
+      Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i>
     </div>
     <div class="content">
       <?php foreach(select_subsidies_and_requests_operation($operation["id"]) as $request => $subsidies){

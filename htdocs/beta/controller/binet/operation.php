@@ -89,7 +89,7 @@
     break;
 
   case "review":
-    $operation = select_operation($operation["id"], array("id", "amount", "created_by", "comment", "date", "binet", "term"));
+    $operation = select_operation($operation["id"], array("id", "amount", "created_by","paid_by", "comment", "date", "binet", "term","type","bill","payment_ref"));
     break;
 
   case "validate":

@@ -2,6 +2,14 @@
   <span class="title">Opération</span>
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-small-char">
+      <thead>
+        <tr>
+          <td>Date d'émission</td>
+          <td>Intitulé</td>
+          <td> A psoté l'opération </td>
+          <td> Montant de l'opération</td>
+        </tr>
+      </thead>
       <tbody>
         <tr>
           <td><?php echo pretty_date($operation["date"]); ?></td>
@@ -11,6 +19,19 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="panel">
+    <div class="title-small">
+      Informations complémentaires
+    </div>
+    <div class="content">
+      <div class="panel-line">
+        <?php echo insert_tooltip("<span>".($operation["paid_by"] ? paid_by_to_caption($operation["paid_by"]) : "Aucun payeur enregistré")."</span>","Payé par"); ?>
+        <?php echo insert_tooltip("<span>".pretty_tags(select_tags_operation($operation["id"]), false)."</span>","Mots clés courants"); ?>
+        <?php echo insert_tooltip("<span><i class=\"fa fa-fw fa-folder-o\"></i>".($operation["bill"] ?: "Aucune facture associée")."</span>","Référence de facture") ?>
+        <?php echo insert_tooltip("<span>".pretty_operation_type($operation["type"])." ".($operation["payment_ref"] ?: "Aucune référence de paiement associée")."</span>","Référence de paiement"); ?>
+      </div>
+    </div>
   </div>
 </div>
 
