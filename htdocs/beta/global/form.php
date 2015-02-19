@@ -28,7 +28,7 @@
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
       if (is_empty($field["disabled"])) {
-        if (!isset($_POST[$name]) && is_empty($field["optional"])) {
+        if ((!isset($_POST[$name]) || (is_empty($_POST[$name]) && !in_array($field["type"], array("boolean", "id"))))&& is_empty($field["optional"])) {
           add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
           $sanitized_input[$name] = default_value_for_type($field["type"]);
         } else {
@@ -47,7 +47,7 @@
       switch ($field["type"]) {
         case "amount":
         if (is_numeric($value)) {
-          $translated_input[$name] = floor($value * 100);
+          $translated_input[$name] = ceil($value * 100);
           $valid = true;
         } elseif (is_empty($value)) {
           $valid = true;
@@ -76,6 +76,9 @@
             $valid = true;
           }
         }
+        if ($value == "") {
+          $valid = true;
+        }
         break;
         case "boolean":
         $valid = in_array($value, array(0, 1));
@@ -88,6 +91,10 @@
         if (!$valid) {
           $translated_input[$name] = default_value_for_type("id");
         }
+        case "text":
+        case "name":
+        $translated_input[$name] = nl2br(htmlspecialchars($sanitized_input[$name], ENT_IGNORE));
+        $valid = true;
         break;
         default:
         $valid = true;
@@ -112,10 +119,10 @@
         break;
         case "amount":
         if ($value < $field["min"]) {
-          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être supérieur à ".pretty_amount($field["min"]).".");
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être supérieur à ".pretty_amount($field["min"], false).".");
         }
         if ($value > $field["max"]) {
-          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être inférieur à ".pretty_amount($field["max"]).".");
+          add_form_error($form["name"], $name, ucfirst($field["human_name"])." doit être inférieur à ".pretty_amount($field["max"], false).".");
         }
         break;
         case "text":
@@ -192,7 +199,7 @@
       $prefill_form_values = array();
     }
     foreach ($form["fields"] as $name => $field) {
-      $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? $prefill_form_values[$name] : "";
+      $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? htmlspecialchars_decode(preg_replace("/<br \/>/", "", $prefill_form_values[$name])) : "";
     }
     extract($GLOBALS, EXTR_SKIP);
     ob_start();

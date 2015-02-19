@@ -55,7 +55,7 @@
   case "show":
     $operation = select_operation(
       $operation["id"],
-      array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "reference", "state", "type", "comment", "paid_by")
+      array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "payment_ref", "state", "type", "comment", "paid_by")
     );
     $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
@@ -64,9 +64,10 @@
     break;
 
   case "update":
+    $operation = select_operation($operation["id"], array("id", "amount", "binet_validation_by"));
     update_operation($operation["id"], $_POST);
     $_SESSION["notice"][] = "L'opération a été mise à jour avec succès.";
-    if ($operation["amount"] != $_POST["amount"]) {
+    if ($operation["amount"] != $_POST["amount"] && !is_empty($operation["binet_validation_by"])) {
       $_SESSION["notice"][] = "Le montant de l'opération a changé : tu dois donc l'attribuer à nouveau à ton budget.";
       remove_budgets_operation($operation["id"]);
       redirect_to_action("review");
