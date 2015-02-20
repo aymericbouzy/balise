@@ -17,7 +17,7 @@
     $form["fields"]["binet"] = create_id_field("le binet", "binet");
     $form["fields"]["next_term"] = create_boolean_field("la promotion du binet");
   }
-  $form["fields"]["amount"] = create_amount_field("le montant de l'opération", array("optional" => $origin_action == "edit" ? 1 : 0, "min" => 1));
+  $form["fields"]["amount"] = create_amount_field("le montant de l'opération", array("optional" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["sign"] = create_boolean_field("le choix recette/dépense", array("disabled" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["bill"] = create_name_field("la référence de facture", array("optional" => 1));
   $form["fields"]["payment_ref"] = create_name_field("la référence de paiement", array("optional" => 1));

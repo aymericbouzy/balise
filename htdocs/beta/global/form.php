@@ -91,6 +91,7 @@
           $value = array($value);
         }
         $all_values = array();
+        $valid = true;
         foreach ($value as $id_value) {
           if (!is_numeric($id_value)) {
             $valid = false;
@@ -99,6 +100,7 @@
           }
         }
         $translated_input[$name] = array_unique($all_values);
+        break;
         case "text":
         case "name":
         $translated_input[$name] = nl2br(htmlspecialchars($sanitized_input[$name], ENT_IGNORE));
@@ -109,7 +111,7 @@
         break;
       }
       if (!$valid) {
-        add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format.");
+        add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format.".array_to_string($value));
       }
     }
     return $translated_input;
@@ -121,8 +123,10 @@
       $field = $form["fields"][$name];
       switch ($field["type"]) {
         case "id":
-        if (!call_user_func("exists_".$field["model"], $value)) {
-          add_form_error($form["name"], $name);
+        foreach ($value as $id_value) {
+          if (!call_user_func("exists_".$field["model"], $id_value)) {
+            add_form_error($form["name"], $name);
+          }
         }
         break;
         case "amount":
@@ -176,6 +180,16 @@
   }
 
   function structured_input($validated_input, $form) {
+    foreach ($validated_input as $name => $value) {
+      $field = $form["fields"][$name];
+      switch ($field["type"]) {
+        case "id":
+        if (is_empty($field["multiple"])) {
+          $validated_input[$name] = is_empty($value) ? default_value_for_type("id") : $value[0];
+        }
+        break;
+      }
+    }
     if (isset($form["structured_input_maker"])) {
       return call_user_func($form["structured_input_maker"], $validated_input);
     } else {
@@ -203,11 +217,20 @@
       unset($_SESSION[$form_name."_form"]);
     } elseif (isset($form["initialise_form"])) {
       $prefill_form_values = call_user_func($form["initialise_form"]);
+      foreach ($form["fields"] as $name => $field) {
+        if ($field["type"] == "id" && is_empty($field["multiple"]) && isset($prefill_form_values[$name])) {
+          $prefill_form_values[$name] = array($prefill_form_values[$name]);
+        }
+      }
     } else {
       $prefill_form_values = array();
     }
     foreach ($form["fields"] as $name => $field) {
-      $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? htmlspecialchars_decode(preg_replace("/<br \/>/", "", $prefill_form_values[$name])) : "";
+      if ($field["type"] != "id") {
+        $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? htmlspecialchars_decode(preg_replace("/<br \/>/", "", $prefill_form_values[$name])) : "";
+      } else {
+        $form["fields"][$name]["value"] = isset($prefill_form_values[$name]) ? $prefill_form_values[$name] : array();
+      }
     }
     extract($GLOBALS, EXTR_SKIP);
     ob_start();

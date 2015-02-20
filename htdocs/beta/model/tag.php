@@ -29,7 +29,7 @@
     $req->execute();
   }
 
-  function select_tag($tag, $fields = NULL) {
+  function select_tag($tag, $fields = array()) {
     $tag = select_entry(
       "tag",
       array("id", "name", "clean_name"),

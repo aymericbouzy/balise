@@ -14,13 +14,10 @@
   $form["html_form_path"] = VIEW_PATH."binet/budget/form.php";
   $form["fields"]["label"] = create_name_field("le nom du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["tags"] = create_id_field("la liste des tags", "tag", array("optional" => 1, "multiple" => 1));
-  $form["fields"]["amount"] = create_amount_field("le montant du budget", array("optional" => $origin_action == "edit" ? 1 : 0, "min" => 1));
+  $form["fields"]["amount"] = create_amount_field("le montant du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["sign"] = create_boolean_field("le choix recette/dépense", array("disabled" => $origin_action == "edit" ? 1 : 0));
 
   function structured_budget_maker($validated_input) {
-    if (isset($validated_input["tags"]) && is_array($validated_input["tags"])) {
-      $validated_input["tags"] = array_unique($validated_input["tags"]);
-    }
     if (isset($GLOBALS["budget"])) {
       $existing_budget = select_budget($GLOBALS["budget"]["id"], array("amount"));
       $validated_input["sign"] = $existing_budget["amount"] > 0 ? 1 : 0;
@@ -43,11 +40,11 @@
       if (!$initial_input["sign"]) {
         $initial_input["amount"] *= -1;
       }
-      $tags_string = "";
+      $tags_array = array();
       foreach (select_tags_budget($budget) as $tag) {
-        $tags_string .= select_tag($tag["id"], array("name"))["name"]."; ";
+        $tags_array[] = $tag["id"];
       }
-      $initial_input["tags"] = $tags_string === "" ? "" : substr($tags_string, 0, -2);
+      $initial_input["tags"] = $tags_array;
     }
     return $initial_input;
   }
