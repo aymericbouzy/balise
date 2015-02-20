@@ -125,7 +125,11 @@
   function form_group_select($label, $field, $options, $prefill_value, $form_name, $parameters = array()) {
     $select_tag = "<select class=\"form-control selectpicker\"".(is_empty($parameters["search"]) ? "" : " data-live-search=\"true\"")." title=\"\"Ò id=\"".$field."\" name=\"".$field."\">";
     foreach ($options as $value => $option_label) {
-      $select_tag .= "<option value=\"".$value."\"".($prefill_value == $value ? " selected=\"selected\"" : "").">".$option_label."</option>";
+      if (is_array($option_label)) {
+        $icon = $option_label["icon"];
+        $option_label = $option_label["label"];
+      }
+      $select_tag .= "<option value=\"".$value."\"".($prefill_value == $value ? " selected=\"selected\"" : "").(is_empty($icon) ? "" : " data-icon=\"fa fa-".$icon."\"").">".$option_label."</option>";
     }
     $select_tag .= "</select>";
     return form_group(
@@ -151,11 +155,15 @@
     return $form_group_radio;
   }
 
-  function option_array($entries, $key_field, $value_field, $model_name) {
+  function option_array($entries, $key_field, $value_field, $model_name, $options = array()) {
     $return_array = array();
     foreach ($entries as $entry) {
-      $entry = call_user_func("select_".$model_name, $entry["id"], array($key_field, $value_field));
-      $return_array[$entry[$key_field]] = $entry[$value_field];
+      $requested_fields = array($key_field, $value_field);
+      if (!is_empty($options["icon"])) {
+        $requested_fields[] = $options["icon"];
+      }
+      $entry = call_user_func("select_".$model_name, $entry["id"], $requested_fields);
+      $return_array[$entry[$key_field]] = is_empty($options["icon"]) ? $entry[$value_field] : array("label" => $entry[$value_field], "icon" => $entry[$options["icon"]]);
     }
     return $return_array;
   }
