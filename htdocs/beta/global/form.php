@@ -87,10 +87,18 @@
         }
         break;
         case "id":
-        $valid = is_numeric($value);
-        if (!$valid) {
-          $translated_input[$name] = default_value_for_type("id");
+        if (is_empty($field["multiple"])) {
+          $value = array($value);
         }
+        $all_values = array();
+        foreach ($value as $id_value) {
+          if (!is_numeric($id_value)) {
+            $valid = false;
+          } else {
+            $all_values[] = $id_value;
+          }
+        }
+        $translated_input[$name] = array_unique($all_values);
         case "text":
         case "name":
         $translated_input[$name] = nl2br(htmlspecialchars($sanitized_input[$name], ENT_IGNORE));
