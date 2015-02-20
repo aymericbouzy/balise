@@ -38,7 +38,7 @@
 
   case "index":
     $operations = array();
-    foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $operation) {
+    foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date",false) as $operation) {
       $operations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type","term","binet"));
     }
     break;

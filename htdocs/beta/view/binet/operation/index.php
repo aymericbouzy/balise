@@ -25,7 +25,7 @@
           <?php echo pretty_tags(select_tags_operation($operation["id"]), true); ?>
         </td>
         <td>
-          <?php echo $operation["date"]; ?>
+          <?php echo pretty_date($operation["date"]); ?>
         </td>
         <?php if ($operation["amount"] < 0) {
           ?><td></td><td>
