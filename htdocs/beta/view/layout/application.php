@@ -22,6 +22,10 @@
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/table.css" type="text/css">
       <!--- Datetimepicker -->
       <link href="<?php echo ASSET_PATH; ?>css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
+      <!-- Selectsearch -->
+      <link rel="stylesheet" type="text/css" href="<?php echo ASSET_PATH; ?>silviomoreto-bootstrap-select-83d5a1b/dist/css/bootstrap-select.css">
+      <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+      <script type="text/javascript" src="<?php echo ASSET_PATH; ?>silviomoreto-bootstrap-select-83d5a1b/dist/js/bootstrap-select.js"></script>
 
      	<!-- Custom Fonts -->
      	<link href="<?php echo ASSET_PATH; ?>font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">

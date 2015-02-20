@@ -10,7 +10,8 @@
       break;
     case "id":
       if (is_empty($parameters["hidden"])) {
-        $form_input = form_group_select($label, $field_name, $parameters["options"], $field["value"], $form["name"]);
+        set_if_not_set($parameters["search"], true);
+        $form_input = form_group_select($label, $field_name, $parameters["options"], $field["value"], $form["name"], $parameters);
       } else {
         $form_input = form_hidden($field_name, $field["value"]);
       }
@@ -121,8 +122,8 @@
     return "<input type=\"submit\" class=\"btn btn-default\" value=\"".$label."\">";
   }
 
-  function form_group_select($label, $field, $options, $prefill_value, $form_name) {
-    $select_tag = "<select class=\"form-control\" id=\"".$field."\" name=\"".$field."\">";
+  function form_group_select($label, $field, $options, $prefill_value, $form_name, $parameters = array()) {
+    $select_tag = "<select class=\"form-control selectpicker\"".(is_empty($parameters["search"]) ? "" : " data-live-search=\"true\"")." title=\"\"Ò id=\"".$field."\" name=\"".$field."\">";
     foreach ($options as $value => $option_label) {
       $select_tag .= "<option value=\"".$value."\"".($prefill_value == $value ? " selected=\"selected\"" : "").">".$option_label."</option>";
     }

@@ -206,6 +206,9 @@
     ?>
     <form role="form" id="<?php echo $form["name"]; ?>" action="/<?php echo $form["destination_path"]; ?>" method="post">
       <?php echo form_csrf_token(); ?>
+      <script charset="utf-8">
+        $('select').selectpicker();
+      </script>
       <?php include $form["html_form_path"]; ?>
     </form>
     <?php

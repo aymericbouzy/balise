@@ -23,7 +23,7 @@
     <?php echo form_input("Référence de paiement :", "payment_ref", $form); ?>
   </div>
   <div class="col-md-3">
-    <?php echo form_input("", "type", $form, array("options" => option_array(select_operation_types(), "id", "name", "operation_type"))); ?>
+    <?php echo form_input("", "type", $form, array("options" => option_array(select_operation_types(), "id", "name", "operation_type"), "search" => false)); ?>
   </div>
 </div>
 <div class="row">
