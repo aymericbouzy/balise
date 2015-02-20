@@ -123,7 +123,7 @@
   }
 
   function form_group_select($label, $field, $options, $prefill_value, $form_name, $parameters = array()) {
-    $select_tag = "<select class=\"form-control selectpicker\"".(is_empty($parameters["search"]) ? "" : " data-live-search=\"true\"")." title=\"\"Ò id=\"".$field."\" name=\"".$field."\">";
+    $select_tag = "<select class=\"form-control selectpicker\"".(is_empty($parameters["search"]) ? "" : " data-live-search=\"true\"")." title=\"\" id=\"".$field."\" name=\"".$field."\">";
     foreach ($options as $value => $option_label) {
       if (is_array($option_label)) {
         $icon = $option_label["icon"];
