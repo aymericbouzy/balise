@@ -32,6 +32,12 @@
   border-radius:0px;
   border:none;
   shadow:none;
+  overflow:hidden;
+}
+.panel::after {
+  display:block;
+  content:"";
+  clear:both;
 }
 .panel.inside {
   border: 1px solid rgba(0,0,0,0.3);
@@ -180,7 +186,7 @@
 .panel-list-element>a:hover {
   text-decoration:underline;
   color:#ccc;
-
+}
 /*------------------------------------------------------*/
 /* Pills */
 .pill {
@@ -200,5 +206,28 @@
   color:#BF360C;
   font-weight:bold;
   padding-left:5px;
->>>>>>> 45a44ebf79575b4447661415a09979eef7596ec4
+}
+
+/*------------------------------------------------------*/
+/* Split panels */
+
+@media(min-width:768px){
+  .panel-split-left , .panel-split-right {
+    display:inline-block;
+    margin-right:2px;
+    width:48%;
+    padding:20px;
+    height:100%;
+  }
+  .panel-split-left {
+    float:left;
+  }
+  .panel-split-right {
+    float:right;
+  }
+}
+
+.panel-split-left,.panel-split-right {
+  display:block;
+  margin:5px;
 }
