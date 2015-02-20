@@ -11,6 +11,9 @@
     case "id":
       if (is_empty($parameters["hidden"])) {
         set_if_not_set($parameters["search"], true);
+        if (!is_empty($field["multiple"])) {
+          $parameters["multiple"] = true;
+        }
         $form_input = form_group_select($label, $field_name, $parameters["options"], $field["value"], $form["name"], $parameters);
       } else {
         $form_input = form_hidden($field_name, $field["value"]);
@@ -123,7 +126,7 @@
   }
 
   function form_group_select($label, $field, $options, $prefill_value, $form_name, $parameters = array()) {
-    $select_tag = "<select class=\"form-control selectpicker\"".(is_empty($parameters["search"]) ? "" : " data-live-search=\"true\"")." title=\"\" id=\"".$field."\" name=\"".$field."\">";
+    $select_tag = "<select class=\"form-control selectpicker\"".(is_empty($parameters["search"]) ? "" : " data-live-search=\"true\"").(is_empty($parameters["multiple"]) ? "" : " multiple")." title=\"\" id=\"".$field."\" name=\"".$field.(is_empty($parameters["multiple"]) ? "" : "[]")."\">";
     foreach ($options as $value => $option_label) {
       if (is_array($option_label)) {
         $icon = $option_label["icon"];
