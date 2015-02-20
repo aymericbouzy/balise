@@ -33,7 +33,10 @@
       </div>
     </div>
     <div class="content">
-      <?php echo link_to(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)),"Modifier l'opération",array("class"=>"btn","id"=>"edit-btn")); ?>
+      <?php
+        echo link_to(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)),"Modifier l'opération",array("class"=>"btn","id"=>"edit-btn"));
+        echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true),"Supprimer l'opération",array("class"=>"btn btn-danger","id"=>"suppr-btn"));
+      ?>
     </div>
   </div>
 </div>

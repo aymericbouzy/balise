@@ -11,6 +11,7 @@
               <th>Nom</th>
               <th>Origine</th>
               <th>Montant</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -24,6 +25,8 @@
                   <td><?php echo $operation["comment"]; ?></td>
                   <td><?php echo pretty_student($operation["created_by"]); ?></td>
                   <td><?php echo pretty_amount($operation["amount"]); ?></td>
+                  <td><?php echo insert_tooltip(
+                    link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true),"<i class=\"fa fa-fw fa-times\"></i>"),"Supprimer");?></td>
                 </tr>
                 <?php
                 echo link_to(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), ob_get_clean(), array("goto" => true));
