@@ -1,4 +1,8 @@
 #review_form_info{
   margin-top:-10px;
-  padding-bottom:10px;
+  padding-bottom:30px;
+}
+
+#edit-btn{
+  float:right;
 }

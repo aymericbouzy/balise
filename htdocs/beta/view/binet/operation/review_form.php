@@ -1,5 +1,5 @@
 <div class="bigpanel opanel">
-  <span class="title">Opération</span>
+  <div class="title">Opération</div>
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-small-char">
       <thead>
@@ -32,11 +32,14 @@
         <?php echo insert_tooltip("<span>".pretty_operation_type($operation["type"])." ".($operation["payment_ref"] ?: "Aucune référence de paiement associée")."</span>","Référence de paiement"); ?>
       </div>
     </div>
+    <div class="content">
+      <?php echo link_to(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)),"Modifier l'opération",array("class"=>"btn","id"=>"edit-btn")); ?>
+    </div>
   </div>
 </div>
 
 <div class="bigpanel opanel">
-  <span class="title">Budgets</span>
+  <span class="title">Budgets - <i style="font-size:13px">répartir le montant de l'opération entre les différents budgets </i></span>
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-hover table-small-char">
       <thead>
