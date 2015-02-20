@@ -54,7 +54,7 @@
       }
       if (is_empty($term_admins)) {
       echo "<p>
-        Vous n'avez pas de binets pour le moment ...
+        Tu n'as pas de binets pour le moment ...
         </p>";
       }
     ?>

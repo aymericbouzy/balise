@@ -6,7 +6,7 @@
         <tr>
           <td>Date d'émission</td>
           <td>Intitulé</td>
-          <td> A psoté l'opération </td>
+          <td> A posté l'opération </td>
           <td> Montant de l'opération</td>
         </tr>
       </thead>
