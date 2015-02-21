@@ -1,9 +1,9 @@
 <?php
 
-	function ratio_bar($numerator, $denominator) {
+	function ratio_bar($numerator, $denominator, $id, $spending) {
 		return "<script>
-			ratio1 = ".(($denominator!=0)?($numerator/$denominator):"0").";
-			ratiobar( ratio1 , 'real_budget');
+			ratio1 = ".($denominator != 0 ? $numerator / $denominator : "0").";
+			ratiobar(".$spending.", ratio1, '".$id."');
 		</script>
 		".pretty_amount($numerator)."/".pretty_amount($denominator) ;
 	}

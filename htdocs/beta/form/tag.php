@@ -7,24 +7,16 @@
   $form["html_form_path"] = VIEW_PATH."tag/form.php";
   $form["fields"]["name"] = create_name_field("le tag");
 
-  function check_all_tags_exist($input) {
-    if (isset($input["tags"])) {
-      foreach (explode(";", $input["tags"]) as $tag_name) {
-        $tag_name = remove_exterior_spaces($tag_name);
-        if (!is_empty($tag_name)) {
-          $tags = select_tags(array("clean_name" => clean_string($tag_name)));
-          if (is_empty($tags)) {
-            $_SESSION["tag_to_create"] = $tag_name;
-            $_SESSION["return_to"] = $GLOBALS["budget_form"]["redirect_to_if_error"];
-            redirect_to_path(path("new", "tag"));
-          }
-        }
-      }
+  function check_unique_clean_name($input) {
+    $criteria["clean_name"] = clean_string($input["name"]);
+    $tags = select_tags($criteria);
+    if (!is_empty($tags)) {
+      return "Ce tag existe déjà sous la forme ".pretty_tag($tags[0]["id"]).".";
     }
     return "";
   }
 
-  $form["validations"] = array("check_all_tags_exist");
+  $form["validations"] = array("check_unique_clean_name");
 
   function structured_budget_maker($validated_input) {
     if (isset($validated_input["tags"])) {
