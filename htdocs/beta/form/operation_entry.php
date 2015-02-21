@@ -20,7 +20,9 @@
   $form["fields"]["amount"] = create_amount_field("le montant de l'opération", array("optional" => $origin_action == "edit" ? 1 : 0, "min" => 1));
   $form["fields"]["sign"] = create_boolean_field("le choix recette/dépense", array("disabled" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["bill"] = create_name_field("la référence de facture", array("optional" => 1));
+  $form["fields"]["bill_date"] = create_date_field("la date de la facture", array("optional" => 1));
   $form["fields"]["payment_ref"] = create_name_field("la référence de paiement", array("optional" => 1));
+  $form["fields"]["payment_date"] = create_date_field("la date de paiement", array("optional" => 1));
   $form["fields"]["comment"] = create_text_field("la description de l'opération", array("optional" => 1));
   $form["fields"]["type"] = create_id_field("le type de transaction", "operation_type");
   $form["fields"]["paid_by"] = create_id_field("la personne qui a payé", "paid_by");

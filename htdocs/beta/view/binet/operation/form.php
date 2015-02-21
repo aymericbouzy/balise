@@ -14,13 +14,19 @@
 ?>
 <?php echo form_input("Description :", "comment", $form); ?>
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-5">
     <?php echo form_input("Référence de facture :", "bill", $form); ?>
+  </div>
+  <div class="col-md-4">
+    <?php echo form_input("Date de la facture :", "bill_date", $form); ?>
   </div>
 </div>
 <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-5">
     <?php echo form_input("Référence de paiement :", "payment_ref", $form); ?>
+  </div>
+  <div class="col-md-4">
+    <?php echo form_input("Date du paiement :", "payment_date", $form); ?>
   </div>
   <div class="col-md-3">
     <?php echo form_input("", "type", $form, array("options" => option_array(select_operation_types(), "id", "name", "operation_type"))); ?>

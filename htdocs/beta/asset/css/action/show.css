@@ -375,27 +375,22 @@
 /*------------------------------------------------------------------------*/
 /* Operation classes */
 
-.sh-op-amount {
-  margin:5px;
-  height:100px;
-  padding : 20px;
+#sh-op-amount-refs{
+  height:140px;
+}
+#sh-op-amount {
   background-color: #3399FF;
   /* Text properties */
   font-size: 40px;
   text-align: center;
-  overflow: hidden;
 }
 
-.sh-op-refs {
-  margin: 5px;
-  height: 100px;
-  padding: 25px;
+#sh-op-refs {
   background-color: #2e2e2e;
   /* Text properties */
   text-align: center;
   font-size: 13px;
   color:#cbddff;
-  overflow: hidden;
 }
 
 .sh-op-info {
@@ -432,18 +427,6 @@
   text-decoration:none;
   font-size:15px;
   color:#2e2e2e;
-}
-
-@media( min-width:543px){
-  .sh-op-amount {
-    display:inline-block;
-    width:289px;
-  }
-
-  .sh-op-refs {
-    display: inline-block;
-    width:230px;
-  }
 }
 
 /*------------------------------------------------------------------------*/

@@ -55,7 +55,7 @@
   case "show":
     $operation = select_operation(
       $operation["id"],
-      array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "payment_ref", "state", "type", "comment", "paid_by")
+      array("id", "binet_validation_by", "kes_validation_by", "binet", "term", "amount", "bill", "bill_date", "payment_ref", "payment_date", "state", "type", "comment", "paid_by")
     );
     $budgets = isset($operation["binet_validation_by"]) ? select_budgets_operation($operation["id"]) : select_budgets(array("binet" => $binet, "term" => $term));
     break;
