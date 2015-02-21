@@ -33,7 +33,7 @@
     </div>
     <div>
       <div class="used" id="real_budget">
-        <?php echo ratio_bar($budget["real_amount"], $budget["amount"]); ?>
+        <?php echo ratio_bar($budget["real_amount"], $budget["amount"], "real_budget", $budget["amount"] < 0); ?>
       </div>
     </div>
   </div>
@@ -46,7 +46,7 @@
         </div>
         <div>
           <div class="used" id="subsidies">
-            <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"]); ?>
+            <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"], "subsidies", true); ?>
           </div>
         </div>
       </div>

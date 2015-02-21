@@ -223,6 +223,13 @@ body {
     background-color:#B2B2B2;
 }
 
+.tag-in-form {
+  color: #fff;
+  border-radius: 2px;
+  padding: 2px;
+  background-color:#3399FF;
+}
+
 /* Containers */
 .show-container {
   position: relative;

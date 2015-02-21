@@ -29,7 +29,7 @@
     <?php echo form_input("Date du paiement :", "payment_date", $form); ?>
   </div>
   <div class="col-md-3">
-    <?php echo form_input("", "type", $form, array("options" => option_array(select_operation_types(), "id", "name", "operation_type"))); ?>
+    <?php echo form_input("", "type", $form, array("options" => option_array(select_operation_types(), "id", "name", "operation_type", array("icon" => "icon")), "search" => false)); ?>
   </div>
 </div>
 <div class="row">

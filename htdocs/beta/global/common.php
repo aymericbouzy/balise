@@ -6,6 +6,12 @@
     }
   }
 
+  function set_if_exists(&$variable, &$value) {
+    if (isset($value)) {
+      $variable = $value;
+    }
+  }
+
   function binet_term_id($binet, $term) {
     return (select_binet($binet, array("clean_name"))["clean_name"])."/".$term;
   }
