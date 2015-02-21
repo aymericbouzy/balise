@@ -83,11 +83,6 @@
     return $link ? link_to(path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])), $caption) : $caption;
   }
 
-  // TODO : get rid of it
-  function pretty_subsidy($subsidy) {
-    return "subsidy ".$subsidy;
-  }
-
   function pretty_terms_list($binet) {
     $list = "";
     foreach (select_terms(array("binet" => $binet)) as $binet_term) {
