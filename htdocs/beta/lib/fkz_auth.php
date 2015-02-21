@@ -26,9 +26,7 @@ function frankiz_do_auth(){
   * Il est prévu pour pouvoir mettre en place un système de redirection après
   * authentification, vers la page à partir de laquelle le client avait tenté de se connecter.
   */
-
-  // TODO : add csrf token
-  $location  = "...";
+  $location  = "";
   /**
   * Nature de la requête.
   * Fkz renverra ici à la fois les noms de la personne mais aussi ses droits dans différents groupes.

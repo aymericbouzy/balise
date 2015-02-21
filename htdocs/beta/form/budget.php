@@ -15,7 +15,7 @@
   $form["destination_path"] = path($destination_action, "budget", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
   $form["html_form_path"] = VIEW_PATH."binet/budget/form.php";
   $form["fields"]["label"] = create_name_field("le nom du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
-  $form["fields"]["tags"] = create_id_field("la liste des tags", "tag", array("optional" => 1, "multiple" => 1));
+  $form["fields"]["tags"] = create_id_field("la liste des mots-clefs", "tag", array("optional" => 1, "multiple" => 1));
   $form["fields"]["amount"] = create_amount_field("le montant du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["sign"] = create_boolean_field("le choix recette/dépense", array("disabled" => $origin_action == "edit" ? 1 : 0));
 

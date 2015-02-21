@@ -5,13 +5,13 @@
   $form["redirect_to_if_error"] = path($origin_action, "tag");
   $form["destination_path"] = path($destination_action, "tag");
   $form["html_form_path"] = VIEW_PATH."tag/form.php";
-  $form["fields"]["name"] = create_name_field("le tag");
+  $form["fields"]["name"] = create_name_field("le mot-clef");
 
   function check_unique_clean_name($input) {
     $criteria["clean_name"] = clean_string($input["name"]);
     $tags = select_tags($criteria);
     if (!is_empty($tags)) {
-      return "Ce tag existe déjà sous la forme ".pretty_tag($tags[0]["id"]).".";
+      return "Ce mot-clef existe déjà sous la forme ".pretty_tag($tags[0]["id"]).".";
     }
     return "";
   }

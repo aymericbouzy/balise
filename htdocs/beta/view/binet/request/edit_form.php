@@ -13,11 +13,13 @@
 <?php
 foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
   $budget = select_budget($budget["id"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used"));
-  path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])) ?>
+  ?>
   <div class="panel light-blue-background opanel">
-    <?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
+    <?php
+    echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
       "<div class=\"title\">".$budget["label"]."<span><i class=\"fa fa-fw fa-eye\"></i>  Voir le budget</span></div>",
-      array("goto"=>true));?>
+      array("goto"=>true));
+    ?>
     <div class="content">
       <div class="edit-infos">
         <p class="budget-summary">
@@ -32,10 +34,10 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
         </p>
       </div>
       <div class="requested-amount">
-        <?php echo form_input("", "amount_".$budget["id"], $form, array("placeholder" => "Montant demandé pour ce budget")); ?>
+        <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé pour ce budget"))); ?>
       </div>
       <div class="explanation">
-        <?php echo form_input("", "purpose_".$budget["id"], $form, array("placeholder" => "Explication pour ce budget")); ?>
+        <?php echo form_input("", "purpose_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Explication pour ce budget"))); ?>
       </div>
     </div>
   </div>

@@ -17,10 +17,11 @@
           break;
           case "validated":
           echo button("", "Validée", "check", "green", false);
+          case "accepted";
+          echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier la répartition sur les budgets", "bar-chart", "teal");
           break;
         }
         echo button(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
-        echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier la répartition sur les budgets", "bar-chart", "teal");
         echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
       }
       if (has_editing_rights_for_suggested_operation($operation["id"]) && !has_editing_rights($binet, $term)) {
@@ -76,25 +77,32 @@
       </div>
     </div>
   </div>
-  <div class="panel opanel light-blue-background">
-    <div class="title-small">
-      Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i>
+  <?php
+  $subsidies_and_requests_operation = select_subsidies_and_requests_operation($operation["id"]);
+  if (!is_empty($subsidies_and_requests_operation)) {
+    ?>
+    <div class="panel opanel light-blue-background">
+      <div class="title-small">
+        Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i>
+      </div>
+      <div class="content">
+        <?php foreach($subsidies_and_requests_operation as $request => $subsidies){
+          echo pretty_wave(select_request($request,array("wave"))["wave"]);
+          echo "<div>";
+          foreach($subsidies as $subsidy){
+            $subsidy = select_subsidy($subsidy,array("budget","purpose"));
+            $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"],false,false)." </button>";
+            $popover_title = "Justification de la demande";
+            $popover_content = $subsidy["purpose"];
+            echo insert_popover($html_button,$popover_content,$popover_title,"left");
+          }
+          echo "</div>";
+        }?>
+      </div>
     </div>
-    <div class="content">
-      <?php foreach(select_subsidies_and_requests_operation($operation["id"]) as $request => $subsidies){
-        echo pretty_wave(select_request($request,array("wave"))["wave"]);
-        echo "<div>";
-        foreach($subsidies as $subsidy){
-          $subsidy = select_subsidy($subsidy,array("budget","purpose"));
-          $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"],false,false)." </button>";
-          $popover_title = "Justification de la demande";
-          $popover_content = $subsidy["purpose"];
-          echo insert_popover($html_button,$popover_content,$popover_title,"left");
-        }
-        echo "</div>";
-      }?>
-    </div>
-  </div>
+    <?php
+  }
+  ?>
   <div class="panel opanel light-blue-background">
     <div class="title-small">
       Répartition sur les budgets
@@ -124,7 +132,7 @@
         echo pretty_budget($budgets[0]["id"], true);
       } else {
         ?>
-        <i>Vous n'avez aucun budget associé à cette opération ?</i>
+        <i>Tu n'as pas encore intégré cette opération dans ton budget.</i>
         <?php
       }
       ?>

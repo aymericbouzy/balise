@@ -49,7 +49,7 @@
   case "create":
     $operation["id"] = create_operation($binet, $term, $_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il te reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
-    $budgets = select_budgets(array("binet" => $binet, "term" => $term, "amount" => array($_POST["sign"] ? "<" : ">", 0)));
+    $budgets = select_budgets(array("binet" => $binet, "term" => $term, "amount" => array($_POST["amount"] > 0 ? ">" : "<", 0)));
     redirect_to_action("review");
     break;
 

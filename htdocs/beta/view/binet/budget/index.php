@@ -8,7 +8,7 @@
   <thead>
     <tr>
       <th>Budget</th>
-      <th>Tags</th>
+      <th>Mots-clefs</th>
       <th>Prévisionnel</th>
       <th>Réel</th>
       <th>Subventionné (accordé)</th>
