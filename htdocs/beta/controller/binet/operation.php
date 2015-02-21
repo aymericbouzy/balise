@@ -38,7 +38,7 @@
 
   case "index":
     $operations = array();
-    foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $operation) {
+    foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date",false) as $operation) {
       $operations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type","term","binet"));
     }
     break;
@@ -49,6 +49,7 @@
   case "create":
     $operation["id"] = create_operation($binet, $term, $_POST["amount"], $_POST["type"], $_POST);
     $_SESSION["notice"][] = "L'opération a été créée avec succès. Il te reste à indiquer à quel(s) budget(s) cette opération se rapporte.";
+    $budgets = select_budgets(array("binet" => $binet, "term" => $term, "amount" => array($_POST["sign"] ? "<" : ">", 0)));
     redirect_to_action("review");
     break;
 
@@ -88,7 +89,7 @@
     break;
 
   case "review":
-    $operation = select_operation($operation["id"], array("id", "amount", "created_by", "comment", "date", "binet", "term"));
+    $operation = select_operation($operation["id"], array("id", "amount", "created_by","paid_by", "comment", "date", "binet", "term","type","bill","payment_ref"));
     break;
 
   case "validate":

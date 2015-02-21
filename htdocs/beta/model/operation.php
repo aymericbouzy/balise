@@ -124,6 +124,19 @@
     return $req->fetchAll();
   }
 
+  function select_subsidies_and_requests_operation($operation) {
+    $subsidies = array();
+    foreach (select_budgets_operation($operation) as $budget) {
+      $subsidies = array_merge($subsidies, select_subsidies(array("budget" => $budget["id"])));
+    }
+    $subsidies_by_request = array();
+    foreach ($subsidies as $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("id", "request"));
+      $subsidies_by_request[$subsidy["request"]][] = $subsidy["id"];
+    }
+    return $subsidies_by_request;
+  }
+
   function add_budgets_operation($operation, $amounts) {
     foreach ($amounts as $budget => $amount) {
       $sql = "INSERT INTO operation_budget(operation, budget, amount)

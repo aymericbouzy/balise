@@ -25,7 +25,7 @@
           <?php echo pretty_tags(select_tags_operation($operation["id"]), true); ?>
         </td>
         <td>
-          <?php echo $operation["date"]; ?>
+          <?php echo pretty_date($operation["date"]); ?>
         </td>
         <?php if ($operation["amount"] < 0) {
           ?><td></td><td>
@@ -55,7 +55,7 @@
   </tr>
   <tr class="total">
     <td colspan="3">Solde</td>
-    <td colspan="2"><?php echo pretty_amount(sum_array($operations, "amount")); ?></td>
+    <td colspan="2"><b><?php echo pretty_amount(sum_array($operations, "amount")); ?></b></td>
   </tr>
 </tbody>
 <?php

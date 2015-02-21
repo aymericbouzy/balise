@@ -1,5 +1,6 @@
 <div id="index-wrapper">
   <div class="panel opanel">
+    <?php if(sizeOf($pending_validations_operations) >0)  {?>
     <div class="title">Opérations à valider</div>
     <div class="content">
       <div class="table-responsive" id="validations-table">
@@ -10,6 +11,7 @@
               <th>Nom</th>
               <th>Origine</th>
               <th>Montant</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -23,6 +25,8 @@
                   <td><?php echo $operation["comment"]; ?></td>
                   <td><?php echo pretty_student($operation["created_by"]); ?></td>
                   <td><?php echo pretty_amount($operation["amount"]); ?></td>
+                  <td><?php echo insert_tooltip(
+                    link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true),"<i class=\"fa fa-fw fa-times\"></i>"),"Supprimer");?></td>
                 </tr>
                 <?php
                 echo link_to(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), ob_get_clean(), array("goto" => true));
@@ -32,15 +36,21 @@
         </table>
       </div>
     </div>
+    <?php } else { ?>
+      <div class="content">
+        Vous n'avez aucune validation en attente !
+      </div>
+    <?php } ?>
   </div>
 
   <?php
 
     if ($binet == KES_ID) {
       ?>
-        <div class="row-centered">
-          <div class="col-max">
-            <h2 class="tabtitle">Opérations à valider par la Kès</h2>
+        <div class="panel opanel">
+          <?php if(sizeOf($pending_validations_operations_kes) >0)  {?>
+          <div class="title">Opérations à valider par la Kès</div>
+          <div class="content">
             <div class="table-responsive" id="validations-table-kes">
               <table class="table table-bordered table-hover table-small-char">
                 <thead>
@@ -71,6 +81,11 @@
               </table>
             </div>
           </div>
+          <?php } else { ?>
+            <div class="content">
+              Aucune validation en attente pour la Kès !
+            </div>
+            <?php } ?>
         </div>
       <?php
     }

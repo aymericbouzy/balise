@@ -1,7 +1,15 @@
 <div class="bigpanel opanel">
-  <span class="title">Opération</span>
+  <div class="title">Opération</div>
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-small-char">
+      <thead>
+        <tr>
+          <td>Date d'émission</td>
+          <td>Intitulé</td>
+          <td> A posté l'opération </td>
+          <td> Montant de l'opération</td>
+        </tr>
+      </thead>
       <tbody>
         <tr>
           <td><?php echo pretty_date($operation["date"]); ?></td>
@@ -12,10 +20,29 @@
       </tbody>
     </table>
   </div>
+  <div class="panel" id="review_form_info">
+    <div class="title-small">
+      Informations complémentaires
+    </div>
+    <div class="content">
+      <div class="panel-line">
+        <?php echo insert_tooltip("<span>".($operation["paid_by"] ? paid_by_to_caption($operation["paid_by"]) : "Aucun payeur enregistré")."</span>","Payé par"); ?>
+        <?php echo insert_tooltip("<span>".pretty_tags(select_tags_operation($operation["id"]), false)."</span>","Mots clés courants"); ?>
+        <?php echo insert_tooltip("<span><i class=\"fa fa-fw fa-folder-o\"></i>".($operation["bill"] ?: "Aucune facture associée")."</span>","Référence de facture") ?>
+        <?php echo insert_tooltip("<span>".pretty_operation_type($operation["type"])." ".($operation["payment_ref"] ?: "Aucune référence de paiement associée")."</span>","Référence de paiement"); ?>
+      </div>
+    </div>
+    <div class="content">
+      <?php
+        echo link_to(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)),"Modifier l'opération",array("class"=>"btn","id"=>"edit-btn"));
+        echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true),"Supprimer l'opération",array("class"=>"btn btn-danger","id"=>"suppr-btn"));
+      ?>
+    </div>
+  </div>
 </div>
 
 <div class="bigpanel opanel">
-  <span class="title">Budgets</span>
+  <span class="title">Budgets - <i style="font-size:13px">répartir le montant de l'opération entre les différents budgets </i></span>
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-hover table-small-char">
       <thead>

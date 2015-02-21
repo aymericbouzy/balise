@@ -14,7 +14,7 @@
     $tag_string = "";
     foreach ($tags as $tag) {
       $tag = select_tag($tag["id"], array("name", "id"));
-      $label = "<span class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>\t";
+      $label = "<span ".($link ? "" : " style=\"cursor:default\"")."class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>\t";
       if ($link) {
         $tag_string .= link_to(search_by_tag_path($tag["id"]), $label);
       } else {

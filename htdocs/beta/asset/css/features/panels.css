@@ -154,6 +154,29 @@
 
 /*------------------------------------------------------*/
 /* ELements inside panels */
+.panel-article {
+  padding:5px;
+}
+.panel-line {
+  display:table;
+  width:100%;
+  font-size:12px;
+  border-bottom:1px solid rgba(0,0,0,0.3);
+  margin-bottom:1px;
+}
+.panel-line>span {
+  display:table-cell;
+  text-align:center;
+}
+.panel-important-element {
+  display:block;
+  text-align:center;
+  width:100%;
+  padding:5px;
+  margin-top:5px;
+  margin-bottom:5px;
+  font-size:15px;
+}
 .panel-list-element {
   display:block;
   width:90%;
@@ -190,12 +213,13 @@
 /*------------------------------------------------------*/
 /* Pills */
 .pill {
+  display:inline-block;
   padding:3px;
   margin:3px;
   font-size:12px;
   border: 1px solid rgba(0,0,0,0.4);
-  border-radius:2px;
-  background-color: rgba(0,0,0,0.3);
+  border-radius:5px;
+  background-color: rgba(30,50,150,0.3);
   color:#fff;
 }
 .pill>a {
@@ -206,6 +230,8 @@
   color:#BF360C;
   font-weight:bold;
   padding-left:5px;
+<<<<<<< HEAD
+=======
 }
 
 /*------------------------------------------------------*/
@@ -230,4 +256,5 @@
 .panel-split-left,.panel-split-right {
   display:block;
   margin:5px;
+>>>>>>> master
 }

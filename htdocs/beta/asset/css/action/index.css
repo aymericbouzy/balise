@@ -85,7 +85,7 @@
 
 .clickable-main{
   display:table;
-  height:50px;
+  min-height:30px;
   width:758px;;
   background-color:#cbddff;
   text-decoration:none;
@@ -106,26 +106,30 @@
   padding-left:15px;
   padding-right:15px;
 }
-.name,.state{
+.name {
   display:table-cell;
-  font-size:20px;
+  font-size:15px;
   padding:5px;
   text-decoration:none;
-  height:25px;
+  height:20px;
 }
 
 .state {
-  width:150px;
+  display:table-cell;
+  font-size:13px;
+  width:120px;
 }
 
 .dates, .users {
   display:table-cell;
-  border-left:1px solid rgba(0,0,0,0.4);
 }
 .users {
   width:200px;
 }
-.dates>.top , .dates>.bottom , .users>.prez, .users>.trez {
+.dates{
+  width:150px;
+}
+.dates>.top , .dates>.bottom {
   text-align:center;
   display:block;
   height:25px;
@@ -135,7 +139,7 @@
   display:table-cell;
   vertical-align:middle;
   padding:5px;
-  width:50px;
+  width:100px;
   border-left:1px solid rgba(0,0,0,0.4);
 }
 .content-line-panel>.actions {
