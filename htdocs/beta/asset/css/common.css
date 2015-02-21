@@ -219,11 +219,11 @@ body {
     background-color:#B2B2B2;
 }
 
-.tag-white {
-  color: #3399FF;
+.tag-in-form {
+  color: #fff;
   border-radius: 2px;
   padding: 2px;
-  background-color:#fff;
+  background-color:#3399FF;
 }
 
 /* Containers */
