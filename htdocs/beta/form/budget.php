@@ -22,11 +22,14 @@
   function check_no_tag_creation($input) {
     if (isset($input["submit"]) && $input["submit"] == new_tag_submit_value) {
       $_SESSION["return_to"] = $GLOBALS["budget_form"]["redirect_to_if_error"];
+      set_if_exists($_SESSION["stored_errors"], $_SESSION["error"]);
+      unset($_SESSION["error"]);
       redirect_to_path(path("new", "tag"));
     }
   }
 
   $form["validations"] = array("check_no_tag_creation");
+  $form["ignore_format_errors_for_validation"] = 1;
 
   function structured_budget_maker($validated_input) {
     if (isset($GLOBALS["budget"])) {

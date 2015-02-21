@@ -21,6 +21,8 @@
     $tag["id"] = create_tag($_POST["name"]);
     $_SESSION["notice"][] = "Le tag \"".$_POST["name"]."\" a été créé avec succès.";
     $_SESSION["budget_form"]["tags"][] = $tag["id"];
+    set_if_exists($_SESSION["error"], $_SESSION["stored_errors"]);
+    unset($_SESSION["stored_errors"]);
     $return_to = $_SESSION["return_to"];
     unset($_SESSION["return_to"]);
     redirect_to_path($return_to);

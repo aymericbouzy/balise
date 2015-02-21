@@ -29,11 +29,15 @@
     $sanitized_input = array();
     foreach ($form["fields"] as $name => $field) {
       if (is_empty($field["disabled"])) {
-        if ((!isset($_POST[$name]) || (is_empty($_POST[$name]) && !in_array($field["type"], array("boolean", "id"))))&& is_empty($field["optional"])) {
+        if ((!isset($_POST[$name]) || (is_empty($_POST[$name]) && !in_array($field["type"], array("boolean", "id")))) && is_empty($field["optional"])) {
           add_form_error($form["name"], $name, "Tu n'as pas rempli ".$field["human_name"].".");
           $sanitized_input[$name] = default_value_for_type($field["type"]);
         } else {
-          $sanitized_input[$name] = $_POST[$name];
+          if (is_empty($_POST[$name]) && $field["type"] == "id" && !is_empty($field["multiple"])) {
+            $sanitized_input[$name] = array();
+          } else {
+            $sanitized_input[$name] = $_POST[$name];
+          }
         }
       }
     }
@@ -158,7 +162,7 @@
         break;
       }
     }
-    if (isset($form["validations"]) && $no_format_error) {
+    if (isset($form["validations"]) && ($no_format_error || !is_empty($form["ignore_format_errors_for_validation"]))) {
       foreach ($form["validations"] as $validation) {
         add_form_error($form["name"], "", call_user_func($validation, $input));
       }
