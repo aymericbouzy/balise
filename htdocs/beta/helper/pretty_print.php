@@ -63,7 +63,7 @@
   }
 
   function pretty_date($date) {
-    return strftime("%d/%m/%Y",strtotime($date));
+    return ($date != "0000-00-00") ? strftime("%d/%m/%Y",strtotime($date)) : "" ;
   }
 
   function pretty_operation_type($type) {
