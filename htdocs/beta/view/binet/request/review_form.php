@@ -20,9 +20,7 @@
   </div>
   <div class="sh-actions">
     <?php
-    if (has_editing_rights($binet, $term)) {
       echo button(path("reject", "request", $request_info["id"], binet_prefix($binet, $term), array(), true), "Refuser", "times", "red");
-    }
     ?>
   </div>
   <div class="sh-title opanel">

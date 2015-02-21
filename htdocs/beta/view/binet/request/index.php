@@ -99,7 +99,7 @@
       <div class="panel opanel light-blue-background">
         <div class="actions">
           <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
-            "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"btn action-on-request"));?>
+            "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>
         </div>
         <div class="title-small">
           <?php echo pretty_wave($request["wave"]); ?>

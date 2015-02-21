@@ -36,7 +36,7 @@
     send_email($admin, "Déchéance des droits d'administration du binet ".pretty_binet_term($binet."/".$term, false, false), "delete_admin_rights", array("binet_term" => $binet."/".$term, "kessier" => connected_student()));
     remove_admin_binet($admin, $binet, $term);
     foreach (select_admins($binet, $term) as $student) {
-      send_email($student["id"], "Suppression d'un administrateur du binet ".pretty_binet_term($binet."/".$admin_term, false, false), "delete_admin_binet", array("admin" => $admin, "binet_term" => $binet."/".$term, "kessier" => connected_student()));
+      send_email($student["id"], "Suppression d'un administrateur du binet ".pretty_binet_term($binet."/".$term, false, false), "delete_admin_binet", array("admin" => $admin, "binet_term" => $binet."/".$term, "kessier" => connected_student()));
     }
     $_SESSION["notice"][] = "Les droits d'administration de ".pretty_student($admin)." pour la promotion ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
     redirect_to_action("");

@@ -98,6 +98,7 @@ CREATE TABLE `operation` (
   `bill_date` date DEFAULT NULL,
   `payment_ref` varchar(30) DEFAULT NULL,
   `payment_date` date DEFAULT NULL,
+  `payment_ref` varchar(30) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `binet_validation_by` int(11) DEFAULT NULL,
   `kes_validation_by` int(11) DEFAULT NULL,
