@@ -122,7 +122,7 @@
   }
 
   function form_submit_button($label) {
-    return "<input type=\"submit\" class=\"btn btn-default\" value=\"".$label."\">";
+    return "<input type=\"submit\" class=\"btn btn-default\" name=\"submit\" value=\"".$label."\">";
   }
 
   function form_group_select($label, $field, $options, $prefill_value, $form_name, $parameters = array()) {

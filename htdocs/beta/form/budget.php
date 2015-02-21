@@ -1,5 +1,7 @@
 <?php
 
+  define("new_tag_submit_value", "+");
+
   if (in_array($_GET["action"], array("new", "create"))) {
     $origin_action = "new";
     $destination_action = "create";
@@ -16,6 +18,15 @@
   $form["fields"]["tags"] = create_id_field("la liste des tags", "tag", array("optional" => 1, "multiple" => 1));
   $form["fields"]["amount"] = create_amount_field("le montant du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["sign"] = create_boolean_field("le choix recette/dépense", array("disabled" => $origin_action == "edit" ? 1 : 0));
+
+  function check_no_tag_creation($input) {
+    if (isset($input["submit"]) && $input["submit"] == new_tag_submit_value) {
+      $_SESSION["return_to"] = $GLOBALS["budget_form"]["redirect_to_if_error"];
+      redirect_to_path(path("new", "tag"));
+    }
+  }
+
+  $form["validations"] = array("check_no_tag_creation");
 
   function structured_budget_maker($validated_input) {
     if (isset($GLOBALS["budget"])) {

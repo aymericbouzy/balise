@@ -4,6 +4,7 @@
     $form = array();
     $form["name"] = $form_name;
     include FORM_PATH.$form_name.".php";
+    $form["fields"]["submit"] = create_name_field("Le bouton pour soumettre le formulaire");
     $GLOBALS[$form_name."_form"] = $form;
   }
 
