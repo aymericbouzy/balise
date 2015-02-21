@@ -135,7 +135,7 @@
       $select_tag .= "<option value=\"".$value."\"".
         (in_array($value, $prefill_value) ? " selected=\"selected\"" : "").
         (is_empty($icon) ? "" : " data-icon=\"fa fa-".$icon."\"").
-        ($field == "tags" ? " data-content=\"<span class='tag-white'>".$option_label."</span>\"" : "").
+        ($field == "tags" ? " data-content=\"<span class='tag-in-form'>".$option_label."</span>\"" : "").
         ">".$option_label."</option>";
     }
     $select_tag .= "</select>";
