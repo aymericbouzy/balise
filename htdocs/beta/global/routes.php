@@ -1,6 +1,7 @@
 <?php
 
   function clean_string($string) {
+    $string = remove_exterior_spaces($string);
     $string = str_replace(
       str_split("àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ", 2),
       str_split("aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY"),

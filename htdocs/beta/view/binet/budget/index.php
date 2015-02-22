@@ -13,7 +13,7 @@
     </tr>
     <tr>
       <th>Nom</th>
-      <th>Mot clés</th>
+      <th>Mots-clefs</th>
       <th>Prévisionnel</th>
       <th>Réel</th>
       <th>Attendues</th>
@@ -90,7 +90,7 @@
       <tr class="total">
           <td colspan="2">Total</td>
           <td><?php echo pretty_amount(sum_array($budgets, "amount")); ?></td>
-          <td><?php echo pretty_amount(sum_array($budgets, "real_amount")); ?></td>
+          <td><b><?php echo pretty_amount(sum_array($budgets, "real_amount")); ?><b></td>
           <td><?php echo pretty_amount(sum_array($budgets,"subsidized_amount")); ?></td>
           <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted")); ?></td>
           <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used")); ?></td>

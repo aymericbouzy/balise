@@ -32,7 +32,7 @@
       Budget réel / prévisionnel
     </div>
     <div class="ratio-container" id="real_budget">
-      <?php echo ratio_bar($budget["real_amount"], $budget["amount"]); ?>
+      <?php echo ratio_bar($budget["real_amount"], $budget["amount"], "real_budget", $budget["amount"] < 0); ?>
     </div>
   </div>
   <?php
@@ -42,8 +42,8 @@
         <div class="title-small">
           Subventions utilisées / accordées
         </div>
-        <div class="ratio-container" id="subsidies">
-          <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"]); ?>
+        <div class="ratio-container" id="subsidies_granted">
+          <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"], "subsidies_granted", true); ?>
         </div>
       </div>
       <div class="panel opanel light-blue-background">
@@ -51,7 +51,7 @@
           Subventions accordées / attendues
         </div>
         <div class="ratio-container" id="subsidies">
-          <?php echo ratio_bar($budget["subsidized_amount_granted"], $budget["subsidized_amount"]); ?>
+          <?php echo ratio_bar($budget["subsidized_amount_granted"], $budget["subsidized_amount"], "subsidies", true); ?>
         </div>
       </div>
       <?php
@@ -62,38 +62,43 @@
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
     </div>
   </div>
-  <div class="sh-piechart-panel opanel">
-  <?php
-    $operations = select_operations_budget($budget["id"]);
-    if (!is_empty($operations) && sizeOf($operations)>1) {
-      ?>
-        <div class="pieID pie">
-        </div>
-        <ul class="pieID legend">
-          <?php
-            foreach ($operations as $operation) {
-              ?>
-              <li>
-                <em><?php echo pretty_operation($operation["id"],true,true); ?></em>
-                <span><?php echo pretty_amount($operation["amount"],false,false); ?></span>
-              </li>
-              <?php
-            }
-          ?>
-        </ul>
-        <script>createPie(".pieID.legend", ".pieID.pie");</script>
+  <div class="panel opanel light-blue-background">
+    <div class="title">
+      Répartition des opérations sur le budget
+    </div>
+    <div class="content">
       <?php
-    }
-    else{
-      if(!is_empty($operations)){
-        echo pretty_operation($operations[0]["id"],true);
-      }
-      else{
-        ?>
-        Vous n'avez aucune opération associée à ce budget !
-        <?php
-      }
-    }
-  ?>
+        $operations = select_operations_budget($budget["id"]);
+        if (!is_empty($operations) && sizeOf($operations)>1) {
+          ?>
+            <div class="pieID pie">
+            </div>
+            <ul class="pieID legend">
+              <?php
+                foreach ($operations as $operation) {
+                  ?>
+                  <li>
+                    <em><?php echo pretty_operation($operation["id"],true,true); ?></em>
+                    <span><?php echo pretty_amount($operation["amount"],false,false); ?></span>
+                  </li>
+                  <?php
+                }
+              ?>
+            </ul>
+            <script>createPie(".pieID.legend", ".pieID.pie");</script>
+          <?php
+        }
+        else{
+          if(!is_empty($operations)){
+            echo pretty_operation($operations[0]["id"],true);
+          }
+          else{
+            ?>
+            Vous n'avez aucune opération associée à ce budget !
+            <?php
+          }
+        }
+      ?>
+    </div>
   </div>
 </div>

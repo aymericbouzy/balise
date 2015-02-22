@@ -52,6 +52,10 @@ body {
     }
 }
 
+.side-information {
+  font-size: smaller;
+}
+
 /* Top Navigation */
 
 .top-nav {
@@ -217,6 +221,13 @@ body {
     border-radius: 2px;
     padding: 2px;
     background-color:#B2B2B2;
+}
+
+.tag-in-form {
+  color: #fff;
+  border-radius: 2px;
+  padding: 2px;
+  background-color:#3399FF;
 }
 
 /* Containers */

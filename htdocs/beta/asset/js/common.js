@@ -1,25 +1,17 @@
 function ratiobar (spending, ratio, elementId) {
   var element = document.getElementById(elementId);
-  var r = Math.floor(ratio*100);
-  if (ratio <= 1) {
-    width = "" + r + "%";
-
-    if (ratio < 0.6) {
-      if (spending)
-        element.style.backgroundColor = '#52CC29'; /* Green */
-      else
-        element.style.backgroundColor = '#FF4D4D'; /* Red */
-    }
-
+  var green = '#52CC29', red = '#FF4D4D';
+  if ((spending && ratio <= 1) || (!spending && ratio >= 1)) {
+    element.style.backgroundColor = green;
   } else {
-    /* Trop de dépenses ou de bonnes recettes*/
-    if (spending)
-      element.style.backgroundColor = '#FF4D4D'; /* Red */
-    else
-      element.style.backgroundColor = '#52CC29'; /* Green */
-
+    element.style.backgroundColor = red;
   }
+  if (ratio > 1) {
+    ratio = 1;
+  }
+  width = "" + Math.floor(ratio*100) + "%";
   element.style.width = width ;
+  element.style.overflow = "visible";
 }
 
 

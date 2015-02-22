@@ -14,7 +14,7 @@
     $tag_string = "";
     foreach ($tags as $tag) {
       $tag = select_tag($tag["id"], array("name", "id"));
-      $label = "<span class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>\t";
+      $label = "<span ".($link ? "" : " style=\"cursor:default\"")."class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>\t";
       if ($link) {
         $tag_string .= link_to(search_by_tag_path($tag["id"]), $label);
       } else {
@@ -63,7 +63,7 @@
   }
 
   function pretty_date($date) {
-    return strftime("%d/%m/%Y",strtotime($date));
+    return ($date != "0000-00-00") ? strftime("%d/%m/%Y",strtotime($date)) : "" ;
   }
 
   function pretty_operation_type($type) {
@@ -81,11 +81,6 @@
     $request = select_request($request, array("id", "binet", "term"));
     $caption = "Demande de subventions ".pretty_binet_term($request["binet"]."/".$request["term"], false);
     return $link ? link_to(path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])), $caption) : $caption;
-  }
-
-  // TODO : get rid of it
-  function pretty_subsidy($subsidy) {
-    return "subsidy ".$subsidy;
   }
 
   function pretty_terms_list($binet) {

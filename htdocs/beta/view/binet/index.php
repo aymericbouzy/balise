@@ -20,25 +20,17 @@
         <?php
           $binet = select_binet($binet["id"], array("id", "current_term"));
           if (is_current_kessier()) {
-            $binet["balance"] = select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance"))["real_balance"];
-            $binet["state_color"] = $binet["balance"] > 0 ? "green" : "red";
+            $binet = array_merge(select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance", "state")), $binet);
           }
           ob_start();
           ?>
-            <i class="fa fa-3x fa-group"></i>
+            <i class="fa fa-fw fa-group"></i>
             <span class="name"><?php echo pretty_binet($binet["id"], false); ?></span>
-            <?php
-              if (is_current_kessier()) {
-                ?>
-                <span class="state <?php echo $binet["state_color"]; ?>-background">Etat du binet</span>
-                <?php
-              }
-            ?>
             <span class="users">
               <?php
                 foreach (select_current_admins($binet["id"]) as $admin) {
                   ?>
-                  <span class="prez"><?php echo pretty_student($admin["id"]); ?></span>
+                  <span class="prez"><?php echo "<span class=\"pill\">".pretty_student($admin["id"])."</span>"; ?></span>
                   <?php
                 }
               ?>
@@ -46,14 +38,18 @@
             <?php
               if (is_current_kessier()) {
                 ?>
-                <span class="amount <?php echo $binet["state_color"]; ?>-background"><?php echo pretty_amount($binet["balance"]); ?></span>
+                <span class="amount <?php echo $binet["state"]; ?>-background"><?php echo pretty_amount($binet["real_balance"]); ?></span>
                 <?php
               }
           echo link_to(path("show", "binet", $binet["id"]), "<div>".ob_get_clean()."</div>\n", array("class"=>"opanel clickable-main","goto"=>true));
           ?>
           <span class="actions">
             <?php
-            echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
+            if(has_viewing_rights($binet["id"],$binet["current_term"])){
+              echo button(path("",binet_prefix($binet["id"],$binet["current_term"])), "Voir l'activité du binet", "eye", "blue");
+            } else {
+              echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
+            }
             ?>
           </span>
         </li>

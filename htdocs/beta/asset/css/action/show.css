@@ -37,13 +37,6 @@
   text-decoration:none;
 }
 
-.sh-block-normal {
-  padding:10px;
-  margin: 5px;
-  background-color: #cbddff;
-  color:#2e2e2e;
-}
-
 
 @media(min-width:543px){
   .sh-title>.text>.main {
@@ -52,14 +45,6 @@
   .sh-title>.text>.sub {
     max-width: 384px;
   }
-}
-
-.sh-piechart-panel {
-  margin: 5px;
-  margin-top: 10px;
-  padding: 15px;
-  background-color: #cbddff ;
-  font-size: 15px;
 }
 
 
@@ -136,28 +121,14 @@
   background-color:#64B5F6;
 }
 
-.sh-bin-eye {
+#sh-bin-eye {
   position:absolute;
   width:50px;
-  height:50px;
+  height:40px;
   overflow:hidden;
   top:5px;
   right:10px;
-  color:#000;
-  margin:5px;
-  padding:5px;
-  padding-right:10px;
-  border-radius:5px;
-  -webkit-transition: width 0.2s, background-color 0.2s;
-  transition: width 0.2s , background-color 0.2s;
-}
-.sh-bin-eye:hover {
-  background-color:#64B5F6;
-  width:auto;
-}
-.sh-bin-eye>span{
-  font-size:10px;
-  color:#2e2e2e;
+  font-size:20px;
 }
 
 .sh-bin-admins {
@@ -344,51 +315,24 @@
 /*------------------------------------------------------------------------*/
 /* Operation classes */
 
-.sh-op-amount {
-  margin:5px;
-  height:100px;
-  padding : 20px;
+#sh-op-amount-refs{
+  height:140px;
+}
+#sh-op-amount {
   background-color: #3399FF;
   /* Text properties */
   font-size: 40px;
   text-align: center;
-  overflow: hidden;
 }
 
-.sh-op-refs {
-  margin: 5px;
-  height: 100px;
-  padding: 25px;
+#sh-op-refs {
   background-color: #2e2e2e;
   /* Text properties */
   text-align: center;
   font-size: 13px;
   color:#cbddff;
-  overflow: hidden;
 }
 
-.sh-op-info {
-  height: auto;
-  margin: 5px;
-  margin-top: 0px;
-  padding: 20px;
-  background-color: #cbddff;
-}
-
-.sh-op-payer {
-  min-height: 100px;
-  margin: 5px;
-  margin-top: 10px;
-  padding: 15px;
-  background-color: #3399FF ;
-  text-align: center;
-  font-size: 50px;
-}
-
-.sh-op-payer>a{
-  text-decoration:none;
-  color:#2e2e2e;
-}
 
 .sh-op-budgets , .sh-bu-operations {
   margin: 5px;
@@ -401,18 +345,6 @@
   text-decoration:none;
   font-size:15px;
   color:#2e2e2e;
-}
-
-@media( min-width:543px){
-  .sh-op-amount {
-    display:inline-block;
-    width:289px;
-  }
-
-  .sh-op-refs {
-    display: inline-block;
-    width:230px;
-  }
 }
 
 /*------------------------------------------------------------------------*/

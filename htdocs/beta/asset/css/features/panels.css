@@ -32,6 +32,12 @@
   border-radius:0px;
   border:none;
   shadow:none;
+  overflow:hidden;
+}
+.panel::after {
+  display:block;
+  content:"";
+  clear:both;
 }
 .panel.inside {
   border: 1px solid rgba(0,0,0,0.3);
@@ -149,6 +155,29 @@
 
 /*------------------------------------------------------*/
 /* ELements inside panels */
+.panel-article {
+  padding:5px;
+}
+.panel-line {
+  display:table;
+  width:100%;
+  font-size:12px;
+  border-bottom:1px solid rgba(0,0,0,0.3);
+  margin-bottom:1px;
+}
+.panel-line>span {
+  display:table-cell;
+  text-align:center;
+}
+.panel-important-element {
+  display:block;
+  text-align:center;
+  width:100%;
+  padding:5px;
+  margin-top:5px;
+  margin-bottom:5px;
+  font-size:15px;
+}
 .panel-list-element {
   display:block;
   width:90%;
@@ -188,15 +217,17 @@
   text-align: center;
   background-color: #3399FF;
 }
+
 /*------------------------------------------------------*/
 /* Pills */
 .pill {
+  display:inline-block;
   padding:3px;
   margin:3px;
   font-size:12px;
   border: 1px solid rgba(0,0,0,0.4);
-  border-radius:2px;
-  background-color: rgba(0,0,0,0.3);
+  border-radius:5px;
+  background-color: rgba(30,50,150,0.3);
   color:#fff;
 }
 .pill>a {
@@ -207,4 +238,28 @@
   color:#BF360C;
   font-weight:bold;
   padding-left:5px;
+}
+
+/*------------------------------------------------------*/
+/* Split panels */
+
+@media(min-width:768px){
+  .panel-split-left , .panel-split-right {
+    display:inline-block;
+    margin-right:2px;
+    width:48%;
+    padding:20px;
+    height:100%;
+  }
+  .panel-split-left {
+    float:left;
+  }
+  .panel-split-right {
+    float:right;
+  }
+}
+
+.panel-split-left,.panel-split-right {
+  display:block;
+  margin:5px;
 }

@@ -89,14 +89,17 @@ CREATE TABLE `budget_tag` (
 --
 
 CREATE TABLE `operation` (
-  `id` int(11) NOT NULL,
+`id` int(11) NOT NULL,
   `date` date NOT NULL,
   `amount` int(11) NOT NULL,
   `binet` int(11) NOT NULL,
   `term` smallint(6) NOT NULL,
   `type` tinyint(4) NOT NULL,
   `bill` varchar(30) DEFAULT NULL,
-  `reference` varchar(30) DEFAULT NULL,
+  `bill_date` date DEFAULT NULL,
+  `payment_ref` varchar(30) DEFAULT NULL,
+  `payment_date` date DEFAULT NULL,
+  `payment_ref` varchar(30) DEFAULT NULL,
   `created_by` int(11) NOT NULL,
   `binet_validation_by` int(11) DEFAULT NULL,
   `kes_validation_by` int(11) DEFAULT NULL,
