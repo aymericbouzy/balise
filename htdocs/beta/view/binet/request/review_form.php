@@ -100,7 +100,7 @@
     <?php
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
-      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used"));
+      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term", "real_amount", "amount", "subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used"));
       ?>
       <div class="panel light-blue-background opanel">
         <?php
