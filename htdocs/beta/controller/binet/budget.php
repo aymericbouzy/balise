@@ -36,7 +36,7 @@
   case "index":
     $budgets = array();
     foreach (select_budgets(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $budget) {
-      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+      $budgets[] = select_budget($budget["id"], array("id", "label", "amount","subsidized_amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     }
     break;
 
@@ -45,17 +45,17 @@
     break;
 
   case "create":
-    $subsidized_amount = $_POST["sign"] == 1 ? $_POST["subsidized_amount"] : NULL;
-    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"], $subsidized_amount);
+    set_if_not_set($_POST["sign"], 0);
+    $budget["id"] = create_budget($binet, $term, (1 - 2*$_POST["sign"])*$_POST["amount"], $_POST["label"]);
     foreach ($tags as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
     $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
-    redirect_to_action("show");
+    redirect_to_action("index");
     break;
 
   case "show":
-    $budget = select_budget($budget["id"], array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+    $budget = select_budget($budget["id"], array("id", "label", "binet", "amount", "term", "real_amount","subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     break;
 
   case "edit":

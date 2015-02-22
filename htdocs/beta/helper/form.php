@@ -1,7 +1,7 @@
 <?php
 
   function form_group($label, $field, $content, $object_name) {
-    return "<div class=\"form-group".(isset($_SESSION[$object_name]["errors"]) && in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\">
+    return "<div class=\"form-group".(isset($_SESSION[$object_name]["errors"]) && in_array($field, $_SESSION[$object_name]["errors"]) ? " has-error" : "")."\" id=\"".$object_name."\">
               <label for=\"".$field."\">".$label."</label>
               ".$content."
             </div>";
@@ -146,7 +146,7 @@
       case "binet":
       return "binet";
       case "term":
-      return "mandat";
+      return "promotion";
       case "comment":
       return "description";
       case "bill":
@@ -162,7 +162,7 @@
       case "paid_by":
       return "payé par";
       case "binet_term":
-      return "mandat";
+      return "promotion";
       case "name":
       return "nom";
       case "description":
@@ -170,7 +170,7 @@
       case "subsidy_steps":
       return "étapes pour la récupération des subventions";
       case "current_term":
-      return "mandat actuel";
+      return "promotion actuelle";
       case "submission_date":
       return "date de soumission";
       case "expiry_date":

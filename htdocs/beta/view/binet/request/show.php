@@ -1,25 +1,10 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <div class="sh-plus <?php $state_to_color = array("rough_draft" => "grey", "sent" => "orange", "reviewed_accepted" => "orange", "reviewed_rejected" => "orange", "accepted" => "green", "rejected" => "red"); echo $state_to_color[$request["state"]]; ?>-background opanel">
-    <i class="fa fa-fw fa-<?php $state_to_icon = array("rough_draft" => "question", "sent" => "question", "reviewed_accepted" => "question", "reviewed_rejected" => "question", "accepted" => "check", "rejected" => "times"); echo $state_to_icon[$request["state"]]; ?>"></i>
+  <?php $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
+  <div class="sh-plus <?php echo $request_state["color"]; ?>-background opanel">
+    <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
     <div class="text">
-      <?php
-        switch ($request["state"]) {
-          case "rough_draft":
-          echo "Brouillon";
-          break;
-          case "accepted":
-          echo "Acceptée";
-          break;
-          case "rejected":
-          echo "Refusée";
-          break;
-          default:
-          if (in_array($request["state"], array("sent", "reviewed"))) {
-            echo "Envoyée";
-          }
-        }
-      ?>
+      <?php echo $request_state["name"]; ?>
     </div>
   </div>
   <div class="sh-actions">
@@ -32,7 +17,7 @@
           break;
         }
       }
-      if (status_admin_binet($request["wave"]["binet"], $request["wave"]["term"])) {
+      if (has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])) {
         if (in_array($request["state"], array("sent", "reviewed"))) {
           echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
         }
@@ -83,11 +68,14 @@
         ".$subsidy["purpose"]."
         </p>
         </div>";
-      echo link_to(
-        path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
-        "<div>".ob_get_clean()."</div>",
-        array("goto"=>true,"class"=>"sh-req-budget opanel")
-      );
+      $caption = "<div class=\"sh-req-budget opanel\">".ob_get_clean()."</div>";
+      echo has_viewing_rights($binet, $term) ?
+        link_to(
+          path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
+          $caption,
+          array("goto" => true)
+        ) :
+        $caption;
     }
   ?>
 </div>

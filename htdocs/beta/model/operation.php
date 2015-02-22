@@ -32,12 +32,12 @@
       foreach (select_budgets_operation($operation["id"]) as $budget) {
         foreach (select_subsidies(array("budget" => $budget["id"])) as $subsidy) {
           $subsidy = select_subsidy($subsidy["id"], array("request"));
-          $requests[$subsidy["request"]] = true;
+          $requests[] = $subsidy["request"];
         }
-      }
-      foreach ($requests as $request => $present) {
-        $request = select_request($request, array("state"));
-        $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
+        foreach (array_unique($requests) as $request) {
+          $request = select_request($request, array("state"));
+          $operation["needs_validation"] = $operation["needs_validation"] || $request["state"] == "accepted";
+        }
       }
     }
     if (in_array("state", $fields)) {
@@ -98,8 +98,7 @@
   }
 
   function select_operations($criteria = array(), $order_by = "date", $ascending = true) {
-    set_if_not_set($criteria["state"], array("IN", "accepted", "validated"));
-
+    set_if_not_set($criteria["state"], array("IN", array("accepted", "validated")));
     return select_entries(
       "operation",
       array("amount", "binet", "term", "created_by", "binet_validation_by", "kes_validation_by", "paid_by", "type"),

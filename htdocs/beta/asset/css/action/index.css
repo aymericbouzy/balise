@@ -1,5 +1,5 @@
 /* -- Wrapper --*/
-#public-index-wrapper {
+#public-index-wrapper, #index-wrapper {
   position: relative;
   width:auto;
   margin: auto;
@@ -7,10 +7,14 @@
 }
 
 @media(min-width:768px){
-  #public-index-wrapper {
+  #public-index-wrapper, #index-wrapper {
     margin:auto;
     width:768px;
     padding-top:155px;
+  }
+
+  #index-wrapper {
+    padding-top:0px;
   }
 }
 
@@ -170,4 +174,28 @@
 .content-line-panel-small>.clickable-main>.dates {
   font-size:12px;
   width:30px;
+}
+
+/* Finances.php */
+#controlbar{
+  margin-bottom:10px;
+}
+#select-term {
+  display:inline-block;
+  width:10%;
+}
+#view-binet {
+  display:inline-block;
+  width:10%;
+}
+#choose-term {
+  padding:5px;
+}
+
+#switch-operations-budgets {
+  margin-top:0px;
+}
+
+input.search {
+  margin : 10px;
 }
