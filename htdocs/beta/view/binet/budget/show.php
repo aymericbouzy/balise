@@ -16,7 +16,7 @@
 	</div>
   <div class="sh-title opanel">
     <div class="logo">
-      <i class="fa fa-5x <?php echo $budget["amount"] > 0 ? "fa-plus-circle" : "fa-minus-circle"; ?>"></i>
+      <i class="fa fa-5x fa-bar-chart"></i>
     </div>
     <div class="text">
       <p class="main">
@@ -27,34 +27,40 @@
       </p>
     </div>
   </div>
-  <div class="sh-bu-ratio opanel">
-    <div class="header">
+  <div class="panel opanel light-blue-background">
+    <div class="title-small">
       Budget réel / prévisionnel
     </div>
-    <div>
-      <div class="used" id="real_budget">
-        <?php echo ratio_bar($budget["real_amount"], $budget["amount"]); ?>
-      </div>
+    <div class="ratio-container" id="real_budget">
+      <?php echo ratio_bar($budget["real_amount"], $budget["amount"]); ?>
     </div>
   </div>
   <?php
     if (!is_empty($budget["subsidized_amount_granted"])) {
       ?>
-      <div class="sh-bu-ratio opanel">
-        <div class="header">
+      <div class="panel opanel light-blue-background">
+        <div class="title-small">
           Subventions utilisées / accordées
         </div>
-        <div>
-          <div class="used" id="subsidies">
-            <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"]); ?>
-          </div>
+        <div class="ratio-container" id="subsidies">
+          <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"]); ?>
+        </div>
+      </div>
+      <div class="panel opanel light-blue-background">
+        <div class="title-small">
+          Subventions accordées / attendues
+        </div>
+        <div class="ratio-container" id="subsidies">
+          <?php echo ratio_bar($budget["subsidized_amount_granted"], $budget["subsidized_amount"]); ?>
         </div>
       </div>
       <?php
     }
   ?>
-  <div class="sh-bu-tags opanel">
+  <div class="panel opanel light-blue-background">
+    <div class="content">
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
+    </div>
   </div>
   <div class="sh-piechart-panel opanel">
   <?php

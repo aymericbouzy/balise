@@ -180,7 +180,13 @@
 .panel-list-element>a:hover {
   text-decoration:underline;
   color:#ccc;
+}
 
+.ratio-container {
+  display: inline-block ;
+  text-align: center;
+  background-color: #3399FF;
+}
 /*------------------------------------------------------*/
 /* Pills */
 .pill {
@@ -200,5 +206,4 @@
   color:#BF360C;
   font-weight:bold;
   padding-left:5px;
->>>>>>> 45a44ebf79575b4447661415a09979eef7596ec4
 }
