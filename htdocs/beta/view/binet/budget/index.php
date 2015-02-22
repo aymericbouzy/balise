@@ -68,9 +68,7 @@
             <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
-            <td><?php echo pretty_amount($budget["subsidized_amount"]); ?></td>
-            <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>
-            <td><?php echo pretty_amount($budget["subsidized_amount_used"]); ?></td>
+            <td class="grey-300-background" colspan="3"></td>
           </tr>
         <?php
         }
@@ -80,9 +78,7 @@
       <td colspan="2">Total des recettes</td>
       <td><?php echo pretty_amount(sum_array($budgets, "amount", "positive")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "real_amount", "positive")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets,"subsidized_amount","positive")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted", "positive")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used", "positive")); ?></td>
+      <td class="grey-300-background" colspan="3"></td>
     </tr>
   </tbody>
   <thead class="separator">
