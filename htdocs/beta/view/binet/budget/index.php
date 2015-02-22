@@ -48,14 +48,14 @@
       <td colspan="2">Total des dépenses</td>
       <td><?php echo pretty_amount(sum_array($budgets, "amount", "negative")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "real_amount", "negative")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets,"subsidized_amount","negative")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted", "negative")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used", "negative")); ?></td>
+      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount", "positive")); ?></td>
+      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted", "positive")); ?></td>
+      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used", "positive")); ?></td>
     </tr>
   </tbody>
   <thead class="separator">
       <tr>
-          <td colspan="7">Recettes</td>
+          <td colspan="4">Recettes</td>
       </tr>
   </thead>
   <tbody class="list">
@@ -83,17 +83,23 @@
   </tbody>
   <thead class="separator">
       <tr>
-          <td colspan="5"></td>
+          <td colspan="4"></td>
       </tr>
   </thead>
   <tbody>
       <tr class="total">
-          <td colspan="2">Total</td>
+          <td colspan="2">Total (non-subventionné)</td>
           <td><?php echo pretty_amount(sum_array($budgets, "amount")); ?></td>
-          <td><b><?php echo pretty_amount(sum_array($budgets, "real_amount")); ?><b></td>
-          <td><?php echo pretty_amount(sum_array($budgets,"subsidized_amount")); ?></td>
-          <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted")); ?></td>
-          <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used")); ?></td>
+          <td><?php echo pretty_amount(sum_array($budgets, "real_amount")); ?></td>
+          <td class="grey-300-background" colspan="3"></td>
+      </tr>
+  </tbody>
+  <tbody>
+      <tr class="total">
+          <td colspan="2">Total</td>
+          <td><?php echo pretty_amount(sum_array($budgets, "amount") + sum_array($budgets, "subsidized_amount")); ?></td>
+          <td><b><?php echo pretty_amount(sum_array($budgets, "real_amount") + sum_array($budgets, "subsidized_amount_used")); ?></b></td>
+          <td class="grey-300-background" colspan="3"></td>
       </tr>
   </tbody>
 
