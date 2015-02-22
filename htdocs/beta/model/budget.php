@@ -67,7 +67,7 @@
 
   function update_budget($budget, $hash) {
     update_entry("budget",
-                  array("amount"),
+                  array("amount", "subsidized_amount"),
                   array("label"),
                   $budget,
                   $hash);
