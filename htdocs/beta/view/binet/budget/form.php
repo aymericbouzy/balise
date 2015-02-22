@@ -24,13 +24,13 @@
 
 <script charset="utf-8">
   var id="expected_subsidies";
-  $('input[id="sign1"]').change(function(){
+  $('input[id="sign0"]').change(function(){
     if($(this).is(':checked'))
     {
       show_hidden_form_element(id);
     }
   });
-  $('input[id="sign0"]').change(function(){
+  $('input[id="sign1"]').change(function(){
     if($(this).is(':checked'))
     {
       hide_form_element(id);
