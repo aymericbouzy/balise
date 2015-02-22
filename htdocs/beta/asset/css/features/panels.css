@@ -93,7 +93,6 @@
 
 /*------------------------------------------------------*/
 /* Info : text outside the panel */
-
 .content>.infos {
   display:inline-block;
   width:70%;
@@ -122,7 +121,9 @@
   position:relative;
   padding:5px;
 }
-
+.content:before {
+  clear:both;
+}
 /*------------------------------------------------------*/
 /* Minipane */
 
