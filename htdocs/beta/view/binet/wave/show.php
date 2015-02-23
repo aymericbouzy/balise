@@ -1,40 +1,22 @@
 <?php $subsidizer_can_study = in_array($wave["state"], array("deliberation", "submission")); ?>
 <div class = "sidebar-present">
   <div class="show-container">
-    <?php $wave_state_to_color = array("submission" => "blue", "deliberation" => "teal", "distribution" => "green", "closed" => "grey");
-          $wave_state_to_icon = array("submission" => "crosshairs", "deliberation" => "cogs", "distribution" => "money", "closed" => "times");
-    ?>
-    <div class="sh-plus <?php echo $wave_state_to_color[$wave["state"]]; ?>-background opanel">
-      <i class="fa fa-fw fa-<?php echo $wave_state_to_icon[$wave["state"]]; ?>"></i>
+    <?php $wave_state = wave_state($wave["state"]); ?>
+    <div class="sh-plus <?php echo $wave_state["color"]; ?>-background opanel">
+      <i class="fa fa-fw fa-<?php echo $wave_state["icon"]; ?>"></i>
       <div class="text">
-        <?php
-          switch ($wave["state"]) {
-            case "submission":
-            echo "Demandes en cours";
-            break;
-            case "deliberation":
-            echo "Etude des demandes";
-            break;
-            case "distribution":
-            echo "Emise";
-            break;
-            case "closed":
-            echo "Fermée";
-            break;
-          }
-        ?>
+        <?php echo $wave_state["name"]; ?>
       </div>
     </div>
     <div class="sh-actions">
   		<?php
         if (has_editing_rights($binet, $term)) {
-          echo button(
-            path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
-            "Modifier","edit","blue");
+          echo button(path("edit", "wave", $wave["id"], binet_prefix($binet, $term)), "Modifier", "edit", "blue");
+          if (is_openable($wave["id"])) {
+            echo button(path("open", "wave", $wave["id"], binet_prefix($binet, $term), array(), true), "Ouvrir", "share", "green");
+          }
           if (is_publishable($wave["id"])) {
-            echo button(
-              path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"]),array(),true),
-              "Publier","share","green");
+            echo button(path("publish", "wave", $wave["id"], binet_prefix($binet, $term), array(), true), "Publier", "share", "green");
           }
         }
       ?>
@@ -62,11 +44,27 @@
         <?php echo pretty_date($wave["expiry_date"]); ?>
       </span>
     </div>
+    <div class="panel grey-background opanel">
+      <div class="content">
+        <?php echo $wave["description"]; ?>
+      </div>
+    </div>
     <div class="panel green-background opanel">
       <div class="content white-text">
         <?php echo $wave["question"]; ?>
       </div>
     </div>
+    <?php
+      if (in_array($wave["state"], array("distribution", "closed"))) {
+        ?>
+        <div class="panel blue-background opanel">
+          <div class="content white-text">
+            <?php echo $wave["explanation"]; ?>
+          </div>
+        </div>
+        <?php
+      }
+    ?>
     <div id="requests">
       <?php
         $requests = select_requests(array("wave" => $wave["id"]));

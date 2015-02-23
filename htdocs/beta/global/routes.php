@@ -18,6 +18,9 @@
     if ($include_csrf) {
       $query_array["csrf_token"] = get_csrf_token();
     }
+    if (STATE == "development" && isset($GLOBALS["query_array"]["current_date"])) {
+      $query_array["current_date"] = $GLOBALS["query_array"]["current_date"];
+    }
     foreach ($query_array as $key => $value) {
       if (!is_empty($value)) {
         if ($include_start_char) {
