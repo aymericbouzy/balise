@@ -1,22 +1,19 @@
 <?php
 
-  function create_wave($binet, $term, $submission_date, $expiry_date, $question) {
-    $values["binet"] = $binet;
-    $values["term"] = $term;
-    $values["submission_date"] = $submission_date;
-    $values["expiry_date"] = $expiry_date;
-    $values["question"] = $question;
+  function create_wave($binet, $term, $parameters) {
+    $parameters["binet"] = $binet;
+    $parameters["term"] = $term;
     return create_entry(
       "wave",
-      array("binet", "term"),
-      array("submission_date", "expiry_date", "question"),
-      $values
+      array("binet", "term", "amount"),
+      array("submission_date", "expiry_date", "question", "description"),
+      $parameters
     );
   }
 
   function select_wave($wave, $fields = array()) {
     if (in_array("state", $fields)) {
-      $fields = array_merge(array("submission_date", "expiry_date", "published"), $fields);
+      $fields = array_merge(array("submission_date", "expiry_date", "published", "open"), $fields);
     }
     $present_virtual_fields = array_intersect(array("requested_amount", "granted_amount", "used_amount", "requests_received", "requests_reviewed"), $fields);
     if (!is_empty($present_virtual_fields)) {
@@ -24,7 +21,7 @@
     }
     $wave = select_entry(
       "wave",
-      array("id", "binet", "term", "submission_date", "expiry_date", "published", "question"),
+      array("id", "binet", "term", "submission_date", "expiry_date", "published", "question", "amount", "description", "explanation", "open"),
       $wave,
       $fields
     );
@@ -40,7 +37,7 @@
         $wave[$field] = get_used_amount_wave($wave["id"]);
         break;
       case "state":
-        $wave[$field] = $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed");
+        $wave[$field] = !$wave["open"] ? "rough_draft" : $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed");
         break;
       case "requests_received":
         $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1)));
@@ -60,11 +57,14 @@
   }
 
   function select_waves($criteria = array(), $order_by = NULL, $ascending = true) {
+    if (!isset($criteria["open"]) && !isset($criteria["state"])) {
+      $criteria["open"] = 1;
+    }
     return select_entries(
       "wave",
-      array("binet", "term", "published"),
+      array("binet", "term", "published", "open"),
       array("submission_date", "expiry_date"),
-      array("requested_amount", "granted_amount", "used_amount", "state"),
+      array("requested_amount", "granted_amount", "used_amount", "state", "amount"),
       $criteria,
       $order_by,
       $ascending
@@ -75,7 +75,7 @@
     update_entry(
       "wave",
       array(),
-      array("submission_date", "expiry_date", "question"),
+      array("submission_date", "expiry_date", "question", "amount", "description", "explanation"),
       $wave,
       $hash
     );
@@ -84,6 +84,16 @@
   function publish_wave($wave) {
     $sql = "UPDATE wave
             SET published = 1
+            WHERE id = :wave
+            LIMIT 1";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':wave', $wave, PDO::PARAM_INT);
+    $req->execute();
+  }
+
+  function open_wave($wave) {
+    $sql = "UPDATE wave
+            SET open = 1
             WHERE id = :wave
             LIMIT 1";
     $req = Database::get()->prepare($sql);

@@ -34,7 +34,7 @@
     break;
 
   case "create":
-    $wave["id"] = create_wave($binet, $term, $_POST["submission_date"], $_POST["expiry_date"], $_POST["question"]);
+    $wave["id"] = create_wave($binet, $term, $_POST);
     $_SESSION["notice"][] = "Une nouvelle vague de subvention a été ouverte.";
     $binets_per_student = array();
     foreach (select_binets() as $any_binet) {
