@@ -4,7 +4,7 @@
     <?php $wave_state_to_color = array("submission" => "blue", "deliberation" => "teal", "distribution" => "green", "closed" => "grey");
           $wave_state_to_icon = array("submission" => "crosshairs", "deliberation" => "cogs", "distribution" => "money", "closed" => "times");
     ?>
-    <div class="sh-plus <?php echo $wave_state_to_color[$wave["state"]]; ?>-background opanel">
+    <div class="sh-plus <?php echo $wave_state_to_color[$wave["state"]]; ?>-background shadowed">
       <i class="fa fa-fw fa-<?php echo $wave_state_to_icon[$wave["state"]]; ?>"></i>
       <div class="text">
         <?php
@@ -39,7 +39,7 @@
         }
       ?>
   	</div>
-    <div class="sh-title opanel">
+    <div class="sh-title shadowed">
       <div class="logo">
         <i class="fa fa-5x fa-star"></i>
       </div>
@@ -52,7 +52,7 @@
         </p>
       </div>
     </div>
-    <div class="sh-wa-dates opanel">
+    <div class="sh-wa-dates shadowed">
       <span id="submission-date">
         Demandes avant le :<br/>
         <?php echo pretty_date($wave["submission_date"]); ?>
@@ -62,7 +62,7 @@
         <?php echo pretty_date($wave["expiry_date"]); ?>
       </span>
     </div>
-    <div class="panel green-background opanel">
+    <div class="panel green-background shadowed">
       <div class="content white-text">
         <?php echo $wave["question"]; ?>
       </div>
@@ -88,11 +88,11 @@
           echo link_to(
             path($subsidizer_can_study && has_editing_rights($binet, $term) ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
             "<div>".ob_get_clean()."</div>",
-            array("goto" => true, "class"=> "sh-wa-request opanel")
+            array("goto" => true, "class"=> "sh-wa-request shadowed")
           );
         }
       ?>
-      <div class="sh-wa-stats opanel2">
+      <div class="sh-wa-stats shadowed2">
         <div class="item blue-background">
           Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
         </div>

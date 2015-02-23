@@ -1,6 +1,6 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <div class="sh-plus <?php echo $budget["amount"] > 0 ? "green" : "red" ?>-background opanel">
+  <div class="sh-plus <?php echo $budget["amount"] > 0 ? "green" : "red" ?>-background shadowed">
     <i class="fa fa-fw fa-<?php echo $budget["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
     <div class="text"><?php echo $budget["amount"] > 0 ? "Recette" : "Dépense" ?></div>
   </div>
@@ -14,7 +14,7 @@
     }
     ?>
 	</div>
-  <div class="sh-title opanel">
+  <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-5x fa-bar-chart"></i>
     </div>
@@ -27,7 +27,7 @@
       </p>
     </div>
   </div>
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="title-small">
       Budget réel / prévisionnel
     </div>
@@ -40,7 +40,7 @@
   <?php
     if (!is_empty($budget["subsidized_amount_granted"])) {
       ?>
-      <div class="panel opanel light-blue-background">
+      <div class="panel shadowed light-blue-background">
         <div class="title-small">
           Subventions utilisées / accordées
         </div>
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-      <div class="panel opanel light-blue-background">
+      <div class="panel shadowed light-blue-background">
         <div class="title-small">
           Subventions accordées / attendues
         </div>
@@ -63,7 +63,7 @@
       <?php
     } else {
   ?>
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="title-small">
       Subventions attendues pour ce budget
     </div>
@@ -72,12 +72,12 @@
     </div>
   </div>
   <?php } ?>
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="content">
     <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
     </div>
   </div>
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="title">
       Répartition des opérations sur le budget
     </div>

@@ -1,7 +1,7 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <?php echo initialize_popovers(); ?>
 <div class="show-container">
-  <div class="sh-plus <?php echo $operation["amount"] > 0 ? "green" : "red" ?>-background opanel">
+  <div class="sh-plus <?php echo $operation["amount"] > 0 ? "green" : "red" ?>-background shadowed">
     <i class="fa fa-fw fa-<?php echo $operation["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
     <div class="text"><?php echo $operation["amount"] > 0 ? "Recette" : "Dépense" ?></div>
   </div>
@@ -37,7 +37,7 @@
       }
     ?>
 	</div>
-  <div class="sh-title opanel">
+  <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-calculator fa-5x"></i>
     </div>
@@ -51,10 +51,10 @@
     </div>
   </div>
   <div class="panel transparent-background" id="sh-op-amount-refs">
-    <div class="panel-split-left opanel" id="sh-op-amount">
+    <div class="panel-split-left shadowed" id="sh-op-amount">
       <?php echo pretty_amount($operation["amount"]); ?> <i class="fa fa-euro"></i>
     </div>
-    <div class="panel-split-right opanel" id="sh-op-refs">
+    <div class="panel-split-right shadowed" id="sh-op-refs">
       <i class="fa fa-fw fa-folder-o"></i>
       <?php echo $operation["bill"] ?: "Aucune facture associée"; ?><br>
       <span class="side-information"><?php echo pretty_date($operation["bill_date"]); ?></span></br>
@@ -62,7 +62,7 @@
       <span class="side-information"><?php echo pretty_date($operation["payment_date"]);?></span>
     </div>
   </div>
-  <div class="panel opanel blue-background">
+  <div class="panel shadowed blue-background">
     <div class="content">
       <?php
         if($operation["comment"] != ""){
@@ -81,7 +81,7 @@
   $subsidies_and_requests_operation = select_subsidies_and_requests_operation($operation["id"]);
   if (!is_empty($subsidies_and_requests_operation)) {
     ?>
-    <div class="panel opanel light-blue-background">
+    <div class="panel shadowed light-blue-background">
       <div class="title-small">
         Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i>
       </div>
@@ -103,7 +103,7 @@
     <?php
   }
   ?>
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="title-small">
       Répartition sur les budgets
     </div>

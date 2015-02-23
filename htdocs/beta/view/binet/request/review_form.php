@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="show-container">
-  <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background opanel">
+  <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background shadowed">
     <i class="fa fa-fw fa-<?php $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times"); echo $state_to_icon[$request_info["state"]]; ?>"></i>
     <div class="text">
       <?php
@@ -23,7 +23,7 @@
       echo button(path("reject", "request", $request_info["id"], binet_prefix($binet, $term), array(), true), "Refuser", "times", "red");
     ?>
   </div>
-  <div class="sh-title opanel">
+  <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
     </div>
@@ -36,13 +36,13 @@
       </p>
     </div>
   </div>
-  <div class="panel light-blue-background opanel">
+  <div class="panel light-blue-background shadowed">
     <div class="content">
       <?php echo $current_binet["description"]; ?>
     </div>
   </div>
   <!-- Answer to the wave question -->
-  <div class="panel green-background opanel">
+  <div class="panel green-background shadowed">
     <div class="content white-text">
       <?php echo $request_info["answer"]; ?>
     </div>
@@ -63,7 +63,7 @@
     $content = ob_get_clean();
     echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"])),
       "<div>".$content."</div>",
-      array("class" => "light-blue-background opanel sh-bin-stats".clean_string($suffix),"id" => "current-term", "goto" => true));
+      array("class" => "light-blue-background shadowed sh-bin-stats".clean_string($suffix),"id" => "current-term", "goto" => true));
 
     if (!is_empty($previous_binet)) {
       ob_start();
@@ -81,10 +81,10 @@
       $content = ob_get_clean();
       echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"] - 1)),
           "<div>".$content."</div>",
-          array("class" => "light-blue-background opanel sh-bin-stats".clean_string($suffix),"id" => "previous-term", "goto" => true));
+          array("class" => "light-blue-background shadowed sh-bin-stats".clean_string($suffix),"id" => "previous-term", "goto" => true));
     }
     ?>
-    <div class="panel light-blue-background opanel">
+    <div class="panel light-blue-background shadowed">
       <div class="title">
         Subventions <?php echo pretty_binet($request_info["wave"]["binet"],false); ?>
       </div>
@@ -102,7 +102,7 @@
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
       $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term", "real_amount", "amount", "subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used"));
       ?>
-      <div class="panel light-blue-background opanel">
+      <div class="panel light-blue-background shadowed">
         <?php
           echo link_to(
             path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),

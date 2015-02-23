@@ -2,7 +2,7 @@
   <div class="panel transparent-background">
     <div class="content" id="controlbar">
       <div id="select-term">
-        <?php echo modal_toggle("choose-term",$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","opanel0 blue-background white-text","terms"); ?>
+        <?php echo modal_toggle("choose-term",$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","shadowed0 blue-background white-text","terms"); ?>
       </div>
       <div id="view-binet">
         <?php echo insert_tooltip(
@@ -10,7 +10,7 @@
             "Voir le binet",
             "right"); ?>
       </div>
-      <div class="switch opanel" id="switch-operations-budgets">
+      <div class="switch shadowed" id="switch-operations-budgets">
         <?php
         $active = "active";
         $inactive = "inactive";
@@ -31,7 +31,7 @@
       </div>
     </div>
   </div>
-  <div class="panel opanel">
+  <div class="panel shadowed">
     <div class="title"><?php echo $table_title; ?></div>
     <div class="content">
       <div id="searchlist">

@@ -1,5 +1,5 @@
 <div id="public-index-wrapper">
-  <div id="action-header" class="opanel2">
+  <div id="action-header" class="shadowed2">
     <div id="action-title">Vagues de subventions</div>
     <div class="searchbar">
         <?php echo fuzzy_input(); ?>
@@ -49,20 +49,20 @@
                 ?>
               </span>
             <?php
-            echo link_to(path("show", "wave", $wave["id"], binet_prefix($wave["binet"],$wave["term"])), "<div>".ob_get_clean()."</div>\n", array("class" => "opanel clickable-main", "goto" => true));
+            echo link_to(path("show", "wave", $wave["id"], binet_prefix($wave["binet"],$wave["term"])), "<div>".ob_get_clean()."</div>\n", array("class" => "shadowed clickable-main", "goto" => true));
 
             if (in_array($wave["state"], array("submission", "deliberation"))) {
               ?>
               <span class="actions">
                 <?php
                   echo modal_toggle("ask_for_subsidies".$wave["id"],"<i class=\"fa fa-fw fa-question anim\"></i> <span class=\"olabel\"> Demander des subventions </span>",
-                    "round-button green-background opanel2","choose_binet".$wave["id"]);
+                    "round-button green-background shadowed2","choose_binet".$wave["id"]);
                   ob_start();
                   foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
                     $term_admin = select_term_binet($term_admin["id"], array("binet","term"));
                     echo link_to(path("new", "request", "", binet_prefix($term_admin["binet"],$term_admin["term"]), array("wave" => $wave["id"])),
                       pretty_binet_term($term_admin["id"], false) ,
-                      array("class" => "modal-list-element opanel0"));
+                      array("class" => "modal-list-element shadowed0"));
                   }
                   echo modal("choose_binet".$wave["id"],"Choisir un binet pour lequel faire une demande",ob_get_clean());
                 ?>
