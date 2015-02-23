@@ -213,7 +213,9 @@
 }
 
 .ratio-container {
-  display: inline-block ;
+  display: block ;
+  min-width:5px;
+  height:20px;
   text-align: center;
   background-color: #3399FF;
 }
