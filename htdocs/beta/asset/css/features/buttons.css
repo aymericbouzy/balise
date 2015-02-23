@@ -12,12 +12,15 @@
   height:100%;
 }
 
-@media(max-width:900px){
+@media(max-width:768px){
   .round-button , .round-button-small {
     display: inline-block;
-    width: 30%;
+    width: 30px;
+    height:30px;
+    padding:7px;
+    padding-left:5px;
+    font-size:15px;
     margin: 1.2%;
-    text-align: center;
   }
 
   .round-button:hover{
