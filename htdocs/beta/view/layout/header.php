@@ -8,9 +8,17 @@
   <?php echo link_to(path("", "home"), "Balise", array("class" => "navbar-brand")); ?>
 </div>
 <ul class="nav navbar-right top-nav">
+  <li>
+    <?php
+    $help_file = VIEW_PATH."help/".(is_empty($_GET["prefix"]) ? "" : $_GET["prefix"]."/").$_GET["controller"]."/".$_GET["action"].".php";
+    if (file_exists($help_file)) {
+      echo modal_toggle("help", "<i class=\"fa fa-question-circle help-icon\"></i>", "", "display-help");
+    }
+    ?>
+  </li>
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      <i class="fa fa-plus-circle green-plus" id="operation-plus"></i> <span class="caret"></span>
+      <i class="fa fa-plus-circle operation-plus"></i> <span class="caret"></span>
     </a>
     <ul class="dropdown-menu" role="menu">
       <?php
@@ -76,6 +84,11 @@
           }
         }
         echo modal("wave-select","Sélectionner une vague de subventions : ",ob_get_clean());
+    }
+    if (file_exists($help_file)) {
+      ob_start();
+      include $help_file;
+      echo modal("display-help", "Aide", ob_get_clean());
     }
   ?>
 </ul>
