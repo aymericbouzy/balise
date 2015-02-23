@@ -37,7 +37,7 @@
         $wave[$field] = get_used_amount_wave($wave["id"]);
         break;
       case "state":
-        $wave[$field] = !$wave["open"] ? "rough_draft" : $wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed");
+        $wave[$field] = $wave["open"] == 0 ? "rough_draft" : ($wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed"));
         break;
       case "requests_received":
         $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1)));

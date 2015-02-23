@@ -93,6 +93,11 @@
       <div class="sh-wa-stats opanel2">
         <div class="item blue-background">
           Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
+          <?php
+          if (has_viewing_rights($binet, $term)) {
+            echo " / ".pretty_amount($wave["amount"], false, true)." à répartir";
+          }
+          ?>
         </div>
         <div class="item green-background">
           <?php

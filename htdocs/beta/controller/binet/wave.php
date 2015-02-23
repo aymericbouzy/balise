@@ -42,6 +42,7 @@
 
   case "index":
     $waves = select_waves(array("binet" => $binet, "term" => $term), "submission_date");
+    $waves_rough_drafts = select_waves(array("binet" => $binet, "term" => $term, "state" => "rough_draft"), "submission_date");
     break;
 
   case "new":
@@ -70,7 +71,7 @@
     break;
 
   case "show":
-    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "requested_amount", "granted_amount", "used_amount", "description", "question", "explanation", "requests_received", "requests_reviewed","requests_accepted"));
+    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "amount", "requested_amount", "granted_amount", "used_amount", "description", "question", "explanation", "requests_received", "requests_reviewed","requests_accepted"));
     break;
 
   case "edit":
