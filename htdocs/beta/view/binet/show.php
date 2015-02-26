@@ -53,40 +53,42 @@
   <?php
   if (!is_empty($binet["current_term"])) {
     ?>
-    <div class="sh-bin-admins shadowed">
+    <div class="panel light-blue-background shadowed">
       <span class="title">
         Administrateurs
       </span>
-      <?php
-      $admins = select_current_admins($binet["id"]);
-      if (!empty($admins)) {
-        foreach ($admins as $admin) {
+      <div class="content">
+        <?php
+        $admins = select_current_admins($binet["id"]);
+        if (!empty($admins)) {
+          foreach ($admins as $admin) {
+            ?>
+            <span class="admin">
+              <i class="fa fa-fw fa-user logo"></i>
+              <i class="fa fa-fw fa-eye logo"></i>
+              <?php echo pretty_student($admin["id"]); ?>
+            </span>
+            <?php
+          }
+        } else {
           ?>
-          <span class="admin">
-            <i class="fa fa-fw fa-user logo"></i>
-            <i class="fa fa-fw fa-send logo"></i>
-            <?php echo pretty_student($admin["id"]); ?>
-          </span>
+          <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet !
           <?php
         }
-      } else {
-        ?>
-        <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet !
-        <?php
-      }
-      if (is_current_kessier()) {
-        ?>
-        <div class="add">
-          <?php
-          echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
-          if (!empty($admins)){
-            echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
-          }
+        if (is_current_kessier()) {
           ?>
-        </div>
-        <?php
-      }
-      ?>
+          <div class="add">
+            <?php
+            echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
+            if (!empty($admins)){
+              echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
+            }
+            ?>
+          </div>
+          <?php
+        }
+        ?>
+      </div>
     </div>
     <?php
   }
@@ -119,7 +121,7 @@
       echo minipane("subsidies_used".$suffix, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
       $content = ob_get_clean();
       ?>
-      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed">
+      <div class="panel sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed">
         <?php echo $content; ?>
       </div>
       <?php

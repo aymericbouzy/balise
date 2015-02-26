@@ -65,17 +65,21 @@
     </div>
   </div>
   <div id="homelinks" class="panel shadowed2">
-    <?php
-      echo link_to(
-        path("","wave"),
-        "<div>   <i class=\"fa-fw fa fa-money\"></i> Subventions </div>",
-        array("class" => "homelink", "id" => "subsidies","goto" => "true" ));
-      ?>
-    <?php
-      echo link_to(
-        path("","binet"),
-        "<div>   <i class=\"fa-fw fa fa-group\"></i> Binets </div>",
-        array("class" => "homelink", "id" => "binets","goto" => "true" ));
-      ?>
+    <div class="homelink-container">
+      <?php
+        echo link_to(
+          path("","wave"),
+          "<div><span>   <i class=\"fa-fw fa fa-money\"></i> Subventions </span></div>",
+          array("class" => "homelink", "id" => "subsidies","goto" => "true" ));
+        ?>
+    </div>
+    <div class="homelink-container">
+      <?php
+        echo link_to(
+          path("","binet"),
+          "<div><span>   <i class=\"fa-fw fa fa-group\"></i> Binets </span></div>",
+          array("class" => "homelink", "id" => "binets","goto" => "true" ));
+        ?>
+    </div>
   </div>
 </div>

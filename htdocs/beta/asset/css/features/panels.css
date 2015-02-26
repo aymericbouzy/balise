@@ -32,7 +32,6 @@
   border-radius:0px;
   border:none;
   shadow:none;
-  overflow:hidden;
 }
 .panel::after {
   display:block;
@@ -153,6 +152,14 @@
   font-weight:500;
 }
 
+@media(max-width: 768px){
+  .minipane{
+    position:relative;
+    width:48%;
+    display:inline-block;
+    margin:2px;
+  }
+}
 /*------------------------------------------------------*/
 /* ELements inside panels */
 .panel-article {

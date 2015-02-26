@@ -8,7 +8,6 @@
   <div class="content white-text" id="description">
     <?php echo form_input($request["wave"]["question"], "answer", $form, array("placeholder" => "Justifiez votre demande", "style" => "color:#fff")); ?>
   </div>
-  </div>
 </div>
 <?php
 foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
@@ -21,17 +20,25 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
       array("goto"=>true));
     ?>
     <div class="content">
-      <div class="edit-infos">
-        <p class="budget-summary">
-          <span class="minititle">Résumé du budget</span>
-          <span>Prévisionnel : <?php echo pretty_amount($budget["amount"])?></span>
-          <span> Réel : <?php echo pretty_amount($budget["real_amount"])?></span>
-        </p>
-        <p class="budget-summary">
-          <span class="minititle">Subventions</span>
-          <span>Reçues : <?php echo pretty_amount($budget["subsidized_amount_granted"])?></span>
-          <span>Utilisées : <?php echo pretty_amount($budget["subsidized_amount_used"])?></span>
-        </p>
+      <div class="edit-infos table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <td class="minititle">Résumé du budget</td>
+              <td class="minititle">Subventions</td>
+            </tr>
+          </thead>
+          <tbody>
+          <tr class="summary">
+            <td>Prévisionnel : <?php echo pretty_amount($budget["amount"])?></td>
+            <td>Reçues : <?php echo pretty_amount($budget["subsidized_amount_granted"])?></td>
+          </tr>
+          <tr class="summary">
+            <td> Réel : <?php echo pretty_amount($budget["real_amount"])?></td>
+            <td>Utilisées : <?php echo pretty_amount($budget["subsidized_amount_used"])?></td>
+          </tr>
+          <tbody>
+        </table>
       </div>
       <div class="requested-amount">
         <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé pour ce budget"))); ?>

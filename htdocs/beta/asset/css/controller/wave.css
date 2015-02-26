@@ -6,9 +6,11 @@
   padding-left:0px;
 }
 
-#wave-index-wrapper {
-  padding-left:225px;
-  width:100%;
+@media(min-width:768px){
+  #wave-index-wrapper {
+    padding-left:225px;
+    width:100%;
+  }
 }
 
 #wave-index {
