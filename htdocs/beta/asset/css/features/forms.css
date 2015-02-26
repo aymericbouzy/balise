@@ -74,6 +74,12 @@ option {
   margin-left:10px;
 }
 
+.hidden-element {
+  display:none;
+  visiblity:hidden;
+  height:0px;
+}
+
 /* Select-search inputs custom classes */
 .form-group>div>.btn{
   background-color:rgba(0,0,0,0);

@@ -63,6 +63,11 @@
         $initial_input["amount_".$subsidy["budget"]] = $subsidy["requested_amount"];
         $initial_input["purpose_".$subsidy["budget"]] = $subsidy["purpose"];
       }
+    } else {
+      foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
+        $budget = select_budget($budget["id"], array("id", "subsidized_amount", "subsidized_amount_granted"));
+        $initial_input["amount_".$budget["id"]] = $budget["subsidized_amount"] - $budget["subsidized_amount_granted"];
+      }
     }
     return $initial_input;
   }

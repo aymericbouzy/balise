@@ -1,10 +1,10 @@
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
-<div class="panel light-blue-background opanel">
+<div class="panel light-blue-background shadowed">
   <div class="content">
     <?php echo pretty_wave($request["wave"]["id"]);?>
   </div>
 </div>
-<div class="panel green-background opanel">
+<div class="panel green-background shadowed">
   <div class="content white-text" id="description">
     <?php echo form_input($request["wave"]["question"], "answer", $form, array("placeholder" => "Justifiez votre demande", "style" => "color:#fff")); ?>
   </div>
@@ -14,7 +14,7 @@
 foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
   $budget = select_budget($budget["id"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used"));
   ?>
-  <div class="panel light-blue-background opanel">
+  <div class="panel light-blue-background shadowed">
     <?php
     echo link_to(path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
       "<div class=\"title\">".$budget["label"]."<span><i class=\"fa fa-fw fa-eye\"></i>  Voir le budget</span></div>",

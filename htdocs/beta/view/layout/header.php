@@ -72,7 +72,7 @@
           echo "<i>Il n'y a aucune vague de subvention pour laquelle faire une demande en ce moment.</i>";
         } else {
           foreach ($waves_for_modal as $wave_for_modal) {
-            echo link_to(path("new", "request", "", binet_prefix($binet,$term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element opanel0"));
+            echo link_to(path("new", "request", "", binet_prefix($binet,$term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element shadowed0"));
           }
         }
         echo modal("wave-select","Sélectionner une vague de subventions : ",ob_get_clean());

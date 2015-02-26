@@ -1,6 +1,6 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <div class="sh-plus <?php echo $budget["amount"] > 0 ? "green" : "red" ?>-background opanel">
+  <div class="sh-plus <?php echo $budget["amount"] > 0 ? "green" : "red" ?>-background shadowed">
     <i class="fa fa-fw fa-<?php echo $budget["amount"] > 0 ? "plus" : "minus" ?>-circle"></i>
     <div class="text"><?php echo $budget["amount"] > 0 ? "Recette" : "Dépense" ?></div>
   </div>
@@ -14,9 +14,9 @@
     }
     ?>
 	</div>
-  <div class="sh-title opanel">
+  <div class="sh-title shadowed">
     <div class="logo">
-      <i class="fa fa-5x <?php echo $budget["amount"] > 0 ? "fa-plus-circle" : "fa-minus-circle"; ?>"></i>
+      <i class="fa fa-5x fa-bar-chart"></i>
     </div>
     <div class="text">
       <p class="main">
@@ -27,38 +27,57 @@
       </p>
     </div>
   </div>
-  <div class="sh-bu-ratio opanel">
-    <div class="header">
+  <div class="panel shadowed light-blue-background">
+    <div class="title-small">
       Budget réel / prévisionnel
     </div>
-    <div>
-      <div class="used" id="real_budget">
-        <?php echo ratio_bar($budget["real_amount"], $budget["amount"], "real_budget", $budget["amount"] < 0); ?>
+    <div class="content">
+      <div class="ratio-container" id="ratio-real_budget">
+        <?php echo ratio_bar($budget["real_amount"], $budget["amount"], "ratio-real_budget", $budget["amount"] < 0); ?>
       </div>
     </div>
   </div>
   <?php
     if (!is_empty($budget["subsidized_amount_granted"])) {
       ?>
-      <div class="sh-bu-ratio opanel">
-        <div class="header">
+      <div class="panel shadowed light-blue-background">
+        <div class="title-small">
           Subventions utilisées / accordées
         </div>
-        <div>
-          <div class="used" id="subsidies">
-            <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"], "subsidies", true); ?>
+        <div class="content">
+          <div class="ratio-container" id="ratio-subsidies_granted">
+            <?php echo ratio_bar($budget["subsidized_amount_used"], $budget["subsidized_amount_granted"], "ratio-subsidies_granted", true); ?>
+          </div>
+        </div>
+      </div>
+      <div class="panel shadowed light-blue-background">
+        <div class="title-small">
+          Subventions accordées / attendues
+        </div>
+        <div class="content">
+          <div class="ratio-container" id="ratio-subsidies">
+            <?php echo ratio_bar($budget["subsidized_amount_granted"], $budget["subsidized_amount"], "ratio-subsidies", true); ?>
           </div>
         </div>
       </div>
       <?php
-    }
+    } else {
   ?>
-  <div class="panel opanel light-blue-background">
-    <div class="content">
-      <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
+  <div class="panel shadowed light-blue-background">
+    <div class="title-small">
+      Subventions attendues pour ce budget
+    </div>
+    <div class="container">
+      <?php echo pretty_amount($budget["subsidized_amount"],false); ?>
     </div>
   </div>
-  <div class="panel opanel light-blue-background">
+  <?php } ?>
+  <div class="panel shadowed light-blue-background">
+    <div class="content">
+    <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
+    </div>
+  </div>
+  <div class="panel shadowed light-blue-background">
     <div class="title">
       Répartition des opérations sur le budget
     </div>

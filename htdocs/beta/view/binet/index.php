@@ -1,5 +1,5 @@
 <div id="public-index-wrapper">
-  <div id="action-header" class="opanel2">
+  <div id="action-header" class="shadowed2">
     <div id="action-title">Binets</div>
     <div class="searchbar">
       <?php echo fuzzy_input(); ?>
@@ -41,7 +41,7 @@
                 <span class="amount <?php echo $binet["state"]; ?>-background"><?php echo pretty_amount($binet["real_balance"]); ?></span>
                 <?php
               }
-          echo link_to(path("show", "binet", $binet["id"]), "<div>".ob_get_clean()."</div>\n", array("class"=>"opanel clickable-main","goto"=>true));
+          echo link_to(path("show", "binet", $binet["id"]), "<div>".ob_get_clean()."</div>\n", array("class"=>"shadowed clickable-main","goto"=>true));
           ?>
           <span class="actions">
             <?php

@@ -1,5 +1,5 @@
 <div id="index-wrapper">
-  <div class="panel opanel">
+  <div class="panel shadowed">
     <?php if(sizeOf($pending_validations_operations) >0)  {?>
     <div class="title">Opérations à valider</div>
     <div class="content">
@@ -47,7 +47,7 @@
 
     if ($binet == KES_ID) {
       ?>
-        <div class="panel opanel">
+        <div class="panel shadowed">
           <?php if(sizeOf($pending_validations_operations_kes) >0)  {?>
           <div class="title">Opérations à valider par la Kès</div>
           <div class="content">

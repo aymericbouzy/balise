@@ -1,7 +1,7 @@
 <!-- page-wrapper content : simple button to login using Frankiz-->
 <div id="welcome">
-  <?php echo link_to(path("login","home"), "<div>Connexion via Frankiz</div>", array("class" => "opanel", "id" => "login", "goto"=>true)); ?>
-  <div id="presentation" class="opanel">
+  <?php echo link_to(path("login","home"), "<div>Connexion via Frankiz</div>", array("class" => "shadowed", "id" => "login", "goto"=>true)); ?>
+  <div id="presentation" class="shadowed">
     <p>
       Bienvenue sur la version beta du projet Balise ! Les informations sur le site sont pour l'instant <b>fictives</b>. Nous t'invitons à naviguer sur le site, à tester les fonctionnalités et à nous faire remonter tous les bugs rencontrés grâce au bouton en bas à droite.
     </p>

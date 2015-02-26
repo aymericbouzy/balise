@@ -1,7 +1,7 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
   <?php $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
-  <div class="sh-plus <?php echo $request_state["color"]; ?>-background opanel">
+  <div class="sh-plus <?php echo $request_state["color"]; ?>-background shadowed">
     <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
     <div class="text">
       <?php echo $request_state["name"]; ?>
@@ -24,7 +24,7 @@
       }
     ?>
 	</div>
-  <div class="sh-title opanel">
+  <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
     </div>
@@ -51,7 +51,7 @@
     echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
     $content = ob_get_clean();
     ?>
-    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel" id="current_term">
+    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed" id="current_term">
       <?php echo $content; ?>
     </div>
   <?php
@@ -68,7 +68,7 @@
         ".$subsidy["purpose"]."
         </p>
         </div>";
-      $caption = "<div class=\"sh-req-budget opanel\">".ob_get_clean()."</div>";
+      $caption = "<div class=\"sh-req-budget shadowed\">".ob_get_clean()."</div>";
       echo has_viewing_rights($binet, $term) ?
         link_to(
           path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),

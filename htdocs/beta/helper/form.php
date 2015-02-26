@@ -49,7 +49,7 @@
   }
 
   function form_group($label, $field, $content, $form_name) {
-    return "<div class=\"form-group".(isset($_SESSION[$form_name."_errors"]) && in_array($field, $_SESSION[$form_name."_errors"]) ? " has-error" : "")."\">
+    return "<div class=\"form-group".(isset($_SESSION[$form_name."_errors"]) && in_array($field, $_SESSION[$form_name."_errors"]) ? " has-error" : "")."\" id=\"".$form_name."_".$field."\">
               ".(is_empty($label) ? "" : "<label for=\"".$field."\">".$label."</label>")."
               ".$content."
             </div>";

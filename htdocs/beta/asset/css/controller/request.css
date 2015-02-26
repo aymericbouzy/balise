@@ -20,36 +20,30 @@
   display:inline-block;
   width:50%;
 }
-.amount-requested {
-  display:inline-block;
-  padding:5px;
-  font-size:30px;
-  border-right: 1px solid rgba(0,0,0,0.15);
+.summary {
+  border-bottom: 1px solid rgba(0,0,0,0.3);
 }
-.budget-summary {
-  display:inline-block;
-  padding:5px;
-  font-size:15px;
-  height:100%;
-  border-right: 1px solid rgba(0,0,0,0.15);
+.summary>td.amount-requested {
+  vertical-align:middle;
+  text-align:center;
+  font-size:30px;
+}
+.summary> td {
+  font-size:12px;
+  padding-left:2px;
+  padding-right:2px;
 }
 .minititle {
-  display:block;
+  text-align:center;
   font-size:10px;
   background-color:#2e2e2e;
   color:#cbddff;
-  padding:2px;
-  width:100%;
-}
-.budget-summary>span {
-  display:block;
-  font-size:10px;
-  padding:2px;
-  width:100%;
+  margin:2px;
 }
 .content>.granted-amount {
   display:inline-block;
   width:29%;
+  float:right;
 }
 .content>.requested-amount {
   display:inline-block;
