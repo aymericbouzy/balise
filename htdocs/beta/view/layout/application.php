@@ -28,7 +28,7 @@
       <script type="text/javascript" src="<?php echo ASSET_PATH; ?>silviomoreto-bootstrap-select-83d5a1b/dist/js/bootstrap-select.js"></script>
 
      	<!-- Custom Fonts -->
-     	<link href="<?php echo ASSET_PATH; ?>font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+     	<link href="<?php echo ASSET_PATH; ?>font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
       <link href="https://fontastic.s3.amazonaws.com/NPPgcBERqW8q6WCovr5CVJ/icons.css" rel="stylesheet">
 
   		<!-- JavaScript -->

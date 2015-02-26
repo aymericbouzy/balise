@@ -18,6 +18,9 @@
     if ($include_csrf) {
       $query_array["csrf_token"] = get_csrf_token();
     }
+    if (STATE == "development" && isset($GLOBALS["query_array"]["current_date"])) {
+      $query_array["current_date"] = $GLOBALS["query_array"]["current_date"];
+    }
     foreach ($query_array as $key => $value) {
       if (!is_empty($value)) {
         if ($include_start_char) {
@@ -130,7 +133,7 @@
     write_controller_rules(array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate", "review")));
     write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant", "reject")));
     write_controller_rules(array("controller" => "validation", "binet_prefix" => true, "except" => array("show", "edit", "update", "new", "create", "delete")));
-    write_controller_rules(array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish")));
+    write_controller_rules(array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish", "open")));
 
     fclose($htaccess);
   }

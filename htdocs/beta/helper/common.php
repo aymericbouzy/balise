@@ -93,7 +93,7 @@
                     <h4 class=\"modal-title\">".$title."</h4>
                     </div>
                     <div class=\"modal-body\">
-                      <div class=\"content\">\n".$content."
+                      <div class=\"content\">\n".$content."</div>
                     </div>
                   </div>
                 </div>

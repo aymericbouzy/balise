@@ -230,7 +230,7 @@
   }
 
   function compute_query_array() {
-    $query_array = array_intersect_key($_GET, array_flip(array("tags")));
+    $query_array = array_intersect_key($_GET, array_flip(array("tags", "current_date")));
     if (!is_empty($query_array["tags"])) {
       $tags_clean_names = explode(" ", $query_array["tags"]);
       $query_array["tags"] = array();
