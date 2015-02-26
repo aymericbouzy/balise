@@ -53,8 +53,10 @@
       <?php
     }
   ?>
-  <div class="sh-bu-tags opanel">
-    <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
+  <div class="panel opanel light-blue-background">
+    <div class="content">
+      <?php echo pretty_tags(select_tags_budget($budget["id"])); ?>
+    </div>
   </div>
   <div class="panel opanel light-blue-background">
     <div class="title">

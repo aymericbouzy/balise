@@ -336,13 +336,6 @@
   text-align: center;
   background-color: #3399FF;
 }
-.sh-bu-tags {
-  margin: 5px;
-  padding: 10px;
-  min-height: 30px;
-  background-color: #cbddff ;
-}
-
 
 /*------------------------------------------------------------------------*/
 /* Operation classes */
@@ -363,20 +356,6 @@
   text-align: center;
   font-size: 13px;
   color:#cbddff;
-}
-
-
-.sh-op-budgets , .sh-bu-operations {
-  margin: 5px;
-  margin-top: 10px;
-  padding: 15px;
-  background-color: #cbddff ;
-  font-size: 50px;
-}
-.sh-op-budgets>a , .sh-bu-operations>a{
-  text-decoration:none;
-  font-size:15px;
-  color:#2e2e2e;
 }
 
 /*------------------------------------------------------------------------*/
