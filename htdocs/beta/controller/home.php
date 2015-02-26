@@ -14,6 +14,7 @@
 
   before_action("no_useless_connection", array("login", "welcome"));
   before_action("check_fake_auth", array("chose_identity"));
+  before_action("check_form", array("bug_report"), "bug_report");
 
   switch ($_GET["action"]) {
 
@@ -57,6 +58,13 @@
     break;
 
   case "chose_identity":
+    break;
+
+  case "bug_report":
+    $reference = substr(md5(rand()), 0, 10);
+    mail_with_headers(WEBMASTER_EMAIL, "[bug #".$reference."]", $_POST["report"]."\n\n".$_POST["information"]);
+    $_SESSION["notice"][] = "Le rapport de bug a bien été envoyé, merci pour ta contribution !";
+    redirect_to_path($bug_report_form["redirect_to_if_error"]);
     break;
 
   default:
