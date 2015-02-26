@@ -1,9 +1,8 @@
 <?php
 
   function budget_is_alone() {
-    $operations = select_operations_budget($_GET["budget"]);
     $subsidies = select_subsidies(array("budget" => $_GET["budget"]));
-    return is_empty($operations) && is_empty($subsidies);
+    return is_empty($subsidies);
   }
 
   function check_budget_is_alone() {
