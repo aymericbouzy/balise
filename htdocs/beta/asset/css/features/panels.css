@@ -32,7 +32,6 @@
   border-radius:0px;
   border:none;
   shadow:none;
-  overflow:hidden;
 }
 .panel::after {
   display:block;
