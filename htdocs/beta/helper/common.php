@@ -33,7 +33,7 @@
     if ($size != "") {
       $size = "-".$size;
     }
-    $caption = "<div class=\"round-button".$size." ".$background_color."-background opanel\">
+    $caption = "<div class=\"round-button".$size." ".$background_color."-background shadowed\">
     <i class=\"fa fa-fw fa-".$icon.($link ? " anim" : "")."\"></i>
     <span class=\"olabel ".$label_position."\">".$caption."</span>
     </div>";

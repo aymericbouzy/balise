@@ -1,5 +1,5 @@
 <div id="index-wrapper">
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="title">
       Informations générales
     </div>
@@ -33,7 +33,7 @@
   <?php
     if (sizeOf($rough_drafts) > 0) {
       ?>
-      <div class="panel opanel">
+      <div class="panel shadowed">
         <div class="title">
           Brouillons
         </div>
@@ -44,7 +44,7 @@
         $rough_draft = select_request($rough_draft["id"], array("id", "wave", "requested_amount"));
         $subsidies = select_subsidies(array("request" => $rough_draft["id"]));
         ?>
-        <div class="panel opanel light-blue-background">
+        <div class="panel shadowed light-blue-background">
           <div class="actions">
             <?php
               echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
@@ -85,7 +85,7 @@
   ?>
 
   <!-- Requests -->
-  <div class="panel opanel">
+  <div class="panel shadowed">
     <div class="title">
       Requêtes par vague de subvention
     </div>
@@ -96,7 +96,7 @@
       $wave = select_wave($request["wave"],array("id","binet","term"));
       $request_state = request_state($request["state"],has_editing_rights($wave["binet"], $wave["term"]));
       ?>
-      <div class="panel opanel light-blue-background">
+      <div class="panel shadowed light-blue-background">
         <div class="actions">
           <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
             "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>

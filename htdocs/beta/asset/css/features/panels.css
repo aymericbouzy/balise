@@ -99,7 +99,6 @@
 
 /*------------------------------------------------------*/
 /* Info : text outside the panel */
-
 .content>.infos {
   display:inline-block;
   width:70%;
@@ -128,7 +127,9 @@
   position:relative;
   padding:5px;
 }
-
+.content:before {
+  clear:both;
+}
 /*------------------------------------------------------*/
 /* Minipane */
 
@@ -210,6 +211,15 @@
   text-decoration:underline;
   color:#ccc;
 }
+
+.ratio-container {
+  display: block ;
+  min-width:5px;
+  height:20px;
+  text-align: center;
+  background-color: #3399FF;
+}
+
 /*------------------------------------------------------*/
 /* Pills */
 .pill {

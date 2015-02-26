@@ -3,7 +3,7 @@
   <?php
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
-      <div class="sh-plus <?php echo $binet["state"]; ?>-background opanel">
+      <div class="sh-plus <?php echo $binet["state"]; ?>-background shadowed">
         <i class="fa fa-fw fa-<?php $color_to_icon = array("green" => "check", "orange" => "warning", "red" => "minus-circle", "grey" => "moon-o"); echo $color_to_icon[$binet["state"]]; ?>"></i>
         <span class="text">Etat du binet</span>
       </div>
@@ -24,7 +24,7 @@
       }
     ?>
   </div>
-  <div class="sh-title opanel">
+  <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-5x fa-group"></i>
     </div>
@@ -40,20 +40,20 @@
                 link_to(
                   path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),
                     "<i class=\"fa fa-fw fa-eye\"></i>",
-                    array("class" => "opanel0 btn btn-success","id" =>"sh-bin-eye")
+                    array("class" => "shadowed0 btn btn-success","id" =>"sh-bin-eye")
                   ),
               "Voir l'activité du binet",
               "left");
         }
       ?>
       <!-- Modal to choose a different term -->
-      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub opanel0", "terms"); ?>
+      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub shadowed0", "terms"); ?>
     </div>
   </div>
   <?php
   if (!is_empty($binet["current_term"])) {
     ?>
-    <div class="sh-bin-admins opanel">
+    <div class="sh-bin-admins shadowed">
       <span class="title">
         Administrateurs
       </span>
@@ -91,7 +91,7 @@
     <?php
   }
   ?>
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="content">
       <div class="panel-article">
         <?php
@@ -119,14 +119,14 @@
       echo minipane("subsidies_used".$suffix, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
       $content = ob_get_clean();
       ?>
-      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed">
         <?php echo $content; ?>
       </div>
       <?php
     }
     if (!empty($waves)) {
       ?>
-      <div class="sh-bin-resume light-blue-background opanel">
+      <div class="sh-bin-resume light-blue-background shadowed">
         <div class="title">
           Vagues de subventions
         </div>

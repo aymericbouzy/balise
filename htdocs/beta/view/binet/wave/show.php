@@ -2,7 +2,7 @@
 <div class = "sidebar-present">
   <div class="show-container">
     <?php $wave_state = wave_state($wave["state"]); ?>
-    <div class="sh-plus <?php echo $wave_state["color"]; ?>-background opanel">
+    <div class="sh-plus <?php echo $wave_state["color"]; ?>-background shadowed">
       <i class="fa fa-fw fa-<?php echo $wave_state["icon"]; ?>"></i>
       <div class="text">
         <?php echo $wave_state["name"]; ?>
@@ -21,7 +21,7 @@
         }
       ?>
   	</div>
-    <div class="sh-title opanel">
+    <div class="sh-title shadowed">
       <div class="logo">
         <i class="fa fa-5x fa-star"></i>
       </div>
@@ -34,7 +34,7 @@
         </p>
       </div>
     </div>
-    <div class="sh-wa-dates opanel">
+    <div class="sh-wa-dates shadowed">
       <span id="submission-date">
         Demandes avant le :<br/>
         <?php echo pretty_date($wave["submission_date"]); ?>
@@ -44,12 +44,12 @@
         <?php echo pretty_date($wave["expiry_date"]); ?>
       </span>
     </div>
-    <div class="panel grey-background opanel">
+    <div class="panel grey-background shadowed">
       <div class="content">
         <?php echo $wave["description"]; ?>
       </div>
     </div>
-    <div class="panel green-background opanel">
+    <div class="panel green-background shadowed">
       <div class="content white-text">
         <?php echo $wave["question"]; ?>
       </div>
@@ -57,7 +57,7 @@
     <?php
       if (in_array($wave["state"], array("distribution", "closed"))) {
         ?>
-        <div class="panel blue-background opanel">
+        <div class="panel blue-background shadowed">
           <div class="content white-text">
             <?php echo $wave["explanation"]; ?>
           </div>
@@ -86,11 +86,11 @@
           echo link_to(
             path($subsidizer_can_study && has_editing_rights($binet, $term) ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
             "<div>".ob_get_clean()."</div>",
-            array("goto" => true, "class"=> "sh-wa-request opanel")
+            array("goto" => true, "class"=> "sh-wa-request shadowed")
           );
         }
       ?>
-      <div class="sh-wa-stats opanel2">
+      <div class="sh-wa-stats shadowed2">
         <div class="item blue-background">
           Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
           <?php
