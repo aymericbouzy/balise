@@ -1,4 +1,4 @@
-<div class="show-container shadowed">
+<div class="show-container">
   <div class="panel shadowed light-blue-background">
     <div class="title">
     <i class="fa fa-fw fa-edit"></i> Modifier la demande de subvention
