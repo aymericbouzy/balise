@@ -121,7 +121,7 @@
       echo minipane("subsidies_used".$suffix, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
       $content = ob_get_clean();
       ?>
-      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+      <div class="panel sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
         <?php echo $content; ?>
       </div>
       <?php
