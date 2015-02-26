@@ -67,7 +67,9 @@
       foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
         $budget = select_budget($budget["id"], array("id", "subsidized_amount", "subsidized_amount_granted"));
         $amount_to_request = $budget["subsidized_amount"] - $budget["subsidized_amount_granted"];
-        $initial_input["amount_".$budget["id"]] = $amount_to_request > 0 ? $amount_to_request : "";
+        if ($amount_to_request > 0) {
+          $initial_input["amount_".$budget["id"]] = $amount_to_request;
+        }
       }
     }
     return $initial_input;
