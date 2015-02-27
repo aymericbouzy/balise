@@ -5,5 +5,5 @@
 </span>
 <?php
 	echo modal_toggle("bug-report-toggle", "Rapport de bug", "btn btn-primary", "bug-report");
-	echo modal("bug-report", "Rapport de bug", get_html_form("bug_report"));
+	// /!\ Modal is outside the footer see in ./application.php
 ?>
