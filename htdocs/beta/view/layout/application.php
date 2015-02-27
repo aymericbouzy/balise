@@ -88,7 +88,7 @@
       include LAYOUT_PATH."footer.php";
       ?>
     </footer>
-
+    <?php echo modal("bug-report", "Rapport de bug", get_html_form("bug_report"));?>
     <script src = "<?php echo ASSET_PATH; ?>js/common.js"></script>
   </body>
 </html>
