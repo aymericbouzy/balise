@@ -102,6 +102,17 @@
   top:5px;
   font-size:30px;
 }
+.title>.fa , .title-small>.fa{
+  display:inline-block;
+  float:right;
+  text-shadow:0 3px 6px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.35);
+}
+.title-small>.fa {
+  padding:3px;
+}
+.title>.fa {
+  padding:4px;
+}
 /*------------------------------------------------------*/
 /* Info : text outside the panel */
 .content>.infos {

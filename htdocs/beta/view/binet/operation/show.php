@@ -83,7 +83,7 @@
     ?>
     <div class="panel shadowed light-blue-background">
       <?php
-        $title_content ="Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i> <span class=\"caret panel-collapse-control\"></span>";
+        $title_content ="Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i> <i class=\"fa fa-fw fa-chevron-down\"></i>";
         echo make_collapse_control("<div class=\"title-small\">".$title_content."</div>", "subsidiesInfos");
       ?>
       <div class="collapse" id="subsidiesInfos">
@@ -108,7 +108,7 @@
   ?>
   <div class="panel shadowed light-blue-background">
     <?php echo make_collapse_control(
-    "<div class=\"title-small\">Répartition sur les budgets <span class=\"caret panel-collapse-control\"></span></div>",
+    "<div class=\"title-small\">Répartition sur les budgets <i class=\"fa fa-fw fa-chevron-down\"></i></div>",
     "operationRepartitionChart"); ?>
     <div class="collapse" id="operationRepartitionChart">
       <div class="content">
