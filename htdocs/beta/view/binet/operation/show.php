@@ -82,60 +82,65 @@
   if (!is_empty($subsidies_and_requests_operation)) {
     ?>
     <div class="panel shadowed light-blue-background">
-      <div class="title-small">
-        Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i>
-      </div>
-      <div class="content">
-        <?php foreach($subsidies_and_requests_operation as $request => $subsidies){
-          echo pretty_wave(select_request($request,array("wave"))["wave"]);
-          echo "<div>";
-          foreach($subsidies as $subsidy){
-            $subsidy = select_subsidy($subsidy,array("budget","purpose"));
-            $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"],false,false)." </button>";
-            $popover_title = "Justification de la demande";
-            $popover_content = $subsidy["purpose"];
-            echo insert_popover($html_button,$popover_content,$popover_title,"left");
-          }
-          echo "</div>";
-        }?>
+      <?php
+        $title_content ="Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i> <span class=\"caret panel-collapse-control\"></span>";
+        echo make_collapse_control("<div class=\"title-small\">".$title_content."</div>", "subsidiesInfos");
+      ?>
+      <div class="collapse" id="subsidiesInfos">
+        <div class="content">
+          <?php foreach($subsidies_and_requests_operation as $request => $subsidies){
+            echo pretty_wave(select_request($request,array("wave"))["wave"]);
+            echo "<div>";
+            foreach($subsidies as $subsidy){
+              $subsidy = select_subsidy($subsidy,array("budget","purpose"));
+              $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"],false,false)." </button>";
+              $popover_title = "Justification de la demande";
+              $popover_content = $subsidy["purpose"];
+              echo insert_popover($html_button,$popover_content,$popover_title,"left");
+            }
+            echo "</div>";
+          }?>
+        </div>
       </div>
     </div>
     <?php
   }
   ?>
   <div class="panel shadowed light-blue-background">
-    <div class="title-small">
-      Répartition sur les budgets
-    </div>
-    <div class="content">
-      <?php
-      $budgets = select_budgets_operation($operation["id"]);
-      if (!is_empty($budgets) && sizeOf($budgets) > 1) {
-        ?>
-        <div class="pieID pie">
-        </div>
-        <ul class="pieID legend">
-          <?php
-          foreach ($budgets as $budget) {
-            ?>
-            <li>
-              <em><?php echo pretty_budget($budget["id"], true, false); ?></em>
-              <span><?php echo pretty_amount($budget["amount"], false); ?></span>
-            </li>
-            <?php
-          }
+    <?php echo make_collapse_control(
+    "<div class=\"title-small\">Répartition sur les budgets <span class=\"caret panel-collapse-control\"></span></div>",
+    "operationRepartitionChart"); ?>
+    <div class="collapse" id="operationRepartitionChart">
+      <div class="content">
+        <?php
+        $budgets = select_budgets_operation($operation["id"]);
+        if (!is_empty($budgets) && sizeOf($budgets) > 1) {
           ?>
-        </ul>
-        <script>createPie(".pieID.legend", ".pieID.pie");</script>
-        <?php
-      } elseif (!is_empty($budgets)) {
-        echo pretty_budget($budgets[0]["id"], true);
-      } else {
+          <div class="pieID pie">
+          </div>
+          <ul class="pieID legend">
+            <?php
+            foreach ($budgets as $budget) {
+              ?>
+              <li>
+                <em><?php echo pretty_budget($budget["id"], true, false); ?></em>
+                <span><?php echo pretty_amount($budget["amount"], false); ?></span>
+              </li>
+              <?php
+            }
+            ?>
+          </ul>
+          <script>createPie(".pieID.legend", ".pieID.pie");</script>
+          <?php
+        } elseif (!is_empty($budgets)) {
+          echo pretty_budget($budgets[0]["id"], true);
+        } else {
+          ?>
+          <i>Tu n'as pas encore intégré cette opération dans ton budget.</i>
+          <?php
+        }
         ?>
-        <i>Tu n'as pas encore intégré cette opération dans ton budget.</i>
-        <?php
-      }
-      ?>
+      </div>
     </div>
   </div>
 </div>
