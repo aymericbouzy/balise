@@ -120,7 +120,7 @@
     if (!URL_REWRITE || ROOT_PATH != "") {
       write_path_rule("home/login", true_path("login", "home"), "[NC,QSA]");
     }
-    write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome", "chose_identity")));
+    write_controller_rules(array("controller" => "home", "except" => array("new", "create", "show", "edit", "update", "delete"), "action_on_collection" => array("login", "logout", "welcome", "chose_identity", "bug_report")));
     write_controller_rules(array("controller" => "binet", "except" => array("delete"), "action_on_member" => array("set_subsidy_provider", "change_term", "power_transfer", "reactivate", "deactivate")));
     write_controller_rules(array("controller" => "operation", "except" => array("delete"), "action_on_member" => array("validate", "reject")));
     write_controller_rules(array("controller" => "tag", "except" => array("edit", "update", "delete")));
