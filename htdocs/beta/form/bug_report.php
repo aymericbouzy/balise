@@ -13,9 +13,7 @@
     $post = array_to_string($_POST);
     $session = array_to_string($_SESSION);
     $get = array_to_string($_GET);
-    $body = "\n\n\n\n———————————\n**** Ne pas modifier cette partie ****\n\nURL demandée :\t\t\t\t\t".$url."\nBrowser :\t\t\t\t\t\t\t".$browser."\npersonne connectée :\t\t\t\t".$email."\nétat de la variable \$_POST :\t\t\t".$post."\nétat de la variable \$_SESSION :\t\t".$session."\nétat de la variable \$_GET :\t\t\t".$get;
-    $body = urlencode($body);
-    $body = str_replace(array("+"), array(" "), $body);
+    $body = "\nURL demandée :\t\t\t\t\t".$url."\nBrowser :\t\t\t\t\t\t\t".$browser."\npersonne connectée :\t\t\t\t".$email."\nétat de la variable \$_POST :\t\t\t".$post."\nétat de la variable \$_SESSION :\t\t".$session."\nétat de la variable \$_GET :\t\t\t".$get;
     $initial_input["information"] = $body;
     return $initial_input;
   }
