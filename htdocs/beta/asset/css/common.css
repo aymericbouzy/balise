@@ -273,21 +273,24 @@ body {
 }
 
 /*------ Footer ------------*/
+/*------ Footer ------------*/
 footer {
-	all:none;
-	position :fixed;
-	padding:10px;
-	height: 50px;
-	width :100%;
-	bottom:0;
-	background-color: rgba(0,0,0,0);
+  all:none;
+  position :fixed;
+  height: 0px;
+  width :100%;
+  bottom:0;
+  background-color: rgba(0,0,0,0);
 }
 footer>span {
- font-size:0.9em;
- float:left;
+  position:absolute;
+  left:10px;
+  top:-40px;
 }
-footer>.btn {
-	float:right;
+footer>.modal-toggle{
+  position:absolute;
+  right:10px;
+  top:-40px;
 }
 
 /*----- Switch -----------*/
