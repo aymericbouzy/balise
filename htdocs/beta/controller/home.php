@@ -62,7 +62,8 @@
 
   case "bug_report":
     $reference = substr(md5(rand()), 0, 10);
-    mail_with_headers(WEBMASTER_EMAIL, "[bug #".$reference."]", $_POST["report"]."\n\n".$_POST["information"]);
+    $student = select_student(connected_student, array("name", "email"));
+    mail_with_headers(WEBMASTER_EMAIL, "bug #".$reference, $_POST["report"]."\n\n".$_POST["information"], $student["name"]. " <".$student["email"].">");
     $_SESSION["notice"][] = "Le rapport de bug a bien été envoyé, merci pour ta contribution !";
     redirect_to_path($bug_report_form["redirect_to_if_error"]);
     break;
