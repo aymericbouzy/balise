@@ -91,56 +91,70 @@
     </div>
   </div>
   <?php
-    foreach(select_requests(array("binet" => $binet, "term" => $term)) as $request) {
-      $request = select_request($request["id"], array("id", "state", "wave", "requested_amount", "used_amount", "granted_amount"));
-      $wave = select_wave($request["wave"],array("id","binet","term"));
-      $request_state = request_state($request["state"],has_editing_rights($wave["binet"], $wave["term"]));
-      ?>
-      <div class="panel shadowed light-blue-background">
-        <div class="actions">
-          <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
-            "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>
-        </div>
-        <div class="title-small">
-          <?php echo pretty_wave($request["wave"]); ?>
-        </div>
+    $requests = select_requests(array("binet" => $binet, "term" => $term));
+    if(sizeOf($requests) > 3) { ?>
+      <div class="panel shadowed" id="search-request-panel">
         <div class="content">
-          <div class="state-indicator <?php echo $request_state["color"]; ?>-background">
-            <i class="fa fa-fw fa-<?php echo $request_state["icon"]; ?>"></i>
+          <div class="searchbar">
+            <?php echo fuzzy_input(); ?>
           </div>
-          <div class="request-infos">
-            <span><?php echo ($request["sent"] == 0 ? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
-              pretty_amount($request["requested_amount"],false)." demandés." ?></span>
-            <span><?php echo ($request["state"] == "accepted" ? pretty_amount($request["used_amount"],false)." utilisés." : ($request["state"] == "rejected" ? "Subventions refusées" : "")); ?></span>
-          </div>
-          <?php
-            if ($request["state"] != "rejected") {
-              ?>
-              <div class="subsidies panel inside">
-                <div class="title-small">
-                  Budgets subventionnés
-                </div>
-                <div class="content light-blue-background">
-                  <?php
-                    foreach(select_subsidies(array("request" => $request["id"])) as $subsidy){
-                      $subsidy = select_subsidy($subsidy["id"],array("id","budget","purpose","requested_amount","used_amount","granted_amount"));
-                      ?>
-                      <div class="subsidy">
-                        <span><?php echo pretty_budget($subsidy["budget"], true, false); ?></span>
-                        <span class="grey-400-background"><?php echo pretty_amount($subsidy["granted_amount"])."/".pretty_amount($subsidy["requested_amount"]); ?></span>
-                        <span><?php echo $subsidy["used_amount"] > 0 ? pretty_amount($subsidy["used_amount"], false) : ""; ?></span>
-                      </div>
-                      <?php
-                    }
-                  ?>
-                </div>
-              </div>
-              <?php
-            }
-          ?>
         </div>
       </div>
-      <?php
-    }
-  ?>
+  <?php } ?>
+  <ul class="list" style="list-style-type:none">
+    <?php
+      foreach($requests as $request) {
+        $request = select_request($request["id"], array("id", "state", "wave", "requested_amount", "used_amount", "granted_amount"));
+        $wave = select_wave($request["wave"],array("id","binet","term"));
+        $request_state = request_state($request["state"],has_editing_rights($wave["binet"], $wave["term"]));
+        ?>
+        <li class="panel shadowed light-blue-background">
+          <div class="actions">
+            <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
+              "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>
+          </div>
+          <div class="title-small">
+            <?php echo insert_properties_in_html_tag(pretty_wave($request["wave"]),array("class"=>"fuzzySelectorName")); ?>
+          </div>
+          <div class="content">
+            <div class="state-indicator <?php echo $request_state["color"]; ?>-background">
+              <i class="fa fa-fw fa-<?php echo $request_state["icon"]; ?>"></i>
+            </div>
+            <div class="request-infos">
+              <span><?php echo ($request["sent"] == 0 ? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
+                pretty_amount($request["requested_amount"],false)." demandés." ?></span>
+              <span><?php echo ($request["state"] == "accepted" ? pretty_amount($request["used_amount"],false)." utilisés." : ($request["state"] == "rejected" ? "Subventions refusées" : "")); ?></span>
+            </div>
+            <?php
+              if ($request["state"] != "rejected") {
+                ?>
+                <div class="subsidies panel inside">
+                  <div class="title-small">
+                    Budgets subventionnés
+                  </div>
+                  <div class="content light-blue-background">
+                    <?php
+                      foreach(select_subsidies(array("request" => $request["id"])) as $subsidy){
+                        $subsidy = select_subsidy($subsidy["id"],array("id","budget","purpose","requested_amount","used_amount","granted_amount"));
+                        ?>
+                        <div class="subsidy">
+                          <span><?php echo pretty_budget($subsidy["budget"], true, false); ?></span>
+                          <span class="grey-400-background"><?php echo pretty_amount($subsidy["granted_amount"])."/".pretty_amount($subsidy["requested_amount"]); ?></span>
+                          <span><?php echo $subsidy["used_amount"] > 0 ? pretty_amount($subsidy["used_amount"], false) : ""; ?></span>
+                        </div>
+                        <?php
+                      }
+                    ?>
+                  </div>
+                </div>
+                <?php
+              }
+            ?>
+          </div>
+        </li>
+        <?php
+      }
+    ?>
+  </ul>
 </div>
+<?php echo fuzzy_load_scripts("index-wrapper","fuzzySelectorName"); ?>

@@ -132,6 +132,11 @@
 
 /* --------------------------------------------------------------------------*/
 /* Request index */
+#search-request-panel{
+  height:50px;
+  background-color:#2e2e2e;
+  color:#1566cc;
+}
 
 #request-count{
   width:100%;
