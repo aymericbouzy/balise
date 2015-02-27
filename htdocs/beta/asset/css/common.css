@@ -282,17 +282,16 @@ footer {
   bottom:0;
   background-color: rgba(0,0,0,0);
 }
-footer>span {
+footer>#link-to-webmasters {
   position:absolute;
   left:10px;
-  top:-40px;
+  bottom:10px;
 }
-footer>.modal-toggle{
+footer>#bug-report-action {
   position:absolute;
   display:block;
-  width:150px;
   right:10px;
-  top:-40px;
+  bottom:10px;
 }
 
 /*----- Switch -----------*/
