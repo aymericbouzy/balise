@@ -78,11 +78,11 @@
     </div>
   </div>
   <div class="panel shadowed light-blue-background">
-    <?php $html_content = "<div class=\"title-small\">Répartition des opérations sur le budget <i class=\"fa fa-fw fa-chevron-down\"></i></div>";
-     echo make_collapse_control($html_content, "budgetRepartitionChart");
+    <?php $html_content = "<div class=\"title-small\">Répartition des opérations sur le budget <i id=\"subsidiesCollpaseControlIcon\"class=\"fa fa-fw fa-chevron-down\"></i></div>";
+     echo make_collapse_control($html_content, "budgetRepartitionChart",true);
      ?>
-     <div class="collapse" id="budgetRepartitionChart">
-      <div class="content">
+     <div class="collapse in" id="budgetRepartitionChart">
+      <div class="content ">
         <?php
           $operations = select_operations_budget($budget["id"]);
           if (!is_empty($operations) && sizeOf($operations)>1) {

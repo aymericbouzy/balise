@@ -54,6 +54,15 @@ function insert_popover($html_tag, $popover_content, $popover_title, $placement 
   ));
 }
 
+/* Inserts attributes in html tag to create a collapse control
+@param  string  $html_tag  The element used to create a control ( e.g. button)
+@param  string  $id   The id of the content to collapse.
+                      The html tag using the id must have the .collpase class if
+                      aria_hidden = true or .collapse.in if aria-hidden = false.
+@param string  $aria_hidden  "true" if collapsible is initially hidden ( use of
+                              .collapse.in in collapsible element), else "false".
+@return string The html tag with inserted attributes
+*/
 function make_collapse_control($html_tag, $id , $aria_hidden = "true"){
   return insert_properties_in_html_tag(
     $html_tag,

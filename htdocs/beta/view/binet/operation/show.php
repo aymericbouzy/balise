@@ -84,9 +84,9 @@
     <div class="panel shadowed light-blue-background">
       <?php
         $title_content ="Utilisation de subventions - <i> Cliquez sur le budget pour avoir l'objectif de la subvention</i> <i class=\"fa fa-fw fa-chevron-down\"></i>";
-        echo make_collapse_control("<div class=\"title-small\">".$title_content."</div>", "subsidiesInfos");
+        echo make_collapse_control("<div class=\"title-small\">".$title_content."</div>", "subsidiesInfos" , true);
       ?>
-      <div class="collapse" id="subsidiesInfos">
+      <div class="collapse in" id="subsidiesInfos">
         <div class="content">
           <?php foreach($subsidies_and_requests_operation as $request => $subsidies){
             echo pretty_wave(select_request($request,array("wave"))["wave"]);
