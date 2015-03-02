@@ -51,6 +51,24 @@
     </div>
   </div>
   <?php
+  if ($binet["subsidy_provider"]){ ?>
+    <div class="panel shadowed light-blue-background">
+      <?php
+        $html_content = "<div class=\"title-small \"> Comment puis-je récupérer des subventions de ce binet ? <i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
+        echo make_collapse_control($html_content,"howToGetSubsisidies_content");
+      ?>
+      <div class="collapse" id="howToGetSubsisidies_content">
+        <div class="content">
+          <?php if(has_editing_rights($binet["id"], $binet["current_term"])) {
+              echo link_to(path("edit", "binet", $binet["id"]), "<i class=\"fa fa-fw fa-edit\"></i> Modifier", array("class" => "panelAction"));
+          }
+          echo $binet["subsidy_steps"]; ?>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <?php
+  }
   if (!is_empty($binet["current_term"])) {
     ?>
     <div class="panel light-blue-background shadowed">

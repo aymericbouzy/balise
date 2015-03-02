@@ -96,6 +96,23 @@
   color:#fff !important;
 }
 
+.title>.panel-collapse-control {
+  position:absolute;
+  right:5px;
+  top:5px;
+  font-size:30px;
+}
+.title>.fa , .title-small>.fa{
+  display:inline-block;
+  float:right;
+  text-shadow:0 3px 6px rgba(0,0,0,0.26), 0 3px 6px rgba(0,0,0,0.35);
+}
+.title-small>.fa {
+  padding:3px;
+}
+.title>.fa {
+  padding:4px;
+}
 /*------------------------------------------------------*/
 /* Info : text outside the panel */
 .content>.infos {
@@ -124,9 +141,14 @@
 .panel>.content {
   display:block;
   position:relative;
-  padding:5px;
+  padding:7px;
 }
-.content:before {
+.panel>.collapsing>.content,
+.panel>.collapse.in>.content {
+  display:block;
+  padding:7px;
+}
+.panel>.content:before {
   clear:both;
 }
 /*------------------------------------------------------*/
@@ -227,6 +249,18 @@
   background-color: #3399FF;
 }
 
+.content>.panelAction {
+  display :block;
+  float:right;
+  text-decoration:none;
+  padding:3px;
+  color:#2e2e2e;
+  background-color:rgba(0,0,0,0.1);
+}
+.content>.panelAction:hover {
+  background-color:rgba(0,0,0,0.2);
+}
+
 /*------------------------------------------------------*/
 /* Pills */
 .pill {
@@ -258,7 +292,7 @@
     margin-right:2px;
     width:48%;
     padding:20px;
-    height:100%;
+    height:95%;
   }
   .panel-split-left {
     float:left;

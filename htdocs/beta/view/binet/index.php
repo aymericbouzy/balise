@@ -5,11 +5,7 @@
       <?php echo fuzzy_input(); ?>
     </div>
     <div class="alpha-selecter">
-      <?php
-        // foreach(range('A', 'Z') as $letter) {
-        //   echo link_to("#".$letter, $letter);
-        // }
-      ?>
+      <a href="#deactivated">Voir les binets abandonnés</a>
     </div>
   </div>
   <ul class="list">
@@ -52,6 +48,38 @@
             }
             ?>
           </span>
+        </li>
+        <?php
+      }
+    ?>
+  </ul>
+  <?php
+    $html_content ="<div id=\"deactivated\" class=\"panel shadowed\"><div class=\"title\">".
+    "  Binets qui n'ont pas trouvé de repreneur <i class=\"fa fa-chevron-down fa-fw\"></i> </div></div>";
+    echo make_collapse_control($html_content, "deactivatedBinets_list");
+  ?>
+  <ul class="list collapse" id="deactivatedBinets_list">
+    <?php
+      foreach(select_binets(array("current_term" => array("IS", "NULL"))) as $binet){
+         ?>
+          <li class="content-line-panel">
+          <?php
+          ob_start();
+          ?>
+          <i class="fa fa-fw fa-group deactivated-text"></i>
+          <span class="name"><?php echo pretty_binet($binet["id"], false); ?></span>
+          <span class="users">
+            <?php
+            foreach (select_current_admins($binet["id"]) as $admin) {
+              ?>
+              <span class="prez"><?php echo "<span class=\"pill\">".pretty_student($admin["id"])."</span>"; ?></span>
+              <?php
+            }
+            ?>
+          </span>
+          <?php
+          echo link_to(path("show", "binet", $binet["id"]), "<div>".ob_get_clean()."</div>\n", array("class"=>"shadowed clickable-main","goto"=>true));
+          ?>
         </li>
         <?php
       }
