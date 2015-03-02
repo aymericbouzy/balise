@@ -50,6 +50,22 @@
       <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub shadowed0", "terms"); ?>
     </div>
   </div>
+  <div class="panel shadowed light-blue-background">
+    <?php
+      $html_content = "<div class=\"title-small green-background\"> Comment puis-je récupérer des subventions de ce binet ? <i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
+      echo make_collapse_control($html_content,"howToGetSubsisidies_content");
+    ?>
+    <div class="collapse" id="howToGetSubsisidies_content">
+      <div class="content">
+        <!-- TODO : put content here -->
+        Lorem ipsum dolor si amet :
+        <ul>
+          <li> Step 1 </li>
+          <li> Step 2 </li>
+        </ul>
+      </div>
+    </div>
+  </div>
   <?php
   if (!is_empty($binet["current_term"])) {
     ?>
