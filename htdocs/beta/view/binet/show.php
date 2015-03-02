@@ -52,11 +52,14 @@
   </div>
   <div class="panel shadowed light-blue-background">
     <?php
-      $html_content = "<div class=\"title-small green-background\"> Comment puis-je récupérer des subventions de ce binet ? <i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
+      $html_content = "<div class=\"title-small \"> Comment puis-je récupérer des subventions de ce binet ? <i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
       echo make_collapse_control($html_content,"howToGetSubsisidies_content");
     ?>
     <div class="collapse" id="howToGetSubsisidies_content">
       <div class="content">
+        <?php if(has_editing_rights($binet["id"], $binet["current_term"])) {
+            echo link_to(path("",""), "<i class=\"fa fa-fw fa-edit\"></i> Modifier", array("class" => "panelAction"));
+        } ?>
         <!-- TODO : put content here -->
         Lorem ipsum dolor si amet :
         <ul>

@@ -249,6 +249,18 @@
   background-color: #3399FF;
 }
 
+.content>.panelAction {
+  display :block;
+  float:right;
+  text-decoration:none;
+  padding:3px;
+  color:#2e2e2e;
+  background-color:rgba(0,0,0,0.1);
+}
+.content>.panelAction:hover {
+  background-color:rgba(0,0,0,0.2);
+}
+
 /*------------------------------------------------------*/
 /* Pills */
 .pill {
