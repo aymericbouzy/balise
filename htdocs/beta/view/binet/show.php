@@ -50,26 +50,29 @@
       <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub shadowed0", "terms"); ?>
     </div>
   </div>
-  <div class="panel shadowed light-blue-background">
-    <?php
-      $html_content = "<div class=\"title-small \"> Comment puis-je récupérer des subventions de ce binet ? <i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
-      echo make_collapse_control($html_content,"howToGetSubsisidies_content");
-    ?>
-    <div class="collapse" id="howToGetSubsisidies_content">
-      <div class="content">
-        <?php if(has_editing_rights($binet["id"], $binet["current_term"])) {
-            echo link_to(path("",""), "<i class=\"fa fa-fw fa-edit\"></i> Modifier", array("class" => "panelAction"));
-        } ?>
-        <!-- TODO : put content here -->
-        Lorem ipsum dolor si amet :
-        <ul>
-          <li> Step 1 </li>
-          <li> Step 2 </li>
-        </ul>
+  <?php
+  if ($binet["subsidy_provider"] == 0){ ?>
+    <div class="panel shadowed light-blue-background">
+      <?php
+        $html_content = "<div class=\"title-small \"> Comment puis-je récupérer des subventions de ce binet ? <i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
+        echo make_collapse_control($html_content,"howToGetSubsisidies_content");
+      ?>
+      <div class="collapse" id="howToGetSubsisidies_content">
+        <div class="content">
+          <?php if(has_editing_rights($binet["id"], $binet["current_term"])) {
+              echo link_to(path("",""), "<i class=\"fa fa-fw fa-edit\"></i> Modifier", array("class" => "panelAction"));
+          } ?>
+          <!-- TODO : put content here -->
+          Lorem ipsum dolor si amet :
+          <ul>
+            <li> Step 1 </li>
+            <li> Step 2 </li>
+          </ul>
+        </div>
       </div>
     </div>
-  </div>
   <?php
+  }
   if (!is_empty($binet["current_term"])) {
     ?>
     <div class="panel light-blue-background shadowed">
