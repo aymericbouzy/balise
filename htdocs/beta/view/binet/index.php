@@ -5,11 +5,7 @@
       <?php echo fuzzy_input(); ?>
     </div>
     <div class="alpha-selecter">
-      <?php
-        // foreach(range('A', 'Z') as $letter) {
-        //   echo link_to("#".$letter, $letter);
-        // }
-      ?>
+      <a href="#deactivated">Voir les binets abandonnés</a>
     </div>
   </div>
   <ul class="list">
@@ -54,6 +50,18 @@
           </span>
         </li>
         <?php
+      }
+    ?>
+  </ul>
+  <div id="deactivated" class="panel shadowed">
+    <div class="title">
+      Binets qui n'ont pas trouvé de repreneur
+    </div>
+  </div>
+  <ul class="list">
+    <?php
+      foreach(select_binets(array("current_term" => null)) as $binet){
+
       }
     ?>
   </ul>
