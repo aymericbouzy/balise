@@ -60,13 +60,13 @@
   ?>
   <ul class="list collapse" id="deactivatedBinets_list">
     <?php
-      foreach(select_binets(array("current_term" => NULL)) as $binet){
+      foreach(select_binets(array("current_term" => array("IS", "NULL"))) as $binet){
          ?>
           <li class="content-line-panel">
           <?php
           ob_start();
           ?>
-          <i class="fa fa-fw fa-group deactivated"></i>
+          <i class="fa fa-fw fa-group deactivated-text"></i>
           <span class="name"><?php echo pretty_binet($binet["id"], false); ?></span>
           <span class="users">
             <?php
