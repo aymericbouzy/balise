@@ -12,7 +12,7 @@
     <?php
     $help_file = VIEW_PATH."help/".(is_empty($_GET["prefix"]) ? "" : $_GET["prefix"]."/").$_GET["controller"]."/".$_GET["action"].".php";
     if (file_exists($help_file)) {
-      echo modal_toggle("help", "<i class=\"fa fa-question-circle help-icon\"></i>", "", "display-help");
+      echo modal_toggle("help", "<span class=\"label label-warning\">Aide</span>", "", "display-help");
     }
     ?>
   </li>
