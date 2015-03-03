@@ -173,3 +173,12 @@
   function kes_pending_validations_operations() {
     return select_operations(array("state" => "waiting_validation"), "date");
   }
+
+  function concerned_subsidy_providers($operation) {
+    $subsidy_providers = array();
+    foreach (select_subsidies_and_requests_operation($operation) as $request => $subsidy) {
+      $wave = select_request($request, array("wave"))["wave"];
+      $subsidy_providers[] = select_wave($wave, array("binet"))["binet"];
+    }
+    return array_unique($subsidy_providers);
+  }

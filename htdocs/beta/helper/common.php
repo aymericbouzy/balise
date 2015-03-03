@@ -114,9 +114,11 @@
 
   function list_to_human_string($list, $pretty_printer) {
     $human_string = "";
-    foreach ($list as $index => $object) {
-      $human_string = ($index == 1 ? " et " : ($index > 1) ? ", " : "") . $human_string;
+    $index = 0;
+    foreach ($list as $object) {
+      $human_string = ($index == 1 ? " et " : (($index > 1) ? ", " : "")) . $human_string;
       $human_string = call_user_func($pretty_printer, $object) . $human_string;
+      $index += 1;
     }
     return $human_string;
   }
