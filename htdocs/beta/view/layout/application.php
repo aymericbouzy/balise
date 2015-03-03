@@ -67,6 +67,9 @@
 
       <?php echo initialize_tooltips(); ?>
 
+      <link rel="icon" href="<?php echo IMG_PATH; ?>favicon.ico">
+      <link rel="apple-touch-icon" href="<?php echo IMG_PATH; ?>balise.png">
+
   </head>
   <body>
     <div id="wrapper">
