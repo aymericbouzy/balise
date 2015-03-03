@@ -126,8 +126,12 @@ body {
     float: none;
 }
 
-#operation-plus {
+.operation-plus {
     color:#52CC29;
+}
+
+.help-icon {
+  color: #FF9900;
 }
 
 /* Side Navigation */
