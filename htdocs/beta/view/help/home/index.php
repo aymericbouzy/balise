@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Balise trézo</title>
-  </head>
-
-	<body>
+<body>
     <h1>Bienvenu(e) sur la page d'accueil !</h1>
     <p>D'ici, tu peux :
       <ul>
@@ -21,5 +11,4 @@ Grâce au bouton "plus"(mettre lien image) en haut à droite (retiens bien ce bo
 Si tu as fais une dépense pour un binet, tu peux le lui signaler comme ça.<br>
 L'administrateur de ce binet validera ton opération ou non, par exemple après que tu lui ai passé la facture.
 		</p>
-  </body>
-</html>
+</body>

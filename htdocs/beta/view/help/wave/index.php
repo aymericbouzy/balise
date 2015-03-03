@@ -1,22 +1,19 @@
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Balise trézo</title>
-  </head>
+<body>
+    <h1>Dans cet onglet, tu peux voir toutes les vagues de subventions depuis la création du site, qu'elles soient passées ou en cours.</h1>
 
-	<body>
-    <h1>Te voici en train d'effectuer une demande de subventions, comment cela se passe ?</h1>
+    <p>Les états possibles de celles-ci sont :
+			<ul>
+				<li>Ouvertes (demandes possibles)</li>
+				<li>Dépôt terminé (le subventionneur étudie les demandes)</li>
+				<li>En cours (subventions attribuées pouvant être dépensées)</li>
+				<li>Terminées (subventions passées ne pouvant plus être dépensées)</li>
+			</ul>
 
-    <p>Tout d'abord, tu dois répondre à la question, cela te permettra de justifier ton éligibilté à cette vague.<br>
+    Les deux dates indiquées sont celles de clôture de dépôt de demandes et la date limite d’utilisation des subventions.<br>
 
-    Ensuite, tu vois apparaître toutes tes lignes budgétaires.
-    Il faut que tu précises quelles dépenses tu comptes subventionner, à quelle hauteur et pourquoi.
-    Après avoir cliqué sur "Sauvegarder", tu verras le résumé de ta demande et tu pourras l'envoyer.
-    Tu n'es pas obligé de l'envoyer tout de suite, tu peux la retrouver dans l'onglet "Subventions" de la barre menu de gauche.
+
+    En cliquant sur une vague en particulier, tu peux voir les montants attribués et les détails pour chaque binet par poste de dépenses.<br>
+
+    	<strong>Attention, tu ne peux pas faire de demande de subventions ici.</strong> En effet, il faut pour cela que tu sois sur la page de ton binet
 		</p>
-  </body>
-</html>
+</body>

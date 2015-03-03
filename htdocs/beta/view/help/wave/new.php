@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Balise trézo</title>
-  </head>
-
-  <body>
+<body>
     <h1>Tu t'apprêtes à créer une nouvelle vague de subventions</h1>
     <p>Il faut pour ça que tu précises les informations suivantes :
       <ul>
@@ -23,5 +13,4 @@
    Un point important à savoir : les binets ayant rédigé un brouillon de demande de subventions pourront quand même te l'envoyer après la date de clotûre.
    Tu en seras informé, à toi de décider si c'est trop tard ou pas.
     </p>
-  </body>
-</html>
+</body>

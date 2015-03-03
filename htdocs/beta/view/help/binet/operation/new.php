@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="fr">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="">
-		<meta name="author" content="">
-		<title>Balise trézo</title>
-  </head>
-
-	<body>
+<body>
     <h1>Sur cette page, tu peux créer de nouvelles opérations</h1>
     <p>Les seuls champs obligatoires sont la description et le montant.
     Mais plus tu mettras d'informations, plus ça te sera utile !<br>
@@ -21,5 +11,4 @@
 
     Si tu n'as pas la ligne qui te convient, tu peux aller la créer, l'opération en attente ira dans l'onglet validation et tu pourras le faire plus tard.
 		</p>
-  </body>
-</html>
+</body>
