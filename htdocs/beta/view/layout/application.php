@@ -29,7 +29,7 @@
 
      	<!-- Custom Fonts -->
      	<link href="<?php echo ASSET_PATH; ?>font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-      <link href="https://fontastic.s3.amazonaws.com/NPPgcBERqW8q6WCovr5CVJ/icons.css" rel="stylesheet">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>fontastic/styles.css" type="text/css">
 
   		<!-- JavaScript -->
       <script src="<?php echo ASSET_PATH; ?>js/common.js"></script>
