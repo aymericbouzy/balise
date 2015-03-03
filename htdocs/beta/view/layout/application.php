@@ -28,8 +28,8 @@
       <script type="text/javascript" src="<?php echo ASSET_PATH; ?>silviomoreto-bootstrap-select-83d5a1b/dist/js/bootstrap-select.js"></script>
 
      	<!-- Custom Fonts -->
-     	<link href="<?php echo ASSET_PATH; ?>font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-      <link href="https://fontastic.s3.amazonaws.com/NPPgcBERqW8q6WCovr5CVJ/icons.css" rel="stylesheet">
+     	<link href="<?php echo ASSET_PATH; ?>font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>fontastic/styles.css" type="text/css">
 
   		<!-- JavaScript -->
       <script src="<?php echo ASSET_PATH; ?>js/common.js"></script>
@@ -67,9 +67,13 @@
 
       <?php echo initialize_tooltips(); ?>
 
+      <link rel="icon" href="<?php echo IMG_PATH; ?>favicon.ico">
+      <link rel="apple-touch-icon" href="<?php echo IMG_PATH; ?>balise.png">
+
   </head>
   <body>
     <div id="wrapper">
+      <?php generate_csrf_token(); ?>
       <?php
         if (!($_GET["controller"] == "error" || $_GET["controller"] == "home" && in_array($_GET["action"], array("welcome", "chose_identity")))) {
           include LAYOUT_PATH."structure.php";
@@ -88,7 +92,7 @@
       include LAYOUT_PATH."footer.php";
       ?>
     </footer>
-
+    <?php echo modal("bug-report", "Rapport de bug", get_html_form("bug_report"));?>
     <script src = "<?php echo ASSET_PATH; ?>js/common.js"></script>
   </body>
 </html>

@@ -1,45 +1,27 @@
 <?php $subsidizer_can_study = in_array($wave["state"], array("deliberation", "submission")); ?>
 <div class = "sidebar-present">
   <div class="show-container">
-    <?php $wave_state_to_color = array("submission" => "blue", "deliberation" => "teal", "distribution" => "green", "closed" => "grey");
-          $wave_state_to_icon = array("submission" => "crosshairs", "deliberation" => "cogs", "distribution" => "money", "closed" => "times");
-    ?>
-    <div class="sh-plus <?php echo $wave_state_to_color[$wave["state"]]; ?>-background opanel">
-      <i class="fa fa-fw fa-<?php echo $wave_state_to_icon[$wave["state"]]; ?>"></i>
+    <?php $wave_state = wave_state($wave["state"]); ?>
+    <div class="sh-plus <?php echo $wave_state["color"]; ?>-background shadowed">
+      <i class="fa fa-fw fa-<?php echo $wave_state["icon"]; ?>"></i>
       <div class="text">
-        <?php
-          switch ($wave["state"]) {
-            case "submission":
-            echo "Demandes en cours";
-            break;
-            case "deliberation":
-            echo "Etude des demandes";
-            break;
-            case "distribution":
-            echo "Emise";
-            break;
-            case "closed":
-            echo "Fermée";
-            break;
-          }
-        ?>
+        <?php echo $wave_state["name"]; ?>
       </div>
     </div>
     <div class="sh-actions">
   		<?php
         if (has_editing_rights($binet, $term)) {
-          echo button(
-            path("edit", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"])),
-            "Modifier","edit","blue");
+          echo button(path("edit", "wave", $wave["id"], binet_prefix($binet, $term)), "Modifier", "edit", "blue");
+          if (is_openable($wave["id"])) {
+            echo button(path("open", "wave", $wave["id"], binet_prefix($binet, $term), array(), true), "Ouvrir", "share", "green");
+          }
           if (is_publishable($wave["id"])) {
-            echo button(
-              path("publish", "wave", $wave["id"], binet_prefix($wave["binet"], $wave["term"]),array(),true),
-              "Publier","share","green");
+            echo button(path("publish", "wave", $wave["id"], binet_prefix($binet, $term), array(), true), "Publier", "share", "green");
           }
         }
       ?>
   	</div>
-    <div class="sh-title opanel">
+    <div class="sh-title shadowed">
       <div class="logo">
         <i class="fa fa-5x fa-star"></i>
       </div>
@@ -52,7 +34,7 @@
         </p>
       </div>
     </div>
-    <div class="sh-wa-dates opanel">
+    <div class="sh-wa-dates shadowed">
       <span id="submission-date">
         Demandes avant le :<br/>
         <?php echo pretty_date($wave["submission_date"]); ?>
@@ -62,11 +44,27 @@
         <?php echo pretty_date($wave["expiry_date"]); ?>
       </span>
     </div>
-    <div class="panel green-background opanel">
+    <div class="panel grey-background shadowed">
+      <div class="content">
+        <?php echo $wave["description"]; ?>
+      </div>
+    </div>
+    <div class="panel green-background shadowed">
       <div class="content white-text">
         <?php echo $wave["question"]; ?>
       </div>
     </div>
+    <?php
+      if (in_array($wave["state"], array("distribution", "closed"))) {
+        ?>
+        <div class="panel blue-background shadowed">
+          <div class="content white-text">
+            <?php echo $wave["explanation"]; ?>
+          </div>
+        </div>
+        <?php
+      }
+    ?>
     <div id="requests">
       <?php
         $requests = select_requests(array("wave" => $wave["id"]));
@@ -76,11 +74,7 @@
           ob_start();
           echo "<p class=\"marker ".$request_state["color"]."-background\" ></p>";
           echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".$request_state["icon"]."\"></i></p>";
-          echo "<p class=\"binet\">".
-          ($subsidizer_can_study && has_viewing_rights($request["binet"], $request["term"]) ?
-            link_to(path("", "binet", binet_term_id($request["binet"], $request["term"])), pretty_binet_term($request["binet"]."/".$request["term"], false)) :
-            pretty_binet_term($request["binet"]."/".$request["term"], false)
-          )."</p>";
+          echo "<p class=\"binet\">".pretty_binet_term($request["binet"]."/".$request["term"], false)."</p>";
           echo "<p class=\"amount\">".
           (has_viewing_rights($binet, $term) || !$subsidizer_can_study ? pretty_amount($request["granted_amount"], false)." / " : "").
           pretty_amount($request["requested_amount"], false)." <i class=\"fa fa-euro\"></i></p>";
@@ -88,13 +82,18 @@
           echo link_to(
             path($subsidizer_can_study && has_editing_rights($binet, $term) ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
             "<div>".ob_get_clean()."</div>",
-            array("goto" => true, "class"=> "sh-wa-request opanel")
+            array("goto" => true, "class"=> "sh-wa-request shadowed")
           );
         }
       ?>
-      <div class="sh-wa-stats opanel2">
+      <div class="sh-wa-stats shadowed2">
         <div class="item blue-background">
           Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
+          <?php
+          if (has_viewing_rights($binet, $term)) {
+            echo " / ".pretty_amount($wave["amount"], false, true)." à répartir";
+          }
+          ?>
         </div>
         <div class="item green-background">
           <?php

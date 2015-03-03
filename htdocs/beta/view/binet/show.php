@@ -3,7 +3,7 @@
   <?php
     if (has_viewing_rights($binet["id"], $binet["current_term"])) {
       ?>
-      <div class="sh-plus <?php echo $binet["state"]; ?>-background opanel">
+      <div class="sh-plus <?php echo $binet["state"]; ?>-background shadowed">
         <i class="fa fa-fw fa-<?php $color_to_icon = array("green" => "check", "orange" => "warning", "red" => "minus-circle", "grey" => "moon-o"); echo $color_to_icon[$binet["state"]]; ?>"></i>
         <span class="text">Etat du binet</span>
       </div>
@@ -24,7 +24,7 @@
       }
     ?>
   </div>
-  <div class="sh-title opanel">
+  <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-5x fa-group"></i>
     </div>
@@ -40,58 +40,78 @@
                 link_to(
                   path("", "binet", binet_term_id($binet["id"], $binet["current_term"])),
                     "<i class=\"fa fa-fw fa-eye\"></i>",
-                    array("class" => "opanel0 btn btn-success","id" =>"sh-bin-eye")
+                    array("class" => "shadowed0 btn btn-success","id" =>"sh-bin-eye")
                   ),
               "Voir l'activité du binet",
               "left");
         }
       ?>
       <!-- Modal to choose a different term -->
-      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub opanel0", "terms"); ?>
+      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub shadowed0", "terms"); ?>
     </div>
   </div>
   <?php
+  if ($binet["subsidy_provider"]){ ?>
+    <div class="panel shadowed light-blue-background">
+      <?php
+        $html_content = "<div class=\"title-small \"> Comment puis-je récupérer des subventions de ce binet ? <i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
+        echo make_collapse_control($html_content,"howToGetSubsisidies_content");
+      ?>
+      <div class="collapse" id="howToGetSubsisidies_content">
+        <div class="content">
+          <?php if(has_editing_rights($binet["id"], $binet["current_term"])) {
+              echo link_to(path("edit", "binet", $binet["id"]), "<i class=\"fa fa-fw fa-edit\"></i> Modifier", array("class" => "panelAction"));
+          }
+          echo $binet["subsidy_steps"]; ?>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <?php
+  }
   if (!is_empty($binet["current_term"])) {
     ?>
-    <div class="sh-bin-admins opanel">
+    <div class="panel light-blue-background shadowed">
       <span class="title">
         Administrateurs
       </span>
-      <?php
-      $admins = select_current_admins($binet["id"]);
-      if (!empty($admins)) {
-        foreach ($admins as $admin) {
+      <div class="content">
+        <?php
+        $admins = select_current_admins($binet["id"]);
+        if (!empty($admins)) {
+          foreach ($admins as $admin) {
+            ?>
+            <span class="admin">
+              <i class="fa fa-fw fa-user logo"></i>
+              <i class="fa fa-fw fa-eye logo"></i>
+              <?php echo pretty_student($admin["id"]); ?>
+            </span>
+            <?php
+          }
+        } else {
           ?>
-          <span class="admin">
-            <i class="fa fa-fw fa-user logo"></i>
-            <i class="fa fa-fw fa-send logo"></i>
-            <?php echo pretty_student($admin["id"]); ?>
-          </span>
+          <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet !
           <?php
         }
-      } else {
-        ?>
-        <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet !
-        <?php
-      }
-      if (is_current_kessier()) {
-        ?>
-        <div class="add">
-          <?php
-          echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
-          if (!empty($admins)){
-            echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
-          }
+        if (is_current_kessier()) {
           ?>
-        </div>
-        <?php
-      }
-      ?>
+          <div class="add">
+            <?php
+            echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
+            if (!empty($admins)){
+              echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
+            }
+            ?>
+          </div>
+          <?php
+        }
+        ?>
+      </div>
     </div>
     <?php
   }
   ?>
-  <div class="panel opanel light-blue-background">
+  <div class="panel shadowed light-blue-background">
     <div class="content">
       <div class="panel-article">
         <?php
@@ -119,14 +139,14 @@
       echo minipane("subsidies_used".$suffix, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
       $content = ob_get_clean();
       ?>
-      <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background opanel">
+      <div class="panel sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed">
         <?php echo $content; ?>
       </div>
       <?php
     }
     if (!empty($waves)) {
       ?>
-      <div class="sh-bin-resume light-blue-background opanel">
+      <div class="sh-bin-resume light-blue-background shadowed">
         <div class="title">
           Vagues de subventions
         </div>

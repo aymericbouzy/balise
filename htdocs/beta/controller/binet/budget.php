@@ -1,9 +1,8 @@
 <?php
 
   function budget_is_alone() {
-    $operations = select_operations_budget($_GET["budget"]);
     $subsidies = select_subsidies(array("budget" => $_GET["budget"]));
-    return is_empty($operations) && is_empty($subsidies);
+    return is_empty($subsidies);
   }
 
   function check_budget_is_alone() {
@@ -22,7 +21,7 @@
   case "index":
     $budgets = array();
     foreach (select_budgets(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $budget) {
-      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "subsidized_amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     }
     break;
 
@@ -30,7 +29,7 @@
     break;
 
   case "create":
-    $budget["id"] = create_budget($binet, $term, $_POST["amount"], $_POST["label"]);
+    $budget["id"] = create_budget($binet, $term, $_POST["amount"], $_POST["label"], $_POST["amount"] < 0 ? $_POST["subsidized_amount"] : NULL);
     foreach ($_POST["tags"] as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
@@ -39,7 +38,7 @@
     break;
 
   case "show":
-    $budget = select_budget($budget["id"], array("id", "label", "binet", "amount", "term", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+    $budget = select_budget($budget["id"], array("id", "label", "binet", "amount", "term", "real_amount","subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     break;
 
   case "edit":

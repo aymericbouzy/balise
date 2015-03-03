@@ -12,7 +12,7 @@
     <?php
     $help_file = VIEW_PATH."help/".(is_empty($_GET["prefix"]) ? "" : $_GET["prefix"]."/").$_GET["controller"]."/".$_GET["action"].".php";
     if (file_exists($help_file)) {
-      echo modal_toggle("help", "<i class=\"fa fa-question-circle help-icon\"></i>", "", "display-help");
+      echo modal_toggle("help", "<span class=\"label label-warning\">Aide</span>", "", "display-help");
     }
     ?>
   </li>
@@ -80,7 +80,7 @@
           echo "<i>Il n'y a aucune vague de subvention pour laquelle faire une demande en ce moment.</i>";
         } else {
           foreach ($waves_for_modal as $wave_for_modal) {
-            echo link_to(path("new", "request", "", binet_prefix($binet,$term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element opanel0"));
+            echo link_to(path("new", "request", "", binet_prefix($binet,$term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element shadowed0"));
           }
         }
         echo modal("wave-select","Sélectionner une vague de subventions : ",ob_get_clean());
