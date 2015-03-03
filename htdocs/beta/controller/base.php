@@ -15,7 +15,7 @@
 
   if (!($_GET["controller"] == "error" || ($_GET["controller"] == "home" && (in_array($_GET["action"], array("login", "chose_identity", "welcome")))))) {
     if (!connected_student()) {
-      $_SESSION["redirect_to_after_connection"] = $_SERVER["REDIRECT_URL"]; // original URL requested by the user
+      $_SESSION["redirect_to_after_connection"] = $_SERVER["REQUEST_URI"]; // original URL requested by the user
       redirect_to_path(path("login", "home"));
     }
   }
