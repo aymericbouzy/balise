@@ -43,14 +43,13 @@
         <?php
         }
       }
-      foreach (select_waves(array("binet" => $binet, "term" => $term), "submission_date") as $wave) {
-        $wave = select_wave($wave["id"], array("id", "amount", "granted_amount", "state", "used_amount"));
+      foreach ($waves as $wave) {
         ?>
         <tr class="budget-wave">
           <td class="element_name"><?php echo pretty_wave($wave["id"]); ?></td>
           <td></td>
-          <td><?php echo pretty_amount(in_array($wave["state"], array("rough_draft", "submission", "deliberation")) ? $wave["amount"] : $wave["granted_amount"]); ?></td>
-          <td><?php echo pretty_amount($wave["used_amount"]); ?></td>
+          <td><?php echo pretty_amount(-$wave["predicted_amount"]); ?></td>
+          <td><?php echo pretty_amount(-$wave["used_amount"]); ?></td>
           <td class="grey-300-background" colspan="3"></td>
         </tr>
         <?php
@@ -58,8 +57,8 @@
     ?>
     <tr class="total">
       <td colspan="2">Total des dépenses</td>
-      <td><?php echo pretty_amount(sum_array($budgets, "amount", "negative")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets, "real_amount", "negative")); ?></td>
+      <td><?php echo pretty_amount(sum_array($budgets, "amount", "negative") - sum_array($waves, "predicted_amount")); ?></td>
+      <td><?php echo pretty_amount(sum_array($budgets, "real_amount", "negative") - sum_array($waves, "used_amount")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount", "positive")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted", "positive")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used", "positive")); ?></td>
@@ -109,8 +108,8 @@
   <tbody>
       <tr class="total">
           <td colspan="2">Total</td>
-          <td><?php echo pretty_amount(sum_array($budgets, "amount") + sum_array($budgets, "subsidized_amount")); ?></td>
-          <td><b><?php echo pretty_amount(sum_array($budgets, "real_amount") + sum_array($budgets, "subsidized_amount_used")); ?></b></td>
+          <td><?php echo pretty_amount(sum_array($budgets, "amount") + sum_array($budgets, "subsidized_amount") - sum_array($waves, "predicted_amount")); ?></td>
+          <td><b><?php echo pretty_amount(sum_array($budgets, "real_amount") + sum_array($budgets, "subsidized_amount_used") - sum_array($waves, "used_amount")); ?></b></td>
           <td class="grey-300-background" colspan="3"></td>
       </tr>
   </tbody>
