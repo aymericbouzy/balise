@@ -74,11 +74,7 @@
           ob_start();
           echo "<p class=\"marker ".$request_state["color"]."-background\" ></p>";
           echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".$request_state["icon"]."\"></i></p>";
-          echo "<p class=\"binet\">".
-          ($subsidizer_can_study && has_viewing_rights($request["binet"], $request["term"]) ?
-            link_to(path("", "binet", binet_term_id($request["binet"], $request["term"])), pretty_binet_term($request["binet"]."/".$request["term"], false)) :
-            pretty_binet_term($request["binet"]."/".$request["term"], false)
-          )."</p>";
+          echo "<p class=\"binet\">".pretty_binet_term($request["binet"]."/".$request["term"], false)."</p>";
           echo "<p class=\"amount\">".
           (has_viewing_rights($binet, $term) || !$subsidizer_can_study ? pretty_amount($request["granted_amount"], false)." / " : "").
           pretty_amount($request["requested_amount"], false)." <i class=\"fa fa-euro\"></i></p>";
