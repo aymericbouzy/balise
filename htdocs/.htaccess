@@ -10,6 +10,7 @@
     RewriteRule ^beta/home/logout/?$ ./beta/index.php?controller=home&action=logout&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/home/welcome/?$ ./beta/index.php?controller=home&action=welcome&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/home/chose_identity/?$ ./beta/index.php?controller=home&action=chose_identity&%{QUERY_STRING} [L,NC,QSA]
+    RewriteRule ^beta/home/bug_report/?$ ./beta/index.php?controller=home&action=bug_report&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/?$ ./beta/index.php?controller=binet&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/index/?$ ./beta/index.php?controller=binet&action=index&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/new/?$ ./beta/index.php?controller=binet&action=new&%{QUERY_STRING} [L,NC,QSA]
@@ -85,4 +86,5 @@
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/([0-9]+)/edit/?$ ./beta/index.php?controller=wave&action=edit&wave=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/([0-9]+)/update/?$ ./beta/index.php?controller=wave&action=update&wave=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/([0-9]+)/publish/?$ ./beta/index.php?controller=wave&action=publish&wave=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
+    RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/wave/([0-9]+)/open/?$ ./beta/index.php?controller=wave&action=open&wave=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     

@@ -1,4 +1,4 @@
-<div class="bigpanel opanel">
+<div class="bigpanel shadowed">
   <div class="title">Opération</div>
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-small-char">
@@ -41,7 +41,7 @@
   </div>
 </div>
 
-<div class="bigpanel opanel">
+<div class="bigpanel shadowed">
   <span class="title">Budgets - <i style="font-size:13px">répartir le montant de l'opération entre les différents budgets </i></span>
   <div class="table-responsive panel-content" id="validations-table">
     <table class="table table-bordered table-hover table-small-char">

@@ -96,29 +96,38 @@ a {
 }
 
 #homelinks {
+  display:table;
+  margin:5px;
   margin-top:10px;
-  height: 50px;
+  height: 30px;
   background-color:#cbddff;
 }
 
-.homelink {
+.homelink-container {
+  text-align:center;
+  vertical-align:middle;
+  width:50%;
+  display:table-cell;
   padding:10px;
+}
+.homelink-container:hover{
+  background-color:#baccff;
+}
+
+.homelink {
+  height:100%;
+  width:100%;
   text-align:center;
   font-size:20px;
 }
 
-.homelink:hover {
-  background-color:#baccff;
-}
 
 #subsidies {
   display:inline-block;
-  width:50%;
   height:100%;
 }
 
 #binets {
   display:inline-block;
-  width:49%;
   height:100%;
 }

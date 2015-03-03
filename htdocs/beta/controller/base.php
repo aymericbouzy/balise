@@ -15,16 +15,17 @@
 
   if (!($_GET["controller"] == "error" || ($_GET["controller"] == "home" && (in_array($_GET["action"], array("login", "chose_identity", "welcome")))))) {
     if (!connected_student()) {
-      $_SESSION["redirect_to_after_connection"] = $_SERVER["REDIRECT_URL"]; // original URL requested by the user
+      $_SESSION["redirect_to_after_connection"] = $_SERVER["REQUEST_URI"]; // original URL requested by the user
       redirect_to_path(path("login", "home"));
     }
   }
+
+  create_form("bug_report");
 
   if ($_GET["controller"] != "error") {
     include CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
   }
 
   if (!(STATE == "development" && ob_get_length() != 0)) {
-    generate_csrf_token();
     include LAYOUT_PATH."application.php";
   }

@@ -8,6 +8,9 @@
 .white-text {
   color : #fff;
 }
+.deactivated-text {
+  color:rgba(0,0,0,0.2);
+}
 .orange-background {
   background-color: rgb(255, 175, 36);
 }

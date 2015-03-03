@@ -10,7 +10,7 @@ $admins = select_current_admins($binet);
 if (!empty($admins)) {
   foreach ($admins as $admin) {
     ?>
-    <span class="admin opanel">
+    <span class="admin shadowed">
       <i class="fa fa-fw fa-user logo"></i>
       <i class="fa fa-fw fa-send logo"></i>
       <?php

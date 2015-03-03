@@ -1,6 +1,6 @@
 <div class="sidebar-not-present">
   <div class="show-container">
-    <div class="sh-title opanel">
+    <div class="sh-title shadowed">
       <div class="logo">
         <i class="fa fa-5x fa-user"></i>
       </div>
@@ -13,7 +13,7 @@
         </span>
       </div>
     </div>
-    <div class="panel opanel light-blue-background">
+    <div class="panel shadowed light-blue-background">
       <div class="title">
         Binet administrés
       </div>
@@ -22,7 +22,7 @@
           $term = select_term_binet($term["id"],array("binet"));
           echo link_to(path("show", "binet", $term["binet"]),
             "<div><i class=\"icon fa fa-fw fa-group\"></i>".pretty_binet($term["binet"],false)."</div>",
-            array("class" => "panel-list-element opanel0","goto" => "true"));
+            array("class" => "panel-list-element shadowed0","goto" => "true"));
         } ?>
       </div>
     </div>

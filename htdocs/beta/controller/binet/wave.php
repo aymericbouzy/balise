@@ -13,13 +13,28 @@
     header_if(select_binet($_GET["binet"], array("subsidy_provider"))["subsidy_provider"], 401);
   }
 
+  function is_openable($wave) {
+    $wave = select_wave($wave, array("open", "submission_date"));
+    return !$wave["open"] && $wave["submission_date"] > current_date();
+  }
+
+  function check_is_openable() {
+    header_if(!is_openable($_GET["wave"]), 403);
+  }
+
+  function check_has_viewing_rights_if_rough_draft() {
+    header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]) && select_wave($_GET["wave"], array("state"))["state"] == "rough_draft", 401);
+  }
+
   before_action("check_csrf_get", array("publish"));
   subsidy_provider();
-  before_action("check_entry", array("show", "edit", "update", "publish"), array("model_name" => "wave", "binet" => $binet, "term" => $term));
-  before_action("check_editing_rights", array("new", "create", "edit", "update", "publish"));
+  before_action("check_entry", array("show", "edit", "update", "publish", "open"), array("model_name" => "wave", "binet" => $binet, "term" => $term));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "publish", "open"));
+  before_action("check_has_viewing_rights_if_rough_draft", array("show"));
   before_action("create_form", array("new", "create", "edit", "update"), "wave");
   before_action("check_form", array("create", "update"), "wave");
   before_action("check_is_publishable", array("publish"));
+  before_action("check_is_openable", array("open"));
 
   $form_fields = array("submission_date", "expiry_date", "question");
 
@@ -27,6 +42,7 @@
 
   case "index":
     $waves = select_waves(array("binet" => $binet, "term" => $term), "submission_date");
+    $waves_rough_drafts = select_waves(array("binet" => $binet, "term" => $term, "state" => "rough_draft"), "submission_date");
     break;
 
   case "new":
@@ -34,8 +50,13 @@
     break;
 
   case "create":
-    $wave["id"] = create_wave($binet, $term, $_POST["submission_date"], $_POST["expiry_date"], $_POST["question"]);
-    $_SESSION["notice"][] = "Une nouvelle vague de subvention a été ouverte.";
+    $wave["id"] = create_wave($binet, $term, $_POST);
+    $_SESSION["notice"][] = "La vague de subvention a été créée. Elle apparait maintenant dans ton budget et tes brouillons. Les binets pourront faire leurs demandes de subventions une fois qu'elle sera ouverte.";
+    redirect_to_action("show");
+    break;
+
+  case "open":
+    open_wave($wave["id"]);
     $binets_per_student = array();
     foreach (select_binets() as $any_binet) {
       foreach (select_current_admins($any_binet["id"]) as $student) {
@@ -45,11 +66,12 @@
     foreach ($binets_per_student as $student => $binets) {
       send_email($student, "Nouvelle vague de subventions", "new_wave", array("wave" => $wave["id"], "binets" => $binets));
     }
+    $_SESSION["notice"][] = "La vague de subvention est à présent ouverte. Un mail a été envoyé aux administrateurs de binets pour les prévenir.";
     redirect_to_action("show");
     break;
 
   case "show":
-    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "requested_amount", "granted_amount", "used_amount", "question", "requests_received", "requests_reviewed","requests_accepted"));
+    $wave = select_wave($wave["id"], array("id", "submission_date", "expiry_date", "published", "binet", "term", "state", "amount", "requested_amount", "granted_amount", "used_amount", "description", "question", "explanation", "requests_received", "requests_reviewed","requests_accepted"));
     break;
 
   case "edit":

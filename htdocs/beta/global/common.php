@@ -26,7 +26,10 @@
   }
 
   function redirect_to_path($path) {
-    header("Location: ".full_path($path));
+    if (substr($path, 0, 7) != "http://") {
+      $path = full_path($path);
+    }
+    header("Location: ".$path);
     exit;
   }
 
