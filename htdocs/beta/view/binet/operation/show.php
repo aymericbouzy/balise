@@ -88,18 +88,24 @@
       ?>
       <div class="collapse in" id="subsidiesInfos">
         <div class="content">
-          <?php foreach($subsidies_and_requests_operation as $request => $subsidies){
-            echo pretty_wave(select_request($request,array("wave"))["wave"]);
+          <?php
+          foreach ($subsidies_and_requests_operation as $request => $subsidies) {
+            $wave = select_wave(select_request($request, array("wave"))["wave"], array("id", "expiry_date"));
+            echo pretty_wave($wave["id"]);
+            echo " <span class=\"side-information\">(".pretty_date($wave["expiry_date"]).")</span>";
             echo "<div>";
             foreach($subsidies as $subsidy){
-              $subsidy = select_subsidy($subsidy,array("budget","purpose"));
-              $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"],false,false)." </button>";
+              $subsidy = select_subsidy($subsidy, array("budget", "purpose", "used_amount", "granted_amount"));
+              $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"], false, false).
+                " <span class=\"side-information\">".pretty_amount($subsidy["used_amount"])." / ".pretty_amount($subsidy["granted_amount"])."</span>
+                </button>";
               $popover_title = "Justification de la demande";
               $popover_content = $subsidy["purpose"];
               echo insert_popover($html_button,$popover_content,$popover_title,"left");
             }
             echo "</div>";
-          }?>
+          }
+          ?>
         </div>
       </div>
     </div>

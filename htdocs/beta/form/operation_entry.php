@@ -22,7 +22,7 @@
   $form["fields"]["bill"] = create_name_field("la référence de facture", array("optional" => 1));
   $form["fields"]["bill_date"] = create_date_field("la date de la facture", array("optional" => 1));
   $form["fields"]["payment_ref"] = create_name_field("la référence de paiement", array("optional" => 1));
-  $form["fields"]["payment_date"] = create_date_field("la date de paiement", array("optional" => 1));
+  $form["fields"]["payment_date"] = create_date_field("la date de paiement");
   $form["fields"]["comment"] = create_text_field("la description de l'opération", array("optional" => 1));
   $form["fields"]["type"] = create_id_field("le type de transaction", "operation_type");
   $form["fields"]["paid_by"] = create_id_field("la personne qui a payé", "paid_by");
@@ -51,6 +51,7 @@
         $initial_input["amount"] *= -1;
       }
     } elseif (is_empty($_GET["prefix"])) {
+      $initial_input["payment_date"] = current_date();
       $initial_input["next_term"] = 0;
     }
     return $initial_input;
