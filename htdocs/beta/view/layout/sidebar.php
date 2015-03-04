@@ -40,7 +40,8 @@
         $_GET["controller"] == "request"
       );
       // If subsidy provider
-      if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
+      $sidebar_waves = select_waves(array("binet" => $binet, "term" => $term));
+      if (!is_empty($sidebar_waves)) {
         ?>
         <li class="divider"></li>
         <?php
