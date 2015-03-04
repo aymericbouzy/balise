@@ -21,7 +21,9 @@
           echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier la répartition sur les budgets", "bar-chart", "teal");
           break;
         }
-        echo button(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+        if (is_editable_operation($operation["id"])) {
+          echo button(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+        }
         echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
       }
       if (has_editing_rights_for_suggested_operation($operation["id"]) && !has_editing_rights($binet, $term)) {
