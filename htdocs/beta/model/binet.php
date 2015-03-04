@@ -75,6 +75,16 @@
     );
   }
 
+  function unset_subsidy_provider($binet) {
+    update_entry(
+      "binet",
+      array("subsidy_provider"),
+      array(),
+      $binet,
+      array("subsidy_provider" => 0)
+    );
+  }
+
   /*
   @param int $binet id of the binet , int(11) NOT NULL in table 'binet'
 
