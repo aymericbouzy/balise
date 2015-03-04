@@ -15,9 +15,9 @@
     if (in_array("state", $fields)) {
       $fields = array_merge(array("submission_date", "expiry_date", "published", "open"), $fields);
     }
-    $present_virtual_fields = array_intersect(array("requested_amount", "granted_amount", "used_amount", "requests_received", "requests_reviewed"), $fields);
+    $present_virtual_fields = array_intersect(array("requested_amount", "granted_amount", "used_amount", "requests_received", "requests_reviewed", "predicted_amount"), $fields);
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_merge(array("id"), $fields);
+      $fields = array_merge(array("id", "published", "granted_amount", "amount"), $fields);
     }
     $wave = select_entry(
       "wave",
@@ -47,6 +47,10 @@
         break;
       case "requests_accepted":
         $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => "accepted")));
+        break;
+      case "predicted_amount":
+        $wave[$field] = $wave["published"] ? $wave["granted_amount"] : $wave["amount"];
+        break;
       }
     }
     return $wave;
@@ -64,7 +68,7 @@
       "wave",
       array("binet", "term", "published", "open"),
       array("submission_date", "expiry_date"),
-      array("requested_amount", "granted_amount", "used_amount", "state", "amount"),
+      array("requested_amount", "granted_amount", "used_amount", "state", "amount", "predicted_amount"),
       $criteria,
       $order_by,
       $ascending

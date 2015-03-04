@@ -23,6 +23,10 @@
     foreach (select_budgets(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $budget) {
       $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "subsidized_amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
     }
+    $waves = array();
+    foreach(select_waves(array("binet" => $binet, "term" => $term), "submission_date") as $wave) {
+      $waves[] = select_wave($wave["id"], array("id", "amount", "granted_amount", "state", "used_amount", "predicted_amount"));
+    }
     break;
 
   case "new":
