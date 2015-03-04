@@ -52,7 +52,7 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
 }
 ?>
 <?php
-  if ($_GET["action"] == "create") {
+  if ($_GET["action"] == "new") {
     $current_term_binet = current_term($binet);
     $checked = $current_term_binet != $term;
     $term_redirect = $current_term_binet + ($checked ? 0 : 1);
