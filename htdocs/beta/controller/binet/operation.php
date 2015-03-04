@@ -100,7 +100,10 @@
     if ($operation["created_by"] != connected_student()) {
       send_email($operation["created_by"], "Opération acceptée", "operation_accepted", array("operation" => $operation["id"], "binet" => $binet));
     }
-    $_SESSION["notice"][] = "L'opération a été ajoutée dans ton budget.".($operation["state"] == "waiting_validation" ? " Elle doit à présent être validée par un kessier pour apparaître dans les comptes." : "");
+    $_SESSION["notice"][] = "L'opération a été ajoutée dans ton budget.";
+    if ($operation["state"] == "waiting_validation") {
+      $_SESSION["notice"][] = "Cette opération va utiliser des subventions ".list_to_human_string(concerned_subsidy_providers($operation["id"]), "pretty_binet").". Pour savoir comment faire valider ton opération par la Kès et récupérer tes subventions, tu peux aller consulter la page du binet subventionneur concerné.";
+    }
     redirect_to_action("show");
     break;
 
