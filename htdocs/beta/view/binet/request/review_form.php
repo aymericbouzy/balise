@@ -45,6 +45,24 @@
   <div class="panel green-background shadowed">
     <div class="content white-text">
       <?php echo $request_info["answer"]; ?>
+      <?php
+      $html_content = "<div class=\"toggle-comments\"> Voir les commentaires  <i class=\"fa fa-fx fa-chevron-down\"></i></div>";
+      echo make_collapse_control($html_content, "requestComment");
+      ?>
+      <div class="collapse" id="requestComment">
+        <div class="comments">
+          <div class="comment">
+            <span class="display-author"> <i class="fa fa-fw fa-user"></i> <span class="name">Hubert Védrine</span> </span>
+            <span class="content">Hello world !</span>
+            <span class="date">12/05/2015 à 13h07</span>
+          </div>
+          <div class="comment">
+            <span class="display-author"> <i class="fa fa-fw fa-user"></i> <span class="name">Hubert Védrine</span></span>
+            <span class="content">Hello world !</span>
+            <span class="date">12/05/2015 à 13h07</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <?php
@@ -146,7 +164,7 @@
             <?php echo form_input("Explication :", "explanation_".$subsidy["id"], $form); ?>
           </div>
           <?php
-          $html_content = "<div> Voir les commentaires  <i class=\"fa fa-fx fa-chevron-down\"></i></div>";
+          $html_content = "<div class=\"toggle-comments\"> Voir les commentaires  <i class=\"fa fa-fx fa-chevron-down\"></i></div>";
           echo make_collapse_control($html_content, "subsidyComment".$subsidy["id"]);
           ?>
           <div class="collapse" id="<?php echo "subsidyComment".$subsidy["id"];?>">
