@@ -13,7 +13,7 @@
    Tu peux même poser plusieurs questions à la suite dans ce champ<br>
 
    Un point important à savoir : les binets ayant rédigé un brouillon de demande de subventions pourront quand même te l'envoyer après la date de clotûre.
-   Tu en seras informé, à toi de décider si c'est trop tard ou pas.
+   Tu en seras informé, à toi de décider si c'est trop tard.
    <strong>Après avoir créé ta vague, elle sera à l'état de brouillon. Il te faudra encore l'ouvrir en cliquant sur le bouton "ouvrir".</strong>
     </p>
 </body>

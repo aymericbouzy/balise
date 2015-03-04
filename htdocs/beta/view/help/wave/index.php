@@ -13,7 +13,7 @@
     Les deux dates indiquées sont celles de clôture de dépôt de demandes et la date limite d’utilisation des subventions.<br>
 
 
-    En cliquant sur une vague en particulier, tu peux voir les montants attribués et les détails pour chaque binet par poste de dépenses.<br>
+    En cliquant sur une vague en particulier, tu peux voir les montants attribués et les détails pour chaque binet par poste de dépense.<br>
 
     	Tu peux faire tes demandes de subventions en cliquant sur le bouton qui apparait à la droite d'une vague ouverte, et en sélectionnant ensuite ton binet.
 		</p>
