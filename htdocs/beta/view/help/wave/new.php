@@ -1,5 +1,4 @@
-<body>
-    <h1>Tu t'apprêtes à créer une nouvelle vague de subventions</h1>
+<h1>Tu t'apprêtes à créer une nouvelle vague de subventions</h1>
     <p>Il faut pour ça que tu précises les informations suivantes :
       <ul>
         <li>La date de clotûre des demandes (attention, si tu indiques le 23, cela finira le 22 à 23:59)</li>
@@ -16,4 +15,3 @@
    Tu en seras informé, à toi de décider si c'est trop tard.
    <strong>Après avoir créé ta vague, elle sera à l'état de brouillon. Il te faudra encore l'ouvrir en cliquant sur le bouton "ouvrir".</strong>
     </p>
-</body>

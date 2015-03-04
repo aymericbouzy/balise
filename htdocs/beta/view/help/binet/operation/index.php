@@ -11,6 +11,6 @@
     Tu pourras également demander des subventions, toujours via le bouton "Plus"!<br>
     Pour utiliser tes subventions, cela se fait lors de la création d'une opération, tu seras guidé pour ça.<br>
 
-    N'hésite pas à cliquer si tu veux avoir des détails sur tel ou tel ligne du tableau, c'est interactif !<br>
+    N'hésite pas à cliquer si tu veux avoir des détails sur telle ou telle ligne du tableau, c'est interactif !<br>
 		<strong>Tu peux exporter ces tableaux avec un simple copier coller dans excel en sélectionnant avec ton curseur l'ensemble des données</strong>
 </p>
