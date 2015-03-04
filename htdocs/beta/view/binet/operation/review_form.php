@@ -92,13 +92,13 @@
           var i, s;
           s = 0;
           for (i = 0; i < inputs.length; i++) {
-            if (inputs[i] != null && inputs[i].value != null && !isNaN(parseFloat(inputs[i].value))) {
-              console.log(parseFloat(inputs[i].value));
-              s += parseFloat(inputs[i].value);
+            var amount = parseInt(parseFloat(inputs[i].value) * 100);
+            if (inputs[i] != null && inputs[i].value != null && !isNaN(amount)) {
+              s += amount;
             }
           }
           var total_remaining = document.getElementById('amount-sum');
-          var remaining = parseInt((operation_amount-s)*100)/100;
+          var remaining = (operation_amount * 100 - s)/100;
           total_remaining.innerHTML = remaining;
 
           var table_line = document.getElementById('remaining_amount_line');
