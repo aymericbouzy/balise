@@ -1,8 +1,22 @@
 <?php
 
-  function not_sent() {
-    $request = select_request($_GET["request"], array("sending_date"));
-    header_if(!is_empty($request["sending_date"]), 403);
+  function is_sendable($request) {
+    $request = select_request($request, array("sending_date", "wave"));
+    $wave = select_wave($request["wave"], array("published"));
+    return is_empty($request["sending_date"]) && !$wave["published"];
+  }
+
+  function check_is_sendable() {
+    header_if(!is_sendable($GLOBALS["request"]["id"]), 403);
+  }
+
+  function is_editable($request) {
+    $request = select_request($request, array("sending_date"));
+    return is_empty($request["sending_date"]);
+  }
+
+  function check_is_editable() {
+    header_if(!is_editable($GLOBALS["request"]["id"]), 403);
   }
 
   function sent_and_not_published() {
@@ -57,7 +71,8 @@
   before_action("check_form", array("create", "update"), "request_entry");
   before_action("create_form", array("review", "grant"), "request_review");
   before_action("check_form", array("grant"), "request_review");
-  before_action("not_sent", array("send", "edit", "update", "delete"));
+  before_action("check_is_sendable", array("send"));
+  before_action("check_is_editable", array("edit", "update", "delete"));
   before_action("sent_and_not_published", array("review", "grant", "reject"));
 
   switch ($_GET["action"]) {

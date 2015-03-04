@@ -50,11 +50,15 @@
       if (in_array("state", $fields)) {
         $wave = select_wave($request["wave"], array("state"));
         $request["state"] =
-          is_empty($request["sending_date"]) ?
-            "rough_draft" :
-            (in_array($wave["state"], array("deliberation", "submission")) ?
-              ($request["reviewed"] != 1 ? "sent" : ($request["granted_amount"] > 0 ? "reviewed_accepted" : "reviewed_rejected")) :
-                ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
+          in_array($wave["state"], array("deliberation", "submission")) ?
+            (is_empty($request["sending_date"]) ?
+              "rough_draft" :
+              ($request["reviewed"] != 1 ?
+                "sent" :
+                ($request["granted_amount"] > 0 ? "reviewed_accepted" : "reviewed_rejected"))) :
+            (is_empty($request["sending_date"]) ?
+              "late_rough_draft" :
+              ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
 
 
       }

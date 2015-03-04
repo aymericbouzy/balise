@@ -7,6 +7,8 @@
       case "rough_draft":
       return array("name"=>"Brouillon","color"=>"grey","icon"=>"question");
       break;
+      case "late_rough_draft":
+      return array("name" => "En retard", "color" => "grey", "icon" => "bed");
       case "reviewed_accepted":
       return array("name"=>"Prête à être acceptée","color"=>"green","icon"=>"check");
       break;
