@@ -38,8 +38,12 @@
 
   case "index":
     $operations = array();
+    $op_pending_kes_validations = array();
     foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date",false) as $operation) {
       $operations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type","term","binet"));
+    }
+    foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term, "state" => "waiting_validation")), "date",false) as $operation){
+      $op_pending_kes_validations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type","term","binet"));
     }
     break;
 
