@@ -121,7 +121,7 @@
               <i class="fa fa-fw fa-<?php echo $request_state["icon"]; ?>"></i>
             </div>
             <div class="request-infos">
-              <span><?php echo ($request["sent"] == 0 ? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
+              <span><?php echo (is_empty($request["sending_date"]) ? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
                 pretty_amount($request["requested_amount"],false)." demandés." ?></span>
               <span><?php echo ($request["state"] == "accepted" ? pretty_amount($request["used_amount"],false)." utilisés." : ($request["state"] == "rejected" ? "Subventions refusées" : "")); ?></span>
             </div>

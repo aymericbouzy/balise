@@ -150,7 +150,7 @@ CREATE TABLE `request` (
   `id` int(11) NOT NULL,
   `wave` int(11) NOT NULL,
   `answer` text NOT NULL,
-  `sent` tinyint(1) NOT NULL DEFAULT '0',
+  `sending_date` date DEFAULT NULL,
   `reviewed` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

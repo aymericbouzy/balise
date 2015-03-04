@@ -219,7 +219,7 @@
             ON request.id = subsidy.request
             INNER JOIN budget
             ON budget.id = subsidy.budget
-            WHERE budget.binet = :binet AND binet_admin.student = :student AND request.sent = 1 AND wave.published = 0
+            WHERE budget.binet = :binet AND binet_admin.student = :student AND request.sending_date IS NOT NULL AND wave.published = 0
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
