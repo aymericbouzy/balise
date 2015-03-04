@@ -5,13 +5,17 @@
     return filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by, $ascending);
   }
 
+  function sort_by_virtual_field($e1, $e2) {
+    return ($GLOBALS["sort_by_virtual_field_ascending"] ? 1 : (-1))*strcmp($e1[$GLOBALS["sort_by_virtual_field_order_by"]], $e2[$GLOBALS["sort_by_virtual_field_order_by"]]);
+  }
+
   function filter_entries($entries, $table, $filterable_virtual_fields, $criteria, $order_by = NULL, $ascending = true) {
     $virtual_criteria = array_intersect_key($criteria, array_flip($filterable_virtual_fields));
-    if (!is_empty($virtual_criteria)) {
+    if (!is_empty($virtual_criteria) || in_array($order_by, $filterable_virtual_fields)) {
       $virtual_entries = array();
       $virtual_fields = array_flip(array_intersect_key(array_flip($filterable_virtual_fields), $criteria));
       foreach($entries as $entry) {
-        $virtual_entry = call_user_func("select_".$table, $entry["id"], array_merge($virtual_fields, array("id")));
+        $virtual_entry = call_user_func("select_".$table, $entry["id"], array_merge($virtual_fields, array("id", $order_by)));
         $keep_entry = true;
         foreach($virtual_criteria as $column => $value) {
           if (is_array($value)) {
@@ -57,9 +61,8 @@
         }
       }
       if (!is_empty($order_by) && in_array($order_by, $filterable_virtual_fields)) {
-        function sort_by_virtual_field($e1, $e2) {
-          return ($ascending ? 1 : (-1))*strcmp($e1[$order_by], $s2[$order_by]);
-        }
+        $GLOBALS["sort_by_virtual_field_order_by"] = $order_by;
+        $GLOBALS["sort_by_virtual_field_ascending"] = $ascending;
         usort($virtual_entries, "sort_by_virtual_field");
       }
       return $virtual_entries;

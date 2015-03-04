@@ -118,27 +118,21 @@
     return $req->fetch(PDO::FETCH_ASSOC)["sum_requested_amount"];
   }
 
-  // To order subsidies in get_subsidized_amount_used_details_budget
-  function sort_by_date($s1, $s2) {
-    return strcmp($s1["expiry_date"], $s2["expiry_date"]);
-  }
-
   function get_subsidized_amount_used_details_budget($budget) {
-    $subsidies = select_subsidies(array("budget" => $budget));
-    foreach($subsidies as $index => $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave", "request"));
-      $subsidies[$index]["accepted"] = select_request($subsidy["request"], array("state"))["state"] == "accepted";
-      $subsidies[$index]["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
-      $subsidies[$index]["used_amount"] = 0;
-      $subsidies[$index]["granted_amount"] = $subsidy["granted_amount"];
-      set_if_not_set($subsidies[$index]["granted_amount"], 0);
+    $subsidies = array();
+    foreach(select_subsidies(array("budget" => $budget), "expiry_date", false) as $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "wave", "request", "expiry_date"));
+      $subsidy["accepted"] = select_request($subsidy["request"], array("state"))["state"] == "accepted";
+      $subsidy["used_amount"] = 0;
+      $subsidy["granted_amount"] = $subsidy["granted_amount"];
+      set_if_not_set($subsidy["granted_amount"], 0);
+      $subsidies[] = $subsidy;
     }
-    usort($subsidies, "sort_by_date");
     foreach(select_operations_budget($budget) as $operation) {
       $operation = select_operation($operation["id"], array("payment_date", "amount", "state"));
       if ($operation["state"] == "validated") {
         $i = 0;
-        while(isset($subsidies[$i]) && $operation["amount"] < 0) {
+        while (isset($subsidies[$i]) && $operation["amount"] < 0) {
           if ($subsidies[$i]["accepted"] && $operation["payment_date"] < $subsidies[$i]["expiry_date"] && $subsidies[$i]["granted_amount"] > $subsidies[$i]["used_amount"]) {
             $amount = min(-$operation["amount"], $subsidies[$i]["granted_amount"] - $subsidies[$i]["used_amount"]);
             $operation["amount"] -= $amount;
