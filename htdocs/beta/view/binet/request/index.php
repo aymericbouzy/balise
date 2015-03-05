@@ -111,6 +111,7 @@
         $request = select_request($request["id"], array("id", "state", "wave", "requested_amount", "used_amount", "granted_amount"));
         $wave = select_wave($request["wave"],array("id","binet","term"));
         $request_state = request_state($request["state"],has_editing_rights($wave["binet"], $wave["term"]));
+        $can_see_granted_amount = in_array($request["state"] , array("accepted","refused"));
         ?>
         <li class="panel shadowed light-blue-background">
           <div class="actions">
@@ -126,7 +127,7 @@
               <i class="fa fa-fw fa-<?php echo $request_state["icon"]; ?>"></i>
             </div>
             <div class="request-infos">
-              <span><?php echo (is_empty($request["sending_date"]) ? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
+              <span><?php echo (!$can_see_granted_amount? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
                 pretty_amount($request["requested_amount"],false)." demandés." ?></span>
               <span><?php echo ($request["state"] == "accepted" ? pretty_amount($request["used_amount"],false)." utilisés." : ($request["state"] == "rejected" ? "Subventions refusées" : "")); ?></span>
             </div>
@@ -144,7 +145,7 @@
                         ?>
                         <div class="subsidy">
                           <span><?php echo pretty_budget($subsidy["budget"], true, false); ?></span>
-                          <span class="grey-400-background"><?php echo pretty_amount($subsidy["granted_amount"])."/".pretty_amount($subsidy["requested_amount"]); ?></span>
+                          <span class="grey-400-background"><?php echo ($can_see_granted_amount ? pretty_amount($subsidy["granted_amount"])."/": " ").pretty_amount($subsidy["requested_amount"]); ?></span>
                           <span><?php echo $subsidy["used_amount"] > 0 ? pretty_amount($subsidy["used_amount"], false) : ""; ?></span>
                         </div>
                         <?php
