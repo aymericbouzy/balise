@@ -13,9 +13,9 @@
   }
 
   function select_subsidy($subsidy, $fields = NULL) {
-    $present_virtual_fields = array_intersect($fields, array("used_amount", "wave"));
+    $present_virtual_fields = array_intersect($fields, array("used_amount", "wave", "expiry_date"));
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_merge(array("id", "request"), $fields);
+      $fields = array_merge(array("id", "request", "wave"), $fields);
     }
     $subsidy = select_entry(
       "subsidy",
@@ -30,7 +30,11 @@
         break;
       case "wave":
         $subsidy[$field] = select_request($subsidy["request"], array("wave"))["wave"];
+        break;
       }
+    }
+    if (in_array("expiry_date", $fields)) {
+      $subsidy[$field] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
     }
     if (in_array("granted_amount", $fields)) {
       set_if_not_set($subsidy["granted_amount"], 0);
@@ -54,12 +58,12 @@
     delete_entry("subsidy", $subsidy);
   }
 
-  function select_subsidies($criteria, $order_by = NULL, $ascending = true) {
+  function select_subsidies($criteria, $order_by = "", $ascending = true) {
     return select_entries(
       "subsidy",
       array("budget", "request", "requested_amount", "granted_amount"),
       array(),
-      array("used_amount", "wave"),
+      array("used_amount", "wave", "expiry_date"),
       $criteria,
       $order_by,
       $ascending

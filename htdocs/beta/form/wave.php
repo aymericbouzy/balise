@@ -22,7 +22,7 @@
     $form["validations"] = array("check_expiry_later_than_submission");
   }
   $form["fields"]["expiry_date"] = create_date_field("la date limite d'utilisation des subventions", array("min" => current_date()));
-  if (in_array($wave_state, array("deliberation"))) {
+  if (in_array($wave_state, array("deliberation", "distribution"))) {
     $form["fields"]["explanation"] = create_text_field("l'explication des subventions attribuées");
   }
 

@@ -23,6 +23,14 @@
     }
   }
 
+  function is_editable_operation($operation) {
+    return is_empty(select_operation($operation, array("kes_validation_by"))["kes_validation_by"]);
+  }
+
+  function check_is_editable_operation() {
+    header_if(is_editable_operation($GLOBALS["operation"]["id"]), 403);
+  }
+
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete", "validate", "review"), array("model_name" => "operation", "binet" => $binet, "term" => $term));
   before_action("define_binet_budgets", array("validate", "review"));
@@ -33,6 +41,7 @@
   before_action("create_form", array("review", "validate"), "operation_review");
   before_action("check_form", array("validate"), "operation_review");
   before_action("check_exists_budget", array("review", "validate"));
+  before_action("check_is_editable_operation", array("edit", "update"));
 
   switch ($_GET["action"]) {
 
