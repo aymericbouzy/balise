@@ -13,7 +13,7 @@
   <div class="sh-actions">
     <?php
       echo button(contact_binet_path($binet["id"]), "Contacter", "paper-plane", "grey");
-      if (has_editing_rights($binet["id"], $binet["current_term"])) {
+      if (has_editing_rights($binet["id"], $binet["current_term"]) || is_current_kessier()) {
         echo button(path("edit", "binet", $binet["id"]), "Modifier le binet", "edit", "orange");
       }
       if (is_current_kessier()) {
