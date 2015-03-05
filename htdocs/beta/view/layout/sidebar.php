@@ -10,7 +10,12 @@
   						$term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
   						?>
   						<li>
-  							<?php echo link_to(path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"])), pretty_binet_term($term_admin["id"], false)); ?>
+  							<?php
+                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
+                  path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
+                  path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
+                echo link_to($link, pretty_binet_term($term_admin["id"], false));
+                ?>
   						</li>
   						<?php
 						}
@@ -26,7 +31,7 @@
         );
       }
       $number_pending_validations = count_pending_validations($binet, $term);
-      if (has_editing_rights($binet, $term)) {
+      if (has_editing_rights($binet, $term) && current_term($binet) == $term) {
         echo li_link(
           link_to(
             path("", "validation", "", binet_prefix($binet, $term)),
