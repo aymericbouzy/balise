@@ -92,7 +92,9 @@
     $binet = $id[0];
     $term = $id[1];
     $terms = select_terms(array("binet" => $binet, "term" => $term));
-    return current_term($binet) == $term || !is_empty($terms);
+    $operations = select_operations(array("binet" => $binet, "term" => $term));
+    $budgets = select_budgets(array("binet" => $binet, "term" => $term));
+    return current_term($binet) == $term || !(is_empty($terms) && is_empty($budgets) && is_empty($operations));
   }
 
 
