@@ -11,7 +11,7 @@
 
   function is_transferable() {
     $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
-    return is_empty($budgets);
+    return is_empty($budgets) && exists_term_binet($GLOBALS["binet"]."/".($GLOBALS["term"] - 1));
   }
 
   function check_is_transferable() {
