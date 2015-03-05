@@ -19,12 +19,12 @@
     $virtual_fields = array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state");
     $present_virtual_fields = array_intersect($virtual_fields, $fields);
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_merge($fields, array("id", "wave", "sent", "granted_amount", "reviewed"));
+      $fields = array_merge($fields, array("id", "wave", "sending_date", "granted_amount", "reviewed"));
     }
     $id = $request;
     $request = select_entry(
       "request",
-      array("id", "wave", "answer", "sent", "reviewed"),
+      array("id", "wave", "answer", "sending_date", "reviewed"),
       $request,
       $fields
     );
@@ -51,15 +51,17 @@
         $request["available_amount"] = get_available_amount_request($id);
       }
       if (in_array("state", $fields)) {
-        $wave = select_wave($request["wave"], array("state"));
+        $wave = select_wave($request["wave"], array("state", "published"));
         $request["state"] =
-          $request["sent"] != 1 ?
-            "rough_draft" :
-            (in_array($wave["state"], array("deliberation", "submission")) ?
-              ($request["reviewed"] != 1 ? "sent" : ($request["granted_amount"] > 0 ? "reviewed_accepted" : "reviewed_rejected")) :
-                ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
-
-
+          is_empty($request["sending_date"]) ?
+            ($wave["state"] == "submission" ?
+              "rough_draft" :
+              ($wave["state"] == "deliberation" ? "late_rough_draft" : "overdue_rough_draft")) :
+            (!$request["reviewed"] ?
+              ($request["sending_date"] > $wave["submission_date"] ? "sent_late" : "sent") :
+              (($request["granted_amount"]) > 0 ?
+                ($wave["published"] ? "accepted" : "reviewed_accepted") :
+                ($wave["published"] ? "rejected" : "reviewed_rejected")));
       }
     }
 
@@ -79,12 +81,12 @@
   }
 
   function select_requests($criteria, $order_by = NULL, $ascending = true) {
-    if (!isset($criteria["sent"]) && !isset($criteria["state"])) {
-      $criteria["sent"] = 1;
+    if (!isset($criteria["sending_date"]) && !isset($criteria["state"])) {
+      $criteria["sending_date"] = array("IS", "NOT NULL");
     }
     return select_entries(
       "request",
-      array("wave", "sent", "reviewed"),
+      array("wave", "sending_date", "reviewed"),
       array(),
       array("binet", "term", "requested_amount", "granted_amount", "used_amount", "state"),
       $criteria,
@@ -102,7 +104,7 @@
 
   function send_request($request) {
     $sql = "UPDATE request
-            SET sent = 1
+            SET sending_date = CURRENT_DATE()
             WHERE id = :request
             LIMIT 1";
     $req = Database::get()->prepare($sql);

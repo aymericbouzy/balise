@@ -10,15 +10,15 @@
     header_if(is_empty($current_term), 403);
   }
 
-  before_action("check_csrf_get", array("delete", "set_subsidy_provider", "deactivate", "power_transfer"));
+  before_action("check_csrf_get", array("delete", "switch_subsidy_provider", "deactivate", "power_transfer"));
   before_action(
     "check_entry",
-    array("edit", "update", "set_subsidy_provider", "show", "change_term", "reactivate", "deactivate", "power_transfer"),
+    array("edit", "update", "switch_subsidy_provider", "show", "change_term", "reactivate", "deactivate", "power_transfer"),
     array("model_name" => "binet")
   );
   before_action("check_is_activated", array("power_transfer", "deactivate"));
   before_action("check_is_deactivated", array("reactivate"));
-  before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "set_subsidy_provider", "admin"));
+  before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider", "admin"));
   before_action("check_editing_rights", array("edit", "update"));
   before_action("create_form", array("new", "create", "edit", "update", "change_term", "reactivate"), "binet");
   before_action("check_form", array("create", "update", "reactivate"), "binet");
@@ -49,9 +49,15 @@
     redirect_to_action("show");
     break;
 
-  case "set_subsidy_provider":
-    set_subsidy_provider($binet["id"]);
-    $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." est devenu un binet subventionneur.";
+  case "switch_subsidy_provider":
+    // TODO add email
+    if (select_binet($binet["id"], array("subsidy_provider"))["subsidy_provider"]) {
+      unset_subsidy_provider($binet["id"]);
+      $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." n'est à présent plus un binet subventionneur.";
+    } else {
+      set_subsidy_provider($binet["id"]);
+      $_SESSION["notice"][] = "Le binet ".pretty_binet($binet["id"])." est devenu un binet subventionneur.";
+    }
     redirect_to_action("show");
     break;
 

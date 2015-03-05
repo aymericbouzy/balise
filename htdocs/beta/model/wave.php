@@ -40,13 +40,13 @@
         $wave[$field] = $wave["open"] == 0 ? "rough_draft" : ($wave["submission_date"] > current_date() ? "submission" : ($wave["expiry_date"] > current_date() ? ($wave["published"] ? "distribution" : "deliberation") : "closed"));
         break;
       case "requests_received":
-        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1)));
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sending_date" => array("IS", "NOT NULL"))));
         break;
       case "requests_reviewed":
-        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => array("!=", "sent"))));
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sending_date" => array("IS", "NOT NULL"), "state" => array("!=", "sent"))));
         break;
       case "requests_accepted":
-        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sent" => 1, "state" => "accepted")));
+        $wave[$field] = count(select_requests(array("wave" => $wave["id"], "sending_date" => array("IS", "NOT NULL"), "state" => "accepted")));
         break;
       case "predicted_amount":
         $wave[$field] = $wave["published"] ? $wave["granted_amount"] : $wave["amount"];
