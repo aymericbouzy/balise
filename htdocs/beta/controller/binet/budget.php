@@ -21,7 +21,7 @@
   case "index":
     $budgets = array();
     foreach (select_budgets(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $budget) {
-      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "subsidized_amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+      $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "subsidized_amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used", "subsidized_amount_available"));
     }
     $waves = array();
     foreach(select_waves(array("binet" => $binet, "term" => $term), "submission_date") as $wave) {

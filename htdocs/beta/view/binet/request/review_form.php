@@ -100,7 +100,7 @@
     <?php
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
-      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term", "real_amount", "amount", "subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used"));
+      $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term", "real_amount", "amount", "subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used", "subsidized_amount_available"));
       ?>
       <div class="panel light-blue-background shadowed">
         <?php
@@ -128,7 +128,7 @@
                 </tr>
                 <tr class="summary">
                   <td> Réel : <?php echo pretty_amount($budget["real_amount"])?></td>
-                  <td> Reçues : <?php echo pretty_amount($budget["subsidized_amount_granted"])?></td>
+                  <td> Disponibles : <?php echo pretty_amount($budget["subsidized_amount_available"])?></td>
                 </tr>
                 <tr class="summary">
                   <td>Utilisées : <?php echo pretty_amount($budget["subsidized_amount_used"])?></td>
