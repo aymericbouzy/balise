@@ -20,10 +20,13 @@
 
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet, "term" => $term));
-  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete"));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "transfer", "copy"));
   before_action("create_form", array("new", "create", "edit", "update"), "budget");
   before_action("check_form", array("create", "update"), "budget");
   before_action("check_budget_is_alone", array("edit", "update", "delete"));
+  before_action("create_form", array("transfer", "copy"), "budget_transfer");
+  before_action("check_form", array("copy"), "budget_transfer");
+  before_action("check_is_transferable", array("transfer", "copy"));
 
   switch ($_GET["action"]) {
 
