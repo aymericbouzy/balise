@@ -74,6 +74,7 @@
           ob_start();
           echo "<p class=\"marker ".$request_state["color"]."-background\" ></p>";
           echo "<p class=\"icon\"><i class=\"fa fa-fw fa-".$request_state["icon"]."\"></i></p>";
+          echo insert_tooltip("<p class=\"date\">".pretty_date($request["sending_date"])."</p>","Date de réception");
           echo "<p class=\"binet\">".pretty_binet_term($request["binet"]."/".$request["term"], false)."</p>";
           echo "<p class=\"amount\">".
           (has_viewing_rights($binet, $term) || !$subsidizer_can_study ? pretty_amount($request["granted_amount"], false)." / " : "").
