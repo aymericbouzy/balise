@@ -23,7 +23,7 @@
       }
       $budgets = array();
       foreach (select_budgets(array("binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $budget) {
-        $budgets[] = select_budget($budget["id"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "amount"));
+        $budgets[] = select_budget($budget["id"], array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "subsidized_amount_available", "amount", "subsidized_amount"));
       }
       $operations = array();
       foreach (select_operations(array("binet" => $term_binet["binet"], "term" => $term_binet["term"])) as $operation) {
@@ -32,11 +32,14 @@
       if (in_array("subsidized_amount_used", $fields) || in_array("real_balance", $fields)) {
         $term_binet["subsidized_amount_used"] = sum_array($budgets, "subsidized_amount_used");
       }
-      if (in_array("subsidized_amount_granted", $fields) || in_array("expected_balance", $fields)) {
+      if (in_array("subsidized_amount_granted", $fields)) {
         $term_binet["subsidized_amount_granted"] = sum_array($budgets, "subsidized_amount_granted");
       }
-      if (in_array("subsidized_amount_requested", $fields) || in_array("expected_balance", $fields)) {
+      if (in_array("subsidized_amount_requested", $fields)) {
         $term_binet["subsidized_amount_requested"] = sum_array($budgets, "subsidized_amount_requested");
+      }
+      if (in_array("subsidized_amount_available", $fields)) {
+        $term_binet["subsidized_amount_available"] = sum_array($budgets, "subsidized_amount_available");
       }
       if (in_array("real_spending", $fields)) {
         $term_binet["real_spending"] = sum_array($operations, "amount", "negative");
@@ -54,7 +57,7 @@
         $term_binet["expected_income"] = sum_array($budgets, "amount", "positive");
       }
       if (in_array("expected_balance", $fields)) {
-        $term_binet["expected_balance"] = sum_array($budgets, "amount") + $term_binet["subsidized_amount_granted"];
+        $term_binet["expected_balance"] = sum_array($budgets, "amount") + sum_array($budgets, "subsidized_amount");
       }
       if (in_array("state", $fields)) {
         $term_binet["state"] = $term_binet["real_balance"] >= 0 ? "green" : ($term_binet["expected_balance"] >= 0 ? "orange" : "red");

@@ -11,7 +11,7 @@
 </div>
 <?php
 foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
-  $budget = select_budget($budget["id"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used"));
+  $budget = select_budget($budget["id"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used", "subsidized_amount_available"));
   ?>
   <div class="panel light-blue-background shadowed">
     <?php
@@ -31,10 +31,10 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
           <tbody>
           <tr class="summary">
             <td>Prévisionnel : <?php echo pretty_amount($budget["amount"])?></td>
-            <td>Reçues : <?php echo pretty_amount($budget["subsidized_amount_granted"])?></td>
+            <td>Disponibles : <?php echo pretty_amount($budget["subsidized_amount_available"])?></td>
           </tr>
           <tr class="summary">
-            <td> Réel : <?php echo pretty_amount($budget["real_amount"])?></td>
+            <td>Réel : <?php echo pretty_amount($budget["real_amount"])?></td>
             <td>Utilisées : <?php echo pretty_amount($budget["subsidized_amount_used"])?></td>
           </tr>
           <tbody>

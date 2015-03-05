@@ -17,7 +17,7 @@
       <th>Prévisionnel</th>
       <th>Réel</th>
       <th>Attendues</th>
-      <th>Accordées</th>
+      <th>Disponibles</th>
       <th>Utilisées</th>
     </tr>
   </thead>
@@ -37,7 +37,7 @@
             <td><?php echo pretty_amount($budget["amount"]); ?></td>
             <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount"]); ?></td>
-            <td><?php echo pretty_amount($budget["subsidized_amount_granted"]); ?></td>
+            <td><?php echo pretty_amount($budget["subsidized_amount_available"]); ?></td>
             <td><?php echo pretty_amount($budget["subsidized_amount_used"]); ?></td>
           </tr>
         <?php
@@ -60,7 +60,7 @@
       <td><?php echo pretty_amount(sum_array($budgets, "amount", "negative") - sum_array($waves, "predicted_amount")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "real_amount", "negative") - sum_array($waves, "used_amount")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount", "positive")); ?></td>
-      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_granted", "positive")); ?></td>
+      <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_available", "positive")); ?></td>
       <td><?php echo pretty_amount(sum_array($budgets, "subsidized_amount_used", "positive")); ?></td>
     </tr>
   </tbody>
