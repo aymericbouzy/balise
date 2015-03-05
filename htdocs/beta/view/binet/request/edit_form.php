@@ -4,6 +4,27 @@
     <?php echo pretty_wave($request["wave"]["id"]);?>
   </div>
 </div>
+<?php
+if ($_GET["action"] == "new") {
+  $current_term_binet = current_term($binet);
+  $current_term_active = $current_term_binet == $term;
+  ?>
+  <div class="panel light-blue-background shadowed">
+    <div class="content">
+      Faire la demande pour la promotion :
+      <div class="switch" id="requestForm_chooseTerm">
+        <span class="left component <?php echo $current_term_active ? "active" : "inactive"; ?>" >
+          <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet), array("wave" => $request["wave"]["id"])), $current_term_binet); ?>
+          </span>
+        <span class="left component <?php echo $current_term_active ? "inactive" : "active"; ?>" >
+          <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet + 1), array("wave" => $request["wave"]["id"])), $current_term_binet + 1); ?>
+        </span>
+      </div>
+    </div>
+  </div>
+  <?php
+}
+?>
 <div class="panel green-background shadowed">
   <div class="content white-text" id="description">
     <?php echo form_input($request["wave"]["question"], "answer", $form, array("placeholder" => "Justifiez votre demande", "style" => "color:#fff")); ?>
@@ -41,30 +62,15 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
         </table>
       </div>
       <div class="requested-amount">
-        <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé pour ce budget"))); ?>
+        <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé"))); ?>
       </div>
       <div class="explanation">
-        <?php echo form_input("", "purpose_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Explication pour ce budget"))); ?>
+        <?php echo form_input("", "purpose_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Explication"))); ?>
       </div>
     </div>
   </div>
   <?php
 }
-?>
-<?php
-  if ($_GET["action"] == "new") {
-    $current_term_binet = current_term($binet);
-    $checked = $current_term_binet != $term;
-    $term_redirect = $current_term_binet + ($checked ? 0 : 1);
-  ?>
-  <div class="checkbox">
-    <label>
-      <input type="checkbox" onclick="goto('/<?php echo path("new", "request", "", binet_prefix($binet, $term_redirect), array("wave" => $request["wave"]["id"])); ?>')"<?php echo $checked ? " checked" : "" ?>>
-      Faire la demande pour la promotion suivante
-    </label>
-  </div>
-  <?php
-  }
 ?>
 <?php echo form_hidden("wave", $request["wave"]["id"]); ?>
 <div class="submit-button">

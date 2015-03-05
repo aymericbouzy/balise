@@ -247,3 +247,13 @@
   padding:4px;
   margin-left:5px;
 }
+
+/* --------------------------------------------------------------------------*/
+/* Request form */
+#requestForm_chooseTerm {
+  margin:0px;
+  padding:0px;
+  position:absolute;
+  right:5px;
+  top:5px;
+}
