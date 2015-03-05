@@ -50,6 +50,8 @@
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/index/?$ ./beta/index.php?controller=budget&action=index&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/new/?$ ./beta/index.php?controller=budget&action=new&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/create/?$ ./beta/index.php?controller=budget&action=create&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
+    RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/transfer/?$ ./beta/index.php?controller=budget&action=transfer&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
+    RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/copy/?$ ./beta/index.php?controller=budget&action=copy&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/([0-9]+)/show/?$ ./beta/index.php?controller=budget&action=show&budget=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/([0-9]+)/edit/?$ ./beta/index.php?controller=budget&action=edit&budget=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
     RewriteRule ^beta/binet/([a-z-]+)/([0-9]+)/budget/([0-9]+)/update/?$ ./beta/index.php?controller=budget&action=update&budget=$3&prefix=binet&binet=$1&term=$2&%{QUERY_STRING} [L,NC,QSA]
