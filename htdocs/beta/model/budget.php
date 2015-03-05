@@ -43,6 +43,9 @@
       case "subsidized_amount_used":
         $budget[$field] = get_subsidized_amount_used_budget($id);
         break;
+      case "subsidized_amount_available":
+        $budget[$field] = get_subsidized_amount_available_budget($id);
+        break;
       }
     }
     return $budget;
@@ -147,6 +150,14 @@
 
   function get_subsidized_amount_used_budget($budget) {
     return sum_array(get_subsidized_amount_used_details_budget($budget), "used_amount");
+  }
+
+  function get_subsidized_amount_available_budget($budget) {
+    $amount = 0;
+    foreach (select_subsidies(array("budget" => $budget)) as $subsidy) {
+      $amount += select_subsidy($subsidy["id"], array("available_amount"))["available_amount"];
+    }
+    return $amount;
   }
 
   function select_budgets_operation($operation) {

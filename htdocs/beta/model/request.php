@@ -47,6 +47,9 @@
       if (in_array("used_amount", $fields)) {
         $request["used_amount"] = get_used_amount_request($id);
       }
+      if (in_array("available_amount", $fields)) {
+        $request["available_amount"] = get_available_amount_request($id);
+      }
       if (in_array("state", $fields)) {
         $wave = select_wave($request["wave"], array("state"));
         $request["state"] =
@@ -137,6 +140,14 @@
     $amount = 0;
     foreach(select_subsidies(array("request" => $request)) as $subsidy) {
       $amount += select_subsidy($subsidy["id"], array("requested_amount"))["requested_amount"];
+    }
+    return $amount;
+  }
+
+  function get_available_amount_request($request) {
+    $amount = 0;
+    foreach (select_subsidies(array("request" => $request)) as $subsidy) {
+      $amount += select_subsidy($subsidy["id"], array("available_amount"))["available_amount"];
     }
     return $amount;
   }
