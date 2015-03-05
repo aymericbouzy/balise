@@ -10,6 +10,13 @@
             "Voir le binet",
             "right"); ?>
       </div>
+      <?php if(is_transferable()) { ?>
+      <div id="transfer_budgets">
+          <?php echo link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
+          "<i class=\"fa fa-fw fa-forward\"></i> Importer les budgets du mandat précédent",
+          array("class" => "btn")); ?>
+      </div>
+      <?php } ?>
       <div class="switch shadowed" id="switch-operations-budgets">
         <?php
         $active = "active";

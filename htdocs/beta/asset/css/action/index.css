@@ -222,8 +222,11 @@
   display:inline-block;
   width:10%;
 }
+#transfer_budgets {
+  display:inline-block;
+}
 #choose-term {
-  padding:5px;
+  padding:7px;
 }
 
 #switch-operations-budgets {
