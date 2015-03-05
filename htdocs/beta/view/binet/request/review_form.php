@@ -1,21 +1,10 @@
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
 <div class="show-container">
-  <div class="sh-plus <?php $state_to_color = array("sent" => "orange", "reviewed_accepted" => "green", "reviewed_rejected" => "red"); echo $state_to_color[$request_info["state"]]; ?>-background shadowed">
-    <i class="fa fa-fw fa-<?php $state_to_icon = array("sent" => "question", "reviewed_accepted" => "check", "reviewed_rejected" => "times"); echo $state_to_icon[$request_info["state"]]; ?>"></i>
+  <?php $request_state = request_state($request_info["state"],has_editing_rights($request_info["wave"]["binet"], $request_info["wave"]["term"])); ?>
+  <div class="sh-plus <?php echo $request_state["color"]; ?>-background shadowed">
+    <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
     <div class="text">
-      <?php
-      switch ($request_info["state"]) {
-        case "sent":
-        echo "Non traitée";
-        break;
-        case "reviewed_accepted":
-        echo "Acceptée";
-        break;
-        case "reviewed_rejected":
-        echo "Refusée";
-        break;
-      }
-      ?>
+      <?php echo $request_state["name"]; ?>
     </div>
   </div>
   <div class="sh-actions">

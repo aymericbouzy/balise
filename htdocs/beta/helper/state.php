@@ -28,6 +28,9 @@
       case "sent":
       return array("name"=>"Envoyée","color"=>"blue","icon"=>"send");
       break;
+      case "sent_late":
+      return array("name"=>"Envoyée en retard","color"=>"orange","icon"=>"send");
+      break;
       case "reviewed":
       return array("name"=>"Traitée","color"=>"blue","icon"=>"check");
     }

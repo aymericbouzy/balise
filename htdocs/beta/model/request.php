@@ -55,7 +55,7 @@
               "rough_draft" :
               ($wave["state"] == "deliberation" ? "late_rough_draft" : "overdue_rough_draft")) :
             (!$request["reviewed"] ?
-              "sent" :
+              ($request["sending_date"] > $wave["submission_date"] ? "sent_late" : "sent") :
               (($request["granted_amount"]) > 0 ?
                 ($wave["published"] ? "accepted" : "reviewed_accepted") :
                 ($wave["published"] ? "rejected" : "reviewed_rejected")));
