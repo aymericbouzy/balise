@@ -99,8 +99,7 @@
             foreach($subsidies as $subsidy){
               $subsidy = select_subsidy($subsidy, array("budget", "purpose", "used_amount", "granted_amount"));
               $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"], false, false).
-                " <span class=\"side-information\">".pretty_amount($subsidy["used_amount"])." / ".pretty_amount($subsidy["granted_amount"])."</span>
-                </button>";
+                " <span class=\"side-information\">".pretty_amount($subsidy["used_amount"])." / ".pretty_amount($subsidy["granted_amount"])."</span></button>";
               $popover_title = "Justification de la demande";
               $popover_content = $subsidy["purpose"];
               echo insert_popover($html_button,$popover_content,$popover_title,"left");
