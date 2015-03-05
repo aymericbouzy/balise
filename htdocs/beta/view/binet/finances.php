@@ -13,7 +13,7 @@
       <?php if($_GET["controller"]== "budget" && is_transferable()) { ?>
       <div id="transfer_budgets">
           <?php echo link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
-          "<i class=\"fa fa-fw fa-forward\"></i> Importer les budgets du mandat précédent",
+          "<i class=\"fa fa-fw fa-forward\"></i> Importer des budgets du mandat précédent",
           array("class" => "btn")); ?>
       </div>
       <?php } ?>
