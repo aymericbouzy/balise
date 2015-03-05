@@ -20,6 +20,7 @@
       $matched_groups = array();
       if (preg_match("/^amount_([0-9]*)$/", $name, $matched_groups)) {
         $structured_input[$matched_groups[1]]["granted_amount"] = $value;
+        $structured_input[$matched_groups[1]]["converted_amount"] = $value;
       } elseif (preg_match("/^explanation_([0-9]*)$/", $name, $matched_groups)) {
         $structured_input[$matched_groups[1]]["explanation"] = $value;
       }

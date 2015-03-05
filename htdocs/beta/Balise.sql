@@ -180,7 +180,9 @@ CREATE TABLE `subsidy` (
   `granted_amount` int(11) DEFAULT NULL,
   `purpose` tinytext NOT NULL,
   `explanation` text,
-  `request` int(11) NOT NULL
+  `request` int(11) NOT NULL,
+  `conditional` tinyint(1) NOT NULL DEFAULT '0',
+  `converted_amount` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
