@@ -40,19 +40,23 @@
       </div>
       <?php
       foreach($rough_drafts as $rough_draft){
-        $draft_state = request_state("rough_draft");
-        $rough_draft = select_request($rough_draft["id"], array("id", "wave", "requested_amount"));
+        $rough_draft = select_request($rough_draft["id"], array("id", "wave", "requested_amount", "state"));
+        $draft_state = request_state($rough_draft["state"]);
         $subsidies = select_subsidies(array("request" => $rough_draft["id"]));
         ?>
         <div class="panel shadowed light-blue-background">
           <div class="actions">
             <?php
               echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
-                "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"action-on-request btn"));
-              echo link_to(path("send", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
-                "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
-              echo link_to(path("delete", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
-                "<i class=\"fa fa-fw fa-trash\"></i> Supprimer",array("class"=>"action-on-request btn-danger btn"));
+                "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande de subventions",array("class"=>"action-on-request btn"));
+              if (is_sendable($rough_draft["id"])) {
+                echo link_to(path("send", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
+                  "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
+              }
+              if (is_editable($rough_draft["id"])) {
+                echo link_to(path("delete", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
+                  "<i class=\"fa fa-fw fa-trash\"></i> Supprimer",array("class"=>"action-on-request btn-danger btn"));
+              }
             ?>
           </div>
           <div class="title-small">
@@ -87,7 +91,7 @@
   <!-- Requests -->
   <div class="panel shadowed">
     <div class="title">
-      Requêtes par vague de subvention
+      Demandes de subventions
     </div>
   </div>
   <?php
@@ -114,14 +118,15 @@
               "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>
           </div>
           <div class="title-small">
-            <?php echo insert_properties_in_html_tag(pretty_wave($request["wave"]),array("class"=>"fuzzySelectorName")); ?>
+            <?php echo insert_properties_in_html_tag(pretty_wave($request["wave"]),array("class"=>"fuzzySelectorName"));
+              echo " <i class=\"sub-info\"> Envoyée le ".pretty_date($request["sending_date"])."</i>"; ?>
           </div>
           <div class="content">
             <div class="state-indicator <?php echo $request_state["color"]; ?>-background">
               <i class="fa fa-fw fa-<?php echo $request_state["icon"]; ?>"></i>
             </div>
             <div class="request-infos">
-              <span><?php echo ($request["sent"] == 0 ? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
+              <span><?php echo (is_empty($request["sending_date"]) ? "" : pretty_amount($request["granted_amount"],false)." accordés / ").
                 pretty_amount($request["requested_amount"],false)." demandés." ?></span>
               <span><?php echo ($request["state"] == "accepted" ? pretty_amount($request["used_amount"],false)." utilisés." : ($request["state"] == "rejected" ? "Subventions refusées" : "")); ?></span>
             </div>

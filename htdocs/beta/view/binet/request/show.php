@@ -10,11 +10,11 @@
   <div class="sh-actions">
     <?php
       if (has_editing_rights($binet, $term)) {
-        switch ($request["state"]) {
-          case "rough_draft":
+        if (is_editable($request["id"])) {
           echo button(path("edit", "request", $request["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+        }
+        if (is_sendable($request["id"])) {
           echo button(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true), "Soumettre", "paper-plane", "green");
-          break;
         }
       }
       if (has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])) {

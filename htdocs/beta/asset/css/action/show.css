@@ -480,6 +480,13 @@
   padding-left:15px;
   text-align: left;
   vertical-align: middle;
+  text-align:center;
+}
+
+.sh-wa-request>.date {
+  display:table-cell;
+  font-size:10px;
+  vertical-align: middle;
 }
 .sh-wa-request>.binet {
   display: table-cell;

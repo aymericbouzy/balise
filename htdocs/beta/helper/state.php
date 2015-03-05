@@ -7,6 +7,12 @@
       case "rough_draft":
       return array("name"=>"Brouillon","color"=>"grey","icon"=>"question");
       break;
+      case "late_rough_draft":
+      return array("name" => "En retard", "color" => "grey", "icon" => "warning");
+      break;
+      case "overdue_rough_draft":
+      return array("name" => "En retard", "color" => "grey", "icon" => "bed");
+      break;
       case "reviewed_accepted":
       return array("name"=>"Prête à être acceptée","color"=>"green","icon"=>"check");
       break;
@@ -21,6 +27,9 @@
       break;
       case "sent":
       return array("name"=>"Envoyée","color"=>"blue","icon"=>"send");
+      break;
+      case "sent_late":
+      return array("name"=>"Envoyée en retard","color"=>"orange","icon"=>"send");
       break;
       case "reviewed":
       return array("name"=>"Traitée","color"=>"blue","icon"=>"check");
