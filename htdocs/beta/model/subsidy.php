@@ -13,9 +13,13 @@
   }
 
   function select_subsidy($subsidy, $fields = NULL) {
-    $present_virtual_fields = array_intersect($fields, array("used_amount", "wave", "expiry_date", "available_amount"));
+    $present_virtual_fields = array_intersect($fields, array("available_amount"));
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_merge(array("id", "request", "wave", "used_amount", "expiry_date", "granted_amount"), $fields);
+      $fields = array_merge(array("expiry_date", "granted_amount", "used_amount", "published"), $fields);
+    }
+    $present_virtual_fields = array_intersect($fields, array("used_amount", "wave", "expiry_date", "published"));
+    if (!is_empty($present_virtual_fields)) {
+      $fields = array_merge(array("id", "request", "wave", "budget"), $fields);
     }
     $subsidy = select_entry(
       "subsidy",
@@ -33,14 +37,16 @@
         break;
       }
     }
-    if (in_array("expiry_date", $fields)) {
-      $subsidy["expiry_date"] = select_wave($subsidy["wave"], array("expiry_date"))["expiry_date"];
+    if (in_array("expiry_date", $fields) || in_array("published", $fields)) {
+      $wave = select_wave($subsidy["wave"], array("expiry_date", "published"));
+      $subsidy["expiry_date"] = $wave["expiry_date"];
+      $subsidy["published"] = $wave["published"];
     }
     if (in_array("granted_amount", $fields)) {
       set_if_not_set($subsidy["granted_amount"], 0);
     }
     if (in_array("available_amount", $fields)) {
-      $subsidy["available_amount"] = current_date() > $subsidy["expiry_date"] ? 0 : $subsidy["granted_amount"] - $subsidy["used_amount"];
+      $subsidy["available_amount"] = current_date() > $subsidy["expiry_date"] || !$subsidy["published"] ? 0 : $subsidy["granted_amount"] - $subsidy["used_amount"];
     }
     return $subsidy;
   }
@@ -85,7 +91,7 @@
 
   function get_used_amount_subsidy($subsidy) {
     $budget = select_subsidy($subsidy, array("budget"))["budget"];
-    foreach(get_subsidized_amount_used_details_budget($budget) as $budget_subsidy) {
+    foreach (get_subsidized_amount_used_details_budget($budget) as $budget_subsidy) {
       if ($budget_subsidy["id"] == $subsidy) {
         $amount = $budget_subsidy["used_amount"];
       }
