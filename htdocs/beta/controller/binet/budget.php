@@ -10,8 +10,7 @@
   }
 
   function is_transferable() {
-    $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
-    return is_empty($budgets) && exists_term_binet($GLOBALS["binet"]."/".($GLOBALS["term"] - 1));
+    return exists_term_binet($GLOBALS["binet"]."/".($GLOBALS["term"] - 1));
   }
 
   function check_is_transferable() {
@@ -85,7 +84,7 @@
       $budget = select_budget($budget, array("id", "amount", "label", "subsidized_amount"));
       $new_budget = create_budget($binet, $term, $budget["amount"], $budget["label"], $budget["subsidized_amount"]);
       foreach (select_tags_budget($budget["id"]) as $tag) {
-        add_tag_budget($tag, $new_budget);
+        add_tag_budget($tag["id"], $new_budget);
       }
     }
     if (!is_empty($_POST["budgets"])) {

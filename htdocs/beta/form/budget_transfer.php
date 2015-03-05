@@ -15,7 +15,7 @@
     $structured_input["budgets"] = array();
     foreach ($validated_input as $name => $value) {
       $matched_groups = array();
-      if (!is_empty($value) && preg_match("/^amount_([0-9]*)$/", $name, $matched_groups)) {
+      if (!is_empty($value) && preg_match("/^budget_([0-9]*)$/", $name, $matched_groups)) {
         $structured_input["budgets"][] = $matched_groups[1];
       }
     }
@@ -23,3 +23,13 @@
   }
 
   $form["structured_input_maker"] = "structured_review_maker";
+
+  function initialise_budget_transfer_form() {
+    $initial_input = array();
+    foreach ($GLOBALS["budget_transfer_form"]["fields"] as $name => $field) {
+      $initial_input[$name] = 1;
+    }
+    return $initial_input;
+  }
+
+  $form["initialise_form"] = "initialise_budget_transfer_form";

@@ -116,7 +116,7 @@
         break;
       }
       if (!$valid) {
-        add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format.".array_to_string($value));
+        add_form_error($form["name"], $name, ucfirst($field["human_name"])." n'est pas au bon format.");
       }
     }
     return $translated_input;
