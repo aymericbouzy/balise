@@ -17,8 +17,10 @@
         echo button(path("edit", "binet", $binet["id"]), "Modifier le binet", "edit", "orange");
       }
       if (is_current_kessier()) {
-        if ($binet["subsidy_provider"] == 0) {
-          echo button(path("set_subsidy_provider", "binet", $binet["id"], "", array(), true), "Ajouter les droits de subventionneur", "money", "blue");
+        if ($binet["subsidy_provider"]) {
+          echo button(path("switch_subsidy_provider", "binet", $binet["id"], "", array(), true), "Retirer les droits de subventionneur", "money", "red");
+        } else {
+          echo button(path("switch_subsidy_provider", "binet", $binet["id"], "", array(), true), "Ajouter les droits de subventionneur", "money", "blue");
         }
         echo button(path("change_term", "binet", $binet["id"]), is_empty($binet["current_term"]) ? "Réactiver le binet" : "Faire la passation", "forward", "green");
       }
