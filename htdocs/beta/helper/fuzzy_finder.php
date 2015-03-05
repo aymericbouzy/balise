@@ -11,11 +11,11 @@
   }
 
   function fuzzy_input(){
-    return "<input type=\"search\" class=\"fuzzy-search\">
+    return "<input type=\"search\" class=\"fuzzy-search\" autofocus>
     <i class=\"fa fa-fw fa-search\"></i>";
   }
 
   function search_input(){
-    return "<input type=\"search\" class=\"search\" placeholder=\"Rechercher\">
+    return "<input type=\"search\" class=\"search\" placeholder=\"Rechercher\" autofocus>
     <i class=\"fa fa-fw fa-search\"></i>";
   }
