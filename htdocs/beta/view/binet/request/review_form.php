@@ -15,7 +15,7 @@
   <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
-      <?php echo insert_tooltip("<span>".pretty_date($request["sending_date"])."</span>","Date d'envoi");?>
+      <?php echo insert_tooltip("<span>".pretty_date($request["sending_date"])."</span>","Date de réception de la requête");?>
     </div>
     <div class="text">
       <p class="main">
