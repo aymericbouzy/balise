@@ -118,7 +118,8 @@
               "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>
           </div>
           <div class="title-small">
-            <?php echo insert_properties_in_html_tag(pretty_wave($request["wave"]),array("class"=>"fuzzySelectorName")); ?>
+            <?php echo insert_properties_in_html_tag(pretty_wave($request["wave"]),array("class"=>"fuzzySelectorName"));
+              echo " <i class=\"sub-info\"> Envoyée le ".pretty_date($request["sending_date"])."</i>"; ?>
           </div>
           <div class="content">
             <div class="state-indicator <?php echo $request_state["color"]; ?>-background">
