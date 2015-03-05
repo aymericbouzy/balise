@@ -48,19 +48,17 @@
         $request["used_amount"] = get_used_amount_request($id);
       }
       if (in_array("state", $fields)) {
-        $wave = select_wave($request["wave"], array("state"));
+        $wave = select_wave($request["wave"], array("state", "published"));
         $request["state"] =
-          in_array($wave["state"], array("deliberation", "submission")) ?
-            (is_empty($request["sending_date"]) ?
+          is_empty($request["sending_date"]) ?
+            ($wave["state"] == "submission" ?
               "rough_draft" :
-              ($request["reviewed"] != 1 ?
-                "sent" :
-                ($request["granted_amount"] > 0 ? "reviewed_accepted" : "reviewed_rejected"))) :
-            (is_empty($request["sending_date"]) ?
-              "late_rough_draft" :
-              ($request["granted_amount"] > 0 ? "accepted" : "rejected"));
-
-
+              ($wave["state"] == "deliberation" ? "late_rough_draft" : "overdue_rough_draft")) :
+            (!$request["reviewed"] ?
+              "sent" :
+              (($request["granted_amount"]) > 0 ?
+                ($wave["published"] ? "accepted" : "reviewed_accepted") :
+                ($wave["published"] ? "rejected" : "reviewed_rejected")));
       }
     }
 

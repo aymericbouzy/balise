@@ -78,7 +78,7 @@
   switch ($_GET["action"]) {
 
   case "index":
-    $rough_drafts = select_requests(array("binet" => $binet, "term" => $term, "state" => "rough_draft"));
+    $rough_drafts = select_requests(array("binet" => $binet, "term" => $term, "state" => array("IN", array("rough_draft", "late_rough_draft", "overdue_rough_draft"))));
     $sent_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => array("IN", array("sent", "reviewed_accepted", "reviewed_rejected"))));
     $accepted_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => "accepted"));
     $published_requests = select_requests(array("binet" => $binet, "term" => $term, "state" => array("IN", array("accepted", "rejected"))));

@@ -40,8 +40,8 @@
       </div>
       <?php
       foreach($rough_drafts as $rough_draft){
-        $draft_state = request_state("rough_draft");
-        $rough_draft = select_request($rough_draft["id"], array("id", "wave", "requested_amount"));
+        $rough_draft = select_request($rough_draft["id"], array("id", "wave", "requested_amount", "state"));
+        $draft_state = request_state($rough_draft["state"]);
         $subsidies = select_subsidies(array("request" => $rough_draft["id"]));
         ?>
         <div class="panel shadowed light-blue-background">
@@ -49,10 +49,14 @@
             <?php
               echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
                 "<i class=\"fa fa-fw fa-eye\"></i> Voir la requête",array("class"=>"action-on-request btn"));
-              echo link_to(path("send", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
-                "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
-              echo link_to(path("delete", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
-                "<i class=\"fa fa-fw fa-trash\"></i> Supprimer",array("class"=>"action-on-request btn-danger btn"));
+              if (is_sendable($rough_draft["id"])) {
+                echo link_to(path("send", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
+                  "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
+              }
+              if (is_editable($rough_draft["id"])) {
+                echo link_to(path("delete", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
+                  "<i class=\"fa fa-fw fa-trash\"></i> Supprimer",array("class"=>"action-on-request btn-danger btn"));
+              }
             ?>
           </div>
           <div class="title-small">
