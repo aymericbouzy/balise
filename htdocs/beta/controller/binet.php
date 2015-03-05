@@ -10,6 +10,10 @@
     header_if(is_empty($current_term), 403);
   }
 
+  function check_editing_rights_or_current_kessier() {
+    header_if(!has_editing_rights($GLOBALS["binet"]["id"], current_term($GLOBALS["binet"]["id"])) && !is_current_kessier(), 401);
+  }
+
   before_action("check_csrf_get", array("delete", "switch_subsidy_provider", "deactivate", "power_transfer"));
   before_action(
     "check_entry",
@@ -19,7 +23,7 @@
   before_action("check_is_activated", array("power_transfer", "deactivate"));
   before_action("check_is_deactivated", array("reactivate"));
   before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider", "admin"));
-  before_action("check_editing_rights", array("edit", "update"));
+  before_action("check_editing_rights_or_current_kessier", array("edit", "update"));
   before_action("create_form", array("new", "create", "edit", "update", "change_term", "reactivate"), "binet");
   before_action("check_form", array("create", "update", "reactivate"), "binet");
 
