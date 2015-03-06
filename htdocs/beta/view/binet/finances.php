@@ -7,8 +7,7 @@
       <div id="view-binet">
         <?php echo insert_tooltip(
             link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")),
-            "Voir le binet",
-            "right"); ?>
+            "Voir le binet"); ?>
       </div>
       <?php if($_GET["controller"]== "budget" && is_transferable()) { ?>
       <div id="transfer_budgets">

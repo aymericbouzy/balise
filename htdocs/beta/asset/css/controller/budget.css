@@ -18,12 +18,12 @@
 }
 
 .transfer-form-tags {
-  width:30%;
+  width:20%;
   text-align:center;
 }
 
 .transfer-form-amount {
   text-align:center;
-  width:25%;
+  width:30%;
   background-color:rgba(255,255,255,0.6);
 }
