@@ -21,13 +21,11 @@
           ob_start();
           ?>
             <i class="fa fa-fw fa-group"></i>
-            <span class="name"><?php echo pretty_binet($binet["id"], false); ?></span>
+            <span class="name search_property"><?php echo pretty_binet($binet["id"], false); ?></span>
             <span class="users">
               <?php
                 foreach (select_current_admins($binet["id"]) as $admin) {
-                  ?>
-                  <span class="prez"><?php echo "<span class=\"pill\">".pretty_student($admin["id"])."</span>"; ?></span>
-                  <?php
+                  echo "<span class=\"pill\">".pretty_student($admin["id"])."</span>";
                 }
               ?>
             </span>
@@ -68,15 +66,6 @@
           ?>
           <i class="fa fa-fw fa-group deactivated-text"></i>
           <span class="name"><?php echo pretty_binet($binet["id"], false); ?></span>
-          <span class="users">
-            <?php
-            foreach (select_current_admins($binet["id"]) as $admin) {
-              ?>
-              <span class="prez"><?php echo "<span class=\"pill\">".pretty_student($admin["id"])."</span>"; ?></span>
-              <?php
-            }
-            ?>
-          </span>
           <?php
           echo link_to(path("show", "binet", $binet["id"]), "<div>".ob_get_clean()."</div>\n", array("class"=>"shadowed clickable-main","goto"=>true));
           ?>
@@ -86,4 +75,4 @@
     ?>
   </ul>
 </div>
-<?php echo fuzzy_load_scripts("public-index-wrapper","name"); ?>
+<?php echo fuzzy_load_scripts("public-index-wrapper","search_property"); ?>
