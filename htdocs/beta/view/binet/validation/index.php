@@ -34,7 +34,7 @@
             ?>
           </tbody>
         </table>
-        <?php echo tip("Tu peux accéder à vos validations depuis l'accueil directement en cliquant sur le point rouge quand il apparait.");?>
+        <?php echo tip("Tu peux accéder à tes validations depuis l'accueil directement en cliquant sur le point rouge quand il apparait.");?>
       </div>
     </div>
     <?php } else { ?>

@@ -103,6 +103,9 @@
   function tip($content){
     return "<span class=\"tip\"><i class=\"fa fa-fw fa-info-circle\"></i> ".$content."</span>";
   }
+  function info_tooltip($content){
+    return insert_tooltip("<i style=\"cursor:pointer\" class=\"fa fa-fw fa-info-circle\"></i>", $content);
+  }
 
   function text_tune_with_amount($amount,$text){
     return $amount." ".$text.($amount > 1 ? "s":"");
