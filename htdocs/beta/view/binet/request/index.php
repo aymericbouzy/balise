@@ -48,7 +48,7 @@
           <div class="actions">
             <?php
               echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
-                "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande de subventions",array("class"=>"action-on-request btn"));
+                "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"action-on-request btn"));
               if (is_sendable($rough_draft["id"])) {
                 echo link_to(path("send", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
                   "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
