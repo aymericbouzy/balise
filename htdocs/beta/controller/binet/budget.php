@@ -9,12 +9,23 @@
     header_if(!budget_is_alone(), 403);
   }
 
+  function is_transferable() {
+    return exists_term_binet($GLOBALS["binet"]."/".($GLOBALS["term"] - 1));
+  }
+
+  function check_is_transferable() {
+    header_if(!is_transferable(), 403);
+  }
+
   before_action("check_csrf_get", array("delete"));
   before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet, "term" => $term));
-  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete"));
+  before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "transfer", "copy"));
   before_action("create_form", array("new", "create", "edit", "update"), "budget");
   before_action("check_form", array("create", "update"), "budget");
   before_action("check_budget_is_alone", array("edit", "update", "delete"));
+  before_action("create_form", array("transfer", "copy"), "budget_transfer");
+  before_action("check_form", array("copy"), "budget_transfer");
+  before_action("check_is_transferable", array("transfer", "copy"));
 
   switch ($_GET["action"]) {
 
@@ -61,6 +72,24 @@
   case "delete":
     delete_budget($budget["id"]);
     $_SESSION["notice"][] = "La ligne de budget a été supprimée avec succès.";
+    redirect_to_action("index");
+    break;
+
+  case "transfer":
+    $budgets = select_budgets(array("binet" => $binet, "term" => $term - 1));
+    break;
+
+  case "copy":
+    foreach ($_POST["budgets"] as $budget) {
+      $budget = select_budget($budget, array("id", "amount", "label", "subsidized_amount"));
+      $new_budget = create_budget($binet, $term, $budget["amount"], $budget["label"], $budget["subsidized_amount"]);
+      foreach (select_tags_budget($budget["id"]) as $tag) {
+        add_tag_budget($tag["id"], $new_budget);
+      }
+    }
+    if (!is_empty($_POST["budgets"])) {
+      $_SESSION["notice"][] = "Les lignes de budget ont été recopiées avec succès.";
+    }
     redirect_to_action("index");
     break;
 

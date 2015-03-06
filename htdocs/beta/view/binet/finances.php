@@ -7,9 +7,21 @@
       <div id="view-binet">
         <?php echo insert_tooltip(
             link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")),
-            "Voir le binet",
-            "right"); ?>
+            "Voir le binet"); ?>
       </div>
+      <?php if($_GET["controller"]== "budget" && is_transferable()) { ?>
+      <div id="transfer_budgets">
+          <?php if(sizeOf($budgets) == 0){
+              echo link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
+                "<i class=\"fa fa-fw fa-arrow-down\"></i> Importer des budgets du mandat précédent",
+                array("class" => "btn"));
+            } else {
+              $link = link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
+                "<i class=\"fa fa-fw fa-arrow-down\"></i>",array("class" => "btn btn-discrete"));
+              echo insert_tooltip($link,"Importer des budgets du mandat précédent" );
+            }?>
+      </div>
+      <?php } ?>
       <div class="switch shadowed" id="switch-operations-budgets">
         <?php
         $active = "active";
