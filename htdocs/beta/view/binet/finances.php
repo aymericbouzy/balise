@@ -12,9 +12,15 @@
       </div>
       <?php if($_GET["controller"]== "budget" && is_transferable()) { ?>
       <div id="transfer_budgets">
-          <?php echo link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
-          "<i class=\"fa fa-fw fa-forward\"></i> Importer des budgets du mandat précédent",
-          array("class" => "btn")); ?>
+          <?php if(sizeOf($budgets) == 0){
+              echo link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
+                "<i class=\"fa fa-fw fa-download\"></i> Importer des budgets du mandat précédent",
+                array("class" => "btn"));
+            } else {
+              $link = link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
+                "<i class=\"fa fa-fw fa-download\"></i>",array("class" => "btn btn-discrete"));
+              echo insert_tooltip($link,"Importer des budgets du mandat précédent" );
+            }?>
       </div>
       <?php } ?>
       <div class="switch shadowed" id="switch-operations-budgets">

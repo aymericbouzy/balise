@@ -156,3 +156,7 @@
 .btn-success:hover{
   background-color:#388E3C;
 }
+
+.btn-discrete{
+  background-color: rgba(0,0,0,0.3);
+}
