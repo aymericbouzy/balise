@@ -181,7 +181,13 @@ body {
 }
 
 /*-------------------------------------------------------------------*/
-/*Tags*/
+/*Tags and containers*/
+.tip {
+  display : block;
+  padding:5px;
+  font-size:12px;
+  background:rgba(255,255,255,0.25);
+}
 
 .tag-red {
     color: #000;

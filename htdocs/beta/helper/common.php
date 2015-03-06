@@ -100,6 +100,10 @@
               </div>";
   }
 
+  function tip($content){
+    return "<span class=\"tip\"><i class=\"fa fa-fw fa-info-circle\"></i> ".$content."</span>";
+  }
+
   function text_tune_with_amount($amount,$text){
     return $amount." ".$text.($amount > 1 ? "s":"");
   }
