@@ -18,7 +18,7 @@
   function select_operation($operation, $fields = array()) {
     $present_virtual_fields = array_intersect($fields, array("state", "needs_validation"));
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_unique(array_merge(array("binet_validation_by", "kes_validation_by", "id", "needs_validation"), $fields));
+      $fields = array_unique(array_merge(array("kes_validation_by", "id", "needs_validation"), $fields));
     }
     $operation = select_entry(
       "operation",
@@ -41,10 +41,11 @@
       }
     }
     if (in_array("state", $fields)) {
+      $budgets = select_budgets_operation($operation["id"]);
       $operation["state"] =
         isset($operation["kes_validation_by"]) ?
           "validated" :
-          (!isset($operation["binet_validation_by"]) ?
+          (is_empty($budgets) ?
             "suggested" :
             ($operation["needs_validation"] ?
               "waiting_validation" :
