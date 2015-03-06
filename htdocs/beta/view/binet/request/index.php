@@ -171,7 +171,7 @@
     <div class="panel shadowed light-blue-background">
       <div class="content">
         Vous n'avez fait aucune demande de subventions ! <br/>
-        <?php echo tip("Si il y a une vague active, vous pouvez en faire sur le bouton <i class=\"fa fa-fw fa-plus-circle\"></i> situé dans la barre supérieure.</span>"); ?>
+        <?php echo tip("Si il y a une vague active, tu peux en faire sur le bouton <i class=\"fa fa-fw fa-plus-circle\"></i> situé dans la barre supérieure.</span>"); ?>
       </div>
     </div>
     <?php } ?>

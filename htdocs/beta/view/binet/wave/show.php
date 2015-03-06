@@ -55,7 +55,7 @@
       </div>
     </div>
     <?php
-      if (in_array($wave["state"], array("distribution", "closed")) && $wave["explanation"] != "") {
+      if (in_array($wave["state"], array("distribution", "closed")) && is_empty($wave["explanation"])) {
         ?>
         <div class="panel blue-background shadowed">
           <div class="content white-text">

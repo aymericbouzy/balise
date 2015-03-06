@@ -34,13 +34,13 @@
             ?>
           </tbody>
         </table>
-        <?php echo tip("Vous pouvez accéder à vos validations depuis l'accueil directement en cliquant sur le point rouge quand il apparait.");?>
+        <?php echo tip("Tu peux accéder à vos validations depuis l'accueil directement en cliquant sur le point rouge quand il apparait.");?>
       </div>
     </div>
     <?php } else { ?>
       <div class="content light-blue-background">
         Vous n'avez aucune validation en attente !<br/>
-        <?php echo tip("Vous pouvez poster une opération pour ce binet avec le bouton <i class=\"fa fa-fw fa-plus-circle\"></i> situé dans la barre supérieure.");?>
+        <?php echo tip("Tu peux poster une opération pour ce binet avec le bouton <i class=\"fa fa-fw fa-plus-circle\"></i> situé dans la barre supérieure.");?>
       </div>
     <?php } ?>
   </div>
