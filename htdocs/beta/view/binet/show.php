@@ -49,7 +49,7 @@
         }
       ?>
       <!-- Modal to choose a different term -->
-      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : $binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub shadowed0", "terms"); ?>
+      <?php echo modal_toggle("choose-term", (is_empty($binet["current_term"]) ? "Actuellement inactif" : "Promo ".$binet["current_term"])."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>", "sub shadowed0", "terms"); ?>
     </div>
   </div>
   <?php
