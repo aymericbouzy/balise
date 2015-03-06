@@ -31,7 +31,7 @@
         );
       }
       $number_pending_validations = count_pending_validations($binet, $term);
-      if (has_editing_rights($binet, $term) && current_term($binet) == $term) {
+      if (has_editing_rights($binet, $term)) {
         echo li_link(
           link_to(
             path("", "validation", "", binet_prefix($binet, $term)),
@@ -45,7 +45,7 @@
         $_GET["controller"] == "request"
       );
       // If subsidy provider
-      $sidebar_waves = select_waves(array("binet" => $binet, "term" => $term));
+      $sidebar_waves = array_merge(select_waves(array("binet" => $binet, "term" => $term)), select_waves(array("binet" => $binet, "term" => $term, "state" => "rough_draft")));
       if (!is_empty($sidebar_waves)) {
         ?>
         <li class="divider"></li>

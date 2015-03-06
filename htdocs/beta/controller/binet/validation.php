@@ -1,6 +1,6 @@
 <?php
 
-  before_action("member_binet_current_term", array("index"));
+  before_action("check_editing_rights", array("index"));
 
   switch ($_GET["action"]) {
 

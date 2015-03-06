@@ -28,7 +28,7 @@
   }
 
   function check_is_editable_operation() {
-    header_if(is_editable_operation($GLOBALS["operation"]["id"]), 403);
+    header_if(!is_editable_operation($GLOBALS["operation"]["id"]), 403);
   }
 
   before_action("check_csrf_get", array("delete"));
