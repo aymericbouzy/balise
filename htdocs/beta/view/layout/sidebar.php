@@ -31,7 +31,7 @@
         );
       }
       $number_pending_validations = count_pending_validations($binet, $term);
-      if (has_editing_rights($binet, $term) && current_term($binet) == $term) {
+      if (has_editing_rights($binet, $term)) {
         echo li_link(
           link_to(
             path("", "validation", "", binet_prefix($binet, $term)),
