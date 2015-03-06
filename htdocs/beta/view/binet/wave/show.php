@@ -55,7 +55,7 @@
       </div>
     </div>
     <?php
-      if (in_array($wave["state"], array("distribution", "closed"))) {
+      if (in_array($wave["state"], array("distribution", "closed")) && is_empty($wave["explanation"])) {
         ?>
         <div class="panel blue-background shadowed">
           <div class="content white-text">
@@ -87,43 +87,45 @@
           );
         }
       ?>
-      <div class="sh-wa-stats shadowed2">
-        <div class="item blue-background">
-          Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
-          <?php
-          if (has_viewing_rights($binet, $term)) {
-            echo " / ".pretty_amount($wave["amount"], false, true)." à répartir";
-          }
-          ?>
-        </div>
-        <div class="item green-background">
-          <?php
-          if ((has_viewing_rights($binet, $term) && $subsidizer_can_study) || (!$subsidizer_can_study && !has_viewing_rights($binet, $term))) {
-            echo "Montant total accordé : <br> ".pretty_amount($wave["granted_amount"], false, true);
-          } else if (has_viewing_rights($binet, $term) && !$subsidizer_can_study) {
-            echo "Montant total utilisé : <br> ".pretty_amount($wave["used_amount"], false, false)." / ".pretty_amount($wave["granted_amount"], false, true)." accordé.";
-          } else {
-            echo "Montant total accordé : <br> <i>non divulgé pour l'instant</i>";
-          }
-          ?>
-        </div>
-        <div class="item teal-background">
-          <?php
-          if(has_viewing_rights($binet, $term)) {
-            if($subsidizer_can_study){
-              echo "Demandes traitées : <br> ".$wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";
-            } else {
-              echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+      <div class="sh-wa-stats-container shadowed2">
+        <div class="sh-wa-stats">
+          <div class="item blue-background">
+            Montant total demandé : <br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
+            <?php
+            if (has_viewing_rights($binet, $term)) {
+              echo " / ".pretty_amount($wave["amount"], false, true)." à répartir";
             }
-          }
-          else {
-            if($subsidizer_can_study){
-              echo "Demandes reçues : <br> ".$wave["requests_received"];
+            ?>
+          </div>
+          <div class="item green-background">
+            <?php
+            if ((has_viewing_rights($binet, $term) && $subsidizer_can_study) || (!$subsidizer_can_study && !has_viewing_rights($binet, $term))) {
+              echo "Montant total accordé : <br> ".pretty_amount($wave["granted_amount"], false, true);
+            } else if (has_viewing_rights($binet, $term) && !$subsidizer_can_study) {
+              echo "Montant total utilisé : <br> ".pretty_amount($wave["used_amount"], false, false)." / ".pretty_amount($wave["granted_amount"], false, true)." accordé.";
             } else {
-              echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+              echo "Montant total accordé : <br> <i>non divulgé pour l'instant</i>";
             }
-          }
-          ?>
+            ?>
+          </div>
+          <div class="item teal-background">
+            <?php
+            if(has_viewing_rights($binet, $term)) {
+              if($subsidizer_can_study){
+                echo "Demandes traitées : <br> ".$wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";
+              } else {
+                echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+              }
+            }
+            else {
+              if($subsidizer_can_study){
+                echo "Demandes reçues : <br> ".$wave["requests_received"];
+              } else {
+                echo "Demandes acceptées : <br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+              }
+            }
+            ?>
+          </div>
         </div>
       </div>
     </div>

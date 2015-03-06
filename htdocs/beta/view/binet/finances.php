@@ -39,6 +39,7 @@
         <table class="table table-bordered table-hover table-small-char">
           <?php echo $table; ?>
         </table>
+        <?php echo tip(" Vous pouvez copier-coller les informations de ce tableau.") ?>
       </div>
     </div>
   </div>

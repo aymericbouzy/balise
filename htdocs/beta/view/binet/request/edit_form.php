@@ -27,7 +27,7 @@ if ($_GET["action"] == "new") {
 ?>
 <div class="panel green-background shadowed">
   <div class="content white-text" id="description">
-    <?php echo form_input($request["wave"]["question"], "answer", $form, array("placeholder" => "Justifiez votre demande", "style" => "color:#fff")); ?>
+    <?php echo form_input($request["wave"]["question"], "answer", $form, array("html_decoration" => array("placeholder" => "Justifiez votre demande", "style" => "color:#fff"))); ?>
   </div>
 </div>
 <?php

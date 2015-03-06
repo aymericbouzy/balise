@@ -511,17 +511,22 @@
 
 #requests{
   position:relative;
-  padding-top:55px;
+  padding-top:65px;
 }
 
-.sh-wa-stats{
+.sh-wa-stats-container{
   position:absolute;
   top:0px;
-  display:table;
+  display:block;
+  max-height:65px;
+  overflow:hidden;
   width:98%;
   margin:5px;
   background-color:#cbddff;
-  height:50px;
+}
+.sh-wa-stats {
+  display:table;
+  width:100%;
 }
 .sh-wa-stats>.item {
   display:table-cell;
