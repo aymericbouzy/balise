@@ -5,7 +5,7 @@
   // when changing these values, run localhost/url_rewriting.php to rewrite .htaccess file.
   define("STATE", $state);
   define("URL_REWRITE", true); // set to false if you don't want pretty urls.
-  define("ROOT_PATH", STATE == "production" ? "" : "beta/"); // set to "" to remove root_path
+  define("ROOT_PATH", ""); // set to "" to remove root_path
 
   define("DATABASE_USERNAME", $database_username);
   define("DATABASE_PASSWORD", $database_password);
