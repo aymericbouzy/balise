@@ -27,13 +27,13 @@
     return mail_with_headers(WEBMASTER_EMAIL, "Error ".$errno." : '".$errstr."'", $content);
   }
 
-  function mail_with_headers($to, $subject, $message, $reply_to = "Projet Balise <balise.bugreport@gmail.com>") {
+  function mail_with_headers($to, $subject, $message, $reply_to = "Balise <balise.bugreport@gmail.com>") {
     $headers  = "MIME-Version: 1.0" . "\r\n";
     $headers .= "Content-type: text/html;charset=UTF-8" . "\r\n";
-    $headers .= "From:         Projet Balise <no-reply@balise.bin>" . "\r\n";
+    $headers .= "From:         Balise <no-reply@balise.bin>" . "\r\n";
     $headers .= "Reply-To:     " . $reply_to . "\r\n";
 
-    $subject = "[Projet balise] ".$subject;
+    $subject = "[Balise] ".$subject;
 
     if (!mail($to, $subject, $message, $headers)) {
       error_log("Email sending to ".$to." with subject \"".$subject."\" failed.");

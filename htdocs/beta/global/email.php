@@ -36,7 +36,7 @@
           <div class="container">
             <div id="tete" class="row">
               <div class="col-xs-offset-3 col-xs-9 col-sm-offset-2 col-md-offset-1">
-                <h1>Projet balise</h1>
+                <h1>Balise</h1>
                 <p class="lead">Trézo facile</p>
               </div> <!-- Fermeture de la colonne -->
             </div> <!-- Fermeture de la ligne -->
