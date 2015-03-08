@@ -5,7 +5,7 @@
 </span>
 <span id="bug-report-action">
 <?php
-	echo modal_toggle("bug-report-toggle", "Rapport de bug", "btn btn-primary", "bug-report");
+	echo modal_toggle("bug-report-toggle", "Contact", "btn btn-primary", "bug-report");
 	// /!\ Modal is outside the footer see in ./application.php
 ?>
 </span>

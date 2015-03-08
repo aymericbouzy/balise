@@ -3,16 +3,15 @@
   <?php echo link_to(path("login","home"), "<div>Connexion via Frankiz</div>", array("class" => "shadowed", "id" => "login", "goto"=>true)); ?>
   <div id="presentation" class="shadowed">
     <p>
-      Bienvenue sur la version beta du projet Balise ! Les informations sur le site sont pour l'instant <b>fictives</b>. Nous t'invitons à naviguer sur le site, à tester les fonctionnalités et à nous faire remonter tous les bugs rencontrés grâce au bouton en bas à droite.
+      Le site Balise te permet de :
+      <ul>
+        <li>gérer la trésorerie de ton binet</li>
+        <li>demander et gérer tes subventions</li>
+      </ul>
+      Pour recevoir les droits d'administration de ton binet, <?php echo link_to("https://docs.google.com/spreadsheets/d/1haTwZQud3of6Tmc_5dGDUqnicxTtTQtt0UhJKWMAt3g/edit#gid=0", "inscris-toi à un créneau à la Kès"); ?>.
     </p>
     <p>
-      Lorsque tu rencontres un bug, essaye de décrire aussi précisément que possible les étapes qui l'ont généré. Pense également à inclure une capture d'écran s'il s'agit d'un bug d'affichage. La personne que nous jugerons la plus utile pour le debbugage du site recevra une récompense ! Tu peux aussi l'utiliser pour nous faire tes remarques, suggestions et compliments ;)
-    </p>
-    <p>
-      Merci !
-    </p>
-    <p>
-      L'équipe du projet Balise.
+      Si tu as des remarques ou des suggestions, n'hésite pas à nous en faire part à l'aide du bouton "Contact".
     </p>
   </div>
 </div>

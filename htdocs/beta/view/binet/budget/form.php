@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-10">
-      <?php echo form_input("Tags :", "tags", $form, array("options" => option_array(select_tags(), "id", "name", "tag"))); ?>
+      <?php echo form_input("Mots-clefs :", "tags", $form, array("options" => option_array(select_tags(), "id", "name", "tag"))); ?>
     </div>
     <div class="col-md-2" style="padding-top:24px;">
       <?php echo form_submit_button(new_tag_submit_value); ?>
