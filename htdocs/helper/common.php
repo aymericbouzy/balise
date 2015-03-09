@@ -3,7 +3,7 @@
   function link_to($path, $caption, $options = array()) {
     set_if_not_set($options["goto"], false);
 
-    if (!in_array(substr($path, 0, 7), array("mailto:", "http://")) && substr($path, 0, 1) != "#") {
+    if (!in_array(substr($path, 0, 7), array("mailto:", "http://", "https:/")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
     }
 
