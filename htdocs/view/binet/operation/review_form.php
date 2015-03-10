@@ -79,7 +79,9 @@
           <td colspan="7"></td>
         </tr>
       </thead>
-      <?php echo "<script> var operation_amount = parseFloat(".pretty_amount($operation["amount"],false,false)."); </script>"; ?>
+      <script>
+        var operation_amount = Math.round(parseFloat(<?php echo pretty_amount($operation["amount"],false,false); ?>) * 100);
+      </script>
       <tbody>
         <tr class="total" id="remaining_amount_line">
           <td colspan="5">Montant restant à attribuer</td>
@@ -92,13 +94,13 @@
           var i, s;
           s = 0;
           for (i = 0; i < inputs.length; i++) {
-            var amount = parseInt(parseFloat(inputs[i].value) * 100);
+            var amount = Math.round(parseFloat(inputs[i].value) * 100);
             if (inputs[i] != null && inputs[i].value != null && !isNaN(amount)) {
               s += amount;
             }
           }
           var total_remaining = document.getElementById('amount-sum');
-          var remaining = (operation_amount * 100 - s)/100;
+          var remaining = (operation_amount - s)/100;
           total_remaining.innerHTML = remaining;
 
           var table_line = document.getElementById('remaining_amount_line');
