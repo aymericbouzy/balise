@@ -25,9 +25,9 @@
     $form["fields"]["term"] = create_name_field("la promotion");
   }
   if (has_editing_rights($id, current_term($id))) {
-    $form["fields"]["description"] = create_text_field("la description publique du binet");
+    $form["fields"]["description"] = create_text_field("la description publique du binet", array("optional" => 1));
     if (!is_empty($binet["subsidy_provider"])) {
-      $form["fields"]["subsidy_steps"] = create_text_field("la description des démarches à effectuer pour récupérer les subventions");
+      $form["fields"]["subsidy_steps"] = create_text_field("la description des démarches à effectuer pour récupérer les subventions", array("optional" => 1));
     }
   }
 

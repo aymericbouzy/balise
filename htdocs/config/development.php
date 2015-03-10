@@ -1,11 +1,16 @@
 <?php
 
-  $webmaster_email = "aymeric.bouzy@polytechique.edu";
-  $state = "development";
-  $database_username = "root";
-  $database_password = "root";
-  $database_name = "balise";
-  $database_host = "localhost";
-  $database_port = "8889";
-  $frankiz_auth_key = "A4d!fgr6?45GF8";
-  $real_frankiz_connection = false;
+  define("WEBMASTER_EMAIL", "aymeric.bouzy@polytechique.edu");
+  define("STATE", "development");
+
+  // when changing these values, run localhost/url_rewriting.php to rewrite .htaccess file.
+  define("URL_REWRITE", true); // set to false if you don't want pretty urls.
+  define("ROOT_PATH", ""); // set to "" to remove root_path
+
+  define("DATABASE_USERNAME", "root");
+  define("DATABASE_PASSWORD", "root");
+  define("DATABASE_NAME", "balise");
+  define("DATABASE_HOST", "localhost");
+  define("DATABASE_PORT", "8889");
+  define("FRANKIZ_AUTH_KEY", "A4d!fgr6?45GF8");
+  define("REAL_FRANKIZ_CONNECTION", false);

@@ -1,20 +1,5 @@
 <?php
 
-  define("WEBMASTER_EMAIL", $webmaster_email);
-
-  // when changing these values, run localhost/url_rewriting.php to rewrite .htaccess file.
-  define("STATE", $state);
-  define("URL_REWRITE", true); // set to false if you don't want pretty urls.
-  define("ROOT_PATH", ""); // set to "" to remove root_path
-
-  define("DATABASE_USERNAME", $database_username);
-  define("DATABASE_PASSWORD", $database_password);
-  define("DATABASE_NAME", $database_name);
-  define("DATABASE_HOST", $database_host);
-  define("DATABASE_PORT", $database_port);
-  define("FRANKIZ_AUTH_KEY", $frankiz_auth_key);
-  define("REAL_FRANKIZ_CONNECTION", $real_frankiz_connection);
-
   define("GLOBAL_PATH", "global/");
   define("MODEL_PATH", "model/");
   define("HELPER_PATH", "helper/");

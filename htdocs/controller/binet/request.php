@@ -86,7 +86,7 @@
     break;
 
   case "new":
-    $request["wave"] = select_wave($_GET["wave"], array("question", "id"));
+    $request["wave"] = select_wave($_GET["wave"], array("question", "id", "description"));
     break;
 
   case "create":
@@ -104,7 +104,7 @@
 
   case "edit":
     $request = select_request($request["id"], array("wave", "id"));
-    $request["wave"] = select_wave($request["wave"], array("question", "id"));
+    $request["wave"] = select_wave($request["wave"], array("question", "id", "description"));
     break;
 
   case "update":
