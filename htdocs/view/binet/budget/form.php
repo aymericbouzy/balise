@@ -16,7 +16,7 @@
       <?php echo form_input(array("0" => "Dépense", "1" => "Recette"), "sign", $form, array("disabled" => $_GET["action"] == "edit" ? 1 : 0, "selection_method" => "radio")); ?>
     </div>
   </div>
-  <div id="expected_subsidies">
+  <div id="expected_subsidies" <?php echo $form["fields"]["sign"]["value"] ? "class=\"hidden-element\"" : ""; ?>>
     <?php echo form_input("Subventions espérées :", "subsidized_amount", $form, array("html_decoration" => array("placeholder" => "0.00 - Les subventions que vous espérez recevoir pour ce budget."))); ?>
   </div>
   <?php echo form_submit_button($_GET["action"] == "new" ? "Sauvegarder" : "Enregistrer"); ?>
