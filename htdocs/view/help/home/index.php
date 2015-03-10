@@ -1,4 +1,4 @@
-<h1>Bienvenu sur la page d'accueil !</h1>
+<h1>Bienvenus sur la page d'accueil !</h1>
     <p>D'ici, tu peux :
       <ul>
         <li>Accéder à tes binets et les gérer en cliquant dessus</li>
