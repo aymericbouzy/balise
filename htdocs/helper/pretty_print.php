@@ -13,15 +13,19 @@
   function pretty_tags($tags, $link = false) {
     $tag_string = "";
     foreach ($tags as $tag) {
-      $tag = select_tag($tag["id"], array("name", "id"));
-      $label = "<span ".($link ? "" : " style=\"cursor:default\"")."class=\"tag-blue".(tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : "")."\">".$tag["name"]."</span>\t";
+      $label = pretty_tag($tag["id"]);
       if ($link) {
-        $tag_string .= link_to(search_by_tag_path($tag["id"]), $label);
+        $tag_string .= link_to(search_by_tag_path($tag["id"]), $label, array("goto" => true, "style" => $link ? "cursor:default" : "", "class" => tag_is_selected($tag["id"], $GLOBALS["query_array"]) ? " tag-selected" : ""));
       } else {
         $tag_string .= $label;
       }
     }
     return $tag_string;
+  }
+
+  function pretty_tag($tag) {
+    $tag = select_tag($tag, array("name"));
+    return "<span class=\"tag-blue\">".$tag["name"]."</span>\t";
   }
 
   function pretty_binet($binet, $link = true, $special = true) {
