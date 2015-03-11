@@ -73,13 +73,6 @@
           </div>
         </div>
         <?php
-      } else {
-        ?>
-        <div class="content light-blue-background">
-          Vous n'avez aucune validation en attente !<br/>
-          <?php echo tip("Tu peux poster une opération pour ce binet avec le bouton <i class=\"fa fa-fw fa-plus-circle\"></i> situé dans la barre supérieure.");?>
-        </div>
-        <?php
       }
     ?>
   </div>
