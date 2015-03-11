@@ -53,8 +53,9 @@
     }
   }
 
-  function check_request_viewing_rights() {
-    header_if(!has_request_viewing_rights($GLOBALS["request"]["id"]), 401);
+  function check_rough_draft_viewing_rights() {
+    $request = select_request($GLOBALS["request"]["id"], array("state"));
+    header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]) && $request["state"] == "rough_draft", 401);
   }
 
   before_action("check_wave_parameter", array("new"));
@@ -63,7 +64,7 @@
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send", "reject"));
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject"), array("model_name" => "request", "binet" => $binet, "term" => $term));
-  before_action("check_request_viewing_rights", array("show"));
+  before_action("check_rough_draft_viewing_rights", array("show", "delete"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant", "reject"));
   before_action("create_form", array("new", "create", "edit", "update"), "request_entry");
