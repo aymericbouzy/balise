@@ -45,6 +45,10 @@
         }
       }
 
+      if (!is_empty($_SERVER["HTTP_REFERER"])) {
+        mail_with_headers(WEBMASTER_EMAIL, "Status ".$status." : '".$header."'", "Requested URL : ".$_SERVER["REQUEST_URI"]"\nPrevious URL : ".$_SERVER["HTTP_REFERER"]);
+      }
+
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
