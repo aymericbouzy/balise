@@ -82,7 +82,7 @@
 
   function kes_reject_operation($operation) {
     $sql = "UPDATE operation
-            SET binet_validation_by = NULL
+            SET binet_validation_by = NULL, kes_validation_by = NULL
             WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
