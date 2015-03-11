@@ -74,7 +74,8 @@
   <li>
     <?php
     if (is_current_kessier()) {
-      echo link_to(path("", "validation"), "<i class=\"fa fa-fw fa-desktop\" style=\"color:#fff;\"></i>");
+      $count_pending_validations_kes = count_pending_validations_kes();
+      echo link_to(path("", "validation"), "<i class=\"fa fa-fw fa-desktop\" style=\"color:#fff;\"></i>".($count_pending_validations_kes > 0 ? "<span class=\"counter counter-sm shadowed0\">".$count_pending_validations_kes."</span>" : ""));
     }
     ?>
   </li>
