@@ -54,10 +54,6 @@
     foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term, "state" => "waiting_validation")), "date",false) as $operation){
       $op_pending_kes_validations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type","term","binet"));
     }
-    $pending_validations_operations = pending_validations_operations($binet, $term);
-    if ($binet == KES_ID) {
-      $pending_validations_operations_kes = kes_pending_validations_operations();
-    }
     break;
 
   case "new":
