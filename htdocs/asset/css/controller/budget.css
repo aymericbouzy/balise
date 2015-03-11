@@ -1,0 +1,29 @@
+.budget-wave {
+  background-color: rgba(255,0,255,0.1);
+}
+
+#transfer-form-header {
+  font-weight:bold;
+  background-color:rgba(0,0,0,0.25);
+}
+#transfer-form-header>span {
+  vertical-align:middle;
+}
+#transfer-form-header>span {
+  vertical-align:middle;
+}
+.transfer-form-checkbox {
+  width:50%;
+  text-align:left;
+}
+
+.transfer-form-tags {
+  width:20%;
+  text-align:center;
+}
+
+.transfer-form-amount {
+  text-align:center;
+  width:30%;
+  background-color:rgba(255,255,255,0.6);
+}
