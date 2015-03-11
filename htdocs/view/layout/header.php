@@ -72,6 +72,13 @@
   }
   ?>
   <li>
+    <?php
+    if (is_current_kessier()) {
+      echo link_to(path("", "validation"), "<i class=\"fa fa-fw fa-desktop\" style=\"color:#fff;\"></i>");
+    }
+    ?>
+  </li>
+  <li>
     <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
   <li style="padding-right:20px;">
