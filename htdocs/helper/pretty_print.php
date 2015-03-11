@@ -36,7 +36,7 @@
 
   function pretty_binet_term($binet_term, $link = true, $kes_special = true) {
     $binet_term = select_term_binet($binet_term, array("binet", "term"));
-    $caption = pretty_binet($binet_term["binet"], false, $kes_special)." <span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>";
+    $caption = pretty_binet($binet_term["binet"], false, $kes_special)." ".($kes_special ? "<span style=\"font-size:smaller\" class=\"binet-term\">".$binet_term["term"]."</span>" : $binet_term["term"]);
     if ($link) {
       return link_to(path("show", "binet", $binet_term["binet"]), $caption);
     } else {
