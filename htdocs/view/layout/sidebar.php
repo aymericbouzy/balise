@@ -33,7 +33,7 @@
         echo li_link(
           link_to(
             path("", "operation", "", binet_prefix($binet, $term)),
-            "<i class=\"fa fa-fw fa-database\"></i> Opérations".($number_pending_validations > 0 ? " <span class=\"badge counter\">".$number_pending_validations."</span>" : "")
+            "<i class=\"fa fa-fw fa-database\"></i> Opérations".($number_pending_validations > 0 ? " <span class=\"badge\">".$number_pending_validations."</span>" : "")
           ),
           $_GET["controller"] == "operation"
         );
