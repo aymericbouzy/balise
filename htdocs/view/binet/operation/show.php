@@ -35,6 +35,9 @@
           echo button(path("validate", "operation", $operation["id"], "", array(), true), "Valider", "check", "green");
           echo button(path("reject", "operation", $operation["id"], "", array(), true), "Refuser", "times", "red");
           break;
+          case "validated":
+          echo button(path("reject", "operation", $operation["id"], "", array(), true), "Retirer la validation", "times", "red");
+          break;
         }
       }
     ?>
