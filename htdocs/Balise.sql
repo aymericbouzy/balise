@@ -35,7 +35,7 @@ CREATE TABLE `binet` (
 --
 
 INSERT INTO `binet` (`id`, `name`, `clean_name`, `description`, `subsidy_provider`, `current_term`, `subsidy_steps`) VALUES
-(1, 'KÃ¨s', 'kes', '', 1, 2013, NULL);
+(1, 'Kès', 'kes', '', 1, 2013, NULL);
 
 -- --------------------------------------------------------
 
@@ -135,9 +135,10 @@ CREATE TABLE `operation_type` (
 --
 
 INSERT INTO `operation_type` (`id`, `name`, `icon`) VALUES
+(0, '', 'question'),
 (1, 'virement', 'credit-card'),
-(2, 'chÃ¨que', 'newspaper-o'),
-(3, 'espÃ¨ces', 'money');
+(2, 'chèque', 'newspaper-o'),
+(3, 'espèces', 'money');
 
 -- --------------------------------------------------------
 
