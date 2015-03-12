@@ -80,22 +80,23 @@
             <p class="binet"><?php echo pretty_binet_term($request["binet"]."/".$request["term"], false); ?></p>
             <p class="amount">
               <?php echo (has_viewing_rights($binet, $term) ?
-              pretty_amount($request["granted_amount"], false)." / ".pretty_amount($request["requested_amount"], false) :
-              ($subsidizer_can_study ? "0" : pretty_amount($request["granted_amount"], false))).
+                pretty_amount($request["granted_amount"], false)." / ".pretty_amount($request["requested_amount"], false) :
+                ($subsidizer_can_study ? "0" : pretty_amount($request["granted_amount"], false)));
               ?>
               <i class="fa fa-euro"></i>
             </p>
           </div>
           <?php
           if (has_request_viewing_rights($request["id"])) {
-            echo link_to(
-              path($subsidizer_can_study && has_editing_rights($binet, $term) ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])),
-              ob_get_clean(),
-              array("goto" => true)
-            );
+            $link_to_path = path($subsidizer_can_study && has_editing_rights($binet, $term) ? "review" : "show", "request", $request["id"], binet_prefix($request["binet"], $request["term"]));
           } else {
-            echo ob_get_clean();
+            $link_to_path = path("show", "binet", $request["binet"]);
           }
+          echo link_to(
+            $link_to_path,
+            ob_get_clean(),
+            array("goto" => true)
+          );
         }
       ?>
       <div class="sh-wa-stats-container shadowed2">
