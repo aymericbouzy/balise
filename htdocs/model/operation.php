@@ -18,7 +18,7 @@
   function select_operation($operation, $fields = array()) {
     $present_virtual_fields = array_intersect($fields, array("state", "needs_validation"));
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_unique(array_merge(array("kes_validation_by", "id", "needs_validation"), $fields));
+      $fields = array_unique(array_merge(array("kes_validation_by", "binet_validation_by", "id", "needs_validation"), $fields));
     }
     $operation = select_entry(
       "operation",
@@ -41,11 +41,10 @@
       }
     }
     if (in_array("state", $fields)) {
-      $budgets = select_budgets_operation($operation["id"]);
       $operation["state"] =
-        isset($operation["kes_validation_by"]) ?
+        !is_empty($operation["kes_validation_by"]) ?
           "validated" :
-          (is_empty($budgets) ?
+          (is_empty($operation["binet_validation_by"]) ?
             "suggested" :
             ($operation["needs_validation"] ?
               "waiting_validation" :
@@ -82,7 +81,7 @@
 
   function kes_reject_operation($operation) {
     $sql = "UPDATE operation
-            SET binet_validation_by = NULL
+            SET binet_validation_by = NULL, kes_validation_by = NULL
             WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
