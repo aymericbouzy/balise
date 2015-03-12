@@ -88,6 +88,10 @@
     break;
 
   case "publish":
+    $wave = select_wave($wave["id"], array("id", "explanation"));
+    if (is_empty($wave["explanation"])) {
+      $_SESSION["warning"][] = "Tu n'as pas mis de texte publique d'explication des subventions accordées. Tu peux le rajouter en modifiant la vague.";
+    }
     publish_wave($wave["id"]);
     $affected_operations = reset_kes_validation_for_operations_affected_by_wave($wave["id"]);
     $_SESSION["notice"][] = "Les attributions de la vague de subvention ont été publiées avec succès.";
