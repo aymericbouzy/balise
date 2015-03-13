@@ -36,7 +36,7 @@
     <?php
     if (sizeOf($pending_validations_operations) > 0) {
       ?>
-      <div class="title">Opérations à valider</div>
+      <div class="title">Opérations en attente</div>
         <div class="content">
           <div class="table-responsive" id="validations-table">
             <table class="table table-bordered table-hover table-small-char">
@@ -69,7 +69,7 @@
                 ?>
               </tbody>
             </table>
-            <?php echo tip("Tu peux accéder à tes validations depuis l'accueil directement en cliquant sur le point rouge quand il apparait.");?>
+            <?php echo tip("Tu peux accéder à tes opérations en attente depuis l'accueil directement en cliquant sur le point rouge quand il apparait.");?>
           </div>
         </div>
         <?php
