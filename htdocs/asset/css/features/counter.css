@@ -1,0 +1,32 @@
+.counter-sm {
+  min-width:20px;
+  height:20px;
+  border-radius:10px;
+  font-size:12px;
+  padding: 1px 5px 0px 5px;
+}
+
+.counter-lg {
+  min-width:26px;
+  height:26px;
+  border-radius:13px;
+  font-size:15px;
+  padding: 3px 7px 0px 7px;
+}
+
+
+.counter {
+  display:block;
+  position:absolute;
+  top:5px;
+  right:5px;
+  text-align: center;
+  font-weight:bold;
+  color:#fff;
+  background-color:red;
+}
+
+.counter:hover{
+  text-decoration:none;
+  background-color:rgb(173, 50, 39);
+}

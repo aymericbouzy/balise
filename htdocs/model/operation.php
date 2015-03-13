@@ -159,7 +159,7 @@
   }
 
   function count_pending_validations($binet, $term) {
-    return count(pending_validations_operations($binet, $term)) + ($binet == KES_ID ? count(kes_pending_validations_operations()) : 0);
+    return count(pending_validations_operations($binet, $term));
   }
 
   function count_pending_validations_kes() {

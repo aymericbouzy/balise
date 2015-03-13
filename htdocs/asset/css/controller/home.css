@@ -52,26 +52,6 @@ a {
   border-radius: 50%;
 }
 
-.validations {
-  display:block;
-  position:absolute;
-  width:26px;
-  height:26px;
-  top:5px;
-  right:5px;
-  padding:3px;
-  border-radius:13px;
-  font-weight:bold;
-  font-size:15px;
-  color:#fff;
-  background-color:red;
-}
-
-.validations:hover{
-  text-decoration:none;
-  background-color:rgb(173, 50, 39);
-}
-
 .binet-name {
   display:block;
   position:absolute;
