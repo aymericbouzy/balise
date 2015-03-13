@@ -1,17 +1,17 @@
 .counter-sm {
-  width:20px;
+  min-width:20px;
   height:20px;
   border-radius:10px;
   font-size:12px;
-  padding-top: 1px;
+  padding: 1px 5px 0px 5px;
 }
 
 .counter-lg {
-  width:26px;
+  min-width:26px;
   height:26px;
   border-radius:13px;
   font-size:15px;
-  padding-top: 3px;
+  padding: 3px 7px 0px 7px;
 }
 
 
