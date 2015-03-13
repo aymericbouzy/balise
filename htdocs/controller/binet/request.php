@@ -58,12 +58,34 @@
     header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]) && $request["state"] == "rough_draft", 401);
   }
 
+  function converted_amount_is_editable($request) {
+    $request = select_request($request, array("id", "state", "wave"));
+    if ($request["state"] != "accepted") {
+      return false;
+    }
+    $wave = select_wave($request["wave"], array("binet", "term"));
+    if (!has_editing_rights($wave["binet"], $wave["term"]) && !is_current_kessier()) {
+      return false;
+    }
+    foreach (select_subsidies(array("request" => $request)) as $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("conditional"));
+      if ($subsidy["conditional"]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  function check_converted_amount_is_editable() {
+    header_if(!converted_amount_is_editable($GLOBALS["request"]["id"]), 401);
+  }
+
   before_action("check_wave_parameter", array("new"));
   before_action("check_no_existing_request", array("new"));
   before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send", "reject"));
-  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject"), array("model_name" => "request", "binet" => $binet, "term" => $term));
+  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject", "edit_converted_amount", "set_converted_amount"), array("model_name" => "request", "binet" => $binet, "term" => $term));
   before_action("check_rough_draft_viewing_rights", array("show", "delete"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant", "reject"));
@@ -73,6 +95,7 @@
   before_action("check_form", array("grant"), "request_review");
   before_action("check_is_sendable", array("send"));
   before_action("check_is_editable", array("edit", "update", "delete"));
+  before_action("check_converted_amount_is_editable", array("edit_converted_amount", "set_converted_amount"))
   before_action("sent_and_not_published", array("review", "grant", "reject"));
 
   switch ($_GET["action"]) {
@@ -161,6 +184,12 @@
     send_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été envoyée avec succès.";
     redirect_to_path(path("", "request", "", binet_prefix($binet, $term)));
+    break;
+
+  case "edit_converted_amount":
+    break;
+
+  case "set_converted_amount":
     break;
 
   default:
