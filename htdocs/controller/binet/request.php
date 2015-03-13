@@ -80,6 +80,15 @@
     header_if(!converted_amount_is_editable($GLOBALS["request"]["id"]), 401);
   }
 
+  function check_return_to_operation() {
+    if (isset($_GET["operation"])) {
+      header_if(!validate_input(array("operation")), 400);
+      header_if(!exists_operation($_GET["operation"]), 404);
+      select_operation($_GET["operation"], array("id", "binet", "term"));
+      $_SESSION["return_to"] = path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"]));
+    }
+  }
+
   before_action("check_wave_parameter", array("new"));
   before_action("check_no_existing_request", array("new"));
   before_action("check_exists_spending_budget", array("new"));
@@ -99,6 +108,7 @@
   before_action("create_form", array("edit_converted_amount", "set_converted_amount"), "request_convert");
   before_action("check_form", array("set_converted_amount"), "request_convert");
   before_action("sent_and_not_published", array("review", "grant", "reject"));
+  before_action("check_return_to_operation", array("edit_converted_amount"));
 
   switch ($_GET["action"]) {
 
@@ -196,9 +206,13 @@
       update_subsidy($subsidy, array("converted_amount" => $converted_amount));
     }
     $_SESSION["notice"][] = "Le montant débloqué de la demande de subvention a été mis à jour.";
-    $return_to = $_SESSION["return_to"];
-    unset($_SESSION["return_to"]);
-    redirect_to_path($return_to);
+    if (isset($_SESSION["return_to"])) {
+      $return_to = $_SESSION["return_to"];
+      unset($_SESSION["return_to"]);
+      redirect_to_path($return_to);
+    } else {
+      redirect_to_action("show");
+    }
     break;
 
   default:
