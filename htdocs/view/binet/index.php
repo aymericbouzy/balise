@@ -14,7 +14,7 @@
         ?>
         <li class="content-line-panel">
         <?php
-          $binet = select_binet($binet["id"], array("id", "current_term"));
+          $binet = select_binet($binet["id"], array("id", "current_term","name"));
           if (is_current_kessier()) {
             $binet = array_merge(select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance", "state")), $binet);
           }
@@ -27,6 +27,12 @@
                 foreach (select_current_admins($binet["id"]) as $admin) {
                   echo "<span class=\"pill\">".pretty_student($admin["id"])."</span>";
                 }
+              ?>
+            </span>
+            <span class="post-operation">
+              <?php
+                $link = link_to(path("new", "operation", "", binet_prefix($binet["id"], $binet["current_term"])), "<i class=\"fa fa-fw fa-plus-circle\"></i>");
+                echo insert_tooltip($link,"Poster une opération pour le binet ".$binet["name"]);
               ?>
             </span>
             <?php
