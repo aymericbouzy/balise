@@ -24,6 +24,11 @@
       }
     ?>
 	</div>
+  <div class="panel shadowed">
+    <div class="title">
+      Demande de subventions
+    </div>
+  </div>
   <div class="sh-title shadowed">
     <div class="logo">
       <i class="fa fa-5x fa-money"></i>
