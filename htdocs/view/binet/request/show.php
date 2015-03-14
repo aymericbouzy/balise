@@ -56,9 +56,30 @@
     echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
     $content = ob_get_clean();
     ?>
-    <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed" id="current_term">
-      <?php echo $content; ?>
+  <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed" id="current_term">
+    <?php echo $content; ?>
+  </div>
+  <?php if( has_viewing_rights($binet,$term) || has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])){
+    ?>
+    <div class="panel shadowed light-blue-background">
+      <?php
+        $caption = "<div class=\"title-small\"> Opérations liées à cette subvention</div>";
+        echo make_collapse_control($caption, "operation_subsidies_collapse");
+      ?>
+      <div class="collapse" id="operation_subsidies_collapse">
+        <div class="content">
+          <?php
+          foreach(select_operations_request($request["id"]) as $operation){
+            $operation = select_operation($operation,array("id","comment","amount"));
+            echo pretty_operation($operation["id"]);
+          }
+          ?>
+        </div>
+      </div>
     </div>
+    <?php
+    }
+  ?>
   <?php
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
       $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
