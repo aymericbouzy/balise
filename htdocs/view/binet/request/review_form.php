@@ -121,6 +121,7 @@
                   <td> Disponibles : <?php echo pretty_amount($budget["subsidized_amount_available"])?></td>
                 </tr>
                 <tr class="summary">
+                	<td></td>
                   <td>Utilisées : <?php echo pretty_amount($budget["subsidized_amount_used"])?></td>
                 </tr>
               </tbody>
