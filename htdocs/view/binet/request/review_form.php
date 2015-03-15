@@ -28,7 +28,7 @@
   </div>
   <div class="panel light-blue-background shadowed">
     <div class="content">
-      <?php echo $current_binet["description"]; ?>
+      <?php echo (is_empty($current_binet["description"]) ? "Aucune description pour ce binet" : $current_binet["description"]); ?>
     </div>
   </div>
   <!-- Answer to the wave question -->
@@ -40,52 +40,80 @@
   <?php
     ob_start();
     if (has_viewing_rights($current_binet["id"], $current_binet["current_term"])) {
-      echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
-      echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
-      echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
+    	echo "<span class=\"reviewForm_infotitle\"> Trésorerie du binet (réel / previsionnel)</span>";
+      echo minipane("reviewForm_income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
+      echo minipane("reviewForm_spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
+      echo minipane("reviewForm_balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
       echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du binet </span>";
-      $suffix = "";
-    } else {
-      $suffix = "_std";
+    	$content = ob_get_clean();
+    	echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"])),
+      	"<div>".$content."</div>",
+      	array("class" => "light-blue-background shadowed panel","id" => "current-term", "goto" => true));
     }
-    echo minipane("subsidies_granted".$suffix, "Subventions accordées", $current_binet["subsidized_amount_granted"], NULL);
-    echo minipane("subsidies_used".$suffix, "Subventions utilisées", $current_binet["subsidized_amount_used"], NULL);
-    $content = ob_get_clean();
-    echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"])),
-      "<div>".$content."</div>",
-      array("class" => "light-blue-background shadowed sh-bin-stats".clean_string($suffix),"id" => "current-term", "goto" => true));
-
     if (!is_empty($previous_binet)) {
       ob_start();
       if (has_viewing_rights($current_binet["id"], $current_binet["current_term"] - 1)) {
-        echo minipane("income", "Recettes", $previous_binet["real_income"], $previous_binet["expected_income"]);
-        echo minipane("spending", "Dépenses", $previous_binet["real_spending"], $previous_binet["expected_spending"]);
-        echo minipane("balance", "Equilibre", $current_binet["real_balance"], $previous_binet["expected_balance"]);
+      	echo "<span class=\"reviewForm_infotitle\">Trésorerie du binet de la promotion précédente </span>";
+        echo minipane("reviewForm_income_old", "Recettes", $previous_binet["real_income"], $previous_binet["expected_income"]);
+        echo minipane("reviewForm_spending_old", "Dépenses", $previous_binet["real_spending"], $previous_binet["expected_spending"]);
+        echo minipane("reviewForm_balance_old", "Equilibre", $current_binet["real_balance"], $previous_binet["expected_balance"]);
         echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Voir l'activité du binet de la promotion précédente </span>";
-        $suffix = "";
-      } else {
-        $suffix = "_std";
-      }
-      echo minipane("subsidies_granted".$suffix, "Subventions accordées", $previous_binet["subsidized_amount_granted"], NULL);
-      echo minipane("subsidies_used".$suffix, "Subventions utilisées", $previous_binet["subsidized_amount_used"], NULL);
-      $content = ob_get_clean();
-      echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"] - 1)),
-          "<div>".$content."</div>",
-          array("class" => "light-blue-background shadowed sh-bin-stats".clean_string($suffix),"id" => "previous-term", "goto" => true));
+      	$content = ob_get_clean();
+      	echo link_to(path("",binet_prefix($current_binet["id"], $current_binet["current_term"] - 1)),
+          	"<div>".$content."</div>",
+          	array("class" => "light-blue-background shadowed panel","id" => "previous-term", "goto" => true));
+    }
     }
     ?>
-    <div class="panel light-blue-background shadowed">
-      <div class="title">
-        Subventions <?php echo pretty_binet($request_info["wave"]["binet"],false); ?>
-      </div>
-      <div class="content" id="wave-owner-subsidy">
-        <?php
-          echo minipane("granted", "Utilisées / accordées cette année ", $existing_subsidies["used_amount"], $existing_subsidies["granted_amount"]);
-          echo minipane("used", "Utilisées / accordées l'année dernière", $previous_subsidies["used_amount"], $previous_subsidies["granted_amount"]);
-        ?>
-      </div>
+    <div class="panel shadowed">
+    	<?php 
+    		$collapse_title = "<div class=\"title\"> Résumé des subventions passées <i class=\"fa fa-fw fa-chevron-down\"></i></div>";
+    		echo make_collapse_control($collapse_title, "subsidies-summary");
+    	?>
     </div>
-
+	   <div class="collapse" id="subsidies-summary">
+	    <div class="panel light-blue-background shadowed">
+	      <div class="title-small">
+	        Subventions <?php echo pretty_binet($request_info["wave"]["binet"],false); ?>
+	      </div>
+	      <div class="content" id="wave-owner-subsidy">
+	        <?php
+	          echo minipane("granted", "Utilisées / accordées cette année ", 
+	          		$existing_subsidies["used_amount"], $existing_subsidies["granted_amount"]);
+	          echo minipane("used", "Utilisées / accordées l'année dernière", 
+	          		$previous_subsidies["used_amount"], $previous_subsidies["granted_amount"]);
+	        ?>
+	      </div>
+	    </div>
+	    <div class="panel light-blue-background shadowed">
+	     <div class="title-small">
+	     	Total subventions reçues par le binet cette année:
+	     </div>
+	     <div class="content">
+	     		<?php 
+	     			echo minipane("reviewForm_granted-requested", "Accordées / demandées ", 
+	          		$current_binet["subsidized_amount_granted"], 
+	          		$current_binet["subsidized_amount_requested"]);
+	          echo minipane("reviewForm_used-available", " Utilisées / disponibles", 
+	          		$current_binet["subsidized_amount_used"], $current_binet["subsidized_amount_available"]);
+	        ?>
+	     </div>
+	    </div>
+	    <div class="panel light-blue-background shadowed" id="previous-term-subsidies" >
+	     <div class="title-small">
+	     	Pour l'année dernière:
+	     </div>
+	     <div class="content">
+	     		<?php 
+	     			echo minipane("reviewForm_granted-requested_old", "Accordées / demandées ", 
+	          		$previous_binet["subsidized_amount_granted"], 
+	          		$previous_binet["subsidized_amount_requested"]);
+	          echo minipane("reviewForm_used-available_old", " Utilisées", 
+	          		$previous_binet["subsidized_amount_used"],"");
+	        ?>
+	     </div>
+	    </div>
+		</div>
     <!-- Form -->
     <?php
     foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
@@ -145,3 +173,4 @@
     <?php echo form_submit_button("Enregistrer"); ?>
   </div>
 </div>
+
