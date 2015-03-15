@@ -14,10 +14,12 @@ if ($_GET["action"] == "new") {
       Faire la demande pour la promotion :
       <div class="switch shadowed0" id="requestForm_chooseTerm">
         <span class="left component <?php echo $current_term_active ? "active" : "inactive"; ?>" >
-          <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet), array("wave" => $request["wave"]["id"])), $current_term_binet); ?>
+          <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet), array("wave" => $request["wave"]["id"])),
+          $current_term_binet." ".($current_term_active ? "<i class=\"fa fa-fw fa-check\"></i>" :"")); ?>
           </span>
         <span class="left component <?php echo $current_term_active ? "inactive" : "active"; ?>" >
-          <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet + 1), array("wave" => $request["wave"]["id"])), $current_term_binet + 1); ?>
+          <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet + 1), array("wave" => $request["wave"]["id"])),
+           ($current_term_binet + 1)." ".($current_term_active ? " ":"<i class=\"fa fa-fw fa-check\"></i>")); ?>
         </span>
       </div>
     </div>

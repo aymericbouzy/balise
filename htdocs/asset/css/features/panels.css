@@ -148,6 +148,9 @@
   position:relative;
   padding:7px;
 }
+.panel.inside>.content{
+  margin:0px;
+}
 .panel>.collapsing>.content,
 .panel>.collapse.in>.content {
   display:block;

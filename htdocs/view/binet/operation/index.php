@@ -34,11 +34,8 @@
         </div>
       </div>
     </div>
-    <?php if(has_editing_rights($binet,$term)){ ?>
+    <?php if(has_editing_rights($binet,$term) && sizeOf($pending_validations_operations) > 0){ ?>
       <div class="panel shadowed">
-        <?php
-        if (sizeOf($pending_validations_operations) > 0) {
-          ?>
           <div class="title">Opérations en attente</div>
             <div class="content">
               <div class="table-responsive" id="validations-table">
@@ -75,10 +72,7 @@
                 <?php echo tip("Tu peux accéder à tes opérations en attente depuis l'accueil directement en cliquant sur le point rouge quand il apparait.");?>
               </div>
             </div>
-            <?php
-          }
-        ?>
-      </div>
+      	</div>
     <?php } ?>
     <div class="panel shadowed">
       <div class="title">Opérations</div>
