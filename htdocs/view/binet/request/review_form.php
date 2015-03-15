@@ -78,10 +78,10 @@
 	      </div>
 	      <div class="content" id="wave-owner-subsidy">
 	        <?php
-	          echo minipane("granted", "Utilisées / accordées cette année ", 
-	          		$existing_subsidies["used_amount"], $existing_subsidies["granted_amount"]);
-	          echo minipane("used", "Utilisées / accordées l'année dernière", 
-	          		$previous_subsidies["used_amount"], $previous_subsidies["granted_amount"]);
+	          echo minipane("reviewForm_owner-granted-requested", "Accordées / demandées  ", 
+	          		$existing_subsidies["granted_amount"], $existing_subsidies["requested_amount"]);
+	          echo minipane("reviewForm_owner-used-available", "Utilisées / disponibles ", 
+	          		$existing_subsidies["used_amount"], $existing_subsidies["granted_amount"] - $existing_subsidies["used_amount"]);
 	        ?>
 	      </div>
 	    </div>

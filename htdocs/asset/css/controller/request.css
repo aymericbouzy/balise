@@ -259,7 +259,7 @@
   visibility : visible;
 }
 
-#granted {
+#reviewForm_owner-granted-requested {
   left:1%;
   top:5px;
   height:40px;
@@ -267,7 +267,7 @@
   background-color:#AA00FF;
 }
 
-#used {
+#reviewForm_owner-used-available {
   left:51%;
   top:5px;
   height:40px;
