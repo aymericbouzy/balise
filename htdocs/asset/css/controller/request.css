@@ -259,24 +259,21 @@
   visibility : visible;
 }
 
-#reviewForm_owner-granted-requested {
-  left:1%;
-  top:5px;
-  height:40px;
-  width:48%;
-  background-color:#AA00FF;
-}
 
-#reviewForm_owner-used-available {
-  left:51%;
-  top:5px;
+#reviewForm_owner-granted-requested {background-color:#AA00FF;}
+#reviewForm_owner-used-available { background-color: #3E2723;}
+#reviewForm_owner-used-granted_old { background-color: #5e5e5e;}
+#reviewForm_owner-granted-requested ,
+#reviewForm_owner-used-available ,
+#reviewForm_owner-used-granted_old {
+	position:relative;
+	display: inline-block;
+  margin:1.5%;
   height:40px;
-  width:48%;
-  background-color:#3E2723;
+  width:27%;
 }
-
-#wave-owner-subsidy{
-  height:50px;
+#reviewForm_owner-used-granted_old {
+	width:35%;
 }
 
 #description>div>::-webkit-input-placeholder { /* WebKit browsers */

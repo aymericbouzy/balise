@@ -76,12 +76,17 @@
 	      <div class="title-small">
 	        Subventions <?php echo pretty_binet($request_info["wave"]["binet"],false); ?>
 	      </div>
-	      <div class="content" id="wave-owner-subsidy">
+	      <div class="content">
 	        <?php
 	          echo minipane("reviewForm_owner-granted-requested", "Accordées / demandées  ", 
-	          		$existing_subsidies["granted_amount"], $existing_subsidies["requested_amount"]);
+	          		$existing_subsidies["granted_amount"], 
+	          		$existing_subsidies["requested_amount"]);
 	          echo minipane("reviewForm_owner-used-available", "Utilisées / disponibles ", 
-	          		$existing_subsidies["used_amount"], $existing_subsidies["granted_amount"] - $existing_subsidies["used_amount"]);
+	          		$existing_subsidies["used_amount"],
+	          		 $existing_subsidies["granted_amount"] - $existing_subsidies["used_amount"]);
+	         	echo minipane("reviewForm_owner-used-granted_old", "Utilisées / accordées l'année dernière",
+	         			 $previous_subsidies["used_amount"],
+	         			 $previous_subsidies ["granted_amount"]);
 	        ?>
 	      </div>
 	    </div>
@@ -109,7 +114,7 @@
 	          		$previous_binet["subsidized_amount_granted"], 
 	          		$previous_binet["subsidized_amount_requested"]);
 	          echo minipane("reviewForm_used-available_old", " Utilisées", 
-	          		$previous_binet["subsidized_amount_used"],"");
+	          		$previous_binet["subsidized_amount_used"],"0");
 	        ?>
 	     </div>
 	    </div>
