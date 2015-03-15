@@ -82,9 +82,11 @@
   <li>
     <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
-  <li style="padding-right:20px;">
+  <li>
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
   </li>
+
+  <!-- Modal : the user can choose the wave to ask for subsidies (make a request) -->
   <?php
     if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
         ob_start();
