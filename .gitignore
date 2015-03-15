@@ -1,3 +1,7 @@
+/.settings/org.eclipse.wst.common.project.facet.core.xml
+/.buildpath
+/.settings/org.eclipse.php.core.prefs
+/.project
 
 htdocs/config/production.php
 
