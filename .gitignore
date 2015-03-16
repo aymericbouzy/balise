@@ -1,3 +1,4 @@
+/.gitignore~
 /htdocs/beta/config/production.php
 /.settings/org.eclipse.wst.common.project.facet.core.xml
 /.buildpath
