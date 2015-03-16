@@ -221,27 +221,13 @@
   width:30px;
 }
 
-/* Finances.php */
-#controlbar{
-  margin-bottom:10px;
-}
-#select-term {
-  display:inline-block;
-  width:16%;
-}
-#view-binet {
-  display:inline-block;
-  width:10%;
-}
+/* Operation & Budget index */
+
 #transfer_budgets {
   display:inline-block;
 }
 #choose-term {
   padding:7px;
-}
-
-#switch-operations-budgets {
-  margin-top:0px;
 }
 
 input.search {

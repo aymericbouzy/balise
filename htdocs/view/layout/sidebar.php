@@ -10,7 +10,7 @@
     			Changer de promotion <i class="fa fa-fw fa-chevron-down"></i>
     		</a>
     		<ul class="collapse" id="terms">
-    		<?php echo pretty_terms_list($binet,true); ?>
+    			<?php echo pretty_terms_list($binet,true); ?>
     		</ul>
     </li>
     <!-- Budget and operation -->
