@@ -46,7 +46,7 @@
       }
 
       if (!is_empty($_SERVER["HTTP_REFERER"])) {
-        mail_with_headers(WEBMASTER_EMAIL, "Status ".$status." : '".$header."'", "Requested URL : ".$_SERVER["REQUEST_URI"]."\nPrevious URL : ".$_SERVER["HTTP_REFERER"]);
+        mail_with_headers(WEBMASTER_EMAIL, "Status ".$status." : '".$header."'", "Requested URL : ".$_SERVER["REQUEST_URI"]."<br>Previous URL : ".$_SERVER["HTTP_REFERER"])."<br>".nl2br(get_debug_context());
       }
 
       $_GET["controller"] = "error";

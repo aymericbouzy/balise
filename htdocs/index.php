@@ -22,6 +22,7 @@
     $content .= "<tr valign='top'><td><b>File</b></td><td>$errfile</td></tr>";
     $content .= "<tr valign='top'><td><b>Line</b></td><td>$errline</td></tr>";
     $content .= "<tr valign='top'><td><b>Trace</b></td><td><pre>$trace</pre></td></tr>";
+    $content .= "<tr valign='top'><td><b>Context</b></td><td><pre>".nl2br(get_debug_context())."</pre></td></tr>";
     $content .= "</tbody></table>";
 
     return mail_with_headers(WEBMASTER_EMAIL, "Error ".$errno." : '".$errstr."'", $content);
