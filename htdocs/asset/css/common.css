@@ -52,6 +52,17 @@ body {
     }
 }
 
+#choose_promo_collapsed_list {
+	font-size:smaller;
+	border-bottom:1px solid #8e8e8e;
+}
+#choose_promo_collapsed_list>a{
+	padding-top: 0px;
+  padding-bottom: 10px;
+  line-height: 15px;
+  color: #999;
+}
+
 .side-information {
   font-size: smaller;
 }

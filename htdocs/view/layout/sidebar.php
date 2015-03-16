@@ -1,10 +1,19 @@
 <div class="collapse navbar-collapse navbar-ex1-collapse">
   <ul class="nav navbar-nav side-nav">
-    <!-- Choose binet using dropdown menu -->
+    <!-- Show current binet -->
     <li>
       <?php echo pretty_binet_term(make_term_id($binet, $term));?>
     </li>
-    <!-- Accueil : links to budget page -->
+    <!--  Change current term  -->
+    <li id="choose_promo_collapsed_list">
+    		<a href="javascript:;" data-target="#terms" data-toggle="collapse">
+    			Changer de promotion <i class="fa fa-fw fa-chevron-down"></i>
+    		</a>
+    		<ul class="collapse" id="terms">
+    		<?php echo pretty_terms_list($binet,true); ?>
+    		</ul>
+    </li>
+    <!-- Budget and operation -->
     <?php
       if (has_viewing_rights($binet, $term)) {
         echo li_link(
@@ -20,11 +29,12 @@
           $_GET["controller"] == "operation"
         );
       }
+      // Subventions
       echo li_link(
         link_to(path("", "request", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Subventions"),
         $_GET["controller"] == "request"
       );
-      // If subsidy provider
+      // If subsidy provider : Vagues de subventions
       $sidebar_waves = array_merge(select_waves(array("binet" => $binet, "term" => $term)), select_waves(array("binet" => $binet, "term" => $term, "state" => "rough_draft")));
       if (!is_empty($sidebar_waves)) {
         ?>

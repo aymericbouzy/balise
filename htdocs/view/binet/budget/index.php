@@ -3,17 +3,6 @@
   <div class="col-lg-10 col-md-10 col-sm-12">
     <div class="panel transparent-background">
       <div class="content" id="controlbar">
-        <div id="select-term">
-          <?php echo modal_toggle("choose-term", "Promo ".$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","shadowed0 blue-background white-text","terms"); ?>
-        </div>
-        <div id="view-binet">
-          <?php
-            echo insert_tooltip(
-              link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")),
-              "Voir le binet"
-            );
-          ?>
-        </div>
         <?php
         if (is_transferable()) {
           ?>
