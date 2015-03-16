@@ -1,12 +1,8 @@
 <?php
 
-  function link_to($path, $caption, $options = array(),$confirmation_modal_message = "") {
+  function link_to($path, $caption, $options = array(), $confirmation_modal_message = "", $modal_options = array()) {
     set_if_not_set($options["goto"], false);
-		if(!is_empty($confirmation_modal_message)){
-			set_if_not_set($options["modal"], true);
-		} else {
-			set_if_not_set($options["modal"], false);
-		}
+
     if (!in_array(substr($path, 0, 7), array("mailto:", "http://", "https:/")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
     }
@@ -21,15 +17,18 @@
         "onclick" => "goto('".$path."')",
         "style" => "cursor:pointer"
       )));
-    } else if ($options["modal"]) {
-    	set_if_not_set($options["modal_title"],"");
+    } else if (!is_empty($confirmation_modal_message)) {
+    	set_if_not_set($modal_options["title"],"Attention !");
     	// A modal toggle should at least be a button and not only a text in a div
     	set_if_not_set($options["class"], "btn");
+
+    	$modal_id = is_empty($modal_options["id"]) ? $options["id"]."_modal_auto_id" : $modal_options["id"] ;
     	$button_in_modal = link_to($path,"<div> Confirmer </div>",array("goto" => true, "class" => "btn"));
     	$content = $confirmation_modal_message."<div class=\"button-container\">".$button_in_modal."</div>";
-    	$modal = modal($options["id"]."_modal_auto_id", $options["modal_title"], $content);
+    	$modal = modal($modal_id, $modal_options["title"], $content);
+
     	return modal_toggle($options["id"], $caption,
-    			$options["class"], $options["id"]."modal")."\n".$modal;
+    			$options["class"], $modal_id)."\n".$modal;
     }
     else {
       $parameters = is_empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
