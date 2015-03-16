@@ -118,6 +118,18 @@
   margin-left:10px;
   font-size:11px;
 }
+
+.title-small.secondary-title{
+	background-color:#B0BEC5;
+  color:#000;
+}
+.title-small.secondary-title>a{
+  color:#2e2e2e;
+}
+.title-small.secondary-title>a:hover{
+  color:#000;
+  background-color: #B0B0B0;
+}
 /*------------------------------------------------------*/
 /* Info : text outside the panel */
 .content>.infos {

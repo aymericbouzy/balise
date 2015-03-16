@@ -63,15 +63,19 @@
     ?>
     <div class="panel shadowed light-blue-background">
       <?php
-        $caption = "<div class=\"title-small\"> Opérations liées à cette subvention</div>";
+        $caption = "<div class=\"title-small\"> Opérations liées à cette subvention ".
+        "<i class=\"fa fa-fw fa-chevron-down\"></i></div>";
         echo make_collapse_control($caption, "operation_subsidies_collapse");
       ?>
       <div class="collapse" id="operation_subsidies_collapse">
-        <div class="content">
+        <div class="content container-fluid">
           <?php
           foreach(select_operations_request($request["id"]) as $operation){
             $operation = select_operation($operation,array("id","comment","amount"));
-            echo pretty_operation($operation["id"]);
+            echo "<div class=\"row\">".
+            				"<div class=\"col-sm-8\">".pretty_operation($operation["id"], true, true)."</div>".
+            				"<div class=\"col-sm-4\">".pretty_amount($operation["amount"],false,true)."</div>".
+            		"</div>";
           }
           ?>
         </div>
