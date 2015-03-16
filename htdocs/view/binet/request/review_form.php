@@ -66,22 +66,22 @@
     }
     ?>
     <div class="panel shadowed">
-    	<?php 
+    	<?php
     		$collapse_title = "<div class=\"title\"> Résumé des subventions passées <i class=\"fa fa-fw fa-chevron-down\"></i></div>";
     		echo make_collapse_control($collapse_title, "subsidies-summary");
     	?>
     </div>
-	   <div class="collapse" id="subsidies-summary">
+	  <div class="collapse" id="subsidies-summary">
 	    <div class="panel light-blue-background shadowed">
 	      <div class="title-small">
 	        Subventions <?php echo pretty_binet($request_info["wave"]["binet"],false); ?>
 	      </div>
 	      <div class="content">
 	        <?php
-	          echo minipane("reviewForm_owner-granted-requested", "Accordées / demandées  ", 
-	          		$existing_subsidies["granted_amount"], 
+	          echo minipane("reviewForm_owner-granted-requested", "Accordées / demandées  ",
+	          		$existing_subsidies["granted_amount"],
 	          		$existing_subsidies["requested_amount"]);
-	          echo minipane("reviewForm_owner-used-available", "Utilisées / disponibles ", 
+	          echo minipane("reviewForm_owner-used-available", "Utilisées / disponibles ",
 	          		$existing_subsidies["used_amount"],
 	          		 $existing_subsidies["granted_amount"] - $existing_subsidies["used_amount"]);
 	         	echo minipane("reviewForm_owner-used-granted_old", "Utilisées / accordées l'année dernière",
@@ -91,32 +91,32 @@
 	      </div>
 	    </div>
 	    <div class="panel light-blue-background shadowed">
-	     <div class="title-small">
-	     	Total subventions reçues par le binet cette année:
-	     </div>
-	     <div class="content">
-	     		<?php 
-	     			echo minipane("reviewForm_granted-requested", "Accordées / demandées ", 
-	          		$current_binet["subsidized_amount_granted"], 
+	    	<div class="title-small">
+	     		Total subventions reçues par le binet cette année:
+	    	</div>
+	    	<div class="content">
+	     		<?php
+	     			echo minipane("reviewForm_granted-requested", "Accordées / demandées ",
+	          		$current_binet["subsidized_amount_granted"],
 	          		$current_binet["subsidized_amount_requested"]);
-	          echo minipane("reviewForm_used-available", " Utilisées / disponibles", 
+	          echo minipane("reviewForm_used-available", " Utilisées / disponibles",
 	          		$current_binet["subsidized_amount_used"], $current_binet["subsidized_amount_available"]);
 	        ?>
-	     </div>
+	    	</div>
 	    </div>
 	    <div class="panel light-blue-background shadowed" id="previous-term-subsidies" >
-	     <div class="title-small">
-	     	Pour l'année dernière:
-	     </div>
-	     <div class="content">
-	     		<?php 
-	     			echo minipane("reviewForm_granted-requested_old", "Accordées / demandées ", 
-	          		$previous_binet["subsidized_amount_granted"], 
+	    	<div class="title-small">
+	     		Pour l'année dernière:
+	     	</div>
+	     	<div class="content">
+	     		<?php
+	     			echo minipane("reviewForm_granted-requested_old", "Accordées / demandées ",
+	          		$previous_binet["subsidized_amount_granted"],
 	          		$previous_binet["subsidized_amount_requested"]);
-	          echo minipane("reviewForm_used-available_old", " Utilisées", 
+	          echo minipane("reviewForm_used-available_old", " Utilisées",
 	          		$previous_binet["subsidized_amount_used"],"0");
 	        ?>
-	     </div>
+	    	</div>
 	    </div>
 		</div>
     <!-- Form -->
