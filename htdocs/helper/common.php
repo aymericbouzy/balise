@@ -1,8 +1,12 @@
 <?php
 
-  function link_to($path, $caption, $options = array()) {
+  function link_to($path, $caption, $options = array(),$confirmation_modal_message = "") {
     set_if_not_set($options["goto"], false);
-
+		if(!is_empty($confirmation_modal_message)){
+			set_if_not_set($options["modal"], true);
+		} else {
+			set_if_not_set($options["modal"], false);
+		}
     if (!in_array(substr($path, 0, 7), array("mailto:", "http://", "https:/")) && substr($path, 0, 1) != "#") {
       $path = "/".$path;
     }
@@ -17,7 +21,14 @@
         "onclick" => "goto('".$path."')",
         "style" => "cursor:pointer"
       )));
-    } else {
+    } else if ($options["modal"]) {
+    	$button_in_modal = link_to($path,"<div> Confirmer </div>",array("goto" => true, "class" => "btn"));
+    	$content = $confirmation_modal_message."<div class=\"button-container\">".$button_in_modal."</div>";
+    	$modal = modal($options["id"]."modal", $options["title"], $content);
+    	return modal_toggle($options["id"], $caption,
+    			$options["class"], $options["id"]."modal")."\n".$modal;
+    }
+    else {
       $parameters = is_empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
       $parameters .= is_empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
       $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
@@ -92,9 +103,7 @@
                     ".close_button("modal")."
                     <h4 class=\"modal-title\">".$title."</h4>
                     </div>
-                    <div class=\"modal-body\">
-                      <div class=\"content\">\n".$content."</div>
-                    </div>
+                    <div class=\"modal-body\">".$content."</div>
                   </div>
                 </div>
               </div>";
