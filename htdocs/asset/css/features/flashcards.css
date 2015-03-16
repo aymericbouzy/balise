@@ -21,7 +21,9 @@
   width: 250px;
   overflow: hidden;
   padding: 10px;
-  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+  line-height:16px;
+  font-size:16px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 }
 
 .flashcard> button {
@@ -35,15 +37,15 @@
   color:#2e2e2e;
 }
 .notice {
-  background-color: rgb(50, 173, 39);
+  background-color: #66BB6A;
   color : #000;
 }
 .error {
-  background-color: rgb(173, 50, 39);
+  background-color: #EF5350;
   color : #000;
 }
 .warning {
-  background-color: rgb(255, 175, 36);
+  background-color: #FFCA28;
   color : #000;
 }
 
