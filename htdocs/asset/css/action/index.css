@@ -223,8 +223,14 @@
 
 /* Operation & Budget index */
 
+#controlbar{
+  margin-bottom:10px;
+}
+
 #transfer_budgets {
   display:inline-block;
+  float:right;
+  margin-right:25px;
 }
 #choose-term {
   padding:7px;

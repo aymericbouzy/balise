@@ -1,13 +1,12 @@
 <div class="row">
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
   <div class="col-lg-10 col-md-10 col-sm-12">
-    <div class="panel transparent-background">
-      <div class="content" id="controlbar">
-        <?php
-        if (is_transferable()) {
-          ?>
-          <div id="transfer_budgets">
-            <?php
+  	<?php
+      if (is_transferable()) {
+      ?>
+      <div class="row">
+        <div id="transfer_budgets">
+           <?php
             if (sizeOf($budgets) == 0) {
               echo link_to(
                 path("transfer", "budget", "", binet_prefix($binet, $term)),
@@ -24,11 +23,10 @@
             }
             ?>
           </div>
-          <?php
-          }
-        ?>
-      </div>
-    </div>
+         </div>
+       <?php
+       }
+      ?>
     <div class="panel shadowed">
       <div class="title">Résumé de la trésorerie du binet</div>
       <div class="content">
