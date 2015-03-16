@@ -11,7 +11,7 @@
   						?>
   						<li>
   							<?php
-                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
+                $link = in_array($_GET["controller"], array("budget", "operation", "request")) ?
                   path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
                   path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
                 echo link_to($link, pretty_binet_term($term_admin["id"], false));
