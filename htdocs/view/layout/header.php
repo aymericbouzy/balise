@@ -5,7 +5,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <?php echo link_to(path("", "home"), "Balise", array("class" => "navbar-brand")); ?>
+  <?php echo link_to(path("", "home"), "<i class=\"fa fa-fw fa-home\"></i> Balise", array("class" => "navbar-brand")); ?>
 </div>
 <ul class="nav navbar-right top-nav">
   <li>
@@ -82,6 +82,30 @@
   <li>
     <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
+
+  <li class="dropdown">
+  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      Mes binets 	<span class="caret"></span>
+    </a>
+  	<ul class="dropdown-menu" role="menu">
+  		<?php
+      	foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
+  				$term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
+  				?>
+  					<li>
+  						<?php
+                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
+                  path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
+                  path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
+                echo link_to($link, pretty_binet_term($term_admin["id"], false));
+            	?>
+  					</li>
+  				<?php
+				}
+			?>
+  	</ul>
+  </li>
+
   <li>
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
   </li>

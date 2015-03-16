@@ -2,27 +2,9 @@
   <ul class="nav navbar-nav side-nav">
     <!-- Choose binet using dropdown menu -->
     <li>
-      <!-- For all binets -->
-    	<a href="javascript:;" data-target="#binets" data-toggle="collapse"><?php echo pretty_binet($binet, false); ?> </a>
-				<ul id="binets" class="collapse">
-					<?php
-            foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
-  						$term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
-  						?>
-  						<li>
-  							<?php
-                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
-                  path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
-                  path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
-                echo link_to($link, pretty_binet_term($term_admin["id"], false));
-                ?>
-  						</li>
-  						<?php
-						}
-					?>
-				</ul>
+      <?php echo pretty_binet_term(make_term_id($binet, $term));?>
     </li>
-    <!-- Accueil : links to budget/operations page -->
+    <!-- Accueil : links to budget page -->
     <?php
       if (has_viewing_rights($binet, $term)) {
         echo li_link(
