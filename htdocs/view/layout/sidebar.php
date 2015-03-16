@@ -2,7 +2,8 @@
   <ul class="nav navbar-nav side-nav">
     <!-- Show current binet -->
     <li>
-      <?php echo pretty_binet_term(make_term_id($binet, $term));?>
+      <?php echo link_to(path("show","binet",$binet),
+      		"<i class=\"fa fa-fw fa-eye\"></i> ".pretty_binet_term(make_term_id($binet, $term),false));?>
     </li>
     <!--  Change current term  -->
     <li id="choose_promo_collapsed_list">
