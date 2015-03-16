@@ -22,9 +22,12 @@
         "style" => "cursor:pointer"
       )));
     } else if ($options["modal"]) {
+    	set_if_not_set($options["modal_title"],"");
+    	// A modal toggle should at least be a button and not only a text in a div
+    	set_if_not_set($options["class"], "btn");
     	$button_in_modal = link_to($path,"<div> Confirmer </div>",array("goto" => true, "class" => "btn"));
     	$content = $confirmation_modal_message."<div class=\"button-container\">".$button_in_modal."</div>";
-    	$modal = modal($options["id"]."modal", $options["title"], $content);
+    	$modal = modal($options["id"]."_modal_auto_id", $options["modal_title"], $content);
     	return modal_toggle($options["id"], $caption,
     			$options["class"], $options["id"]."modal")."\n".$modal;
     }
