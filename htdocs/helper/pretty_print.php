@@ -96,7 +96,7 @@
       if (has_viewing_rights($binet_term["binet"], $binet_term["term"])) {
         $list .= $li.link_to(path("", "binet", binet_term_id($binet_term["binet"], $binet_term["term"])), $binet_term["term"])." ".$liend;
       } else {
-        $list .= $li.$binet_term["term"].$liend;
+        $list .= $li.$binet_term["term"]." <i> Vous n'avez pas la possibilité de voir ce mandat </i>".$liend;
       }
     }
     return $list;

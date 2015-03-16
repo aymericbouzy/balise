@@ -6,14 +6,16 @@
       		"<i class=\"fa fa-fw fa-eye\"></i> ".pretty_binet_term(make_term_id($binet, $term),false));?>
     </li>
     <!--  Change current term  -->
-    <li id="choose_promo_collapsed_list">
-    		<a href="javascript:;" data-target="#terms" data-toggle="collapse">
-    			Changer de promotion <i class="fa fa-fw fa-chevron-down"></i>
-    		</a>
-    		<ul class="collapse" id="terms">
-    			<?php echo pretty_terms_list($binet,true); ?>
-    		</ul>
-    </li>
+    <?php if(sizeof(select_terms(array("binet" => $binet))) > 1){?>
+	    <li id="choose_promo_collapsed_list">
+	    		<a href="javascript:;" data-target="#terms" data-toggle="collapse">
+	    			Voir une autre promotion <i class="fa fa-fw fa-chevron-down"></i>
+	    		</a>
+	    		<ul class="collapse" id="terms">
+	    			<?php echo pretty_terms_list($binet,true); ?>
+	    		</ul>
+	    </li>
+	  <?php } ?>
     <!-- Budget and operation -->
     <?php
       if (has_viewing_rights($binet, $term)) {
