@@ -82,7 +82,7 @@
   <li>
     <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
-
+	<?php if (!is_empty($_GET["prefix"])) { ?>
   <li class="dropdown">
   	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
       Mes binets 	<span class="caret"></span>
@@ -105,6 +105,7 @@
 			?>
   	</ul>
   </li>
+  <?php } ?>
 
   <li>
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
