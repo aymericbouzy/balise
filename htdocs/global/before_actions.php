@@ -176,11 +176,11 @@
           case "tags":
             $tags = explode(" ", $value);
             foreach ($tags as $tag) {
-              $valid = $valid && $tag == clean_string($tag);
+              $valid = $valid && $tag == preg_does_match("/^([".allowed_clean_string_characters()."])+$/", $tag);
             }
             break;
           case "binet":
-            $valid = $valid && preg_does_match("/^([a-z0-9-])+$/", $value);
+            $valid = $valid && preg_does_match("/^([".allowed_clean_string_characters()."])+$/", $value);
             break;
           case "term":
             $valid = $valid && is_numeric($value);
