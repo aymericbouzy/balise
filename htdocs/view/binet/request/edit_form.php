@@ -12,7 +12,7 @@ if ($_GET["action"] == "new") {
   <div class="panel light-blue-background shadowed">
     <div class="content">
       Faire la demande pour la promotion :
-      <div class="switch" id="requestForm_chooseTerm">
+      <div class="switch shadowed0" id="requestForm_chooseTerm">
         <span class="left component <?php echo $current_term_active ? "active" : "inactive"; ?>" >
           <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet), array("wave" => $request["wave"]["id"])),
           $current_term_binet." ".($current_term_active ? "<i class=\"fa fa-fw fa-check\"></i>" :"")); ?>

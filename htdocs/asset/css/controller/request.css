@@ -61,74 +61,8 @@
   font-size:1em;
   font-weight:500;
 }
-.sh-bin-stats:hover{
-  -webkit-filter:brightness(0.7);
-}
-.sh-bin-stats>.message{
-  color:#fff;
-  position:absolute;
-  top:40px;
-  left:100px;
-  margin:auto;
-  background-color:#2e2e2e;
-  padding:5px;
-  border-radius:4px;
-  z-index:1000;
-  visibility:hidden;
-}
-.sh-bin-stats:hover>.message{
-  visibility : visible;
-}
-#granted {
-  left:1%;
-  top:5px;
-  height:40px;
-  width:48%;
-  background-color:#AA00FF;
-}
-
-#used {
-  left:51%;
-  top:5px;
-  height:40px;
-  width:48%;
-  background-color:#3E2723;
-}
-
-#wave-owner-subsidy{
-  height:50px;
-}
-
-#current-term {
-  height:115px;
-}
-
-#previous-term {
-  height:115px;
-  -webkit-filter: sepia(0.6);
-}
-
-.panel>.content {
-  position:relative;
-}
 
 
-#description>div>::-webkit-input-placeholder { /* WebKit browsers */
-  color:    #fff;
-  opacity:  0.7;
-}
-#description>div>:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  color:    #fff;
-  opacity:  0.7;
-}
-#description>div>::-moz-placeholder { /* Mozilla Firefox 19+ */
-  color:    #fff;
-  opacity:  0.7;
-}
-#description>div>:-ms-input-placeholder { /* Internet Explorer 10+ */
-  color:    #fff;
-  opacity:  0.7;
-}
 
 /* --------------------------------------------------------------------------*/
 /* Request index */
@@ -256,4 +190,105 @@
   position:absolute;
   right:5px;
   top:5px;
+}
+
+/* Review request form */
+
+.reviewForm_infotitle  {
+	display:block;
+	font-size : 13px;
+	width: 100%;
+	text-align: center;
+}
+
+#reviewForm_spending , #reviewForm_spending_old {  background-color:#C51162;}
+#reviewForm_income , #reviewForm_income_old {  background-color:#4CAF50;}
+#reviewForm_balance , #reviewForm_balance_old {  background-color:#2196F3;}
+#reviewForm_granted-requested, #reviewForm_granted-requested_old { background-color: #AA00FF;}
+#reviewForm_used-available, #reviewForm_used-available_old { background-color: #3E2723;}
+
+#reviewForm_income,
+#reviewForm_spending,
+#reviewForm_balance,
+#reviewForm_income_old,
+#reviewForm_spending_old,
+#reviewForm_balance_old{
+	position:relative;
+	display:inline-block;
+	width:31%;
+	min-height:30px;
+	margin:1%;
+}
+
+#reviewForm_granted-requested,
+#reviewForm_used-available,
+#reviewForm_granted-requested_old,
+#reviewForm_used-available_old { 
+	position:relative;
+	display: inline-block;
+	width:48%;
+	margin:1%;
+	min-height: 30px;
+}
+
+
+
+#previous-term, #previous-term-subsidies {
+  -webkit-filter: sepia(0.6);
+}
+
+#current-term:hover , 
+#previous-term:hover{
+  -webkit-filter:brightness(0.7);
+}
+#current-term >.message,
+#previous-term>.message{
+  color:#fff;
+  position:absolute;
+  top:10px;
+  left:30%;
+  margin:auto;
+  background-color:#2e2e2e;
+  padding:5px;
+  border-radius:4px;
+  z-index:1000;
+  visibility:hidden;
+}
+#current-term:hover>.message,
+#previous-term:hover>.message {
+  visibility : visible;
+}
+
+
+#reviewForm_owner-granted-requested {background-color:#AA00FF;}
+#reviewForm_owner-used-available { background-color: #3E2723;}
+#reviewForm_owner-used-granted_old { background-color: #5e5e5e;}
+#reviewForm_owner-granted-requested ,
+#reviewForm_owner-used-available ,
+#reviewForm_owner-used-granted_old {
+	position:relative;
+	display: inline-block;
+  margin:1.5%;
+  height:40px;
+  width:27%;
+}
+#reviewForm_owner-used-granted_old {
+	width:35%;
+}
+
+#description>div>::-webkit-input-placeholder { /* WebKit browsers */
+  color:    #fff;
+  opacity:  0.7;
+}
+#description>div>:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  color:    #fff;
+  opacity:  0.7;
+}
+#description>div>::-moz-placeholder { /* Mozilla Firefox 19+ */
+  color:    #fff;
+  opacity:  0.7;
+}
+#description>div>:-ms-input-placeholder { /* Internet Explorer 10+ */
+  color:    #fff;
+  opacity:  0.7;
 }

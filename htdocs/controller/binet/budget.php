@@ -1,12 +1,21 @@
 <?php
 
-  function budget_is_alone() {
+  function budget_is_editable() {
     $subsidies = select_subsidies(array("budget" => $_GET["budget"]));
     return is_empty($subsidies);
   }
 
-  function check_budget_is_alone() {
-    header_if(!budget_is_alone(), 403);
+  function check_budget_is_editable() {
+    header_if(!budget_is_editable(), 403);
+  }
+
+  function budget_is_deletable() {
+    $operations = select_operations_budget($_GET["budget"]);
+    return is_empty($operations) && budget_is_editable();
+  }
+
+  function check_budget_is_deletable() {
+    header_if(!budget_is_deletable(), 403);
   }
 
   function is_transferable() {
@@ -22,7 +31,8 @@
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "transfer", "copy"));
   before_action("create_form", array("new", "create", "edit", "update"), "budget");
   before_action("check_form", array("create", "update"), "budget");
-  before_action("check_budget_is_alone", array("edit", "update", "delete"));
+  before_action("check_budget_is_editable", array("edit", "update"));
+  before_action("check_budget_is_deletable", array("delete"));
   before_action("create_form", array("transfer", "copy"), "budget_transfer");
   before_action("check_form", array("copy"), "budget_transfer");
   before_action("check_is_transferable", array("transfer", "copy"));
