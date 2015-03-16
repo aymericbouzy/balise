@@ -41,7 +41,7 @@
           "<div class=\"spot shadowed\">".
             ($number_pending_validations > 0 ?
                 insert_tooltip(
-                  link_to(path("", "validation", "", binet_prefix($term_admin["binet"], $term_admin["term"])),
+                  link_to(path("", "operation", "", binet_prefix($term_admin["binet"], $term_admin["term"])),
                     $number_pending_validations,array("class"=>"counter counter-lg shadowed0")),
                   "Validations en attente")
                 : "")."
