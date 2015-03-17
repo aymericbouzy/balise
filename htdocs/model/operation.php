@@ -30,7 +30,7 @@
       $operation["needs_validation"] = false;
       $requests = array();
       foreach (select_budgets_operation($operation["id"]) as $budget) {
-        foreach (select_subsidies(array("budget" => $budget["id"])) as $subsidy) {
+        foreach (select_subsidies(array("budget" => $budget["id"], "granted_amount" => array(">", 0))) as $subsidy) {
           $subsidy = select_subsidy($subsidy["id"], array("request"));
           $requests[] = $subsidy["request"];
         }
@@ -131,8 +131,11 @@
     }
     $subsidies_by_request = array();
     foreach ($subsidies as $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("id", "request"));
-      $subsidies_by_request[$subsidy["request"]][] = $subsidy["id"];
+      $subsidy = select_subsidy($subsidy["id"], array("id", "request", "granted_amount"));
+      $request = select_request($subsidy["request"], array("id", "state"));
+      if ($subsidy["granted_amount"] > 0 && $request["state"] == "accepted") {
+        $subsidies_by_request[$request["id"]][] = $subsidy["id"];
+      }
     }
     return $subsidies_by_request;
   }

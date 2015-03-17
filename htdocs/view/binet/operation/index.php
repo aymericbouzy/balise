@@ -62,80 +62,86 @@
             </div>
       	</div>
     <?php } ?>
-    <div class="panel shadowed">
-      <div class="title">Opérations</div>
-      <div class="content">
-        <div id="searchlist">
-          <?php echo search_input();?>
-          <table class="table table-bordered table-hover table-small-char">
-            <thead>
-              <tr>
-                <th>Nom</th>
-                <th>Tags</th>
-                <th>Date</th>
-                <th>+</th>
-                <th>-</th>
-              </tr>
-            </thead>
-            <tbody class="list">
-              <?php
-                foreach ($operations as $operation) {
-                  echo operation_line($operation);
-                }
-              ?>
-            </tbody>
-            <thead class="separator">
-              <tr>
-                <td colspan="5"></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="total">
-                <td colspan="3">Total</td>
-                <td><?php echo pretty_amount($sum_incomes,false); ?></td>
-                <td><?php echo pretty_amount($sum_spendings,false); ?></td>
-              </tr>
-              <tr class="total">
-                <td colspan="3">Solde</td>
-                <td colspan="2"><b><?php echo pretty_amount($balance); ?></b></td>
-              </tr>
-            </tbody>
-            <thead class="separator">
-              <tr>
-                <td colspan="5"></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="grey-background">
-                <td colspan="5">
-                  Opérations en attente de validation par la Kès
-                </td>
-              </tr>
-              <?php foreach($op_pending_kes_validations as $operation ){
-                  echo operation_line($operation);
-                } ?>
-            </tbody>
-            <thead class="separator">
-              <tr>
-                <td colspan="5"></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="total">
-                <td colspan="3">Total après validation des opérations en attente</td>
-                <td><?php echo pretty_amount($sum_incomes + $sum_pending_incomes,false); ?></td>
-                <td><?php echo pretty_amount($sum_spendings + $sum_pending_spendings,false); ?></td>
-              </tr>
-              <tr class="total">
-                <td colspan="3">Solde après validation des opérations en attente</td>
-                <td colspan="2"><b><?php echo pretty_amount($balance + $pendings_balance); ?></b></td>
-              </tr>
-            </tbody>
-          </table>
-          <?php echo tip(" Vous pouvez copier-coller les informations de ce tableau.") ?>
-        </div>
-      </div>
-    </div>
+  </div>
+  <div class="col-lg-1 col-md-1 col-sm-0"></div>
+</div>
+<div class="row">
+	<div class="col-lg-1 col-md-1 col-sm-0"></div>
+	<div class="col-lg-10 col-md-10 col-sm-12">
+	  <div class="panel shadowed">
+	    <div class="title">Opérations</div>
+	    <div class="content">
+	      <div id="searchlist">
+	        <?php echo search_input();?>
+	        <table class="table table-bordered table-hover table-small-char">
+	          <thead>
+	            <tr>
+	              <th>Nom</th>
+	              <th>Mots-clefs</th>
+	              <th>Date</th>
+	              <th>+</th>
+	              <th>-</th>
+	            </tr>
+	          </thead>
+	          <tbody class="list">
+	            <?php
+	              foreach ($operations as $operation) {
+	                echo operation_line($operation);
+	              }
+	            ?>
+	          </tbody>
+	          <thead class="separator">
+	            <tr>
+	              <td colspan="5"></td>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr class="total">
+	              <td colspan="3">Total</td>
+	              <td><?php echo pretty_amount($sum_incomes,false); ?></td>
+	              <td><?php echo pretty_amount($sum_spendings,false); ?></td>
+	            </tr>
+	            <tr class="total">
+	              <td colspan="3">Solde</td>
+	              <td colspan="2"><b><?php echo pretty_amount($balance); ?></b></td>
+	            </tr>
+	          </tbody>
+	          <thead class="separator">
+	            <tr>
+	              <td colspan="5"></td>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr class="grey-background">
+	              <td colspan="5">
+	                Opérations en attente de validation par la Kès
+	              </td>
+	            </tr>
+	            <?php foreach($op_pending_kes_validations as $operation ){
+	                echo operation_line($operation);
+	              } ?>
+	          </tbody>
+	          <thead class="separator">
+	            <tr>
+	              <td colspan="5"></td>
+	            </tr>
+	          </thead>
+	          <tbody>
+	            <tr class="total">
+	              <td colspan="3">Total après validation des opérations en attente</td>
+	              <td><?php echo pretty_amount($sum_incomes + $sum_pending_incomes,false); ?></td>
+	              <td><?php echo pretty_amount($sum_spendings + $sum_pending_spendings,false); ?></td>
+	            </tr>
+	            <tr class="total">
+	              <td colspan="3">Solde après validation des opérations en attente</td>
+	              <td colspan="2"><b><?php echo pretty_amount($balance + $pendings_balance); ?></b></td>
+	            </tr>
+	          </tbody>
+	        </table>
+	        <?php echo tip(" Vous pouvez copier-coller les informations de ce tableau.") ?>
+	      </div>
+	    </div>
+	  </div>
   </div>
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
 </div>

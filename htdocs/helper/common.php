@@ -140,3 +140,13 @@
     }
     return $human_string;
   }
+
+  function get_debug_context() {
+    $url = $_SERVER["REQUEST_URI"];
+    $browser = $_SERVER["HTTP_USER_AGENT"];
+    $email = connected_student() ? select_student($_SESSION["student"], array("email"))["email"] : "";
+    $post = array_to_string($_POST);
+    $session = array_to_string($_SESSION);
+    $get = array_to_string($_GET);
+    return "\nURL demandée :\t\t\t\t\t".$url."\nBrowser :\t\t\t\t\t\t\t".$browser."\npersonne connectée :\t\t\t\t".$email."\nétat de la variable \$_POST :\t\t\t".$post."\nétat de la variable \$_SESSION :\t\t".$session."\nétat de la variable \$_GET :\t\t\t".$get;
+  }

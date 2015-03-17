@@ -356,6 +356,8 @@ footer>#bug-report-action {
 .switch>.component {
   display: inline-block;
   text-align: center;
+  color:#fff;
+  font-weight:bold;
   width: 50%;
   height:100%;
   padding: 2px;
@@ -379,10 +381,6 @@ footer>#bug-report-action {
   color: #8b8b8b;
 }
 
-.switch>.component>a{
-  color:#fff;
-  font-weight:bold;
-}
 
 /*--------------------------------------------------------------------------*/
 /* Fuzzy search */
