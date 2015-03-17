@@ -45,10 +45,6 @@
         }
       }
 
-      if (!is_empty($_SERVER["HTTP_REFERER"])) {
-        mail_with_headers(WEBMASTER_EMAIL, "Status ".$status." : '".$header."'", "Requested URL : ".$_SERVER["REQUEST_URI"]."\nPrevious URL : ".$_SERVER["HTTP_REFERER"]);
-      }
-
       $_GET["controller"] = "error";
       $_GET["action"] = $status;
       unset($_GET["prefix"]);
@@ -176,11 +172,11 @@
           case "tags":
             $tags = explode(" ", $value);
             foreach ($tags as $tag) {
-              $valid = $valid && $tag == clean_string($tag);
+              $valid = $valid && $tag == preg_does_match("/^([".allowed_clean_string_characters()."])+$/", $tag);
             }
             break;
           case "binet":
-            $valid = $valid && preg_does_match("/^([a-z0-9-])+$/", $value);
+            $valid = $valid && preg_does_match("/^([".allowed_clean_string_characters()."])+$/", $value);
             break;
           case "term":
             $valid = $valid && is_numeric($value);

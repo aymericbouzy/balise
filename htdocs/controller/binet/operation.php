@@ -19,7 +19,7 @@
     $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($operation["amount"] > 0 ? ">" : "<", 0)));
     if (is_empty($budgets)) {
       $_SESSION["warning"][] = "Avant de pouvoir faire apparaître cette opération dans ta trésorerie, tu dois créer un budget auquel l'associer.";
-      redirect_to_path(path("", "validation", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
+      redirect_to_path(path("", "operation", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
     }
   }
 

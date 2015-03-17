@@ -11,7 +11,7 @@
   						?>
   						<li>
   							<?php
-                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
+                $link = in_array($_GET["controller"], array("budget", "operation", "request")) ?
                   path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
                   path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
                 echo link_to($link, pretty_binet_term($term_admin["id"], false));
@@ -33,7 +33,7 @@
         echo li_link(
           link_to(
             path("", "operation", "", binet_prefix($binet, $term)),
-            "<i class=\"fa fa-fw fa-database\"></i> Opérations".($number_pending_validations > 0 ? " <span class=\"badge\">".$number_pending_validations."</span>" : "")
+            "<i class=\"fa fa-fw fa-database\"></i> Opérations".(($number_pending_validations > 0 && has_editing_rights($binet,$term))? " <span class=\"badge\">".$number_pending_validations."</span>" : "")
           ),
           $_GET["controller"] == "operation"
         );
