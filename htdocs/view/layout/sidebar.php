@@ -26,18 +26,16 @@
     <?php
       if (has_viewing_rights($binet, $term)) {
         echo li_link(
-          link_to(path("", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-database\"></i> Trésorerie"),
-          $_GET["controller"] == "budget" || $_GET["controller"] == "operation"
+          link_to(path("", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Budget"),
+          $_GET["controller"] == "budget"
         );
-      }
-      $number_pending_validations = count_pending_validations($binet, $term);
-      if (has_editing_rights($binet, $term)) {
+        $number_pending_validations = count_pending_validations($binet, $term);
         echo li_link(
           link_to(
-            path("", "validation", "", binet_prefix($binet, $term)),
-            "<i class=\"fa fa-fw fa-check\"></i> Validations".($number_pending_validations > 0 ? " <span class=\"badge counter\">".$number_pending_validations."</span>" : "")
+            path("", "operation", "", binet_prefix($binet, $term)),
+            "<i class=\"fa fa-fw fa-database\"></i> Opérations".($number_pending_validations > 0 ? " <span class=\"badge\">".$number_pending_validations."</span>" : "")
           ),
-          $_GET["controller"] == "validation"
+          $_GET["controller"] == "operation"
         );
       }
       echo li_link(

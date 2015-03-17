@@ -126,6 +126,7 @@
     write_controller_rules(array("controller" => "tag", "except" => array("edit", "update", "delete")));
     write_controller_rules(array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete", "show")));
     write_controller_rules(array("controller" => "student", "except" => array("new", "create", "edit", "update", "delete", "index")));
+    write_controller_rules(array("controller" => "validation", "except" => array("show", "edit", "update", "new", "create", "delete")));
 
     write_path_rule(path("", "binet", "([a-z-]+)/([0-9]+)"), true_path("", "budget", "", "binet/$1/$2"));
     write_controller_rules(array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
