@@ -150,7 +150,7 @@
       ?>
       <div class="sh-bin-resume light-blue-background shadowed">
         <div class="title">
-          Vagues de subventions
+          Vagues de subventions émises
         </div>
         <?php
           foreach($waves as $wave) {
@@ -167,5 +167,37 @@
       <?php
     }
   ?>
+  <?php if(has_viewing_rights($binet['id'],$binet['current_term'])) {?>
+	  <div class="panel shadowed light-blue-background">
+	  	<?php
+	  		$collapse_control_content =" <div class=\"title-small\"> Subventions reçues".
+  												"<i class=\"fa fa-fw fa-chevron-down\"></i> </div>";
+	  		echo make_collapse_control($collapse_control_content, "subsidies_list");
+	  	?>
+	  	<div class="collapse" id="subsidies_list">
+	  		<div class="content">
+	  		<?php
+          foreach (select_requests(array("binet" => $binet['id'],"term"=> $binet["current_term"])) as $request) {
+          	$request = select_request($request["id"] , array("id","wave","binet","granted_amount"))
+						?>
+							<div class="panel-line">
+								<div class="col-sm-8">
+									<?php echo pretty_wave($request['wave']); ?>
+								</div>
+								<div class="col-sm-3">
+									<?php echo pretty_amount($request['granted_amount']); ?>
+								</div>
+								<div class="col-sm-1">
+									<?php echo link_to(path("show","request",$request["id"],binet_prefix($binet['id'],$binet['current_term'])),
+											"<i class=\"fa fa-fw fa-eye\"></i>")?>
+								</div>
+							</div>
+						<?php
+          }
+          ?>
+	  		</div>
+	  	</div>
+	  </div>
+  <?php } ?>
 </div>
 <?php echo modal("terms", "Toutes les promotions du binet", pretty_terms_list($binet["id"])); ?>
