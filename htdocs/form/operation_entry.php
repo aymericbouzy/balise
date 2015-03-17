@@ -10,7 +10,9 @@
     $id = $GLOBALS["operation"]["id"];
   }
   $prefix = isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : "";
-  $form["redirect_to_if_error"] = path($origin_action, "operation", $id, $prefix);
+  $binet = isset($_GET["binet"]) ? $_GET["binet"] : (isset($_POST["binet"]) ? $_POST["binet"] : "");
+  $parameters = !isset($_GET["prefix"]) ? array("binet" => $binet) : array();
+  $form["redirect_to_if_error"] = path($origin_action, "operation", $id, $prefix, $parameters);
   $form["destination_path"] = path($destination_action, "operation", $id, $prefix);
   $form["html_form_path"] = VIEW_PATH."binet/operation/form.php";
   if (is_empty($prefix)) {
@@ -50,7 +52,10 @@
       if (!$initial_input["sign"]) {
         $initial_input["amount"] *= -1;
       }
-    } elseif (is_empty($_GET["prefix"])) {
+    } else {
+      if (is_empty($_GET["prefix"])) {
+        $initial_input["binet"] = $_GET["binet"];
+      }
       $initial_input["payment_date"] = current_date();
       $initial_input["next_term"] = 0;
     }

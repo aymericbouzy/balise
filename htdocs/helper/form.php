@@ -17,7 +17,7 @@
           }
           $form_input = form_group_select($label, $field_name, $parameters["options"], $field["value"], $form["name"], $parameters);
         } else {
-          $form_input = form_hidden($field_name, $field["value"]);
+          $form_input = form_hidden($field_name, $field["value"][0]);
         }
         break;
       case "date":

@@ -31,7 +31,7 @@
             </span>
             <span class="post-operation">
               <?php
-                $link = link_to(path("new", "operation", "", binet_prefix($binet["id"], $binet["current_term"])), "<i class=\"fa fa-fw fa-plus-circle\"></i>");
+                $link = link_to(path("new", "operation", "", "", array("binet" => $binet["id"])), "<i class=\"fa fa-fw fa-plus-circle\"></i>");
                 echo insert_tooltip($link,"Poster une opération pour le binet ".pretty_binet($binet["id"],false,false));
               ?>
             </span>
