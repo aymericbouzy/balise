@@ -12,6 +12,7 @@
   before_action("check_admin", array("delete"));
   before_action("current_kessier", array("new", "create", "delete"));
   before_action("create_form", array("new", "create"), "admin");
+  before_action("check_form", array("create"), "admin");
 
   switch ($_GET["action"]) {
 

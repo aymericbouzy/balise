@@ -85,7 +85,7 @@
           <thead>
             <tr>
               <th>Nom</th>
-              <th>Tags</th>
+              <th>Mots-clefs</th>
               <th>Date</th>
               <th>+</th>
               <th>-</th>
