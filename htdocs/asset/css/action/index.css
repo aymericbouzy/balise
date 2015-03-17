@@ -156,6 +156,17 @@
   height:25px;
 }
 
+.post-operation{
+  display:table-cell;
+  text-align:center;
+  font-size:20px;
+  width:50px;
+}
+.post-operation>a{
+  text-decoration:none;
+  color:#52CC29;
+}
+
 .amount {
   display:table-cell;
   vertical-align:middle;
