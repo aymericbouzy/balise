@@ -71,6 +71,30 @@
     <?php
   }
   ?>
+  <?php if (!is_empty($_GET["prefix"])) { ?>
+	  <li class="dropdown">
+	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+	      <i style="color:#3399FF" class="fa fa-fw fa-group"></i> 	<span class="caret"></span>
+	    </a>
+	  	<ul class="dropdown-menu" role="menu">
+	  		<?php
+	      	foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
+	  				$term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
+	  				?>
+	  					<li>
+	  						<?php
+	                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
+	                  path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
+	                  path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
+	                echo link_to($link, pretty_binet_term($term_admin["id"], false));
+	            	?>
+	  					</li>
+	  				<?php
+					}
+				?>
+	  	</ul>
+	  </li>
+  <?php } ?>
   <li>
     <?php
     if (is_current_kessier()) {
@@ -82,30 +106,6 @@
   <li>
     <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
-	<?php if (!is_empty($_GET["prefix"])) { ?>
-  <li class="dropdown">
-  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-      Mes binets 	<span class="caret"></span>
-    </a>
-  	<ul class="dropdown-menu" role="menu">
-  		<?php
-      	foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
-  				$term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
-  				?>
-  					<li>
-  						<?php
-                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
-                  path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
-                  path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
-                echo link_to($link, pretty_binet_term($term_admin["id"], false));
-            	?>
-  					</li>
-  				<?php
-				}
-			?>
-  	</ul>
-  </li>
-  <?php } ?>
 
   <li>
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>

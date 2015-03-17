@@ -1,21 +1,26 @@
 <div class="collapse navbar-collapse navbar-ex1-collapse">
   <ul class="nav navbar-nav side-nav">
     <!-- Show current binet -->
-    <li>
-      <?php echo link_to(path("show","binet",$binet),
-      		"<i class=\"fa fa-fw fa-eye\"></i> ".pretty_binet_term(make_term_id($binet, $term),false));?>
-    </li>
-    <!--  Change current term  -->
-    <?php if(sizeof(select_terms(array("binet" => $binet))) > 1){?>
-	    <li id="choose_promo_collapsed_list">
-	    		<a href="javascript:;" data-target="#terms" data-toggle="collapse">
-	    			Voir une autre promotion <i class="fa fa-fw fa-chevron-down"></i>
+    <li id="binetName_and_switchPromo" >
+    	<span>
+	      <?php
+	      echo link_to(path("show","binet",$binet),
+	      		"<i class=\"fa fa-fw fa-eye\"></i> ".pretty_binet_term(make_term_id($binet, $term),false),
+	      		array("id"=>"show_binet"));
+	      ?>
+    		<!--  Change current term  -->
+    		<?php if(sizeof(select_terms(array("binet" => $binet))) > 1){?>
+	    		<a href="javascript:;" data-target="#terms" data-toggle="collapse" id="uncollapse_terms">
+	    			<i class="fa fa-fw fa-clock-o"></i><span class="caret"></span>
 	    		</a>
-	    		<ul class="collapse" id="terms">
+	    	<?php } ?>
+	    </span>
+	  </li>
+	  <li>
+	  	<ul class="collapse" id="terms">
 	    			<?php echo pretty_terms_list($binet,true); ?>
-	    		</ul>
-	    </li>
-	  <?php } ?>
+	    </ul>
+	  </li>
     <!-- Budget and operation -->
     <?php
       if (has_viewing_rights($binet, $term)) {

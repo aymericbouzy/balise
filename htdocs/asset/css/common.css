@@ -170,7 +170,8 @@ body {
         background-color: #5B5B5B;
     }
 
-    .side-nav>li>a {
+    .side-nav>li>a,
+    .side-nav>#binetName_and_switchPromo>span  {
         width: 225px;
     }
 
@@ -178,6 +179,9 @@ body {
     .side-nav li a:focus {
         outline: none;
         background-color: #000 !important;
+    }
+    .side-nav>li>ul>li>a{
+     width:225px;
     }
 }
 
@@ -196,6 +200,20 @@ body {
     color: #fff;
 }
 
+.side-nav>#binetName_and_switchPromo>span>a {
+	display:inline-block;
+	text-decoration: none;
+	color:#999;
+	padding:10px;
+}
+a#uncollapse_terms {
+	border-left:1px solid rgba(255,255,255,0.3);
+	float:right;
+}
+#show_binet{
+	width:176px;
+	overflow: hidden;
+}
 .add-operation:hover {
     background-color:#6CB5FF;
 }
