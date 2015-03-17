@@ -71,7 +71,7 @@
     <?php
   }
   ?>
-  <?php if (!is_empty($_GET["prefix"])) { ?>
+  <?php if ($_GET["controller"]!="home") { ?>
 	  <li class="dropdown">
 	  	<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	      <i style="color:#3399FF" class="fa fa-fw fa-group"></i> 	<span class="caret"></span>
