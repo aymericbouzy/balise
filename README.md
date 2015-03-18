@@ -20,6 +20,7 @@ Le site peut être mis en ligne uniquement depuis le réseau élève. Il faut to
 Le fichier de configuration du site s'appelle `htdocs/config/production.php` : le fichier `htdocs/config/development.php` peut servir de base pour savoir quels paramètres spécifier, et sous quelle format. Si on développe en local et que l'on souhaite utiliser le fichier `development.php`, il suffit de définir une variable d'environnement au lancement du serveur. Avec MAMP en particulier, il suffit de rajouter le fichier `envvars` suivant dans le dossier `MAMP/Library/bin/` avec par exemple :
 ```
 export state="development"
+export webmaster_email="prenom.nom@polytechnique.edu"
 ```
 Cela aura pour effet de définir une variable d'environnement appelée `state`, initialisée à `"development"` ; le site prendra alors le fichier de configuration `developement.php`.
 La variable `ROOT_PATH` permet éventuellement de placer le site dans un sous-dossier : par exemple, si on initialise le serveur sur le dossier `balise/` (plutôt que `htdocs/`), on pourra définir la variable `ROOT_PATH` comme étant égale à `htdocs/`.
