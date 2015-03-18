@@ -1,6 +1,6 @@
 <?php
 
-  define("WEBMASTER_EMAIL", "aymeric.bouzy@polytechique.edu");
+  define("WEBMASTER_EMAIL", $_ENV["webmaster_email"]);
   define("STATE", "development");
 
   // when changing these values, run localhost/url_rewriting.php to rewrite .htaccess file.
