@@ -82,7 +82,7 @@
   }
 
   function has_viewing_rights($binet, $term) {
-    if (status_admin_current_binet(KES_ID)) {
+    if (status_viewer_binet($binet, $term) || status_admin_current_binet(KES_ID)) {
       return true;
     } else {
       $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term - 1), "student" => $_SESSION["student"]));

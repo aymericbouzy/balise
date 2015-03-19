@@ -149,6 +149,16 @@
     return !is_empty($results);
   }
 
+  function status_viewer_binet($binet, $term) {
+    $connected_student = connected_student();
+    if ($connected_student) {
+      $terms = select_terms(array("binet" => $binet, "term" => $term, "student" => $connected_student, "rights" => viewing_rights));
+      return !is_empty($terms);
+    } else {
+      return false;
+    }
+  }
+
   function status_admin_current_binet($binet) {
     $sql = "SELECT *
     FROM binet_admin
