@@ -18,3 +18,6 @@
   define("MAX_TEXT_LENGTH", 65000);
   define("MAX_NAME_LENGTH", 127);
   define("MAX_TERM", 2100);
+
+  define("editing_rights", 0);
+  define("viewing_rigths", 1);

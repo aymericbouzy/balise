@@ -99,10 +99,11 @@
 
 
   function select_terms($criteria = array(), $order_by = NULL, $ascending = true) {
+    set_if_not_set($criteria["rights"], editing_rights);
     $terms = select_with_request_string(
       "CONCAT(binet, '/', term) as id",
       "binet_admin",
-      array("binet", "term", "student"),
+      array("binet", "term", "student", "rights"),
       array(),
       $criteria,
       $order_by,
