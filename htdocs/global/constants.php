@@ -20,4 +20,4 @@
   define("MAX_TERM", 2100);
 
   define("editing_rights", 0);
-  define("viewing_rigths", 1);
+  define("viewing_rights", 1);

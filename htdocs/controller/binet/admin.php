@@ -8,11 +8,17 @@
     $GLOBALS["admin"] = $_GET["admin"];
   }
 
+  function check_not_already_admin() {
+    $terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "student" => $_POST["student"]));
+    header_if(!is_empty($terms), 403);
+  }
+
   before_action("check_csrf_get", array("delete"));
   before_action("check_admin", array("delete"));
   before_action("current_kessier", array("new", "create", "delete"));
   before_action("create_form", array("new", "create"), "admin");
   before_action("check_form", array("create"), "admin");
+  before_action("check_not_already_admin", array("create"));
 
   switch ($_GET["action"]) {
 
@@ -20,6 +26,14 @@
     break;
 
   case "new":
+    $admins = array_keys(ids_as_keys(select_admins($binet, $term)));
+    $students = select_students(array("id" => array("NOT IN", $admins)));
+    break;
+
+  case "new_viewer":
+    break;
+
+  case "create_viewer":
     break;
 
   case "create":

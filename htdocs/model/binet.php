@@ -93,7 +93,7 @@
   function select_admins($binet, $term) {
     $sql = "SELECT student AS id
             FROM binet_admin
-            WHERE binet = :binet AND term = :term AND rights = 0";
+            WHERE binet = :binet AND term = :term AND rights = ".editing_rights;
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':term', $term, PDO::PARAM_INT);
@@ -105,7 +105,7 @@
     $sql = "SELECT DISTINCT binet_admin.student AS id
     FROM binet_admin
     INNER JOIN binet
-    WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term AND binet_admin.binet = binet.id AND binet_admin.rights = 0";
+    WHERE binet_admin.binet = :binet AND binet_admin.term = binet.current_term AND binet_admin.binet = binet.id AND binet_admin.rights = ".editing_rights;
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->execute();
@@ -119,7 +119,7 @@
   */
   function add_admin_binet($student, $binet, $term) {
     $sql = "INSERT INTO binet_admin(student, binet, term, rights)
-            VALUES(:student, :binet, :term, 0)";
+            VALUES(:student, :binet, :term, ".editing_rights.")";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':student', $student, PDO::PARAM_INT);
@@ -136,7 +136,7 @@
   function status_admin_binet($binet, $term = NULL) {
     $sql = "SELECT *
             FROM binet_admin
-            WHERE binet = :binet ".(is_empty($term) ? "" : "AND term = :term ")."AND student = :student AND rights = 0
+            WHERE binet = :binet ".(is_empty($term) ? "" : "AND term = :term ")."AND student = :student AND rights = ".editing_rights."
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
@@ -164,7 +164,7 @@
     FROM binet_admin
     INNER JOIN binet
     ON binet_admin.binet = binet.id AND binet_admin.term = binet.current_term
-    WHERE binet_admin.binet = :binet AND binet_admin.student = :student AND binet_admin = 0
+    WHERE binet_admin.binet = :binet AND binet_admin.student = :student AND binet_admin.rights = ".editing_rights."
     LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
@@ -184,8 +184,7 @@
   function remove_admin_binet($student, $binet, $term) {
     $sql = "DELETE
             FROM binet_admin
-            WHERE binet = :binet AND term = :term AND student = :student AND binet_admin = 0
-            LIMIT 1";
+            WHERE binet = :binet AND term = :term AND student = :student AND binet_admin.rights = ".editing_rights;
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':term', $term, PDO::PARAM_INT);
