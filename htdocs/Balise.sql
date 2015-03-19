@@ -46,7 +46,8 @@ INSERT INTO `binet` (`id`, `name`, `clean_name`, `description`, `subsidy_provide
 CREATE TABLE `binet_admin` (
   `binet` int(11) NOT NULL,
   `student` int(11) NOT NULL,
-  `term` smallint(6) NOT NULL
+  `term` smallint(6) NOT NULL,
+  `rights` tinyint(4) NOT NULL COMMENT '0:editing rights; 1:viewing_rights'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
