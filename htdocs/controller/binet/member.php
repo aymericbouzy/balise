@@ -38,19 +38,19 @@
   case "create":
     $admin_term = current_term($binet) + $_POST["next_term"];
     foreach (select_admins($binet, $admin_term) as $student) {
-      send_email($student["id"], "Nouvel administrateur du binet ".pretty_binet_term($binet."/".$admin_term, false, false), "new_admin_binet", array("admin" => $_POST["student"], "binet_term" => $binet."/".$admin_term));
+      send_email($student["id"], "Nouvel administrateur du binet ".pretty_binet_term(term_id($binet, $admin_term), false, false), "new_admin_binet", array("admin" => $_POST["student"], "binet_term" => term_id($binet, $admin_term)));
     }
     add_admin_binet($_POST["student"], $binet, $admin_term);
-    send_email($_POST["student"], "Nouveau binet", "new_admin_rights", array("binet_term" => $binet."/".$admin_term));
+    send_email($_POST["student"], "Nouveau binet", "new_admin_rights", array("binet_term" => term_id($binet, $admin_term)));
     $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet($binet)." pour la promotion ".$admin_term.".";
     redirect_to_action("");
     break;
 
   case "delete":
-    send_email($admin["id"], "Déchéance des droits d'administration du binet ".pretty_binet_term($binet."/".$term, false, false), "delete_admin_rights", array("binet_term" => $binet."/".$term, "kessier" => connected_student()));
+    send_email($admin["id"], "Déchéance des droits d'administration du binet ".pretty_binet_term(term_id($binet, $term), false, false), "delete_admin_rights", array("binet_term" => term_id($binet, $term), "kessier" => connected_student()));
     remove_admin_binet($admin["id"], $binet, $term);
     foreach (select_admins($binet, $term) as $student) {
-      send_email($student["id"], "Suppression d'un administrateur du binet ".pretty_binet_term($binet."/".$term, false, false), "delete_admin_binet", array("admin" => $admin["id"], "binet_term" => $binet."/".$term, "kessier" => connected_student()));
+      send_email($student["id"], "Suppression d'un administrateur du binet ".pretty_binet_term(term_id($binet, $term), false, false), "delete_admin_binet", array("admin" => $admin["id"], "binet_term" => term_id($binet, $term), "kessier" => connected_student()));
     }
     $_SESSION["notice"][] = "Les droits d'administration de ".pretty_student($admin["id"])." pour la promotion ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
     redirect_to_action("");

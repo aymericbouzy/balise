@@ -25,7 +25,7 @@
         <?php echo $budget["label"]; ?>
       </p>
       <p class="sub">
-        <?php echo pretty_binet_term($budget["binet"]."/".$budget["term"]); ?>
+        <?php echo pretty_binet_term(term_id($budget["binet"], $budget["term"])); ?>
       </p>
     </div>
   </div>

@@ -19,7 +19,7 @@
     </div>
     <div class="text">
       <p class="main">
-        <?php echo pretty_binet_term($binet."/".$term); ?>
+        <?php echo pretty_binet_term(term_id($binet, $term)); ?>
       </p>
       <p class="sub">
         <?php echo pretty_wave($request_info["wave"]["id"]); ?>
@@ -178,4 +178,3 @@
     <?php echo form_submit_button("Enregistrer"); ?>
   </div>
 </div>
-

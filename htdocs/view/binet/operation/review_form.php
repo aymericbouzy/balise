@@ -14,7 +14,7 @@
         <tr>
           <td><?php echo pretty_date($operation["date"]); ?></td>
           <td><?php echo $operation["comment"]; ?></td>
-          <td><?php echo pretty_student($operation["created_by"])." ".pretty_binet_term($operation["binet"]."/".$operation["term"]); ?></td>
+          <td><?php echo pretty_student($operation["created_by"])." ".pretty_binet_term(term_id($operation["binet"], $operation["term"])); ?></td>
           <td><?php echo pretty_amount($operation["amount"]); ?></td>
         </tr>
       </tbody>

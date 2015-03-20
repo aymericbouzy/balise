@@ -19,7 +19,7 @@
   }
 
   function is_transferable() {
-    return exists_term_binet($GLOBALS["binet"]."/".($GLOBALS["term"] - 1));
+    return exists_term_binet(term_id($GLOBALS["binet"], $GLOBALS["term"] - 1));
   }
 
   function check_is_transferable() {

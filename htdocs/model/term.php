@@ -13,7 +13,7 @@
     $binet = $id[0];
     $term = $id[1];
     $term_binet = array();
-    $term_binet["id"] = $id[0]."/".$id[1];
+    $term_binet["id"] = term_id($id[0], $id[1]);
     $term_binet["binet"] = $id[0];
     $term_binet["term"] = $id[1];
     $present_virtual_fields = array_intersect($fields, array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state", "amount_requested_in_sent", "amount_requested_in_rough_drafts", "amount_requested_in_published"));
