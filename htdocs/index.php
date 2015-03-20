@@ -53,7 +53,7 @@
   }
 
   register_shutdown_function("call_at_shutdown");
-  set_error_handler("exceptions_error_handler");
+  //set_error_handler("exceptions_error_handler");
 
   include "global/initialisation.php";
 
