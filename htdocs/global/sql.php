@@ -213,8 +213,8 @@
 
   function create_entry($table, $creatable_int_fields, $creatable_str_fields, $values) {
     $values = array_intersect_key($values, array_flip(array_merge($creatable_int_fields, $creatable_str_fields)));
-    $sql1 = "INSERT INTO ".$table."(id, ";
-    $sql2 = "VALUES(NULL, ";
+    $sql1 = "INSERT INTO ".$table."(";
+    $sql2 = "VALUES(";
     $initial = true;
     foreach($values as $column => $value) {
       if ($initial) {

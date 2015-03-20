@@ -112,22 +112,12 @@
     header_if(!has_editing_rights($binet, $term), 401);
   }
 
-  // useless
-  function kessier() {
-    header_if(!status_admin_binet(KES_ID), 401);
-  }
-
   function is_current_kessier() {
     return status_admin_current_binet(KES_ID);
   }
 
   function current_kessier() {
     header_if(!is_current_kessier(), 401);
-  }
-
-  // useless
-  function member_binet_term() {
-    header_if(!status_admin_binet($GLOBALS["binet"], $GLOBALS["term"]), 401);
   }
 
   function member_binet_current_term() {

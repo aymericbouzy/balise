@@ -99,7 +99,6 @@
 
 
   function select_terms($criteria = array(), $order_by = "term", $ascending = true) {
-    // set_if_not_set($criteria["rights"], editing_rights);
     $terms = select_with_request_string(
       "CONCAT(binet, '/', term) as id",
       "binet_admin",
@@ -117,6 +116,10 @@
       $order_by,
       $ascending
     );
+  }
+
+  function term_id($binet, $year) {
+    return $binet."/".$year;
   }
 
   // useless : to delete
