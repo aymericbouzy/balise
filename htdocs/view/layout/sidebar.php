@@ -53,6 +53,12 @@
           $_GET["controller"] == "wave"
         );
       }
+      if (has_viewing_rights($binet, $term)) {
+        echo li_link(
+          link_to(path("", "admin", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-group\"></i> Membres"),
+          $_GET["controller"] == "admin"
+        );
+      }
       // TODO define and create administration link
       if ($binet == KES_ID && false) {
         ?>
