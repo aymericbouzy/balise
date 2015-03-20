@@ -61,12 +61,6 @@
     header_if(is_empty($binets), 404);
     $GLOBALS["binet"] = $binets[0]["id"];
     $GLOBALS["term"] = $_GET["term"];
-    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
-    $binet_term = $GLOBALS["binet"]."/".$GLOBALS["term"];
-    if (is_empty($binet_terms) && $_GET["controller"] != "admin" && (!isset($_SESSION["aware_no_admins_for"]) || !in_array($binet_term, $_SESSION["aware_no_admins_for"]))) {
-      $_SESSION["error"][] = "Il n'y a aucun administrateur pour cette promotion du binet ".pretty_binet($GLOBALS["binet"]).".";
-      $_SESSION["aware_no_admins_for"][] = $binet_term;
-    }
   }
 
   function check_entry($array) {
@@ -85,7 +79,7 @@
     if (status_viewer_binet($binet, $term) || status_admin_current_binet(KES_ID)) {
       return true;
     } else {
-      $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term - 1), "student" => $_SESSION["student"]));
+      $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term - 1), "student" => connected_student()));
       return !is_empty($terms) ||
       received_subsidy_request_from($binet);
     }
@@ -93,7 +87,7 @@
 
   function has_editing_rights($binet, $term) {
     $current_term = current_term($binet);
-    $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => $_SESSION["student"]), "term");
+    $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => connected_student(), "rights" => editing_rights), "term");
     if (is_empty($terms_admin)) {
       return false;
     }

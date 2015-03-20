@@ -6,7 +6,7 @@
     	<a href="javascript:;" data-target="#binets" data-toggle="collapse"><?php echo pretty_binet($binet, false); ?> </a>
 				<ul id="binets" class="collapse">
 					<?php
-            foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
+            foreach (select_terms(array("student" => connected_student())) as $term_admin) {
   						$term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
   						?>
   						<li>

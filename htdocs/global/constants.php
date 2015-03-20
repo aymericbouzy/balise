@@ -21,3 +21,4 @@
 
   define("editing_rights", 0);
   define("viewing_rights", 1);
+  define("no_rights", -1);

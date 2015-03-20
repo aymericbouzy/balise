@@ -154,6 +154,33 @@
     @uses $_SESSION["student"] to fill `student` int(11) DEFAULT NULL in table 'binet' for select
   */
 
+  function status_member_term($binet_term) {
+    $term = select_term_binet($binet_term, array("binet", "term"));
+    $sql = "SELECT rights
+            FROM binet_admin
+            WHERE binet = :binet AND term = :term AND student = :student";
+    $req = Database::get()->prepare($sql);
+    $req->bindValue(':binet', $term["binet"], PDO::PARAM_INT);
+    $req->bindValue(':term', $term["term"], PDO::PARAM_INT);
+    $req->bindValue(':student', $_SESSION["student"], PDO::PARAM_INT);
+    $req->execute();
+    $results = $req->fetchAll();
+    $viewing_rights = false;
+    foreach ($results as $result) {
+      switch ($result["rights"]) {
+        case editing_rights:
+        return editing_rights;
+        case viewing_rights:
+        $viewing_rights = true;
+      }
+    }
+    if ($viewing_rights) {
+      return viewing_rights;
+    } else {
+      return no_rights;
+    }
+  }
+
   function status_admin_binet($binet, $term = NULL) {
     $sql = "SELECT *
             FROM binet_admin

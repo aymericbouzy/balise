@@ -2,7 +2,7 @@
 
   function check_admin() {
     header_if(!validate_input(array("admin")), 400);
-    $terms = select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
+    $terms = select_terms(array("student" => $_GET["admin"], "binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "rights" => editing_rights));
     header_if(is_empty($terms), 404);
     header_if($GLOBALS["binet"] == KES_ID && $_GET["admin"] == connected_student(), 401);
     $GLOBALS["admin"]["id"] = $_GET["admin"];
@@ -21,7 +21,7 @@
   }
 
   function check_not_already_viewer() {
-    $terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "student" => $_POST["student"], "rights" => array("IN", array(viewing_rights, editing_rights))));
+    $terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "student" => $_POST["student"]));
     header_if(!is_empty($terms), 403);
   }
 
