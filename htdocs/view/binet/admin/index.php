@@ -49,7 +49,7 @@
     foreach ($viewers as $viewer) {
       ?>
       <span class="admin shadowed">
-        <i class="fa fa-fw fa-user logo"></i>
+        <i class="fa fa-fw fa-eye logo"></i>
         <i class="fa fa-fw fa-send logo"></i>
         <?php
           echo pretty_student($viewer["id"]);

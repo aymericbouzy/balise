@@ -15,7 +15,7 @@
           ?>
         </div>
         <?php
-        if (is_transferable()) {
+        if (has_editing_rights($binet, $term) && is_transferable()) {
           ?>
           <div id="transfer_budgets">
             <?php
