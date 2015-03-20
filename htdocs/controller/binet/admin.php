@@ -45,19 +45,6 @@
     $students = select_students(array("id" => array("NOT IN", $admins)));
     break;
 
-  case "new_viewer":
-    $viewers = array_keys(ids_as_keys(select_viewers($binet, $term)));
-    $admins = array_keys(ids_as_keys(select_admins($binet, $term)));
-    $students = select_students(array("id" => array("NOT IN", array_merge($viewers, $admins))));
-    break;
-
-  case "create_viewer":
-    break;
-
-  case "delete_viewer":
-
-    break;
-
   case "create":
     $admin_term = current_term($binet) + $_POST["next_term"];
     foreach (select_admins($binet, $admin_term) as $student) {
@@ -76,6 +63,24 @@
       send_email($student["id"], "Suppression d'un administrateur du binet ".pretty_binet_term($binet."/".$term, false, false), "delete_admin_binet", array("admin" => $admin["id"], "binet_term" => $binet."/".$term, "kessier" => connected_student()));
     }
     $_SESSION["notice"][] = "Les droits d'administration de ".pretty_student($admin["id"])." pour la promotion ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
+    redirect_to_action("");
+    break;
+
+  case "new_viewer":
+    $viewers = array_keys(ids_as_keys(select_viewers($binet, $term)));
+    $admins = array_keys(ids_as_keys(select_admins($binet, $term)));
+    $students = select_students(array("id" => array("NOT IN", array_merge($viewers, $admins))));
+    break;
+
+  case "create_viewer":
+    $admin_term = current_term($binet) + $_POST["next_term"];
+    add_viewer_binet($_POST["student"], $binet, $admin_term);
+    $_SESSION["notice"][] = pretty_student($_POST["student"])." peut à présent voir le détail de la trésorerie du binet ".pretty_binet($binet)." pour la promotion ".$admin_term.".";
+    break;
+
+  case "delete_viewer":
+    remove_viewer_binet($admin["id"], $binet, $term);
+    $_SESSION["notice"][] = "Les droits de regard de ".pretty_student($admin["id"])." pour la promotion ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
     redirect_to_action("");
     break;
 
