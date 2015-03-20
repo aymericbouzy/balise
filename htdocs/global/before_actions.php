@@ -187,7 +187,7 @@
           case "wave":
             $valid = $valid && is_numeric($value);
             break;
-          case "admin":
+          case "member":
             $valid = $valid && is_numeric($value);
             break;
           case "student":

@@ -22,7 +22,7 @@
   );
   before_action("check_is_activated", array("power_transfer", "deactivate"));
   before_action("check_is_deactivated", array("reactivate"));
-  before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider", "admin"));
+  before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider"));
   before_action("check_editing_rights_or_current_kessier", array("edit", "update"));
   before_action("create_form", array("new", "create", "edit", "update", "change_term", "reactivate"), "binet");
   before_action("check_form", array("create", "update", "reactivate"), "binet");

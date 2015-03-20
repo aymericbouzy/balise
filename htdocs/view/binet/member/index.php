@@ -1,14 +1,11 @@
 <div id="admin-wrapper">
-  <div class="actionbar-left">
-    <?php echo button(path("show", "binet", $binet),"Retour au résumé du binet","chevron-left","blue",true,"","left");?>
-  </div>
   <div class="actionbar-right">
     <?php
     if (is_current_kessier()) {
-      echo button(path("new", "admin", "", binet_prefix($binet, $term)),"Ajouter un administrateur","plus","green");
+      echo button(path("new", "member", "", binet_prefix($binet, $term)),"Ajouter un administrateur","plus","green");
     }
     if (has_editing_rights($binet, $term)) {
-      echo button(path("new_viewer", "admin", "", binet_prefix($binet, $term)),"Ajouter un observateur","plus","green");
+      echo button(path("new_viewer", "member", "", binet_prefix($binet, $term)),"Ajouter un observateur","plus","green");
     }
     ?>
   </div>
@@ -28,7 +25,7 @@
         <?php
           echo pretty_student($admin["id"]);
           if (is_current_kessier() && ($binet != KES_ID || $admin["id"] != connected_student())) {
-            echo button(path("delete", "admin", $admin["id"], binet_prefix($binet, $term), array(), true),"Retirer cet administrateur","times","red",true,"small");
+            echo button(path("delete", "member", $admin["id"], binet_prefix($binet, $term), array(), true),"Retirer cet administrateur","times","red",true,"small");
           }
         ?>
       </span>
@@ -54,7 +51,7 @@
         <?php
           echo pretty_student($viewer["id"]);
           if (has_editing_rights($binet, $term)) {
-            echo button(path("delete_viewer", "admin", $viewer["id"], binet_prefix($binet, $term), array(), true),"Retirer cet observateur","times","red",true,"small");
+            echo button(path("delete_viewer", "member", $viewer["id"], binet_prefix($binet, $term), array(), true),"Retirer cet observateur","times","red",true,"small");
           }
         ?>
       </span>
