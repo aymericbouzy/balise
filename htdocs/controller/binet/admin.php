@@ -76,11 +76,12 @@
     $admin_term = current_term($binet) + $_POST["next_term"];
     add_viewer_binet($_POST["student"], $binet, $admin_term);
     $_SESSION["notice"][] = pretty_student($_POST["student"])." peut à présent voir le détail de la trésorerie du binet ".pretty_binet($binet)." pour la promotion ".$admin_term.".";
+    redirect_to_action("");
     break;
 
   case "delete_viewer":
-    remove_viewer_binet($admin["id"], $binet, $term);
-    $_SESSION["notice"][] = "Les droits de regard de ".pretty_student($admin["id"])." pour la promotion ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
+    remove_viewer_binet($viewer["id"], $binet, $term);
+    $_SESSION["notice"][] = "Les droits de regard de ".pretty_student($viewer["id"])." pour la promotion ".$term." du binet ".pretty_binet($binet)." ont été révoqués.";
     redirect_to_action("");
     break;
 

@@ -15,7 +15,7 @@
     </div>
     <div class="panel shadowed light-blue-background">
       <div class="title">
-        Binet administrés
+        Binets administrés
       </div>
       <div class="content">
         <?php foreach(select_terms(array("student"=>$student["id"])) as $term){
