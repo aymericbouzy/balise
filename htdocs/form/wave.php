@@ -11,8 +11,8 @@
     $id = $GLOBALS["wave"]["id"];
     $wave_state = select_wave($id, array("state"))["state"];
   }
-  $form["redirect_to_if_error"] = path($origin_action, "wave", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
-  $form["destination_path"] = path($destination_action, "wave", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
+  $form["redirect_to_if_error"] = path($origin_action, "wave", $id, binet_prefix(binet, term));
+  $form["destination_path"] = path($destination_action, "wave", $id, binet_prefix(binet, term));
   $form["html_form_path"] = VIEW_PATH."binet/wave/form.php";
   if (in_array($wave_state, array("rough_draft", "submission"))) {
     $form["fields"]["submission_date"] = create_date_field("la date limite de dépôt des demandes de subventions", array("min" => current_date()));

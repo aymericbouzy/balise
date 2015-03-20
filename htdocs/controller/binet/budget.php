@@ -19,7 +19,7 @@
   }
 
   function is_transferable() {
-    return exists_term_binet(term_id($GLOBALS["binet"], $GLOBALS["term"] - 1));
+    return exists_term_binet(term_id(binet, term - 1));
   }
 
   function check_is_transferable() {
@@ -27,7 +27,7 @@
   }
 
   before_action("check_csrf_get", array("delete"));
-  before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => $binet, "term" => $term));
+  before_action("check_entry", array("show", "edit", "update", "delete"), array("model_name" => "budget", "binet" => binet, "term" => term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "transfer", "copy"));
   before_action("create_form", array("new", "create", "edit", "update"), "budget");
   before_action("check_form", array("create", "update"), "budget");
@@ -41,11 +41,11 @@
 
   case "index":
     $budgets = array();
-    foreach (select_budgets(array_merge($query_array, array("binet" => $binet, "term" => $term)), "date") as $budget) {
+    foreach (select_budgets(array_merge($query_array, array("binet" => binet, "term" => term)), "date") as $budget) {
       $budgets[] = select_budget($budget["id"], array("id", "label", "amount", "subsidized_amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used", "subsidized_amount_available"));
     }
     $waves = array();
-    foreach(select_waves(array("binet" => $binet, "term" => $term), "submission_date") as $wave) {
+    foreach(select_waves(array("binet" => binet, "term" => term), "submission_date") as $wave) {
       $waves[] = select_wave($wave["id"], array("id", "amount", "granted_amount", "state", "used_amount", "predicted_amount"));
     }
     break;
@@ -54,7 +54,7 @@
     break;
 
   case "create":
-    $budget["id"] = create_budget($binet, $term, $_POST["amount"], $_POST["label"], $_POST["amount"] < 0 ? $_POST["subsidized_amount"] : NULL);
+    $budget["id"] = create_budget(binet, term, $_POST["amount"], $_POST["label"], $_POST["amount"] < 0 ? $_POST["subsidized_amount"] : NULL);
     foreach ($_POST["tags"] as $tag) {
       add_tag_budget($tag, $budget["id"]);
     }
@@ -86,13 +86,13 @@
     break;
 
   case "transfer":
-    $budgets = select_budgets(array("binet" => $binet, "term" => $term - 1));
+    $budgets = select_budgets(array("binet" => binet, "term" => term - 1));
     break;
 
   case "copy":
     foreach ($_POST["budgets"] as $budget) {
       $budget = select_budget($budget, array("id", "amount", "label", "subsidized_amount"));
-      $new_budget = create_budget($binet, $term, $budget["amount"], $budget["label"], $budget["subsidized_amount"]);
+      $new_budget = create_budget(binet, term, $budget["amount"], $budget["label"], $budget["subsidized_amount"]);
       foreach (select_tags_budget($budget["id"]) as $tag) {
         add_tag_budget($tag["id"], $new_budget);
       }

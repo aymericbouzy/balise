@@ -1,6 +1,6 @@
 <?php
 
-  check_binet_term(); // defines $binet and $term
+  check_binet_term();
   $viewing_rights_exceptions[] = array("show", "wave");
   $viewing_rights_exceptions[] = array("index", "wave");
   $viewing_rights_exceptions[] = array("show", "request");

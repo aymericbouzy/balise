@@ -59,8 +59,8 @@
     header_if(!validate_input(array("binet", "term")), 400);
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(is_empty($binets), 404);
-    $GLOBALS["binet"] = $binets[0]["id"];
-    $GLOBALS["term"] = $_GET["term"];
+    define("binet", $binets[0]["id"]);
+    define("term", $_GET["term"]);
   }
 
   function check_entry($array) {
@@ -98,7 +98,7 @@
   }
 
   function check_viewing_rights() {
-    header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+    header_if(!has_viewing_rights(binet, term), 401);
   }
 
   function check_editing_rights() {
@@ -106,8 +106,8 @@
       $binet = $GLOBALS["binet"]["id"];
       $term = current_term($binet);
     } else {
-      $binet = $GLOBALS["binet"];
-      $term = $GLOBALS["term"];
+      $binet = binet;
+      $term = term;
     }
     header_if(!has_editing_rights($binet, $term), 401);
   }
@@ -121,7 +121,7 @@
   }
 
   function member_binet_current_term() {
-    header_if(!status_admin_current_binet($GLOBALS["binet"]), 401);
+    header_if(!status_admin_current_binet(binet), 401);
   }
 
   function validate_input($required_parameters, $optional_parameters = array(), $method = "get") {

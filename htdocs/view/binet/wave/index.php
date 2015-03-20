@@ -2,7 +2,7 @@
   <div id="wave-index">
     <ul class="list">
       <?php
-      if (has_viewing_rights($binet, $term)) {
+      if (has_viewing_rights(binet, term)) {
         foreach ($waves_rough_drafts as $wave) {
           $wave = select_wave($wave["id"], array("id", "name", "submission_date", "expiry_date", "binet", "term", "state", "amount"));
           $wave_state = wave_state("rough_draft");
@@ -71,7 +71,7 @@
             <?php
             if (in_array($wave["state"], array("distribution", "closed"))) {
               $amount = $wave["granted_amount"];
-            } elseif (!has_viewing_rights($binet, $term)) {
+            } elseif (!has_viewing_rights(binet, term)) {
               $amount = 0;
             } else {
               $amount = $wave["requested_amount"];

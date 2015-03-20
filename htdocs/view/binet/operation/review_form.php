@@ -34,8 +34,8 @@
     </div>
     <div class="content">
       <?php
-        echo link_to(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)),"Modifier l'opération",array("class"=>"btn","id"=>"edit-btn"));
-        echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true),"Supprimer l'opération",array("class"=>"btn btn-danger","id"=>"suppr-btn"));
+        echo link_to(path("edit", "operation", $operation["id"], binet_prefix(binet, term)),"Modifier l'opération",array("class"=>"btn","id"=>"edit-btn"));
+        echo link_to(path("delete", "operation", $operation["id"], binet_prefix(binet, term), array(), true),"Supprimer l'opération",array("class"=>"btn btn-danger","id"=>"suppr-btn"));
       ?>
     </div>
   </div>
@@ -62,7 +62,7 @@
             $budget = select_budget($budget["id"], array("id", "label", "amount", "real_amount", "subsidized_amount_granted", "subsidized_amount_used"));
             ?>
               <tr>
-                <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
+                <td><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix(binet, term)), $budget["label"]); ?></td>
                 <td><?php echo pretty_tags(select_tags_budget($budget["id"]), false); ?></td>
                 <td><?php echo pretty_amount($budget["amount"]); ?></td>
                 <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
@@ -118,6 +118,6 @@
   </div>
   <div class="buttons">
     <?php echo form_submit_button("Enregistrer"); ?>
-    <?php echo link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer l'opération", array("class" => "btn btn-danger")); ?>
+    <?php echo link_to(path("delete", "operation", $operation["id"], binet_prefix(binet, term), array(), true), "Supprimer l'opération", array("class" => "btn btn-danger")); ?>
   </div>
 </div>

@@ -25,16 +25,16 @@
     <div class="panel transparent-background">
       <div class="content" id="controlbar">
         <div id="select-term">
-          <?php echo modal_toggle("choose-term", "Promo ".$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","shadowed0 blue-background white-text","terms"); ?>
+          <?php echo modal_toggle("choose-term", "Promo ".term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","shadowed0 blue-background white-text","terms"); ?>
         </div>
         <div id="view-binet">
           <?php echo insert_tooltip(
-              link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")),
+              link_to(path("show","binet",binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")),
               "Voir le binet"); ?>
         </div>
       </div>
     </div>
-    <?php if(has_editing_rights($binet,$term) && sizeOf($pending_validations_operations) > 0){ ?>
+    <?php if(has_editing_rights(binet,term) && sizeOf($pending_validations_operations) > 0){ ?>
       <div class="panel shadowed">
           <div class="title">Opérations en attente</div>
             <div class="content">
@@ -61,10 +61,10 @@
                           <td><?php echo pretty_student($operation["created_by"]); ?></td>
                           <td><?php echo pretty_amount($operation["amount"]); ?></td>
                           <td><?php echo insert_tooltip(
-                            link_to(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true),"<i class=\"fa fa-fw fa-times\"></i>"),"Supprimer");?></td>
+                            link_to(path("delete", "operation", $operation["id"], binet_prefix(binet, term), array(), true),"<i class=\"fa fa-fw fa-times\"></i>"),"Supprimer");?></td>
                         </tr>
                         <?php
-                        echo link_to(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), ob_get_clean(), array("goto" => true));
+                        echo link_to(path("review", "operation", $operation["id"], binet_prefix(binet, term)), ob_get_clean(), array("goto" => true));
                       }
                     ?>
                   </tbody>
@@ -157,6 +157,6 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
 </div>
-<?php echo modal("terms","Voir l'activité d'une autre promotion du binet",pretty_terms_list($binet)); ?>
+<?php echo modal("terms","Voir l'activité d'une autre promotion du binet",pretty_terms_list(binet)); ?>
 <script src = "<?php echo ASSET_PATH; ?>js/list.js"></script>
 <?php echo initialize_tablefilter("searchlist",array("element_name","tags")); ?>

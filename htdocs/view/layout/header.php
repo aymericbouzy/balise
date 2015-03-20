@@ -17,7 +17,7 @@
     ?>
   </li>
   <?php
-  if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
+  if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights(binet, term)) {
     ?>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -25,27 +25,27 @@
       </a>
       <ul class="dropdown-menu" role="menu">
         <?php
-          $budgets_for_checking_if_not_empty = select_budgets(array("binet" => $binet, "term" => $term));
+          $budgets_for_checking_if_not_empty = select_budgets(array("binet" => binet, "term" => term));
           if (!is_empty($budgets_for_checking_if_not_empty)) {
             ?>
               <li class="add-operation">
-                <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
+                <?php echo link_to(path("new", "operation", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
               </li>
             <?php
           }
         ?>
         <li class="add-operation">
-          <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
+          <?php echo link_to(path("new", "budget", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
         </li >
         <li class="add-operation">
           <?php echo modal_toggle("request","<i class=\"fa fa-fw fa-question\"></i>Demander des subventions","add-operation","wave-select");?>
         </li>
         <?php
-          if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
+          if (select_binet(binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
             ?>
             <li class = "divider"></li>
             <li class="add-operation">
-              <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
+              <?php echo link_to(path("new", "wave", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
             </li>
             <?php
           }
@@ -80,14 +80,14 @@
 
   <!-- Modal : the user can choose the wave to ask for subsidies (make a request) -->
   <?php
-    if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
+    if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights(binet, term)) {
         ob_start();
         $waves_for_modal = select_waves(array("state" => "submission"), "submission_date", false);
         if (is_empty($waves_for_modal)) {
           echo "<i>Il n'y a aucune vague de subvention pour laquelle faire une demande en ce moment.</i>";
         } else {
           foreach ($waves_for_modal as $wave_for_modal) {
-            echo link_to(path("new", "request", "", binet_prefix($binet,$term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element shadowed0"));
+            echo link_to(path("new", "request", "", binet_prefix(binet,term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element shadowed0"));
           }
         }
         echo modal("wave-select","Sélectionner une vague de subventions : ",ob_get_clean());

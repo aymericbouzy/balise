@@ -1,7 +1,7 @@
 <?php
 
   function search_by_tag_path($tag) {
-    $binet_prefix = isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : "";
+    $binet_prefix = isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix(binet, term) : "";
     $query_array = is_selected_tag($tag, $GLOBALS["query_array"]) ? query_array_unselecting_tag($tag, $GLOBALS["query_array"]) : query_array_selecting_tag($tag, $GLOBALS["query_array"]);
     set_if_exists($id, $_GET[$_GET["controller"]]);
     set_if_not_set($id, "");
