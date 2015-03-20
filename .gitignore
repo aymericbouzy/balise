@@ -1,10 +1,10 @@
-/htdocs/beta/config/production.php
+/htdocs/beta/config/development.php
 /.settings/org.eclipse.wst.common.project.facet.core.xml
 /.buildpath
 /.settings/org.eclipse.php.core.prefs
 /.project
 
-htdocs/config/production.php
+htdocs/config/development.php
 
 htdocs/-FProjet
 
