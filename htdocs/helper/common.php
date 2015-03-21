@@ -1,6 +1,7 @@
 <?php
 
-  function link_to($path, $caption, $options = array(), $confirmation_modal_message = "", $modal_options = array()) {
+	//
+  function link_to($path, $caption, $options = array()) {
     set_if_not_set($options["goto"], false);
 
     if (!in_array(substr($path, 0, 7), array("mailto:", "http://", "https:/")) && substr($path, 0, 1) != "#") {
@@ -17,20 +18,23 @@
         "onclick" => "goto('".$path."')",
         "style" => "cursor:pointer"
       )));
-    } else if (!is_empty($confirmation_modal_message)) {
-    	set_if_not_set($modal_options["title"],"Attention !");
-    	// A modal toggle should at least be a button and not only a text in a div
-    	set_if_not_set($options["class"], "btn");
 
-    	$modal_id = is_empty($modal_options["id"]) ? $options["id"]."_modal_auto_id" : $modal_options["id"] ;
+    } else if (!is_empty($options['modal'])) {
+    	set_if_not_set($options['modal']['title'], "");
+    	// The message should be set if the 'modal' options is used, but we provide a default one
+    	set_if_not_set($options['modal']['message'], " Es-tu sûr de vouloir faire ça ?");
+    	// A modal toggle should at least be a button and not only a text in a div
+    	set_if_not_set($options['modal']['class'], "btn");
+
+    	$modal_id = is_empty($options['modal']["id"]) ? $options["id"]."_modal_auto_id" : $modal_options["id"] ;
     	$button_in_modal = link_to($path,"<div> Confirmer </div>",array("goto" => true, "class" => "btn"));
     	$content = $confirmation_modal_message."<div class=\"button-container\">".$button_in_modal."</div>";
-    	$modal = modal($modal_id, $modal_options["title"], $content);
+    	$modal = modal($modal_id, $options['modal']["title"], $content);
 
     	return modal_toggle($options["id"], $caption,
     			$options["class"], $modal_id)."\n".$modal;
-    }
-    else {
+
+    } else {
       $parameters = is_empty($options["class"]) ? "" : " class=\"".$options["class"]."\"";
       $parameters .= is_empty($options["id"]) ? "" : " id=\"".$options["id"]."\"";
       $parameters .= is_empty($options["title"])? "" : " title=\"".$options["title"]."\"";
@@ -100,12 +104,14 @@
   function modal($id,$title,$content){
       return "<div class=\"modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
                 <div class=\"modal-dialog\">
-                  <div class=\"modal-content\">
-                    <div class=\"modal-header\">
-                    ".close_button("modal")."
-                    <h4 class=\"modal-title\">".$title."</h4>
-                    </div>
-                    <div class=\"modal-body\">".$content."</div>
+                  <div class=\"modal-content\">".
+      							( !is_empty($title)?
+                    	"<div class=\"modal-header\">
+                    	".close_button("modal")."
+                    	<h4 class=\"modal-title\">".$title."</h4>
+                    	</div>" :
+      									"" ).
+                    "<div class=\"modal-body\">".$content."</div>
                   </div>
                 </div>
               </div>";
