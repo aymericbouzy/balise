@@ -9,23 +9,23 @@
     header_if(!has_editing_rights($GLOBALS["binet"]["id"], current_term($GLOBALS["binet"]["id"])) && !is_current_kessier(), 401);
   }
 
-  function is_transferable() {
+  function is_transferable($binet) {
     $admins = select_admins(KES_ID, current_term(KES_ID) + 1);
-    $current_term = current_term($GLOBALS["binet"]["id"]);
-    return ($GLOBALS["binet"]["id"] != KES_ID || !is_empty($admins)) && !is_empty($current_term);
+    $current_term = current_term($binet);
+    return ($binet != KES_ID || !is_empty($admins)) && !is_empty($current_term);
   }
 
   function check_is_transferable() {
-    header_if(!is_transferable(), 403);
+    header_if(!is_transferable($GLOBALS["binet"]["id"]), 403);
   }
 
-  function is_deactivatable() {
-    $current_term = current_term($GLOBALS["binet"]["id"]);
-    return $GLOBALS["binet"]["id"] != KES_ID && !is_empty($current_term);
+  function is_deactivatable($binet) {
+    $current_term = current_term($binet);
+    return $binet != KES_ID && !is_empty($current_term);
   }
 
   function check_is_deactivatable() {
-    header_if(!is_deactivatable(), 403);
+    header_if(!is_deactivatable($GLOBALS["binet"]["id"]), 403);
   }
 
   before_action("check_csrf_get", array("delete", "switch_subsidy_provider", "deactivate", "power_transfer"));
