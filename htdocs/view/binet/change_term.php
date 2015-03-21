@@ -15,6 +15,8 @@
         if (is_transferable($binet["id"])) {
           echo link_to(path("power_transfer", "binet", $binet["id"], "", array("term" => $new_term), true), "Passer à la promo ".$new_term, array("class" => "btn btn-primary"));
           echo "\t";
+        } else {
+          echo tip("Pour faire la passation de la Kès, il faut qu'il y ait au moins un administrateur du mandat suivant.");
         }
         if (is_deactivatable($binet["id"])) {
           echo link_to(path("deactivate", "binet", $binet["id"], "", array(), true), "Désactiver le binet",  array("class" => "btn btn-danger"));

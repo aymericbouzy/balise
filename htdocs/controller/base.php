@@ -24,12 +24,8 @@
 
   if ($_GET["controller"] != "error") {
     include CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
-  } else {
-    if (!is_empty($_SERVER["HTTP_REFERER"])) {
-      mail_with_headers(WEBMASTER_EMAIL, "Status ".$status." : '".$header."'", "Requested URL : ".$_SERVER["REQUEST_URI"]."<br>Previous URL : ".$_SERVER["HTTP_REFERER"])."<br>".nl2br(get_debug_context());
-    }
   }
-
+  
   if (!(STATE == "development" && ob_get_length() != 0)) {
     include LAYOUT_PATH."application.php";
   }
