@@ -16,18 +16,29 @@
     $values["current_term"] = $term;
     $values["clean_name"] = clean_string($values["name"]);
     $values["description"] = "";
+    $values["created_by"] = connected_student();
     return create_entry(
       "binet",
-      array("current_term"),
+      array("current_term", "created_by"),
       array("name", "clean_name", "description"),
       $values
+    );
+  }
+
+  function validate_binet($binet) {
+    update_entry(
+      "binet",
+      array("validated_by"),
+      array(),
+      $binet,
+      array("validated_by" => connected_student());
     );
   }
 
   function select_binet($binet, $fields = array()) {
     $binet = select_entry(
       "binet",
-      array("id", "name", "clean_name", "description", "current_term", "subsidy_provider", "subsidy_steps"),
+      array("id", "name", "clean_name", "description", "current_term", "subsidy_provider", "subsidy_steps", "created_by", "validated_by"),
       $binet,
       $fields
     );
@@ -39,9 +50,10 @@
   }
 
   function select_binets($criteria = array(), $order_by = "", $ascending = true) {
+    set_if_not_set($criteria["validated_by"], array("IS NOT", "NULL"));
     return select_entries(
       "binet",
-      array("subsidy_provider", "current_term", "id"),
+      array("subsidy_provider", "current_term", "id", "validated_by", "created_by"),
       array("name", "clean_name"),
       array(),
       $criteria,
@@ -59,6 +71,13 @@
                   array("description", "name", "clean_name", "subsidy_steps"),
                   $binet,
                   $hash);
+  }
+
+  function delete_binet($binet) {
+    delete_entry(
+      "binet",
+      $binet
+    );
   }
 
   /*
