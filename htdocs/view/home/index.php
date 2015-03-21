@@ -34,7 +34,7 @@
       $term_admins = select_terms(array("student"=>$_SESSION["student"]));
       foreach($term_admins as $term_admin) {
         $term_admin = select_term_binet($term_admin["id"],array("id","binet","term"));
-        $id = "binet".$term_admin["binet"];
+        $id = "binet_".$term_admin["binet"]."_".$term_admin["term"];
         $number_pending_validations = count_pending_validations($term_admin["binet"], $term_admin["term"]);
         echo link_to(
           path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"])),
