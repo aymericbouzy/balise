@@ -27,15 +27,17 @@ CREATE TABLE `binet` (
   `description` text,
   `subsidy_provider` tinyint(1) NOT NULL DEFAULT '0',
   `current_term` smallint(6) DEFAULT NULL,
-  `subsidy_steps` text
+  `subsidy_steps` text,
+  `created_by` int(11) NOT NULL,
+  `validated_by` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `binet`
 --
 
-INSERT INTO `binet` (`id`, `name`, `clean_name`, `description`, `subsidy_provider`, `current_term`, `subsidy_steps`) VALUES
-(1, 'Kès', 'kes', '', 1, 2013, NULL);
+INSERT INTO `binet` (`id`, `name`, `clean_name`, `description`, `subsidy_provider`, `current_term`, `subsidy_steps`, `created_by`, `validated_by`) VALUES
+(1, 'Kès', 'kes', '', 1, 2013, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
