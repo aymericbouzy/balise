@@ -1,5 +1,17 @@
 <?php
 
+  function is_validated($binet) {
+    return !is_empty(select_binet($binet, array("validated_by"))["validated_by"]);
+  }
+
+  function check_is_validated() {
+    header_if(!is_validated($GLOBALS["binet"]["id"]), 403);
+  }
+
+  function check_is_not_validated() {
+    header_if(is_validated($GLOBALS["binet"]["id"]), 403);
+  }
+
   function check_is_deactivated() {
     $current_term = current_term($GLOBALS["binet"]["id"]);
     header_if(!is_empty($current_term), 403);
@@ -20,6 +32,11 @@
     array("edit", "update", "switch_subsidy_provider", "show", "change_term", "reactivate", "deactivate", "power_transfer"),
     array("model_name" => "binet")
   );
+  before_action(
+    "check_is_validated",
+    array("switch_subsidy_provider", "change_term", "reactivate", "deactivate", "power_transfer"),
+  );
+  before_action("check_is_not_validated", array("validate"));
   before_action("check_is_activated", array("power_transfer", "deactivate"));
   before_action("check_is_deactivated", array("reactivate"));
   before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider", "admin"));
