@@ -1,6 +1,6 @@
 <?php
 
-  if ($_SERVER["HTTP_HOST"] == "localhost:3000") {
+  if (isset($_ENV["state"]) && $_ENV["state"] == "development") {
     include "config/development.php";
   } else {
     include "config/production.php";
