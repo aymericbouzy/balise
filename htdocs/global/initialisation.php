@@ -1,6 +1,6 @@
 <?php
 
-  if ($_SERVER["HTTP_HOST"] != "balise.bin") {
+  if ($_SERVER["HTTP_HOST"] == "localhost:3000") {
     include "config/development.php";
   } else {
     include "config/production.php";
