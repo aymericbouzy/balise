@@ -26,9 +26,9 @@
     	// A modal toggle should at least be a button and not only a text in a div
     	set_if_not_set($options['modal']['class'], "btn");
 
-    	$modal_id = is_empty($options['modal']["id"]) ? $options["id"]."_modal_auto_id" : $modal_options["id"] ;
-    	$button_in_modal = link_to($path,"<div> Confirmer </div>",array("goto" => true, "class" => "btn"));
-    	$content = $confirmation_modal_message."<div class=\"button-container\">".$button_in_modal."</div>";
+    	$modal_id = is_empty($options['modal']["id"]) ? $options["id"]."_modal_auto_id" : $options['modal']["id"] ;
+    	$button_in_modal = link_to($path,"<div> Confirmer </div>",array("class" => "btn"));
+    	$content = $options['modal']['message']."<div class=\"button-container\">".$button_in_modal."</div>";
     	$modal = modal($modal_id, $options['modal']["title"], $content);
 
     	return modal_toggle($options["id"], $caption,
