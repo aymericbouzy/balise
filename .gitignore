@@ -5,6 +5,7 @@
 /.project
 
 htdocs/config/production.php
+htdocs/config/development.php
 
 htdocs/-FProjet
 
