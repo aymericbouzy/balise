@@ -1,6 +1,6 @@
 <?php
 
-  if (isset($_ENV["state"]) && $_ENV["state"] == "development") {
+  if ($_SERVER["HTTP_HOST"] != "balise.bin") {
     include "config/development.php";
   } else {
     include "config/production.php";
