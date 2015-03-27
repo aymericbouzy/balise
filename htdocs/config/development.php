@@ -1,6 +1,6 @@
 <?php
 
-  define("WEBMASTER_EMAIL", $_ENV["webmaster_email"]);
+  define("WEBMASTER_EMAIL", "nathan.eckert@polytechique.edu");
   define("STATE", "development");
 
   // when changing these values, run localhost/url_rewriting.php to rewrite .htaccess file.
@@ -9,8 +9,8 @@
 
   define("DATABASE_USERNAME", "root");
   define("DATABASE_PASSWORD", "root");
-  define("DATABASE_NAME", "balise");
+  define("DATABASE_NAME", "projetbalise");
   define("DATABASE_HOST", "localhost");
-  define("DATABASE_PORT", "8889");
+  define("DATABASE_PORT", "");
   define("FRANKIZ_AUTH_KEY", "A4d!fgr6?45GF8");
   define("REAL_FRANKIZ_CONNECTION", false);
