@@ -12,3 +12,4 @@ htdocs/-FProjet
 htdocs/test.php
 
 htdocs/.htaccess
+vendor
