@@ -11,6 +11,7 @@ Pour installer le site (sur `balise.bin` ou en local), il faut :
 * placer le dossier htdocs à la racine du serveur
 * ajouter le fichier de configuration
 * initialiser la base de données SQL
+* démarer le serveur sur le port 3000 si on fait tourner le site en local
 
 ## Dossier htdocs
 
@@ -19,7 +20,7 @@ En local, il faut initialiser le serveur sur le dossier `htdocs`. Dans le cas o�
 
 ## Fichier de configuration
 
-Le fichier de configuration du site sur `balise.bin` s'appelle `htdocs/config/production.php`, ailleurs, il s'appelle `htdocs/config/development.php` : le fichier `htdocs/config/example.php` peut servir de base pour savoir quels paramètres spécifier, et sous quelle format.
+Le fichier de configuration du site sur `balise.bin` s'appelle `htdocs/config/production.php`, et sur `localhost:3000`, il s'appelle `htdocs/config/development.php` : le fichier `htdocs/config/example.php` peut servir de base pour savoir quels paramètres spécifier, et sous quelle format.
 
 ### Racine du serveur
 
@@ -41,6 +42,11 @@ La variable `URL_REWRITE` sert à définir si l'on souhaite utiliser de la réé
 
 Pour initialiser la base de données, il suffit d'exécuter le fichier `Balise.sql` dans la base de données que l'on aura préalablement créée, en lui donnant pour nom celui renseigné dans `DATABASE_NAME`.
 La première personne à se connecter sera administrateur de la Kès.
+
+## Démarage du serveur sur le port 3000
+
+Si l'on souhaite utiliser la connexion avec Frankiz, c'est obligatoire. Si l'on souhaite utiliser deux fichiers de configuration, celui de production et celui de dévelopement, c'est également nécessaire. Dans tous les autres cas, c'est à dire si `REAL_FRANKIZ_CONNECTION` a été définie à `false` et si on a nommé le fichier de configuration `production.php`, on peut faire tourner le site sur le port que l'on souhaite.
+La configuration du port du serveur est spécifique à chaque serveur : dans MAMP, on trouve ce paramètre dans Préférences > Ports > Apache Port.
 
 ## Mise à jour du site en production sur balise.bin
 
