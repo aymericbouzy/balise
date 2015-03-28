@@ -9,8 +9,8 @@
 
   define("DATABASE_USERNAME", "root");
   define("DATABASE_PASSWORD", "root");
-  define("DATABASE_NAME", "balise");
+  define("DATABASE_NAME", "projetbalise");
   define("DATABASE_HOST", "localhost");
   define("DATABASE_PORT", "8889");
-  define("FRANKIZ_AUTH_KEY", "A4d!fgr6?45GF8");
+  define("FRANKIZ_AUTH_KEY", "A4d!fgr6?45GF8"); // This value allows to make requests for http://localhost:3000/home/login
   define("REAL_FRANKIZ_CONNECTION", false);
