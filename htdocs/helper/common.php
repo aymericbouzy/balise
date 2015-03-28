@@ -29,7 +29,7 @@
     	$modal_id = is_empty($options['modal']["id"]) ? $options["id"]."_modal_auto_id" : $options['modal']["id"] ;
     	$button_in_modal = link_to($path,"<div> Confirmer </div>",array("class" => "btn"));
     	$content = $options['modal']['message']."<div class=\"button-container\">".$button_in_modal."</div>";
-    	$modal = modal($modal_id, $options['modal']["title"], $content);
+    	$modal = modal($modal_id, array("title" => $options['modal']["title"]), $content);
 
     	return modal_toggle($options["id"], $caption,
     			$options["class"], $modal_id)."\n".$modal;
@@ -101,14 +101,14 @@
     return "<span class=\"modal-toggle ".$class."\" id=\"".$id."\" data-toggle=\"modal\" data-target=\"#".$target."\">".$content."</span>";
   }
 
-  function modal($id,$title,$content){
+  function modal($id,$content,$options = array()){
       return "<div class=\"modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
                 <div class=\"modal-dialog\">
                   <div class=\"modal-content\">".
-      							( !is_empty($title)?
+      							( !is_empty($options['title'])?
                     	"<div class=\"modal-header\">
                     	".close_button("modal")."
-                    	<h4 class=\"modal-title\">".$title."</h4>
+                    	<h4 class=\"modal-title\">".$options['title']."</h4>
                     	</div>" :
       									"" ).
                     "<div class=\"modal-body\">".$content."</div>

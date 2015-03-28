@@ -56,6 +56,6 @@
     </div>
   </div>
 </div>
-<?php echo modal("terms","Voir l'activité d'une autre promotion du binet",pretty_terms_list($binet)); ?>
+<?php echo modal("terms", pretty_terms_list($binet) ,array("title" => "Voir l'activité d'une autre promotion du binet")); ?>
 <script src = "<?php echo ASSET_PATH; ?>js/list.js"></script>
 <?php echo initialize_tablefilter("searchlist",array("element_name","tags")); ?>

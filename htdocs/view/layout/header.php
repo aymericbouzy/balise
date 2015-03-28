@@ -115,12 +115,12 @@
             echo link_to(path("new", "request", "", binet_prefix($binet,$term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element shadowed0"));
           }
         }
-        echo modal("wave-select","Sélectionner une vague de subventions : ",ob_get_clean());
+        echo modal("wave-select", ob_get_clean(), array("title" => "Sélectionner une vague de subventions : "));
     }
     if (file_exists($help_file)) {
       ob_start();
       include $help_file;
-      echo modal("display-help", "Aide", ob_get_clean());
+      echo modal("display-help", ob_get_clean(),array("title" => "Aide"));
     }
   ?>
 </ul>
