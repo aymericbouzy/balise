@@ -110,7 +110,7 @@
 		if (fwrite(
       $htaccess,
       "
-      ErrorDocument  404  ".substr(true_path("400", "error"), 1)."
+      ErrorDocument  404  ".substr(true_path("unknown_url", "error"), 1)."
 	    AddDefaultCharset UTF-8
 	    RewriteEngine ".(URL_REWRITE ? "on" : "off")."
 	    ") === FALSE) {
