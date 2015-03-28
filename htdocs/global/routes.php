@@ -1,5 +1,9 @@
 <?php
 
+  function allowed_clean_string_characters() {
+    return "a-z0-9-";
+  }
+
   function clean_string($string) {
     $string = remove_exterior_spaces($string);
     $string = str_replace(
@@ -8,7 +12,7 @@
       $string
     );
     $string = strtolower($string);
-    $string = preg_replace("/[^a-z0-9]/", "-", $string);
+    $string = preg_replace("/[^".allowed_clean_string_characters()."]/", "-", $string);
     return $string;
   }
 
@@ -79,19 +83,19 @@
 
     if (!in_array("index", $hash["except"])) {
       write_path_rule(
-        path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
+        path("", $hash["controller"], "", $hash["binet_prefix"] ? "binet/([".allowed_clean_string_characters()."]+)/([0-9]+)" : ""),
         true_path($hash["root"], $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
     }
     foreach ($collection_actions as $action) {
       write_path_rule(
-        path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
+        path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/([".allowed_clean_string_characters()."]+)/([0-9]+)" : ""),
         true_path($action, $hash["controller"], "", $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
     }
     foreach ($member_actions as $action) {
       write_path_rule(
-        path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([a-z-]+)/([0-9]+)" : ""),
+        path($action, $hash["controller"], "([0-9]+)", $hash["binet_prefix"] ? "binet/([".allowed_clean_string_characters()."]+)/([0-9]+)" : ""),
         true_path($action, $hash["controller"], "$".($hash["binet_prefix"] ? "3" : "1"), $hash["binet_prefix"] ? "binet/$1/$2" : "")
       );
     }
@@ -126,13 +130,13 @@
     write_controller_rules(array("controller" => "tag", "except" => array("edit", "update", "delete")));
     write_controller_rules(array("controller" => "wave", "except" => array("new", "create", "edit", "update", "delete", "show")));
     write_controller_rules(array("controller" => "student", "except" => array("new", "create", "edit", "update", "delete", "index")));
+    write_controller_rules(array("controller" => "validation", "except" => array("show", "edit", "update", "new", "create", "delete")));
 
-    write_path_rule(path("", "binet", "([a-z-]+)/([0-9]+)"), true_path("", "budget", "", "binet/$1/$2"));
+    write_path_rule(path("", "binet", "([".allowed_clean_string_characters()."]+)/([0-9]+)"), true_path("", "budget", "", "binet/$1/$2"));
     write_controller_rules(array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
     write_controller_rules(array("controller" => "budget", "binet_prefix" => true, "action_on_collection" => array("transfer", "copy")));
     write_controller_rules(array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate", "review")));
     write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant", "reject")));
-    write_controller_rules(array("controller" => "validation", "binet_prefix" => true, "except" => array("show", "edit", "update", "new", "create", "delete")));
     write_controller_rules(array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish", "open")));
 
     fclose($htaccess);

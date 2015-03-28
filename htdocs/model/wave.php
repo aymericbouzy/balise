@@ -163,6 +163,7 @@
     $used_amount = 0;
     $granted_amount = 0;
     $requested_amount = 0;
+    $available_amount = 0;
     $term = select_term_binet($term, array("binet", "term"));
     foreach (select_waves(array("binet" => $binet)) as $wave) {
       foreach (select_requests(array("binet" => $term["binet"], "term" => $term["term"], "wave" => $wave["id"])) as $request) {

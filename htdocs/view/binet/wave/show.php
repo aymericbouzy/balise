@@ -55,11 +55,12 @@
       </div>
     </div>
     <?php
-      if (in_array($wave["state"], array("distribution", "closed")) && !is_empty($wave["explanation"])) {
+      $wave_explanation = is_empty($wave["explanation"]) && has_editing_rights($binet, $term) ? "<i>Aucun message promo associé à la publication de la vague renseigné</i>" : $wave["explanation"];
+      if (in_array($wave["state"], array("distribution", "closed")) && !is_empty($wave_explanation)) {
         ?>
         <div class="panel blue-background shadowed">
           <div class="content white-text">
-            <?php echo $wave["explanation"]; ?>
+            <?php echo $wave_explanation; ?>
           </div>
         </div>
         <?php

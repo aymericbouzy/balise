@@ -9,7 +9,7 @@
   } else {
     $full_controller = $_GET["controller"];
   }
-  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "student", "binet/admin", "binet/budget", "binet/operation", "binet/request", "binet/validation", "binet/wave", "error")), 404);
+  header_if(!in_array($full_controller, array("binet", "home", "operation", "tag", "wave", "student", "binet/admin", "binet/budget", "binet/operation", "binet/request", "validation", "binet/wave", "error")), 404);
 
   $query_array = compute_query_array();
 
@@ -24,6 +24,8 @@
 
   if ($_GET["controller"] != "error") {
     include CONTROLLER_PATH.(isset($_GET["prefix"]) ? $_GET["prefix"]."/base.php" : $_GET["controller"].".php");
+  } elseif (!is_empty($_SERVER["HTTP_REFERER"])) {
+    mail_with_headers(WEBMASTER_EMAIL, "Satus ".$_GET["action"]." : Wrong link", "Requested URL : ".$_SERVER["REQUEST_URI"]."<br>Previous URL : ".$_SERVER["HTTP_REFERER"])."<br>".nl2br(get_debug_context());
   }
 
   if (!(STATE == "development" && ob_get_length() != 0)) {

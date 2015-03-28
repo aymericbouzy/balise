@@ -2,6 +2,7 @@
 
   check_binet_term(); // defines $binet and $term
   $viewing_rights_exceptions[] = array("show", "wave");
+  $viewing_rights_exceptions[] = array("index", "wave");
   $viewing_rights_exceptions[] = array("show", "request");
   $viewing_rights_exceptions[] = array("index", "request");
   $viewing_rights_exceptions[] = array("show", "operation");

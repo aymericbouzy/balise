@@ -17,7 +17,7 @@
     ?>
   </li>
   <?php
-  if (!is_empty($_GET["prefix"])) {
+  if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
     ?>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -25,35 +25,27 @@
       </a>
       <ul class="dropdown-menu" role="menu">
         <?php
-          if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
-            $budgets_for_checking_if_not_empty = select_budgets(array("binet" => $binet, "term" => $term));
-            if (!is_empty($budgets_for_checking_if_not_empty)) {
-              ?>
-                <li class="add-operation">
-                  <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
-                </li>
-              <?php
-            }
-          ?>
-          <li class="add-operation">
-            <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
-          </li >
-          <li class="add-operation">
-            <?php echo modal_toggle("request","<i class=\"fa fa-fw fa-question\"></i>Demander des subventions","add-operation","wave-select");?>
-          </li>
-          <?php
-            if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
-              ?>
-              <li class = "divider"></li>
-              <li class="add-operation">
-                <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
-              </li>
-              <?php
-            }
-          } else {
+          $budgets_for_checking_if_not_empty = select_budgets(array("binet" => $binet, "term" => $term));
+          if (!is_empty($budgets_for_checking_if_not_empty)) {
             ?>
+              <li class="add-operation">
+                <?php echo link_to(path("new", "operation", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
+              </li>
+            <?php
+          }
+        ?>
+        <li class="add-operation">
+          <?php echo link_to(path("new", "budget", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Ligne budgétaire", array("class" => "add-operation")); ?>
+        </li >
+        <li class="add-operation">
+          <?php echo modal_toggle("request","<i class=\"fa fa-fw fa-question\"></i>Demander des subventions","add-operation","wave-select");?>
+        </li>
+        <?php
+          if (select_binet($binet, array("subsidy_provider"))["subsidy_provider"] == 1) {
+            ?>
+            <li class = "divider"></li>
             <li class="add-operation">
-              <?php echo link_to(path("new", "operation"), "<i class=\"fa fa-fw fa-calculator\"></i> Opération", array("class" => "add-operation")); ?>
+              <?php echo link_to(path("new", "wave", "", binet_prefix($binet, $term)), "<i class=\"fa fa-fw fa-money\"></i> Vague de subvention", array("class" => "add-operation")); ?>
             </li>
             <?php
           }
@@ -72,11 +64,21 @@
   }
   ?>
   <li>
+    <?php
+    if (is_current_kessier()) {
+      $count_pending_validations_kes = count_pending_validations_kes();
+      echo link_to(path("", "validation"), "<i class=\"fa fa-fw fa-desktop\" style=\"color:#fff;\"></i>".($count_pending_validations_kes > 0 ? "<span class=\"counter counter-sm shadowed0\">".$count_pending_validations_kes."</span>" : ""));
+    }
+    ?>
+  </li>
+  <li>
     <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
-  <li style="padding-right:20px;">
+  <li>
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
   </li>
+
+  <!-- Modal : the user can choose the wave to ask for subsidies (make a request) -->
   <?php
     if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
         ob_start();

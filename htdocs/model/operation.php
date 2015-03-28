@@ -18,7 +18,7 @@
   function select_operation($operation, $fields = array()) {
     $present_virtual_fields = array_intersect($fields, array("state", "needs_validation"));
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_unique(array_merge(array("kes_validation_by", "id", "needs_validation"), $fields));
+      $fields = array_unique(array_merge(array("kes_validation_by", "binet_validation_by", "id", "needs_validation"), $fields));
     }
     $operation = select_entry(
       "operation",
@@ -30,7 +30,7 @@
       $operation["needs_validation"] = false;
       $requests = array();
       foreach (select_budgets_operation($operation["id"]) as $budget) {
-        foreach (select_subsidies(array("budget" => $budget["id"])) as $subsidy) {
+        foreach (select_subsidies(array("budget" => $budget["id"], "granted_amount" => array(">", 0))) as $subsidy) {
           $subsidy = select_subsidy($subsidy["id"], array("request"));
           $requests[] = $subsidy["request"];
         }
@@ -41,11 +41,10 @@
       }
     }
     if (in_array("state", $fields)) {
-      $budgets = select_budgets_operation($operation["id"]);
       $operation["state"] =
-        isset($operation["kes_validation_by"]) ?
+        !is_empty($operation["kes_validation_by"]) ?
           "validated" :
-          (is_empty($budgets) ?
+          (is_empty($operation["binet_validation_by"]) ?
             "suggested" :
             ($operation["needs_validation"] ?
               "waiting_validation" :
@@ -82,7 +81,7 @@
 
   function kes_reject_operation($operation) {
     $sql = "UPDATE operation
-            SET binet_validation_by = NULL
+            SET binet_validation_by = NULL, kes_validation_by = NULL
             WHERE id = :operation
             LIMIT 1";
     $req = Database::get()->prepare($sql);
@@ -132,8 +131,11 @@
     }
     $subsidies_by_request = array();
     foreach ($subsidies as $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("id", "request"));
-      $subsidies_by_request[$subsidy["request"]][] = $subsidy["id"];
+      $subsidy = select_subsidy($subsidy["id"], array("id", "request", "granted_amount"));
+      $request = select_request($subsidy["request"], array("id", "state"));
+      if ($subsidy["granted_amount"] > 0 && $request["state"] == "accepted") {
+        $subsidies_by_request[$request["id"]][] = $subsidy["id"];
+      }
     }
     return $subsidies_by_request;
   }
@@ -160,7 +162,7 @@
   }
 
   function count_pending_validations($binet, $term) {
-    return count(pending_validations_operations($binet, $term)) + ($binet == KES_ID ? count(kes_pending_validations_operations()) : 0);
+    return count(pending_validations_operations($binet, $term));
   }
 
   function count_pending_validations_kes() {

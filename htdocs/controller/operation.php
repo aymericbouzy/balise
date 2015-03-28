@@ -10,13 +10,21 @@
     header_if($operation["state"] != "waiting_validation", 403);
   }
 
+  function check_binet_parameter() {
+    header_if(!validate_input(array("binet")), 400);
+    header_if(!exists_binet($_GET["binet"]), 404);
+    $current_term = current_term($_GET["binet"]);
+    header_if(is_empty($current_term), 403);
+  }
+
   before_action("check_csrf_get", array("validate", "reject"));
   before_action("check_entry", array("edit", "update", "validate", "reject"), array("model_name" => "operation"));
   before_action("current_kessier", array("validate", "reject"));
+  before_action("check_binet_parameter", array("new"));
   before_action("creator_operation_or_kessier", array("edit", "update"));
   before_action("create_form", array("new", "create", "edit", "update"), "operation_entry");
   before_action("check_form", array("create", "update"), "operation_entry");
-  before_action("check_not_validated", array("validate", "reject"));
+  before_action("check_not_validated", array("validate"));
 
   switch ($_GET["action"]) {
 
@@ -54,7 +62,7 @@
     foreach (select_admins($operation["binet"], $operation["term"]) as $student) {
       send_email($student["id"], "Opération validée", "operation_validated", array("operation" => $operation["id"], "binet" => $operation["binet"], "term" => $operation["term"]));
     }
-    redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
+    redirect_to_path(path("", "validation"));
     break;
 
   case "reject":
@@ -64,7 +72,7 @@
     foreach (select_admins($operation["binet"], $operation["term"]) as $student) {
       send_email($student["id"], "Opération refusée par la Kès", "operation_rejected", array("operation" => $operation["id"], "kessier" => connected_student()));
     }
-    redirect_to_path(path("validation", "binet", binet_term_id(KES_ID, select_binet(KES_ID, array("current_term"))["current_term"])));
+    redirect_to_path(path("", "validation"));
     break;
 
   default:

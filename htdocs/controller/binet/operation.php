@@ -19,7 +19,7 @@
     $budgets = select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array($operation["amount"] > 0 ? ">" : "<", 0)));
     if (is_empty($budgets)) {
       $_SESSION["warning"][] = "Avant de pouvoir faire apparaître cette opération dans ta trésorerie, tu dois créer un budget auquel l'associer.";
-      redirect_to_path(path("", "validation", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
+      redirect_to_path(path("", "operation", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"])));
     }
   }
 
@@ -54,6 +54,7 @@
     foreach (select_operations(array_merge($query_array, array("binet" => $binet, "term" => $term, "state" => "waiting_validation")), "date",false) as $operation){
       $op_pending_kes_validations[] = select_operation($operation["id"], array("id", "comment", "amount", "date", "type","term","binet"));
     }
+    $pending_validations_operations = pending_validations_operations($binet, $term);
     break;
 
   case "new":

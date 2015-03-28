@@ -20,6 +20,7 @@
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/forms.css" type="text/css">
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/panels.css" type="text/css">
       <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/table.css" type="text/css">
+      <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/features/counter.css" type="text/css">
       <!--- Datetimepicker -->
       <link href="<?php echo ASSET_PATH; ?>css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
       <!-- Selectsearch -->
