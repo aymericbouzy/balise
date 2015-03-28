@@ -44,7 +44,8 @@
   </div>
     <?php
     ob_start();
-    if (has_viewing_rights($current_binet["id"], $current_binet["current_term"])) {
+    if (has_viewing_rights($current_binet["id"], $current_binet["current_term"])
+    		&& in_array($request['wave']['state'],array("deliberation","submission"))) {
       echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
       echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
       echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
@@ -86,17 +87,19 @@
   ?>
   <?php
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
+      $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "granted_amount", "used_amount", "purpose"));
       $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term"));
       ob_start();
       echo "<div class=\"header\"><span class=\"name\">".$budget["label"]."</span></div>";
       echo "<div class=\"content\">
-        <p class=\"amount\">
-        ".pretty_amount($subsidy["requested_amount"])." <i class=\"fa fa-fw fa-euro\"></i>
+        <p class=\"amount\">".
+        (has_viewing_rights($binet,$term) ? pretty_amount($subsidy["used_amount"])." utilisés, " : "").
+        pretty_amount($subsidy["granted_amount"])." accordés".
+        (has_viewing_rights($binet,$term) ? ", ".pretty_amount($subsidy["requested_amount"])." demandés" :"")."</i>
         </p>
-        <p class=\"text\">
-        ".$subsidy["purpose"]."
-        </p>
+        <p class=\"text\">".
+        		$subsidy["purpose"].
+       "</p>
         </div>";
       $caption = "<div class=\"sh-req-budget shadowed\">".ob_get_clean()."</div>";
       echo has_viewing_rights($binet, $term) ?
