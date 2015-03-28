@@ -197,13 +197,13 @@
             FROM request
             INNER JOIN wave
             ON wave.id = request.wave
-            INNER JOIN binet_admin
-            ON binet_admin.binet = wave.binet AND binet_admin.term = wave.term
+            INNER JOIN binet_member
+            ON binet_member.binet = wave.binet AND binet_member.term = wave.term
             INNER JOIN subsidy
             ON request.id = subsidy.request
             INNER JOIN budget
             ON budget.id = subsidy.budget
-            WHERE budget.binet = :binet AND binet_admin.student = :student AND binet_admin.rights = 0 AND request.sending_date IS NOT NULL AND wave.published = 0
+            WHERE budget.binet = :binet AND binet_member.student = :student AND binet_member.rights = 0 AND request.sending_date IS NOT NULL AND wave.published = 0
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);

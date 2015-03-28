@@ -40,10 +40,10 @@ INSERT INTO `binet` (`id`, `name`, `clean_name`, `description`, `subsidy_provide
 -- --------------------------------------------------------
 
 --
--- Table structure for table `binet_admin`
+-- Table structure for table `binet_member`
 --
 
-CREATE TABLE `binet_admin` (
+CREATE TABLE `binet_member` (
   `binet` int(11) NOT NULL,
   `student` int(11) NOT NULL,
   `term` smallint(6) NOT NULL,
@@ -51,10 +51,10 @@ CREATE TABLE `binet_admin` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `binet_admin`
+-- Dumping data for table `binet_member`
 --
 
-INSERT INTO `binet_admin` (`binet`, `student`, `term`) VALUES
+INSERT INTO `binet_member` (`binet`, `student`, `term`) VALUES
 (1, 1, 2013);
 
 -- --------------------------------------------------------
@@ -227,9 +227,9 @@ ALTER TABLE `binet`
 ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `name` (`name`), ADD UNIQUE KEY `clean_name` (`clean_name`);
 
 --
--- Indexes for table `binet_admin`
+-- Indexes for table `binet_member`
 --
-ALTER TABLE `binet_admin`
+ALTER TABLE `binet_member`
 ADD UNIQUE KEY `binet_2` (`binet`,`student`,`term`), ADD KEY `binet` (`binet`);
 
 --

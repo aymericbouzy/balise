@@ -3,7 +3,7 @@
   function select_members($criteria, $order_by = "", $ascending = true) {
     return select_with_request_string(
       "student as id",
-      "binet_admin",
+      "binet_member",
       array("binet", "term", "student", "rights"),
       array(),
       $criteria,
@@ -26,7 +26,7 @@
 
   function add_admin_binet($student, $binet, $term) {
     create_entry(
-      "binet_admin",
+      "binet_member",
       array("student", "binet", "term", "rights"),
       array(),
       array(
@@ -40,7 +40,7 @@
 
   function add_viewer_binet($student, $binet, $term) {
     create_entry(
-      "binet_admin",
+      "binet_member",
       array("student", "binet", "term", "rights"),
       array(),
       array(
@@ -60,7 +60,7 @@
     $binet_term = select_term_binet($binet_term, array("binet", "term"));
     $results = select_with_request_string(
       "rights",
-      "binet_admin",
+      "binet_member",
       array("binet", "term", "student", "rights"),
       array(),
       array("binet" => $binet_term["binet"], "term" => $binet_term["term"], "student" => connected_student()),
@@ -97,8 +97,8 @@
 
   function remove_admin_binet($student, $binet, $term) {
     $sql = "DELETE
-            FROM binet_admin
-            WHERE binet = :binet AND term = :term AND student = :student AND binet_admin.rights = ".editing_rights;
+            FROM binet_member
+            WHERE binet = :binet AND term = :term AND student = :student AND rights = ".editing_rights;
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':term', $term, PDO::PARAM_INT);
@@ -108,8 +108,8 @@
 
   function remove_viewer_binet($student, $binet, $term) {
     $sql = "DELETE
-            FROM binet_admin
-            WHERE binet = :binet AND term = :term AND student = :student AND binet_admin.rights = ".viewing_rights;
+            FROM binet_member
+            WHERE binet = :binet AND term = :term AND student = :student AND rights = ".viewing_rights;
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);
     $req->bindValue(':term', $term, PDO::PARAM_INT);
