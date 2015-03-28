@@ -35,6 +35,8 @@
         urlrewrite();
         $_SESSION["known_rejected_url"] = $_SERVER["REQUEST_URI"];
         redirect_to_path($_SERVER["REQUEST_URI"]);
+      } else {
+        unset($_SESSION["known_rejected_url"]);
       }
 
       if (STATE == "development") {
