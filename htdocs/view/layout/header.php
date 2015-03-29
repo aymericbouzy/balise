@@ -63,7 +63,9 @@
     <?php
   }
   ?>
-  <?php if ($_GET["controller"]!="home") { ?>
+  <?php 
+  if ($_GET["controller"]!="home") { 
+    ?>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
         <i style="color:#3399FF" class="fa fa-fw fa-group"></i> 	<span class="caret"></span>
@@ -84,9 +86,11 @@
           <?php
 					}
 				?>
-	  	</ul>
-	  </li>
-  <?php } ?>
+      </ul>
+    </li>
+    <?php 
+  } 
+  ?>
   <li>
     <?php
     if (is_current_kessier()) {
