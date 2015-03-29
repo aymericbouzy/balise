@@ -5,13 +5,27 @@
     header_if(!is_empty($current_term), 403);
   }
 
-  function check_is_activated() {
-    $current_term = current_term($GLOBALS["binet"]["id"]);
-    header_if(is_empty($current_term), 403);
-  }
-
   function check_editing_rights_or_current_kessier() {
     header_if(!has_editing_rights($GLOBALS["binet"]["id"], current_term($GLOBALS["binet"]["id"])) && !is_current_kessier(), 401);
+  }
+
+  function is_transferable($binet) {
+    $admins = select_admins(KES_ID, current_term(KES_ID) + 1);
+    $current_term = current_term($binet);
+    return ($binet != KES_ID || !is_empty($admins)) && !is_empty($current_term);
+  }
+
+  function check_is_transferable() {
+    header_if(!is_transferable($GLOBALS["binet"]["id"]), 403);
+  }
+
+  function is_deactivatable($binet) {
+    $current_term = current_term($binet);
+    return $binet != KES_ID && !is_empty($current_term);
+  }
+
+  function check_is_deactivatable() {
+    header_if(!is_deactivatable($GLOBALS["binet"]["id"]), 403);
   }
 
   before_action("check_csrf_get", array("delete", "switch_subsidy_provider", "deactivate", "power_transfer"));
@@ -20,14 +34,13 @@
     array("edit", "update", "switch_subsidy_provider", "show", "change_term", "reactivate", "deactivate", "power_transfer"),
     array("model_name" => "binet")
   );
-  before_action("check_is_activated", array("power_transfer", "deactivate"));
   before_action("check_is_deactivated", array("reactivate"));
   before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider", "admin"));
   before_action("check_editing_rights_or_current_kessier", array("edit", "update"));
   before_action("create_form", array("new", "create", "edit", "update", "change_term", "reactivate"), "binet");
   before_action("check_form", array("create", "update", "reactivate"), "binet");
-
-  $term_form_fields = array("term");
+  before_action("check_is_deactivatable", array("deactivate"));
+  before_action("check_is_transferable", array("power_transfer"));
 
   switch ($_GET["action"]) {
 
