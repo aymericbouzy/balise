@@ -65,7 +65,7 @@
                       pretty_binet_term($term_admin["id"], false) ,
                       array("class" => "modal-list-element shadowed0"));
                   }
-                  echo modal("choose_binet".$wave["id"],"Choisir un binet pour lequel faire une demande",ob_get_clean());
+                  echo modal("choose_binet".$wave["id"], ob_get_clean(), array("title" => "Choisir un binet pour lequel faire une demande"));
                 ?>
               </span>
               <?php
