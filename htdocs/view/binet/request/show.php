@@ -1,6 +1,8 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
-  <?php $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
+  <?php
+  $has_viewing_rights = has_viewing_rights($binet,$term) || has_editing_rights($request["wave"]["binet"], $request["wave"]["term"]);
+  $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
   <div class="sh-plus <?php echo $request_state["color"]; ?>-background shadowed">
     <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
     <div class="text">
@@ -38,14 +40,13 @@
         <?php echo pretty_binet_term($binet."/".$term); ?>
       </p>
       <p class="sub">
-        <?php echo pretty_wave($request["wave"]["id"], false); ?>
+        <?php echo pretty_wave($request["wave"]["id"]); ?>
       </p>
     </div>
   </div>
     <?php
     ob_start();
-    if (has_viewing_rights($current_binet["id"], $current_binet["current_term"])
-    		&& in_array($request['wave']['state'],array("deliberation","submission"))) {
+    if ( $has_viewing_rights && in_array($request['wave']['state'],array("deliberation","submission"))) {
       echo minipane("income", "Recettes", $current_binet["real_income"], $current_binet["expected_income"]);
       echo minipane("spending", "Dépenses", $current_binet["real_spending"], $current_binet["expected_spending"]);
       echo minipane("balance", "Equilibre", $current_binet["real_balance"], $current_binet["expected_balance"]);
@@ -60,7 +61,7 @@
   <div class="sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed" id="current_term">
     <?php echo $content; ?>
   </div>
-  <?php if( has_viewing_rights($binet,$term) || has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])){
+  <?php if($has_viewing_rights){
     ?>
     <div class="panel shadowed light-blue-background">
       <?php
@@ -93,9 +94,9 @@
       echo "<div class=\"header\"><span class=\"name\">".$budget["label"]."</span></div>";
       echo "<div class=\"content\">
         <p class=\"amount\">".
-        (has_viewing_rights($binet,$term) ? pretty_amount($subsidy["used_amount"])." utilisés, " : "").
+        ($has_viewing_rights ? pretty_amount($subsidy["used_amount"])." utilisés, " : "").
         pretty_amount($subsidy["granted_amount"])." accordés".
-        (has_viewing_rights($binet,$term) ? ", ".pretty_amount($subsidy["requested_amount"])." demandés" :"")."</i>
+        ($has_viewing_rights ? ", ".pretty_amount($subsidy["requested_amount"])." demandés" :"")."</i>
         </p>
         <p class=\"text\">".
         		$subsidy["purpose"].
