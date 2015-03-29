@@ -22,7 +22,7 @@
     } else if (!is_empty($options['modal'])) {
     	set_if_not_set($options['modal']['title'], "");
     	// The message should be set if the 'modal' options is used, but we provide a default one
-    	set_if_not_set($options['modal']['message'], " Es-tu sûr de vouloir faire ça ?");
+    	set_if_not_set($options['modal']['message'], " Es-tu sûr de vouloir faire cela ?");
     	// A modal toggle should at least be a button and not only a text in a div
     	set_if_not_set($options['modal']['class'], "btn");
 
@@ -105,12 +105,12 @@
       return "<div class=\"modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
                 <div class=\"modal-dialog\">
                   <div class=\"modal-content\">".
-      							( !is_empty($options['title'])?
+                    (!is_empty($options['title']) ?
                     	"<div class=\"modal-header\">
-                    	".close_button("modal")."
-                    	<h4 class=\"modal-title\">".$options['title']."</h4>
+                      	".close_button("modal")."
+                      	<h4 class=\"modal-title\">".$options['title']."</h4>
                     	</div>" :
-      									"" ).
+      							  "" ).
                     "<div class=\"modal-body\">".$content."</div>
                   </div>
                 </div>
