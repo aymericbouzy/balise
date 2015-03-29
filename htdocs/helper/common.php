@@ -106,11 +106,11 @@
                 <div class=\"modal-dialog\">
                   <div class=\"modal-content\">".
                     (!is_empty($options['title']) ?
-                    	"<div class=\"modal-header\">
-                      	".close_button("modal")."
-                      	<h4 class=\"modal-title\">".$options['title']."</h4>
-                    	</div>" :
-      							  "" ).
+                      "<div class=\"modal-header\">
+                        ".close_button("modal")."
+                        <h4 class=\"modal-title\">".$options['title']."</h4>
+                      </div>" :
+                    "" ).
                     "<div class=\"modal-body\">".$content."</div>
                   </div>
                 </div>
