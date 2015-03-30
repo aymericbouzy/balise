@@ -18,61 +18,61 @@
   </div>
 
   <div class="container">
-  	<div class="col-lg-2 col-md-1 col-sm-0"></div>
-  	<div class="col-lg-8 col-md-10 col-sm-12">
-	  	<?php
-				$collapse_control = "<div class=\"panel shadowed\"><div class=\"title\"> Voir les tutos vidéo </div></div>";
-				echo make_collapse_control($collapse_control, "tutorials");
-			?>
-			<div id="tutorials" class="collapse">
-			  <?php
-			  	// TODO : mettre ici les vidéos, infos sur les vidéos, ou même faire un fichier contenant ces infos ?
-			  	// --> fichier de métadonnées externe type json
+    <div class="col-lg-2 col-md-1 col-sm-0"></div>
+    <div class="col-lg-8 col-md-10 col-sm-12">
+      <?php
+        $collapse_control = "<div class=\"panel shadowed\"><div class=\"title\"> Voir les tutos vidéo </div></div>";
+        echo make_collapse_control($collapse_control, "tutorials");
+      ?>
+      <div id="tutorials" class="collapse">
+        <?php
+          // TODO : mettre ici les vidéos, infos sur les vidéos, ou même faire un fichier contenant ces infos ?
+          // --> fichier de métadonnées externe type json
 
-			  	$videos = array(
-			  			array("pathname" => "../../video/presentation",
-			  					"title" => "Hello world",
-			  					"id" => "video1"
-			  					),
-			  			array("pathname" => "../../video/presentation",
-			  					"title" => "Hello world",
-			  					"id" => "video1"
-			  			)
-			  	);
+          $videos = array(
+              array("pathname" => "../../video/presentation",
+                  "title" => "Hello world",
+                  "id" => "video1"
+                  ),
+              array("pathname" => "../../video/presentation",
+                  "title" => "Hello world",
+                  "id" => "video1"
+              )
+          );
 
-			  	// TODO : ajouter un petit index avec des ancres vers les vidéos
+          // TODO : ajouter un petit index avec des ancres vers les vidéos
 
-			  	foreach($videos as $video){
-			  		$title_tag = "<div class=\"title\">".$video['title']."</div>";
+          foreach($videos as $video){
+            $title_tag = "<div class=\"title\">".$video['title']."</div>";
 
-						ob_start();
-						echo "<video controls poster=\"".$video['pathname'].".png\" width=\"75%\">";
-						foreach(array(".mp4", ".webm", ".ogv") as $video_format) {
-							if(file_exists($video['pathname'].$video_format)) {
-								echo "<source src=\"".$video['pathname'].$video_format."\">";
-							}
-						}
-						echo	"Votre navigateur n'est pas à jour, il ne peut pas lire cette vidéo !".
-			    			"</video>";
-						$video_tag = ob_get_clean();
+            ob_start();
+            echo "<video controls poster=\"".$video['pathname'].".png\" width=\"75%\">";
+            foreach(array(".mp4", ".webm", ".ogv") as $video_format) {
+              if(file_exists($video['pathname'].$video_format)) {
+                echo "<source src=\"".$video['pathname'].$video_format."\">";
+              }
+            }
+            echo  "Votre navigateur n'est pas à jour, il ne peut pas lire cette vidéo !".
+                "</video>";
+            $video_tag = ob_get_clean();
 
-						$back_to_top = link_to("#", "<i class=\"fa fa-fw fa-arrow-up\"></i> Retour en haut de page" );
+            $back_to_top = link_to("#", "<i class=\"fa fa-fw fa-arrow-up\"></i> Retour en haut de page" );
 
-						echo "<div class=\"panel shadowed light-blue-background\" id=\"".$video['id']."\" >".
-										$title_tag.
-										"<div class=\"content\">
-			      					<div class=\"video-content\">".
-			      						$video_tag.
-			      					"</div>".
-			      					$back_to_top.
-			  						"</div>
-			  					</div>";
+            echo "<div class=\"panel shadowed light-blue-background\" id=\"".$video['id']."\" >".
+                    $title_tag.
+                    "<div class=\"content\">
+                      <div class=\"video-content\">".
+                        $video_tag.
+                      "</div>".
+                      $back_to_top.
+                    "</div>
+                  </div>";
 
-			  	}
-			  ?>
-		  </div>
-	  </div>
-	</div>
+          }
+        ?>
+      </div>
+    </div>
+  </div>
   <!-- TODO : supprimer le contenu ci-dessous une fois que le code ci dessus fonctionne -->
   <div id="video1" class="panel shadowed">
     <div class="title">
