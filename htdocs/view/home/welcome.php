@@ -30,11 +30,11 @@
 			  	// --> fichier de métadonnées externe type json
 
 			  	$videos = array(
-			  			array("pathname"=>"../../video/presentation",
+			  			array("pathname" => "../../video/presentation",
 			  					"title" => "Hello world",
 			  					"id" => "video1"
 			  					),
-			  			array("pathname"=>"../../video/presentation",
+			  			array("pathname" => "../../video/presentation",
 			  					"title" => "Hello world",
 			  					"id" => "video1"
 			  			)
@@ -56,7 +56,7 @@
 			    			"</video>";
 						$video_tag = ob_get_clean();
 
-						$back_to_top = link_to("#","<i class=\"fa fa-fw fa-arrow-up\"></i> Retour en haut de page" );
+						$back_to_top = link_to("#", "<i class=\"fa fa-fw fa-arrow-up\"></i> Retour en haut de page" );
 
 						echo "<div class=\"panel shadowed light-blue-background\" id=\"".$video['id']."\" >".
 										$title_tag.
