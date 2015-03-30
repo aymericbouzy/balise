@@ -54,6 +54,7 @@ body{
   background-color:#cbddff;
   padding:10px;
   bottom : 60px;
+  margin-bottom:30px;
 }
 
 @media(max-width:900px){
@@ -71,5 +72,6 @@ body{
   }
   #presentation{
     width:100%;
+    margin-bottom:10px;
   }
 }
