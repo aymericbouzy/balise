@@ -5,7 +5,7 @@
     <span class="icon-bar"></span>
     <span class="icon-bar"></span>
   </button>
-  <?php echo link_to(path("", "home"), "Balise", array("class" => "navbar-brand")); ?>
+  <?php echo link_to(path("", "home"), "<i class=\"fa fa-fw fa-home\"></i> Balise", array("class" => "navbar-brand")); ?>
 </div>
 <ul class="nav navbar-right top-nav">
   <li>
@@ -63,6 +63,34 @@
     <?php
   }
   ?>
+  <?php 
+  if ($_GET["controller"]!="home") { 
+    ?>
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i style="color:#3399FF" class="fa fa-fw fa-group"></i> 	<span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" role="menu">
+        <?php
+        foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
+          $term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
+          ?>
+            <li>
+              <?php
+                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
+                  path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
+                  path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
+                echo link_to($link, pretty_binet_term($term_admin["id"], false));
+              ?>
+            </li>
+          <?php
+        }
+        ?>
+      </ul>
+    </li>
+    <?php 
+  } 
+  ?>
   <li>
     <?php
     if (is_current_kessier()) {
@@ -74,6 +102,7 @@
   <li>
     <span><?php echo pretty_student(connected_student(),true,true); ?></span>
   </li>
+
   <li>
 		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
   </li>
@@ -90,12 +119,12 @@
             echo link_to(path("new", "request", "", binet_prefix(binet,term), array("wave" => $wave_for_modal["id"])),pretty_wave($wave_for_modal["id"],false),array("class" => "modal-list-element shadowed0"));
           }
         }
-        echo modal("wave-select","Sélectionner une vague de subventions : ",ob_get_clean());
+        echo modal("wave-select", ob_get_clean(), array("title" => "Sélectionner une vague de subventions : "));
     }
     if (file_exists($help_file)) {
       ob_start();
       include $help_file;
-      echo modal("display-help", "Aide", ob_get_clean());
+      echo modal("display-help", ob_get_clean(),array("title" => "Aide"));
     }
   ?>
 </ul>

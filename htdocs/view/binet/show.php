@@ -168,4 +168,4 @@
     }
   ?>
 </div>
-<?php echo modal("terms", "Toutes les promotions du binet", pretty_terms_list($binet["id"])); ?>
+<?php echo modal("terms", pretty_terms_list($binet["id"]),array('title' => "Toutes les promotions du binet")); ?>
