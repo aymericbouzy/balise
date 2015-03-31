@@ -112,11 +112,12 @@
   }
 
   function insert_properties_in_html_tag($html_tag, $properties) {
+    $html_tag = preg_replace('/\s+/', ' ', trim($html_tag));
     $properties_string = "";
     foreach ($properties as $property => $value) {
       $properties_string .= " ".$property."=\"".$value."\"";
     }
-    return preg_replace("/^\s*(<[^>]*)(>)(.*)$/", "$1".$properties_string.">\n$3" , $html_tag);
+    return preg_replace("/^(\s*<[^>]*)(>)(.*)$/", "$1".$properties_string.">\n$3", $html_tag);
   }
 
   function list_to_human_string($list, $pretty_printer) {
