@@ -5,7 +5,7 @@
       echo button(path("new", "member", "", binet_prefix(binet, term)),"Ajouter un administrateur","plus","green");
     }
     if (has_editing_rights(binet, term)) {
-      echo button(path("new_viewer", "member", "", binet_prefix(binet, term)),"Ajouter un observateur","plus","green");
+      echo button(path("new_viewer", "member", "", binet_prefix(binet, term)),"Ajouter un observateur","plus","teal");
     }
     ?>
   </div>
