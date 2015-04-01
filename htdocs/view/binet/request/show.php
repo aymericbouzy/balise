@@ -1,7 +1,7 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
   <?php
-  $has_viewing_rights = has_viewing_rights($binet,$term) || has_editing_rights($request["wave"]["binet"], $request["wave"]["term"]);
+  $has_viewing_rights = has_viewing_rights(binet, term) || has_editing_rights($request["wave"]["binet"], $request["wave"]["term"]);
   $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
   <div class="sh-plus <?php echo $request_state["color"]; ?>-background shadowed">
     <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
