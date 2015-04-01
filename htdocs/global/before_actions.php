@@ -105,6 +105,12 @@
       $term_admin <= $term;
   }
 
+  function has_request_viewing_rights($request) {
+    $request = select_request($request, array("state", "wave", "binet", "term"));
+    $wave = select_wave($request["wave"], array("binet", "term"));
+    return has_viewing_rights($request["binet"], $request["term"]) || ($request["state"] != "rough_draft" && has_viewing_rights($wave["binet"], $wave["term"]));
+  }
+
   function check_viewing_rights() {
     header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
   }

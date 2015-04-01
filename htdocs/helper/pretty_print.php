@@ -75,8 +75,9 @@
   }
 
   function pretty_operation($operation, $link = false, $raw = false) {
-    $operation = select_operation($operation, array("binet", "term", "id", "amount", "type", "date"));
-    $raw_caption = ($operation["amount"] > 0 ? "Recette" : "Dépense")." ".pretty_date($operation["date"]);
+    $operation = select_operation($operation, array("binet", "term", "id", "amount", "type", "date","comment"));
+    $raw_caption = ($operation["amount"] > 0 ? "(+) " : "(-) ")." ".pretty_date($operation["date"]);
+    $raw_caption .= " : ".substr($operation["comment"], 0, 30).(strlen($operation["comment"]) > 30 ? "..." : " ");
     $caption = $raw ? $raw_caption : pretty_operation_type($operation["type"])." ".$raw_caption." (".pretty_amount($operation["amount"], false, true)." )";
     return $link? link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), $caption) : $caption;
   }
