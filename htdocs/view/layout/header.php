@@ -111,23 +111,23 @@
   <?php
     if (isset($_GET["prefix"]) && $_GET["prefix"] == "binet" && has_editing_rights($binet, $term)) {
         ob_start();
-        $waves_for_modal = select_waves(array("state" => array("submission", "deliberation")), "submission_date", false);
+        $waves_for_modal = select_waves(array("state" => array("IN", array("submission", "deliberation"))), "submission_date", false);
         if (is_empty($waves_for_modal)) {
           echo "<i>Il n'y a aucune vague de subvention pour laquelle faire une demande en ce moment.</i>";
         } else {
           foreach ($waves_for_modal as $wave_for_modal) {
-            $wave_for_modal = select_wave($wave_for_modal, array("state","id"));
-            if($wave_for_modal["state"] == "submission") {
+            $wave_for_modal = select_wave($wave_for_modal["id"], array("state","id"));
+            if ($wave_for_modal["state"] == "submission") {
               echo link_to(
-                  path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
-                  pretty_wave($wave_for_modal["id"],false),
-                  array("class" => "modal-list-element shadowed0")
+                path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
+                pretty_wave($wave_for_modal["id"],false),
+                array("class" => "modal-list-element shadowed0")
               );
             } else {
               echo link_to(
-                  path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
-                  pretty_wave($wave_for_modal["id"],false)."<i>  Demande en retard ! </i>",
-                  array("class" => "modal-list-element list-element-danger shadowed0")
+                path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
+                pretty_wave($wave_for_modal["id"],false)."<i>  Demande en retard ! </i>",
+                array("class" => "modal-list-element list-element-danger shadowed0")
               );
             }
           }
