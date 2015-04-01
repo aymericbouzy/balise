@@ -153,3 +153,12 @@
     }
     return $amount;
   }
+
+  function select_operations_request($request) {
+    $operations = array();
+    foreach (select_subsidies(array("request" => $request)) as $subsidy) {
+      $subsidy = select_subsidy($subsidy["id"], array("budget"));
+      $operations = array_merge($operations, array_keys(ids_as_keys(select_operations_budget($subsidy["budget"]))));
+    }
+    return array_unique($operations);
+  }

@@ -133,12 +133,12 @@
         echo minipane("income", "Recettes", $binet["real_income"], $binet["expected_income"]);
         echo minipane("spending", "Dépenses", $binet["real_spending"], $binet["expected_spending"]);
         echo minipane("balance", "Equilibre", $binet["real_balance"], $binet["expected_balance"]);
+        echo minipane("subsidies_used", "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
         $suffix = "";
       } else {
         $suffix = "_std";
       }
       echo minipane("subsidies_granted".$suffix, "Subventions accordées", $binet["subsidized_amount_granted"], NULL);
-      echo minipane("subsidies_used".$suffix, "Subventions utilisées", $binet["subsidized_amount_used"], NULL);
       $content = ob_get_clean();
       ?>
       <div class="panel sh-bin-stats<?php echo clean_string($suffix); ?> light-blue-background shadowed">
@@ -150,7 +150,7 @@
       ?>
       <div class="sh-bin-resume light-blue-background shadowed">
         <div class="title">
-          Vagues de subventions
+          Vagues de subventions émises
         </div>
         <?php
           foreach($waves as $wave) {
@@ -158,7 +158,7 @@
             <div class="line">
               <span class="label"><?php echo pretty_wave($wave["id"]); ?></span>
               <span class="submission date"><?php echo $wave["submission_date"]; ?></span>
-              <span class="expiry date"> <?php echo $wave["expiry_date"]; ?></span>
+              <span class="expiry date"><?php echo $wave["expiry_date"]; ?></span>
             </div>
             <?php
           }
@@ -167,5 +167,46 @@
       <?php
     }
   ?>
+  <div class="panel shadowed light-blue-background">
+    <?php
+    $collapse_control_content = "<div class=\"title-small\">
+      Subventions reçues <i class=\"fa fa-fw fa-chevron-down\"></i>
+    </div>";
+    echo make_collapse_control($collapse_control_content, "subsidies_list");
+    ?>
+    <div class="collapse" id="subsidies_list">
+      <div class="content">
+        <?php
+        foreach (select_requests(array("binet" => $binet['id'], "term" => $binet["current_term"])) as $request) {
+          $request = select_request($request["id"] , array("id", "wave", "binet", "granted_amount"))
+          ?>
+          <div class="panel-line">
+            <div class="col-sm-8">
+              <?php echo pretty_wave($request['wave']); ?>
+            </div>
+            <div class="col-sm-3">
+              <?php echo pretty_amount($request['granted_amount']); ?>
+            </div>
+            <?php
+            if (has_viewing_rights($binet['id'], $binet['current_term'])) {
+              ?>
+              <div class="col-sm-1">
+                <?php
+                echo link_to(
+                  path("show", "request",$request["id"], binet_prefix($binet['id'], $binet['current_term'])),
+                  "<i class=\"fa fa-fw fa-eye\"></i>"
+                );
+                ?>
+              </div>
+              <?php
+            }
+            ?>
+          </div>
+          <?php
+        }
+        ?>
+      </div>
+    </div>
+  </div>
 </div>
 <?php echo modal("terms", pretty_terms_list($binet["id"]),array('title' => "Toutes les promotions du binet")); ?>

@@ -113,17 +113,6 @@
   left:70%;
 }
 
-.panel>.title-small{
-  background-color:#B0BEC5;
-  color:#000;
-}
-.title-small>a{
-  color:#2e2e2e;
-}
-.title-small>a:hover{
-  color:#000;
-}
-
 .state-indicator{
   position:absolute;
   display:inline-block;

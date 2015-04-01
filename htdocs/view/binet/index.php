@@ -58,9 +58,10 @@
     ?>
   </ul>
   <?php
-    $html_content ="<div id=\"deactivated\" class=\"panel shadowed\"><div class=\"title\">".
-    "  Binets qui n'ont pas trouvé de repreneur <i class=\"fa fa-chevron-down fa-fw\"></i> </div></div>";
-    echo make_collapse_control($html_content, "deactivatedBinets_list");
+  $html_content = "<div id=\"deactivated\" class=\"panel shadowed\">
+    <div class=\"title\"> Binets qui n'ont pas trouvé de repreneur <i class=\"fa fa-chevron-down fa-fw\"></i> </div>
+  </div>";
+  echo make_collapse_control($html_content, "deactivatedBinets_list");
   ?>
   <ul class="list collapse" id="deactivatedBinets_list">
     <?php

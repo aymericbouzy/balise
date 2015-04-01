@@ -31,6 +31,14 @@
       }
       header("HTTP/1.1 ".$header);
 
+      if (!isset($_SESSION["known_rejected_url"]) || $_SERVER["REQUEST_URI"] != $_SESSION["known_rejected_url"]) {
+        urlrewrite();
+        $_SESSION["known_rejected_url"] = $_SERVER["REQUEST_URI"];
+        redirect_to_path($_SERVER["REQUEST_URI"]);
+      } else {
+        unset($_SESSION["known_rejected_url"]);
+      }
+
       if (STATE == "development") {
         echo "\$_GET : ";
         var_dump($_GET);
@@ -97,6 +105,12 @@
     return is_numeric($term_admin) &&
       $term_admin >= $current_term &&
       $term_admin <= $term;
+  }
+
+  function has_request_viewing_rights($request) {
+    $request = select_request($request, array("state", "wave", "binet", "term"));
+    $wave = select_wave($request["wave"], array("binet", "term"));
+    return has_viewing_rights($request["binet"], $request["term"]) || ($request["state"] != "rough_draft" && has_viewing_rights($wave["binet"], $wave["term"]));
   }
 
   function check_viewing_rights() {

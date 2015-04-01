@@ -59,7 +59,7 @@
               }
             ?>
           </div>
-          <div class="title-small">
+          <div class="title-small secondary-title">
             <?php echo pretty_wave($rough_draft["wave"]); ?>
           </div>
           <div class="content">
@@ -121,7 +121,7 @@
               <?php echo link_to(path("show", "request", $request["id"], binet_prefix(binet, term)),
                 "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>
             </div>
-            <div class="title-small">
+            <div class="title-small secondary-title">
               <?php echo insert_properties_in_html_tag(pretty_wave($request["wave"]),array("class"=>"fuzzySelectorName"));
                 echo " <i class=\"sub-info\"> Envoyée le ".pretty_date($request["sending_date"])."</i>"; ?>
             </div>

@@ -63,7 +63,7 @@ function insert_popover($html_tag, $popover_content, $popover_title, $placement 
                               .collapse.in in collapsible element), else "false".
 @return string The html tag with inserted attributes
 */
-function make_collapse_control($html_tag, $id , $aria_hidden = "true"){
+function make_collapse_control($html_tag, $id, $aria_hidden = "true") {
   return insert_properties_in_html_tag(
     $html_tag,
     array(
@@ -72,5 +72,6 @@ function make_collapse_control($html_tag, $id , $aria_hidden = "true"){
       "aria-hidden" => $aria_hidden,
       "aria-controls" => $id,
       "style" => "cursor : pointer"
-    ));
+    )
+  );
 }
