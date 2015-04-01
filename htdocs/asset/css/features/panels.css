@@ -261,6 +261,14 @@
   color:#ccc;
 }
 
+.panel-list-element.list-element-danger {
+	background-color:#dd4e60;
+}
+.panel-list-element.list-element-danger:hover{
+  color:#cbddff;
+  background-color:#e23278;
+}
+
 .ratio-container {
   display: block ;
   min-width:5px;
