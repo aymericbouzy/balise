@@ -13,52 +13,56 @@
     <div class="title">
       Adminisrateurs
     </div>
-  </div>
-  <?php
-  $admins = select_admins(binet, term);
-  if (!empty($admins)) {
-    foreach ($admins as $admin) {
-      ?>
-      <span class="admin shadowed">
-        <i class="fa fa-fw fa-user logo"></i>
-        <i class="fa fa-fw fa-send logo"></i>
-        <?php
-          echo pretty_student($admin["id"]);
-          if (is_current_kessier() && (binet != KES_ID || $admin["id"] != connected_student())) {
-            echo button(path("delete", "member", $admin["id"], binet_prefix(binet, term), array(), true),"Retirer cet administrateur","times","red",true,"small");
-          }
+    <div class="content">
+    <?php
+    $admins = select_admins(binet, term);
+    if (!empty($admins)) {
+      foreach ($admins as $admin) {
         ?>
-      </span>
-      <?php
+        <span class="admin shadowed">
+          <i class="fa fa-fw fa-user logo"></i>
+          <i class="fa fa-fw fa-send logo"></i>
+          <?php
+            echo pretty_student($admin["id"]);
+            if (is_current_kessier() && (binet != KES_ID || $admin["id"] != connected_student())) {
+              echo button(path("delete", "member", $admin["id"], binet_prefix(binet, term), array(), true),"Retirer cet administrateur","times","red",true,"small");
+            }
+          ?>
+        </span>
+        <?php
+      }
+    } else {
+      echo " Il n'y aucun administrateur pour ce binet.";
     }
-  } else {
-    echo " Il n'y aucun administrateur pour ce binet.";
-  }
-  ?>
-  <div class="panel shadowed light-blue-background">
-    <div class="title">
-      Oservateurs
+    ?>
     </div>
   </div>
-  <?php
-  $viewers = select_viewers(binet, term);
-  if (!empty($viewers)) {
-    foreach ($viewers as $viewer) {
-      ?>
-      <span class="admin shadowed">
-        <i class="fa fa-fw fa-eye logo"></i>
-        <i class="fa fa-fw fa-send logo"></i>
-        <?php
-          echo pretty_student($viewer["id"]);
-          if (has_editing_rights(binet, term)) {
-            echo button(path("delete_viewer", "member", $viewer["id"], binet_prefix(binet, term), array(), true),"Retirer cet observateur","times","red",true,"small");
-          }
-        ?>
-      </span>
+  <div class="panel shadowed light-blue-background">
+    <div class="title">
+      Observateurs
+    </div>
+    <div class="content">
       <?php
-    }
-  } else {
-    echo " Il n'y aucun observateur pour ce binet.";
-  }
-  ?>
+      $viewers = select_viewers(binet, term);
+      if (!empty($viewers)) {
+        foreach ($viewers as $viewer) {
+          ?>
+          <span class="admin shadowed">
+            <i class="fa fa-fw fa-eye logo"></i>
+            <i class="fa fa-fw fa-send logo"></i>
+            <?php
+              echo pretty_student($viewer["id"]);
+              if (has_editing_rights(binet, term)) {
+                echo button(path("delete_viewer", "member", $viewer["id"], binet_prefix(binet, term), array(), true),"Retirer cet observateur","times","red",true,"small");
+              }
+            ?>
+          </span>
+          <?php
+        }
+      } else {
+        echo " Il n'y aucun observateur pour ce binet.";
+      }
+      ?>
+    </div>
+  </div>
 </div>
