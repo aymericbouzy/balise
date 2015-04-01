@@ -68,7 +68,7 @@
     ?>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i style="color:#3399FF" class="fa fa-fw fa-group"></i> 	<span class="caret"></span>
+        <i style="color:#3399FF" class="fa fa-fw fa-group"></i>   <span class="caret"></span>
       </a>
       <ul class="dropdown-menu" role="menu">
         <?php
@@ -104,7 +104,7 @@
   </li>
 
   <li>
-		<?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
+    <?php echo link_to(path("logout", "home"), "<i class=\"fa fa-fw fa-power-off\" style=\"color:#fff;\"></i>") ?>
   </li>
 
   <!-- Modal : the user can choose the wave to ask for subsidies (make a request) -->
@@ -116,20 +116,20 @@
           echo "<i>Il n'y a aucune vague de subvention pour laquelle faire une demande en ce moment.</i>";
         } else {
           foreach ($waves_for_modal as $wave_for_modal) {
-          	$wave_for_modal = select_wave($wave_for_modal, array("state","id"));
-          	if($wave_for_modal["state"] == "submission") {
-	            echo link_to(
-	            		path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
-	            		pretty_wave($wave_for_modal["id"],false),
-	            		array("class" => "modal-list-element shadowed0")
-	            );
-          	} else {
-          		echo link_to(
-          				path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
-          				pretty_wave($wave_for_modal["id"],false)."<i>  Demande en retard ! </i>",
-          				array("class" => "modal-list-element list-element-danger shadowed0")
-          		);
-          	}
+            $wave_for_modal = select_wave($wave_for_modal, array("state","id"));
+            if($wave_for_modal["state"] == "submission") {
+              echo link_to(
+                  path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
+                  pretty_wave($wave_for_modal["id"],false),
+                  array("class" => "modal-list-element shadowed0")
+              );
+            } else {
+              echo link_to(
+                  path("new", "request", "", binet_prefix($binet,$term),array("wave" => $wave_for_modal["id"])),
+                  pretty_wave($wave_for_modal["id"],false)."<i>  Demande en retard ! </i>",
+                  array("class" => "modal-list-element list-element-danger shadowed0")
+              );
+            }
           }
         }
         echo modal("wave-select", ob_get_clean(), array("title" => "Sélectionner une vague de subventions : "));
