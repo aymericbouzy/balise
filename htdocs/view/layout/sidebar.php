@@ -49,6 +49,10 @@
       <?php
       echo li_link(link_to(path("", "wave", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-star\"></i> Vague de subventions" ), $_GET["controller"] == "wave");
     }
+
+    // Membres
+    echo li_link(link_to(path("", "member", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-group\"></i> Membres" ), $_GET["controller"] == "member");
+    
     // TODO define and create administration link
     if (binet == KES_ID && false) {
       ?>
