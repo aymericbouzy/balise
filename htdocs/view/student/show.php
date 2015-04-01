@@ -15,14 +15,16 @@
     </div>
     <div class="panel shadowed light-blue-background">
       <div class="title">
-        Binet administrés
+        Binets administrés
       </div>
       <div class="content">
-        <?php foreach(select_terms(array("student"=>$student["id"])) as $term){
-          $term = select_term_binet($term["id"],array("binet"));
+        <?php
+        foreach (select_terms(array("student" => $student["id"])) as $term){
+          $term = select_term_binet($term["id"], array("id", "binet", "term"));
+          $term["rights"] = status_member_term($term["id"]);
           echo link_to(path("show", "binet", $term["binet"]),
-            "<div><i class=\"icon fa fa-fw fa-group\"></i>".pretty_binet($term["binet"],false)."</div>",
-            array("class" => "panel-list-element shadowed0","goto" => "true"));
+            "<div><i class=\"icon fa fa-fw fa-".($term["rights"] == editing_rights ? "user" : "eye")."\"></i>".pretty_binet_term($term["id"], false)."</div>",
+            array("class" => "panel-list-element ".($term["rights"] == editing_rights ? "" : "less-active")." shadowed0","goto" => "true"));
         } ?>
       </div>
     </div>

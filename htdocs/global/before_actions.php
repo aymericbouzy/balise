@@ -69,14 +69,8 @@
     header_if(!validate_input(array("binet", "term")), 400);
     $binets = select_binets(array("clean_name" => $_GET["binet"]));
     header_if(is_empty($binets), 404);
-    $GLOBALS["binet"] = $binets[0]["id"];
-    $GLOBALS["term"] = $_GET["term"];
-    $binet_terms = select_terms(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"]));
-    $binet_term = $GLOBALS["binet"]."/".$GLOBALS["term"];
-    if (is_empty($binet_terms) && $_GET["controller"] != "admin" && (!isset($_SESSION["aware_no_admins_for"]) || !in_array($binet_term, $_SESSION["aware_no_admins_for"]))) {
-      $_SESSION["error"][] = "Il n'y a aucun administrateur pour cette promotion du binet ".pretty_binet($GLOBALS["binet"]).".";
-      $_SESSION["aware_no_admins_for"][] = $binet_term;
-    }
+    define("binet", $binets[0]["id"]);
+    define("term", $_GET["term"]);
   }
 
   function check_entry($array) {
@@ -92,10 +86,10 @@
   }
 
   function has_viewing_rights($binet, $term) {
-    if (status_admin_current_binet(KES_ID)) {
+    if (status_viewer_binet($binet, $term) || status_admin_current_binet(KES_ID)) {
       return true;
     } else {
-      $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term - 1), "student" => $_SESSION["student"]));
+      $terms = select_terms(array("binet" => $binet, "term" => array(">=", $term - 1), "student" => connected_student()));
       return !is_empty($terms) ||
       received_subsidy_request_from($binet);
     }
@@ -103,7 +97,7 @@
 
   function has_editing_rights($binet, $term) {
     $current_term = current_term($binet);
-    $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => $_SESSION["student"]), "term");
+    $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => connected_student(), "rights" => editing_rights), "term");
     if (is_empty($terms_admin)) {
       return false;
     }
@@ -120,7 +114,7 @@
   }
 
   function check_viewing_rights() {
-    header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]), 401);
+    header_if(!has_viewing_rights(binet, term), 401);
   }
 
   function check_editing_rights() {
@@ -128,15 +122,10 @@
       $binet = $GLOBALS["binet"]["id"];
       $term = current_term($binet);
     } else {
-      $binet = $GLOBALS["binet"];
-      $term = $GLOBALS["term"];
+      $binet = binet;
+      $term = term;
     }
     header_if(!has_editing_rights($binet, $term), 401);
-  }
-
-  // useless
-  function kessier() {
-    header_if(!status_admin_binet(KES_ID), 401);
   }
 
   function is_current_kessier() {
@@ -147,13 +136,8 @@
     header_if(!is_current_kessier(), 401);
   }
 
-  // useless
-  function member_binet_term() {
-    header_if(!status_admin_binet($GLOBALS["binet"], $GLOBALS["term"]), 401);
-  }
-
   function member_binet_current_term() {
-    header_if(!status_admin_current_binet($GLOBALS["binet"]), 401);
+    header_if(!status_admin_current_binet(binet), 401);
   }
 
   function validate_input($required_parameters, $optional_parameters = array(), $method = "get") {
@@ -209,7 +193,7 @@
           case "wave":
             $valid = $valid && is_numeric($value);
             break;
-          case "admin":
+          case "member":
             $valid = $valid && is_numeric($value);
             break;
           case "student":
@@ -229,13 +213,13 @@
             FROM request
             INNER JOIN wave
             ON wave.id = request.wave
-            INNER JOIN binet_admin
-            ON binet_admin.binet = wave.binet AND binet_admin.term = wave.term
+            INNER JOIN binet_member
+            ON binet_member.binet = wave.binet AND binet_member.term = wave.term
             INNER JOIN subsidy
             ON request.id = subsidy.request
             INNER JOIN budget
             ON budget.id = subsidy.budget
-            WHERE budget.binet = :binet AND binet_admin.student = :student AND request.sending_date IS NOT NULL AND wave.published = 0
+            WHERE budget.binet = :binet AND binet_member.student = :student AND binet_member.rights = 0 AND request.sending_date IS NOT NULL AND wave.published = 0
             LIMIT 1";
     $req = Database::get()->prepare($sql);
     $req->bindValue(':binet', $binet, PDO::PARAM_INT);

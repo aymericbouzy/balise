@@ -23,12 +23,12 @@
   }
 
   function check_has_viewing_rights_if_rough_draft() {
-    header_if(!has_viewing_rights($GLOBALS["binet"], $GLOBALS["term"]) && select_wave($_GET["wave"], array("state"))["state"] == "rough_draft", 401);
+    header_if(!has_viewing_rights(binet, term) && select_wave($_GET["wave"], array("state"))["state"] == "rough_draft", 401);
   }
 
   before_action("check_csrf_get", array("publish"));
   subsidy_provider();
-  before_action("check_entry", array("show", "edit", "update", "publish", "open"), array("model_name" => "wave", "binet" => $binet, "term" => $term));
+  before_action("check_entry", array("show", "edit", "update", "publish", "open"), array("model_name" => "wave", "binet" => binet, "term" => term));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "publish", "open"));
   before_action("check_has_viewing_rights_if_rough_draft", array("show"));
   before_action("create_form", array("new", "create", "edit", "update"), "wave");
@@ -41,8 +41,8 @@
   switch ($_GET["action"]) {
 
   case "index":
-    $waves = select_waves(array("binet" => $binet, "term" => $term), "submission_date");
-    $waves_rough_drafts = select_waves(array("binet" => $binet, "term" => $term, "state" => "rough_draft"), "submission_date");
+    $waves = select_waves(array("binet" => binet, "term" => term), "submission_date");
+    $waves_rough_drafts = select_waves(array("binet" => binet, "term" => term, "state" => "rough_draft"), "submission_date");
     break;
 
   case "new":
@@ -50,7 +50,7 @@
     break;
 
   case "create":
-    $wave["id"] = create_wave($binet, $term, $_POST);
+    $wave["id"] = create_wave(binet, term, $_POST);
     $_SESSION["notice"][] = "La vague de subvention a été créée. Elle apparait maintenant dans ton budget et tes brouillons. Les binets pourront faire leurs demandes de subventions une fois qu'elle sera ouverte.";
     redirect_to_action("show");
     break;

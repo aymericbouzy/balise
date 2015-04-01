@@ -35,7 +35,7 @@
     array("model_name" => "binet")
   );
   before_action("check_is_deactivated", array("reactivate"));
-  before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider", "admin"));
+  before_action("current_kessier", array("new", "create", "power_transfer", "change_term", "deactivate", "reactivate", "switch_subsidy_provider"));
   before_action("check_editing_rights_or_current_kessier", array("edit", "update"));
   before_action("create_form", array("new", "create", "edit", "update", "change_term", "reactivate"), "binet");
   before_action("check_form", array("create", "update", "reactivate"), "binet");
@@ -80,7 +80,7 @@
 
   case "show":
     $binet = select_binet($binet["id"], array("id", "name", "description", "current_term", "subsidy_provider", "subsidy_steps"));
-    $binet = array_merge(select_term_binet(make_term_id($binet["id"],$binet["current_term"]), array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $binet);
+    $binet = array_merge(select_term_binet(term_id($binet["id"], $binet["current_term"]), array("subsidized_amount_used", "subsidized_amount_granted", "subsidized_amount_requested", "real_spending", "real_income", "real_balance", "expected_spending", "expected_income", "expected_balance", "state")), $binet);
     foreach (select_waves(array("binet" => $binet["id"]), "submission_date") as $wave) {
       $waves[] = select_wave($wave["id"], array("id", "binet", "term", "submission_date", "expiry_date", "published"));
     }

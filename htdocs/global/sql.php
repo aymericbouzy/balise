@@ -51,6 +51,9 @@
             case "IN":
               $keep_entry = $keep_entry && in_array($virtual_entry[$column], $value[1]);
               break;
+            case "NOT IN":
+              $keep_entry = $keep_entry && !in_array($virtual_entry[$column], $value[1]);
+              break;
             }
           } else {
             $keep_entry = $keep_entry && $virtual_entry[$column] == $value;
@@ -101,30 +104,34 @@
         }
       }
       if (in_array($column, array_merge($selectable_int_fields, $selectable_str_fields))) {
-        $sql .= " AND ".$column;
-
-        if (is_array($value)) {
-          $sql .= " ".$value[0];
+        if (is_array($value) && $value[0] == "NOT IN" && is_empty($value[1])) {
+          unset($criteria[$column]);
         } else {
-          $sql .= " =";
-        }
+          $sql .= " AND ".$column;
 
-        if (is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL"))) {
-          $sql .= " ".$value[1];
-        } elseif (is_array($value) && $value[0] === "IN") {
-          $sql .= "(";
-          $first = true;
-          foreach ($value[1] as $index => $element) {
-            if ($first) {
-              $first = false;
-            } else {
-              $sql .= ",";
-            }
-            $sql .= ":".$column.$index;
+          if (is_array($value)) {
+            $sql .= " ".$value[0];
+          } else {
+            $sql .= " =";
           }
-          $sql .= ")";
-        } else {
-          $sql .= " :".$column;
+
+          if (is_array($value) && $value[0] === "IS" && in_array($value[1], array("NULL", "NOT NULL"))) {
+            $sql .= " ".$value[1];
+          } elseif (is_array($value) && ($value[0] === "IN" || $value[0] === "NOT IN")) {
+            $sql .= "(";
+            $first = true;
+            foreach ($value[1] as $index => $element) {
+              if ($first) {
+                $first = false;
+              } else {
+                $sql .= ",";
+              }
+              $sql .= ":".$column.$index;
+            }
+            $sql .= ")";
+          } else {
+            $sql .= " :".$column;
+          }
         }
       }
     }
@@ -146,7 +153,7 @@
             } elseif (in_array($column, $selectable_str_fields)) {
               $pdo_option = PDO::PARAM_INT;
             }
-            if (is_array($value) && $value[0] == "IN") {
+            if (is_array($value) && ($value[0] == "IN" || $value[0] == "NOT IN")) {
               foreach ($value[1] as $index => $element) {
                 $req->bindValue(':'.$column.$index, $element, $pdo_option);
               }
@@ -206,8 +213,8 @@
 
   function create_entry($table, $creatable_int_fields, $creatable_str_fields, $values) {
     $values = array_intersect_key($values, array_flip(array_merge($creatable_int_fields, $creatable_str_fields)));
-    $sql1 = "INSERT INTO ".$table."(id, ";
-    $sql2 = "VALUES(NULL, ";
+    $sql1 = "INSERT INTO ".$table."(";
+    $sql2 = "VALUES(";
     $initial = true;
     foreach($values as $column => $value) {
       if ($initial) {

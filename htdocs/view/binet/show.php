@@ -95,13 +95,19 @@
           <i style="padding:5px;color:#DD2C00;" class="fa fa-fw fa-warning"></i> Il n'y a aucun administrateur pour ce binet !
           <?php
         }
-        if (is_current_kessier()) {
+        if (has_viewing_rights($binet["id"], $binet["current_term"])) {
           ?>
           <div class="add">
             <?php
-            echo button(path("new", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
-            if (!empty($admins)){
-              echo button(path("index", "admin", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
+            if (is_current_kessier()) {
+              echo button(path("new", "member", "", binet_prefix($binet["id"], $binet["current_term"])), "Ajouter un administrateur", "plus", "green", true, "small");
+              if (!empty($admins)){
+                echo button(path("index", "member", "", binet_prefix($binet["id"], $binet["current_term"])), "Supprimer un administrateur", "minus", "red", true, "small");
+              }
+            } else {
+              if (!empty($admins)){
+                echo button(path("index", "member", "", binet_prefix($binet["id"], $binet["current_term"])), "Voir les membres", "eye", "blue", true, "small");
+              }
             }
             ?>
           </div>

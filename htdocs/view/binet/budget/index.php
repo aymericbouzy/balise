@@ -9,14 +9,14 @@
            <?php
             if (sizeOf($budgets) == 0) {
               echo link_to(
-                path("transfer", "budget", "", binet_prefix($binet, $term)),
+                path("transfer", "budget", "", binet_prefix(binet, term)),
                 "<i class=\"fa fa-fw fa-arrow-down\"></i> Importer des budgets du mandat précédent",
                 array("class" => "btn")
               );
             } else {
               echo insert_tooltip(
                 link_to(
-                  path("transfer", "budget", "", binet_prefix($binet, $term)),
+                  path("transfer", "budget", "", binet_prefix(binet, term)),
                   "<i class=\"fa fa-fw fa-arrow-down\"></i>",array("class" => "btn btn-discrete")),
                 "Importer des budgets du mandat précédent"
               );
@@ -60,7 +60,7 @@
                   if ($budget["amount"] < 0) {
                     ?>
                     <tr>
-                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
+                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix(binet, term)), $budget["label"]); ?></td>
                       <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
                       <td><?php echo pretty_amount($budget["amount"]); ?></td>
                       <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
@@ -103,7 +103,7 @@
                   if ($budget["amount"] > 0) {
                     ?>
                     <tr>
-                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
+                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix(binet, term)), $budget["label"]); ?></td>
                       <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
                       <td><?php echo pretty_amount($budget["amount"]); ?></td>
                       <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
@@ -149,5 +149,5 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
 </div>
-<script src = "<?php echo ASSET_PATH; ?>js/list.js"></script>
-<?php echo initialize_tablefilter("searchlist",array("element_name","tags")); ?>
+<script src="<?php echo ASSET_PATH; ?>js/list.js"></script>
+<?php echo initialize_tablefilter("searchlist", array("element_name","tags")); ?>

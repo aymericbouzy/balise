@@ -6,8 +6,8 @@
 </div>
 <?php
 if ($_GET["action"] == "new") {
-  $current_term_binet = current_term($binet);
-  $current_term_active = $current_term_binet == $term;
+  $current_term_binet = current_term(binet);
+  $current_term_active = $current_term_binet == term;
   ?>
   <div class="panel light-blue-background shadowed">
     <div class="content">
@@ -17,12 +17,12 @@ if ($_GET["action"] == "new") {
         <span class="left component <?php echo $current_term_active ? "active" : "inactive"; ?>" >
           <?php echo $current_term_binet." ".($current_term_active ? "<i class=\"fa fa-fw fa-check\"></i>" : ""); ?>
         </span>
-        <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
+        <?php echo link_to(path("new", "request", "", binet_prefix(binet, $current_term_binet), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
         <?php ob_start(); ?>
         <span class="left component <?php echo $current_term_active ? "inactive" : "active"; ?>" >
           <?php echo ($current_term_binet + 1)." ".($current_term_active ? " " : "<i class=\"fa fa-fw fa-check\"></i>"); ?>
         </span>
-        <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet + 1), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
+        <?php echo link_to(path("new", "request", "", binet_prefix(binet, $current_term_binet + 1), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
         </span>
       </div>
     </div>
@@ -41,7 +41,7 @@ if ($_GET["action"] == "new") {
   </div>
 </div>
 <?php
-foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
+foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => array("<", 0))) as $budget) {
   $budget = select_budget($budget["id"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used", "subsidized_amount_available"));
   ?>
   <div class="panel light-blue-background shadowed">

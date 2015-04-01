@@ -1,7 +1,7 @@
 <script src = "<?php echo ASSET_PATH; ?>js/piechart.js"></script>
 <div class="show-container">
   <?php
-  $has_viewing_rights = has_viewing_rights($binet,$term) || has_editing_rights($request["wave"]["binet"], $request["wave"]["term"]);
+  $has_viewing_rights = has_viewing_rights(binet, term) || has_editing_rights($request["wave"]["binet"], $request["wave"]["term"]);
   $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
   <div class="sh-plus <?php echo $request_state["color"]; ?>-background shadowed">
     <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
@@ -11,17 +11,17 @@
   </div>
   <div class="sh-actions">
     <?php
-      if (has_editing_rights($binet, $term)) {
+      if (has_editing_rights(binet, term)) {
         if (is_editable($request["id"])) {
-          echo button(path("edit", "request", $request["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+          echo button(path("edit", "request", $request["id"], binet_prefix(binet, term)), "Modifier", "edit", "grey");
         }
         if (is_sendable($request["id"])) {
-          echo button(path("send", "request", $request["id"], binet_prefix($binet, $term), array(), true), "Soumettre", "paper-plane", "green");
+          echo button(path("send", "request", $request["id"], binet_prefix(binet, term), array(), true), "Soumettre", "paper-plane", "green");
         }
       }
       if (has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])) {
         if (in_array($request["state"], array("sent", "reviewed"))) {
-          echo button(path("review", "request", $request["id"], binet_prefix($binet, $term)), "Etudier", "bookmark", "grey");
+          echo button(path("review", "request", $request["id"], binet_prefix(binet, term)), "Etudier", "bookmark", "grey");
         }
       }
     ?>
@@ -37,7 +37,7 @@
     </div>
     <div class="text">
       <p class="main">
-        <?php echo pretty_binet_term($binet."/".$term); ?>
+        <?php echo pretty_binet_term(term_id(binet, term)); ?>
       </p>
       <p class="sub">
         <?php echo pretty_wave($request["wave"]["id"]); ?>
@@ -103,7 +103,7 @@
        "</p>
         </div>";
       $caption = "<div class=\"sh-req-budget shadowed\">".ob_get_clean()."</div>";
-      echo has_viewing_rights($binet, $term) ?
+      echo has_viewing_rights(binet, term) ?
         link_to(
           path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
           $caption,

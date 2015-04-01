@@ -9,7 +9,7 @@
     $destination_action = "update";
     $id = $GLOBALS["operation"]["id"];
   }
-  $prefix = isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix($GLOBALS["binet"], $GLOBALS["term"]) : "";
+  $prefix = isset($_GET["prefix"]) && $_GET["prefix"] == "binet" ? binet_prefix(binet, term) : "";
   $binet = isset($_GET["binet"]) ? $_GET["binet"] : (isset($_POST["binet"]) ? $_POST["binet"] : "");
   $parameters = !isset($_GET["prefix"]) ? array("binet" => $binet) : array();
   $form["redirect_to_if_error"] = path($origin_action, "operation", $id, $prefix, $parameters);

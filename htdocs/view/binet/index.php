@@ -16,7 +16,7 @@
         <?php
           $binet = select_binet($binet["id"], array("id", "current_term","name"));
           if (is_current_kessier()) {
-            $binet = array_merge(select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance", "state")), $binet);
+            $binet = array_merge(select_term_binet(term_id($binet["id"], $binet["current_term"]), array("real_balance", "state")), $binet);
           }
           ob_start();
           ?>
