@@ -63,8 +63,8 @@
     <?php
   }
   ?>
-  <?php 
-  if ($_GET["controller"]!="home") { 
+  <?php
+  if ($_GET["controller"] != "home") {
     ?>
     <li class="dropdown">
       <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -72,12 +72,12 @@
       </a>
       <ul class="dropdown-menu" role="menu">
         <?php
-        foreach(select_terms(array("student"=>$_SESSION["student"])) as $term_admin) {
-          $term_admin = select_term_binet($term_admin["id"], array("id","binet","term"))
+        foreach (select_terms(array("student" => $_SESSION["student"])) as $term_admin) {
+          $term_admin = select_term_binet($term_admin["id"], array("id", "binet", "term"))
           ?>
             <li>
               <?php
-                $link = in_array($_GET["controller"], array("budget", "operation", "validation", "request")) ?
+                $link = in_array($_GET["controller"], array("budget", "operation", "member", "request")) ?
                   path("", $_GET["controller"], "", binet_prefix($term_admin["binet"], $term_admin["term"])) :
                   path("", "binet", binet_term_id($term_admin["binet"], $term_admin["term"]));
                 echo link_to($link, pretty_binet_term($term_admin["id"], false));
@@ -88,8 +88,8 @@
         ?>
       </ul>
     </li>
-    <?php 
-  } 
+    <?php
+  }
   ?>
   <li>
     <?php
