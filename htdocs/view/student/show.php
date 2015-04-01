@@ -24,7 +24,7 @@
           $term["rights"] = status_member_term($term["id"]);
           echo link_to(path("show", "binet", $term["binet"]),
             "<div><i class=\"icon fa fa-fw fa-".($term["rights"] == editing_rights ? "user" : "eye")."\"></i>".pretty_binet_term($term["id"], false)."</div>",
-            array("class" => "panel-list-element shadowed0","goto" => "true"));
+            array("class" => "panel-list-element ".($term["rights"] == editing_rights ? "" : "less-active")." shadowed0","goto" => "true"));
         } ?>
       </div>
     </div>
