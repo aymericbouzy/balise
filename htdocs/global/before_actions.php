@@ -31,6 +31,14 @@
       }
       header("HTTP/1.1 ".$header);
 
+      if (!isset($_SESSION["known_rejected_url"]) || $_SERVER["REQUEST_URI"] != $_SESSION["known_rejected_url"]) {
+        urlrewrite();
+        $_SESSION["known_rejected_url"] = $_SERVER["REQUEST_URI"];
+        redirect_to_path($_SERVER["REQUEST_URI"]);
+      } else {
+        unset($_SESSION["known_rejected_url"]);
+      }
+
       if (STATE == "development") {
         echo "\$_GET : ";
         var_dump($_GET);
