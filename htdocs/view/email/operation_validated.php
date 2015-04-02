@@ -3,5 +3,5 @@
 </p>
 <p>
   Elle apparaît désormais dans les <?php echo link_to("", "operation", "", binet_prefix($parameters["binet"], $parameters["term"]), "opérations"); ?>
-  du binet <?php echo pretty_binet_term($parameters["binet"]."/".$parameters["term"], true, false); ?>.
+  du binet <?php echo pretty_binet_term(term_id($parameters["binet"], $parameters["term"]), true, false); ?>.
 </p>

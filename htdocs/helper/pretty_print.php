@@ -84,7 +84,7 @@
 
   function pretty_request($request, $link = true) {
     $request = select_request($request, array("id", "binet", "term"));
-    $caption = "Demande de subventions ".pretty_binet_term($request["binet"]."/".$request["term"], false);
+    $caption = "Demande de subventions ".pretty_binet_term(term_id($request["binet"], $request["term"]), false);
     return $link ? link_to(path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])), $caption) : $caption;
   }
 

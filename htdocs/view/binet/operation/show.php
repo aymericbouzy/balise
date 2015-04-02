@@ -7,10 +7,10 @@
   </div>
   <div class="sh-actions">
     <?php
-      if (has_editing_rights($binet, $term)) {
+      if (has_editing_rights(binet, term)) {
         switch ($operation["state"]) {
           case "suggested":
-          echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Ajouter", "plus", "green");
+          echo button(path("review", "operation", $operation["id"], binet_prefix(binet, term)), "Ajouter", "plus", "green");
           break;
           case "waiting_validation":
           echo button("", "En attente de validation par la Kès", "question", "orange", false);
@@ -18,15 +18,15 @@
           case "validated":
           echo button("", "Validée", "check", "green", false);
           case "accepted";
-          echo button(path("review", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier la répartition sur les budgets", "bar-chart", "teal");
+          echo button(path("review", "operation", $operation["id"], binet_prefix(binet, term)), "Modifier la répartition sur les budgets", "bar-chart", "teal");
           break;
         }
         if (is_editable_operation($operation["id"])) {
-          echo button(path("edit", "operation", $operation["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+          echo button(path("edit", "operation", $operation["id"], binet_prefix(binet, term)), "Modifier", "edit", "grey");
         }
-        echo button(path("delete", "operation", $operation["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
+        echo button(path("delete", "operation", $operation["id"], binet_prefix(binet, term), array(), true), "Supprimer", "trash", "red");
       }
-      if (has_editing_rights_for_suggested_operation($operation["id"]) && !has_editing_rights($binet, $term)) {
+      if (has_editing_rights_for_suggested_operation($operation["id"]) && !has_editing_rights(binet, term)) {
         echo button(path("edit", "operation", $operation["id"]), "Modifier", "edit", "grey");
       }
       if (is_current_kessier()) {

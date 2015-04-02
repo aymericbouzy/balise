@@ -31,9 +31,9 @@
   </div>
   <div id="mybinets">
     <?php
-      $term_admins = select_terms(array("student"=>$_SESSION["student"]));
-      foreach($term_admins as $term_admin) {
-        $term_admin = select_term_binet($term_admin["id"],array("id","binet","term"));
+      $term_admins = select_terms(array("student" => connected_student()));
+      foreach ($term_admins as $term_admin) {
+        $term_admin = select_term_binet($term_admin["id"], array("id", "binet", "term"));
         $id = "binet_".$term_admin["binet"]."_".$term_admin["term"];
         $number_pending_validations = count_pending_validations($term_admin["binet"], $term_admin["term"]);
         echo link_to(
@@ -54,7 +54,7 @@
       }
       if (is_empty($term_admins)) {
       echo "<p>
-        Tu n'as pas de binets pour le moment ...
+        Tu n'as pas de binet pour le moment ...
         </p>";
       }
     ?>

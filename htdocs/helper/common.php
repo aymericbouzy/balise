@@ -101,20 +101,20 @@
     return "<span class=\"modal-toggle ".$class."\" id=\"".$id."\" data-toggle=\"modal\" data-target=\"#".$target."\">".$content."</span>";
   }
 
-  function modal($id,$content,$options = array()){
-      return "<div class=\"modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
-                <div class=\"modal-dialog\">
-                  <div class=\"modal-content\">".
-                    (!is_empty($options['title']) ?
-                      "<div class=\"modal-header\">
-                        ".close_button("modal")."
-                        <h4 class=\"modal-title\">".$options['title']."</h4>
-                      </div>" :
-                    "" ).
-                    "<div class=\"modal-body\">".$content."</div>
-                  </div>
+  function modal($id, $content, $options = array()) {
+    return "<div class=\"modal fade\" id=\"".$id."\" tabindex=\"-1\" role=\"dialog\" aria-hidden=\"true\">
+              <div class=\"modal-dialog\">
+                <div class=\"modal-content\">".
+                  (!is_empty($options["title"]) ?
+                    "<div class=\"modal-header\">
+                      ".close_button("modal")."
+                      <h4 class=\"modal-title\">".$options['title']."</h4>
+                    </div>" :
+                  "" ).
+                  "<div class=\"modal-body\">".$content."</div>
                 </div>
-              </div>";
+              </div>
+            </div>";
   }
 
   function tip($content){
