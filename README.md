@@ -16,7 +16,7 @@ Pour installer le site (sur `balise.bin` ou en local), il faut :
 ## Dossier htdocs
 
 Le site peut être mis en ligne sur `balise.bin` uniquement depuis le réseau élève. Il faut tout d'abord être administrateur du groupe Frankiz "Projet Balise", la demande se fait directement sur [frankiz](https://www.frankiz.net/groups/see/projetbalise). Ensuite, on a accès au dossier ftp sur le serveur `binets`, auquel on se connecte avec son login et mot de passe frankiz. Il ne reste plus ensuite qu'à remplacer le dossier `htdocs` par celui du repository `balise`.
-En local, il faut initialiser le serveur sur le dossier `htdocs`. Dans le cas où l'on ne peut pas configurer soi-même le dossier sur lequel est démaré le serveur, on peut créer un symlink du dossier `htdocs` dans le dossier où est démaré le serveur, que l'on appelera par exemple `balise` : ensuite, il suffit de définir la variable `ROOT_PATH` à `"balise/"` (voir section suivante).
+En local, il faut initialiser le serveur sur le dossier `htdocs`. Dans le cas où l'on ne peut pas configurer soi-même le dossier sur lequel est démarré le serveur, on peut créer un symlink du dossier `htdocs` dans le dossier où est démarré le serveur, que l'on appelera par exemple `balise` : ensuite, il suffit de définir la variable `ROOT_PATH` à `"balise/"` (voir section suivante).
 
 ## Fichier de configuration
 
