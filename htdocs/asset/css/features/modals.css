@@ -15,10 +15,18 @@
   background-color:#AD1457;
   text-decoration:none;
 }
+
+.modal-list-element.less-active {
+  background-color:#D32F2F;
+}
 .modal-list-element:hover {
   background-color:#AD1457;
   text-decoration:none;
   color:#fff;
+}
+
+.modal-list-element.less-active:hover {
+  background-color:#F44336;
 }
 
 /* Modifying Bootstrap css */
