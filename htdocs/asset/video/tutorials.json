@@ -1,5 +1,14 @@
 {
-    "name": "video1",
-    "id": "file",
-    "title": "File"
+  "videos":[
+    {
+      "name": "video1",
+      "id": "file",
+      "title": "File"
+    } ,
+    {
+      "name": "video2",
+      "id": "file1",
+      "title": "File0"
+    }
+  ]
 }

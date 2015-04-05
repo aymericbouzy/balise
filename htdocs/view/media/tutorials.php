@@ -7,13 +7,12 @@
       ?>
       <div id="tutorials" class="collapse">
         <?php
-
-          $videos = json_decode(file_get_contents(ASSET_PATH."video/tutorials.json"));
+          $videos = json_decode(file_get_contents("asset/video/tutorials.json"), true)['videos'];
 
           // TODO : ajouter un petit index avec des ancres vers les vidéos
 
           foreach($videos as $video) {
-            set_if_not_set($video['pathname'], ASSET_PATH."video/".$video['name']);
+            $video['pathname'] = ASSET_PATH."video/".$video['name'];
             $title_tag = "<div class=\"title\">".$video['title']."</div>";
 
             ob_start();
