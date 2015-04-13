@@ -16,9 +16,17 @@
 
   function check_new_member($input) {
     if (!is_empty($input["student"][0])) {
-      $terms = select_terms(array("binet" => binet, "term" => term, "student" => $input["student"][0]));
+      $criteria = array("binet" => binet, "term" => term, "student" => $input["student"][0]);
+      if ($_GET["action"] == "create") {
+        $criteria["rights"] = editing_rights;
+      }
+      $terms = select_terms($criteria);
       if (!is_empty($terms)) {
-        return "Cette personne a déjà des droits sur le mandat de ce binet.";
+        if ($_GET["action"] == "create") {
+          return "Cette personne a déjà les droits d'administration sur le mandat de ce binet.";
+        } else {
+          return "Cette personne est déjà observatrice du mandat de ce binet.";
+        }
       }
     }
     return "";
