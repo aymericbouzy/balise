@@ -11,7 +11,7 @@
   </div>
   <div class="panel shadowed light-blue-background">
     <div class="title">
-      Adminisrateurs
+      Administrateurs
     </div>
     <div class="content">
     <?php
