@@ -157,3 +157,7 @@
     $get = array_to_string($_GET);
     return "\nURL demandée :\t\t\t\t\t".$url."\nBrowser :\t\t\t\t\t\t\t".$browser."\npersonne connectée :\t\t\t\t".$email."\nétat de la variable \$_POST :\t\t\t".$post."\nétat de la variable \$_SESSION :\t\t".$session."\nétat de la variable \$_GET :\t\t\t".$get;
   }
+
+  function get_bug_reference() {
+    return "bug #".substr(md5(rand()), 0, 10);
+  }

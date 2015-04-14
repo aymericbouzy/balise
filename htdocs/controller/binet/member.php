@@ -29,6 +29,10 @@
     break;
 
   case "new":
+    $admins = array_keys(ids_as_keys(select_admins(binet, term)));
+    $students = select_students(array("id" => array("NOT IN", $admins)));
+    break;
+
   case "new_viewer":
     $viewers = array_keys(ids_as_keys(select_viewers(binet, term)));
     $admins = array_keys(ids_as_keys(select_admins(binet, term)));
@@ -37,6 +41,7 @@
 
   case "create":
     $admin_term = current_term(binet) + $_POST["next_term"];
+    remove_viewer_binet($_POST["student"], binet, $admin_term);
     foreach (select_admins(binet, $admin_term) as $student) {
       send_email($student["id"], "Nouvel administrateur du binet ".pretty_binet_term(term_id(binet, $admin_term), false, false), "new_admin_binet", array("admin" => $_POST["student"], "binet_term" => term_id(binet, $admin_term)));
     }
