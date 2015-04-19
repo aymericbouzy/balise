@@ -168,7 +168,9 @@
     foreach (select_admins(binet, term) as $student) {
       send_email($student["id"], "Demande de subventions renvoyée", "request_sent_back", array("request" => $request["id"], "binet" => binet, "term" => term));
     }
-    redirect_to_path(path("", "request", "", binet_prefix(binet, term)));
+    $request = select_request($request["id"], array("id", "wave"));
+    $wave = select_wave($request["wave"], array("id", "binet", "term"));
+    redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
     break;
 
   default:
