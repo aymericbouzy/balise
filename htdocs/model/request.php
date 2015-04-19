@@ -105,9 +105,9 @@
   }
 
   function send_request($request) {
-    update_request(
+    update_entry(
       "request",
-      array("sending_date")
+      array("sending_date"),
       array(),
       $request,
       array("sending_date" => current_date())
@@ -125,7 +125,7 @@
   }
 
   function review_request($request) {
-    update_request(
+    update_entry(
       "request",
       array("reviewed"),
       array(),

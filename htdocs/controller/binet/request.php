@@ -135,7 +135,7 @@
     review_request($request["id"]);
     $request = select_request($request["id"], array("id", "wave"));
     $wave = select_wave($request["wave"], array("id", "binet", "term"));
-    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(binet, term)." a été étudiée.";
+    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(term_id(binet, term))." a été étudiée.";
     redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
     break;
 
@@ -146,7 +146,7 @@
     review_request($request["id"]);
     $request = select_request($request["id"], array("id", "wave"));
     $wave = select_wave($request["wave"], array("id", "binet", "term"));
-    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(binet, term)." a été marquée refusée. Nous vous conseillons tout de même de rajouter un commentaire explicatif.";
+    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(term_id(binet, term))." a été marquée refusée. Nous vous conseillons tout de même de rajouter un commentaire explicatif.";
     redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
     break;
 
