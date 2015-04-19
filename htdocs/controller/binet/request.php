@@ -61,18 +61,18 @@
   before_action("check_no_existing_request", array("new"));
   before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
-  before_action("check_csrf_get", array("delete", "send", "reject"));
-  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject"), array("model_name" => "request", "binet" => binet, "term" => term));
+  before_action("check_csrf_get", array("delete", "send", "reject", "send_back"));
+  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject", "send_back"), array("model_name" => "request", "binet" => binet, "term" => term));
   before_action("check_request_viewing_rights", array("show"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
-  before_action("check_granting_rights", array("review", "grant", "reject"));
+  before_action("check_granting_rights", array("review", "grant", "reject", "send_back"));
   before_action("create_form", array("new", "create", "edit", "update"), "request_entry");
   before_action("check_form", array("create", "update"), "request_entry");
   before_action("create_form", array("review", "grant"), "request_review");
   before_action("check_form", array("grant"), "request_review");
   before_action("check_is_sendable", array("send"));
   before_action("check_is_editable", array("edit", "update", "delete"));
-  before_action("sent_and_not_published", array("review", "grant", "reject"));
+  before_action("sent_and_not_published", array("review", "grant", "reject", "send_back"));
 
   switch ($_GET["action"]) {
 
@@ -159,6 +159,15 @@
   case "send":
     send_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été envoyée avec succès.";
+    redirect_to_path(path("", "request", "", binet_prefix(binet, term)));
+    break;
+
+  case "send_back":
+    send_back_request($request["id"]);
+    $_SESSION["notice"][] = "Les administrateurs du binet ont été prévenus que leur demande leur a été renvoyée.";
+    foreach (select_admins(binet, term) as $student) {
+      send_email($student["id"], "Demande de subventions renvoyée", "request_sent_back", array("request" => $request["id"], "binet" => binet, "term" => term));
+    }
     redirect_to_path(path("", "request", "", binet_prefix(binet, term)));
     break;
 
