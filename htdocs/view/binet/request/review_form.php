@@ -10,6 +10,7 @@
   <div class="sh-actions">
     <?php
       echo button(path("reject", "request", $request_info["id"], binet_prefix(binet, term), array(), true), "Refuser", "times", "red");
+      echo button(path("send_back", "request", $request_info["id"], binet_prefix(binet, term), array(), true), "Renvoyer au binet", "paper-plane", "teal")
     ?>
   </div>
   <div class="sh-title shadowed">
