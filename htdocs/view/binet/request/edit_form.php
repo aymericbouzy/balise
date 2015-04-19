@@ -72,7 +72,7 @@ foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => arra
         </table>
       </div>
       <div class="requested-amount">
-        <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé"))); ?>
+        <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé", "class" => "amount-input"))); ?>
       </div>
       <div class="explanation">
         <?php echo form_input("", "purpose_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Explication"))); ?>
@@ -84,5 +84,18 @@ foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => arra
 ?>
 <?php echo form_hidden("wave", $request["wave"]["id"]); ?>
 <div class="submit-button">
+  <div class="btn btn-discrete" onclick="reset_amounts()">
+    Remettre tous les montants à zéro
+  </div>
   <?php echo form_submit_button("Sauvegarder"); ?>
 </div>
+
+<script charset="utf-8">
+  function reset_amounts() {
+    var inputs = document.getElementsByClassName('amount-input');
+    var i;
+    for (i = 0; i < inputs.length; i++) {
+      inputs[i].value = 0
+    }
+  }
+</script>
