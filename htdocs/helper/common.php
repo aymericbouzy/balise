@@ -1,6 +1,5 @@
 <?php
 
-	//
   function link_to($path, $caption, $options = array()) {
     set_if_not_set($options["goto"], false);
 
