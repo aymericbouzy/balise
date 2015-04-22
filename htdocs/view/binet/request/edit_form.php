@@ -40,6 +40,16 @@ if ($_GET["action"] == "new") {
     <?php echo form_input($request["wave"]["question"], "answer", $form, array("html_decoration" => array("placeholder" => "Justifiez votre demande", "style" => "color:#fff"))); ?>
   </div>
 </div>
+<div class="panel transparent-background">
+  <div class="actions">
+    <div class="btn btn-discrete action-on-request" onclick="reset_amounts()">
+      Remettre tous les montants à zéro
+    </div>
+  </div>
+  <div class="title-small">
+    Demandes de subventions par ligne budgétaire
+  </div>
+</div>
 <?php
 foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => array("<", 0))) as $budget) {
   $budget = select_budget($budget["id"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used", "subsidized_amount_available"));
@@ -84,9 +94,6 @@ foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => arra
 ?>
 <?php echo form_hidden("wave", $request["wave"]["id"]); ?>
 <div class="submit-button">
-  <div class="btn btn-discrete" onclick="reset_amounts()">
-    Remettre tous les montants à zéro
-  </div>
   <?php echo form_submit_button("Sauvegarder"); ?>
 </div>
 
