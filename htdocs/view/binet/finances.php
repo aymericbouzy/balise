@@ -2,7 +2,7 @@
   <div class="panel transparent-background">
     <div class="content" id="controlbar">
       <div id="select-term">
-        <?php echo modal_toggle("choose-term", "Promo ".$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","shadowed0 blue-background white-text","terms"); ?>
+        <?php echo modal_toggle("choose-term", "Promo ".term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","shadowed0 blue-background white-text","terms"); ?>
       </div>
       <div id="view-binet">
         <?php echo insert_tooltip(
@@ -12,11 +12,11 @@
       <?php if($_GET["controller"]== "budget" && is_transferable()) { ?>
       <div id="transfer_budgets">
           <?php if(sizeOf($budgets) == 0){
-              echo link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
+              echo link_to(path("transfer", "budget", "", binet_prefix($binet, term)),
                 "<i class=\"fa fa-fw fa-arrow-down\"></i> Importer des budgets du mandat précédent",
                 array("class" => "btn"));
             } else {
-              $link = link_to(path("transfer", "budget", "", binet_prefix($binet, $term)),
+              $link = link_to(path("transfer", "budget", "", binet_prefix($binet, term)),
                 "<i class=\"fa fa-fw fa-arrow-down\"></i>",array("class" => "btn btn-discrete"));
               echo insert_tooltip($link,"Importer des budgets du mandat précédent" );
             }?>
@@ -35,10 +35,10 @@
         }
         ?>
         <span class="left component <?php echo $budget_class; ?> ">
-          <?php echo link_to(path("index", "budget", "", binet_prefix($binet, $term)), "Budget",array("class" => $budget_class)); ?>
+          <?php echo link_to(path("index", "budget", "", binet_prefix($binet, term)), "Budget",array("class" => $budget_class)); ?>
         </span>
         <span class="right component <?php echo $operation_class; ?>">
-          <?php echo link_to(path("index", "operation", "", binet_prefix($binet, $term)), "Opérations",array("class" => $operation_class)); ?>
+          <?php echo link_to(path("index", "operation", "", binet_prefix($binet, term)), "Opérations",array("class" => $operation_class)); ?>
         </span>
       </div>
     </div>
@@ -56,6 +56,6 @@
     </div>
   </div>
 </div>
-<?php echo modal("terms","Voir l'activité d'une autre promotion du binet",pretty_terms_list($binet)); ?>
+<?php echo modal("terms", pretty_terms_list($binet) ,array("title" => "Voir l'activité d'une autre promotion du binet")); ?>
 <script src = "<?php echo ASSET_PATH; ?>js/list.js"></script>
 <?php echo initialize_tablefilter("searchlist",array("element_name","tags")); ?>

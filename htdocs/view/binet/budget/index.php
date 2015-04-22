@@ -1,45 +1,32 @@
 <div class="row">
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
   <div class="col-lg-10 col-md-10 col-sm-12">
-    <div class="panel transparent-background">
-      <div class="content" id="controlbar">
-        <div id="select-term">
-          <?php echo modal_toggle("choose-term", "Promo ".$term."<i class=\"fa fa-fw fa-caret-square-o-down\"></i>","shadowed0 blue-background white-text","terms"); ?>
-        </div>
-        <div id="view-binet">
-          <?php
-            echo insert_tooltip(
-              link_to(path("show","binet",$binet),"<i class=\"fa fa-fw fa-eye\"></i>",array("class" => "btn btn-success")),
-              "Voir le binet"
-            );
-          ?>
-        </div>
-        <?php
-        if (is_transferable()) {
-          ?>
-          <div id="transfer_budgets">
-            <?php
+  	<?php
+      if (is_transferable()) {
+      ?>
+      <div class="row">
+        <div id="transfer_budgets">
+           <?php
             if (sizeOf($budgets) == 0) {
               echo link_to(
-                path("transfer", "budget", "", binet_prefix($binet, $term)),
+                path("transfer", "budget", "", binet_prefix(binet, term)),
                 "<i class=\"fa fa-fw fa-arrow-down\"></i> Importer des budgets du mandat précédent",
                 array("class" => "btn")
               );
             } else {
               echo insert_tooltip(
                 link_to(
-                  path("transfer", "budget", "", binet_prefix($binet, $term)),
+                  path("transfer", "budget", "", binet_prefix(binet, term)),
                   "<i class=\"fa fa-fw fa-arrow-down\"></i>",array("class" => "btn btn-discrete")),
                 "Importer des budgets du mandat précédent"
               );
             }
             ?>
           </div>
-          <?php
-          }
-        ?>
-      </div>
-    </div>
+         </div>
+       <?php
+       }
+      ?>
     <div class="panel shadowed">
       <div class="title">Résumé de la trésorerie du binet</div>
       <div class="content">
@@ -73,7 +60,7 @@
                   if ($budget["amount"] < 0) {
                     ?>
                     <tr>
-                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
+                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix(binet, term)), $budget["label"]); ?></td>
                       <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
                       <td><?php echo pretty_amount($budget["amount"]); ?></td>
                       <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
@@ -116,7 +103,7 @@
                   if ($budget["amount"] > 0) {
                     ?>
                     <tr>
-                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix($binet, $term)), $budget["label"]); ?></td>
+                      <td class="element_name"><?php echo link_to(path("show", "budget", $budget["id"], binet_prefix(binet, term)), $budget["label"]); ?></td>
                       <td class="tags"><?php echo pretty_tags(select_tags_budget($budget["id"]), true); ?></td>
                       <td><?php echo pretty_amount($budget["amount"]); ?></td>
                       <td><?php echo pretty_amount($budget["real_amount"]); ?></td>
@@ -162,6 +149,5 @@
   </div>
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
 </div>
-<?php echo modal("terms","Voir l'activité d'une autre promotion du binet",pretty_terms_list($binet)); ?>
-<script src = "<?php echo ASSET_PATH; ?>js/list.js"></script>
-<?php echo initialize_tablefilter("searchlist",array("element_name","tags")); ?>
+<script src="<?php echo ASSET_PATH; ?>js/list.js"></script>
+<?php echo initialize_tablefilter("searchlist", array("element_name","tags")); ?>

@@ -47,19 +47,19 @@
         <div class="panel shadowed light-blue-background">
           <div class="actions">
             <?php
-              echo link_to(path("show", "request", $rough_draft["id"], binet_prefix($binet, $term)),
+              echo link_to(path("show", "request", $rough_draft["id"], binet_prefix(binet, term)),
                 "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"action-on-request btn"));
               if (is_sendable($rough_draft["id"])) {
-                echo link_to(path("send", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
+                echo link_to(path("send", "request", $rough_draft["id"], binet_prefix(binet, term), array(), true),
                   "<i class=\"fa fa-fw fa-send\"></i> Envoyer",array("class"=>"action-on-request btn-success btn"));
               }
               if (is_editable($rough_draft["id"])) {
-                echo link_to(path("delete", "request", $rough_draft["id"], binet_prefix($binet, $term), array(), true),
+                echo link_to(path("delete", "request", $rough_draft["id"], binet_prefix(binet, term), array(), true),
                   "<i class=\"fa fa-fw fa-trash\"></i> Supprimer",array("class"=>"action-on-request btn-danger btn"));
               }
             ?>
           </div>
-          <div class="title-small">
+          <div class="title-small secondary-title">
             <?php echo pretty_wave($rough_draft["wave"]); ?>
           </div>
           <div class="content">
@@ -90,7 +90,7 @@
 
   <!-- Requests -->
   <?php
-    $requests = select_requests(array("binet" => $binet, "term" => $term));
+    $requests = select_requests(array("binet" => binet, "term" => term));
     if(sizeOf($requests)>0) {
   ?>
     <div class="panel shadowed">
@@ -118,10 +118,10 @@
           ?>
           <li class="panel shadowed light-blue-background">
             <div class="actions">
-              <?php echo link_to(path("show", "request", $request["id"], binet_prefix($binet, $term)),
+              <?php echo link_to(path("show", "request", $request["id"], binet_prefix(binet, term)),
                 "<i class=\"fa fa-fw fa-eye\"></i> Voir la demande",array("class"=>"btn action-on-request"));?>
             </div>
-            <div class="title-small">
+            <div class="title-small secondary-title">
               <?php echo insert_properties_in_html_tag(pretty_wave($request["wave"]),array("class"=>"fuzzySelectorName"));
                 echo " <i class=\"sub-info\"> Envoyée le ".pretty_date($request["sending_date"])."</i>"; ?>
             </div>

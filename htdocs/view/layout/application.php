@@ -93,7 +93,7 @@
       include LAYOUT_PATH."footer.php";
       ?>
     </footer>
-    <?php echo modal("bug-report", "Contacter l'équipe du site Balise", get_html_form("bug_report"));?>
+    <?php echo modal("bug-report", get_html_form("bug_report"), array("title" => "Contacter l'équipe du site Balise"));?>
     <script src = "<?php echo ASSET_PATH; ?>js/common.js"></script>
   </body>
 </html>

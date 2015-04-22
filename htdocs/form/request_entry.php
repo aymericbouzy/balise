@@ -10,11 +10,11 @@
     $id = $GLOBALS["request"]["id"];
   }
   $query_array = isset($_POST["wave"]) ? array("wave" => $_POST["wave"]) : array();
-  $form["redirect_to_if_error"] = path($origin_action, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]), $query_array);
-  $form["destination_path"] = path($destination_action, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
+  $form["redirect_to_if_error"] = path($origin_action, "request", $id, binet_prefix(binet, term), $query_array);
+  $form["destination_path"] = path($destination_action, "request", $id, binet_prefix(binet, term));
   $form["html_form_path"] = VIEW_PATH."binet/request/edit_form.php";
 
-  foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
+  foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => array("<", 0))) as $budget) {
     $budget = select_budget($budget["id"], array("id", "label"));
     $form["fields"]["amount_".$budget["id"]] = create_amount_field("le montant demandé pour le budget \"".$budget["label"]."\"", array("optional" => 1));
     $form["fields"]["purpose_".$budget["id"]] = create_text_field("l'explication pour le montant demandé pour le budget \"".$budget["label"]."\"", array("optional" => 1));
@@ -64,7 +64,7 @@
         $initial_input["purpose_".$subsidy["budget"]] = $subsidy["purpose"];
       }
     } else {
-      foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
+      foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => array("<", 0))) as $budget) {
         $budget = select_budget($budget["id"], array("id", "subsidized_amount", "subsidized_amount_granted"));
         $amount_to_request = $budget["subsidized_amount"] - $budget["subsidized_amount_granted"];
         if ($amount_to_request > 0) {

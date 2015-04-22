@@ -2,11 +2,11 @@
 
   $origin_action = "transfer";
   $destination_action = "copy";
-  $form["redirect_to_if_error"] = path($origin_action, "budget", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
-  $form["destination_path"] = path($destination_action, "budget", "", binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
+  $form["redirect_to_if_error"] = path($origin_action, "budget", "", binet_prefix(binet, term));
+  $form["destination_path"] = path($destination_action, "budget", "", binet_prefix(binet, term));
   $form["html_form_path"] = VIEW_PATH."binet/budget/transfer_form.php";
 
-  foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"] - 1)) as $budget) {
+  foreach (select_budgets(array("binet" => binet, "term" => term - 1)) as $budget) {
     $budget = select_budget($budget["id"], array("id", "label"));
     $form["fields"]["budget_".$budget["id"]] = create_boolean_field("le choix du budget \"".$budget["label"]."\"", array("optional" => 1));
   }

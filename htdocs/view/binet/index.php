@@ -16,7 +16,7 @@
         <?php
           $binet = select_binet($binet["id"], array("id", "current_term","name"));
           if (is_current_kessier()) {
-            $binet = array_merge(select_term_binet($binet["id"]."/".$binet["current_term"], array("real_balance", "state")), $binet);
+            $binet = array_merge(select_term_binet(term_id($binet["id"], $binet["current_term"]), array("real_balance", "state")), $binet);
           }
           ob_start();
           ?>
@@ -58,9 +58,10 @@
     ?>
   </ul>
   <?php
-    $html_content ="<div id=\"deactivated\" class=\"panel shadowed\"><div class=\"title\">".
-    "  Binets qui n'ont pas trouvé de repreneur <i class=\"fa fa-chevron-down fa-fw\"></i> </div></div>";
-    echo make_collapse_control($html_content, "deactivatedBinets_list");
+  $html_content = "<div id=\"deactivated\" class=\"panel shadowed\">
+    <div class=\"title\"> Binets qui n'ont pas trouvé de repreneur <i class=\"fa fa-chevron-down fa-fw\"></i> </div>
+  </div>";
+  echo make_collapse_control($html_content, "deactivatedBinets_list");
   ?>
   <ul class="list collapse" id="deactivatedBinets_list">
     <?php

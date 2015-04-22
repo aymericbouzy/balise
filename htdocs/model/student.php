@@ -18,7 +18,7 @@
     return select_entries(
       "student",
       array(),
-      array("name", "email", "hruid"),
+      array("id", "name", "email", "hruid"),
       array(),
       $criteria,
       $order_by,
