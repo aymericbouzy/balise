@@ -73,11 +73,13 @@
   }
 
   function update_request($request, $hash) {
-    update_entry("request",
-                  array(),
-                  array("answer"),
-                  $request,
-                  $hash);
+    update_entry(
+      "request",
+      array(),
+      array("answer"),
+      $request,
+      $hash
+    );
   }
 
   function select_requests($criteria, $order_by = NULL, $ascending = true) {
@@ -103,8 +105,18 @@
   }
 
   function send_request($request) {
+    update_entry(
+      "request",
+      array("sending_date"),
+      array(),
+      $request,
+      array("sending_date" => current_date())
+    );
+  }
+
+  function send_back_request($request) {
     $sql = "UPDATE request
-            SET sending_date = CURRENT_DATE()
+            SET sending_date = NULL
             WHERE id = :request
             LIMIT 1";
     $req = Database::get()->prepare($sql);
@@ -113,13 +125,13 @@
   }
 
   function review_request($request) {
-    $sql = "UPDATE request
-            SET reviewed = 1
-            WHERE id = :request
-            LIMIT 1";
-    $req = Database::get()->prepare($sql);
-    $req->bindValue(':request', $request, PDO::PARAM_INT);
-    $req->execute();
+    update_entry(
+      "request",
+      array("reviewed"),
+      array(),
+      $request,
+      array("reviewed" => 1)
+    );
   }
 
   function get_used_amount_request($request) {

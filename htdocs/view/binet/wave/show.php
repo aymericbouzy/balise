@@ -78,7 +78,7 @@
             <p class="marker <?php echo $request_state["color"]; ?>-background"></p>
             <p class="icon"><i class=\"fa fa-fw fa-<?php echo $request_state["icon"]; ?>"></i></p>
             <?php echo insert_tooltip("<p class=\"date\">".pretty_date($request["sending_date"])."</p>", "Date de réception"); ?>
-            <p class="binet"><?php echo pretty_binet_term($request["binet"]."/".$request["term"], false); ?></p>
+            <p class="binet"><?php echo pretty_binet_term(term_id($request["binet"], $request["term"]), false); ?></p>
             <p class="amount">
               <?php echo (has_viewing_rights(binet, term) ?
                 pretty_amount($request["granted_amount"], false)." / ".pretty_amount($request["requested_amount"], false) :

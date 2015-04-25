@@ -4,7 +4,7 @@
     <li id="binetName_and_switchPromo">
       <span>
         <?php
-          echo link_to(path("show", "binet", binet), "<i class=\"fa fa-fw fa-eye\"></i> " . pretty_binet_term(make_term_id(binet, term), false), array(
+          echo link_to(path("show", "binet", binet), "<i class=\"fa fa-fw fa-eye\"></i> " . pretty_binet_term(term_id(binet, term), false), array(
             "id" => "show_binet"
           ));
         ?>
