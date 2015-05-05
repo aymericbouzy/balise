@@ -52,6 +52,8 @@
   }
 
   function request_used_amount_status($request){
+    if($request["granted_amount"] == 0) return "grey";
+    
     $remaining = ($request["granted_amount"] - $request["used_amount"]) / $request["granted_amount"];
     if($remaining < 0){
       return "red";

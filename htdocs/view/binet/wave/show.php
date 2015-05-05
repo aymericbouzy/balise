@@ -87,7 +87,7 @@
               <i class="fa fa-euro"></i>
             </p>
             <?php
-              if(has_viewing_rights(binet, term)) {
+              if(has_viewing_rights(binet, term) && $request["granted_amount"] > 0) {
               ?>
                 <p class="amount-used <?php echo request_used_amount_status($request); ?>-background">
                   <?php echo pretty_amount($request["used_amount"], false, true);?>
