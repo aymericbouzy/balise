@@ -70,7 +70,7 @@
       <?php
         $requests = select_requests(array("wave" => $wave["id"]));
         foreach ($requests as $request) {
-          $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount"));
+          $request = select_request($request["id"], array("id", "state", "binet", "term", "requested_amount", "used_amount"));
           $request_state = request_state($request["state"], has_viewing_rights(binet, term));
           ob_start();
           ?>
@@ -86,6 +86,13 @@
               ?>
               <i class="fa fa-euro"></i>
             </p>
+            <?php
+              if(has_viewing_rights(binet, term) && $request["granted_amount"] > 0) {
+                $content = "<p class=\"amount-used ".request_used_amount_status($request)."-background\">".
+                  pretty_amount($request["used_amount"], false, true);
+                echo insert_tooltip($content,"Montant utilisé");
+              }
+            ?>
           </div>
           <?php
           if (has_request_viewing_rights($request["id"])) {
