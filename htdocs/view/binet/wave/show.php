@@ -88,11 +88,9 @@
             </p>
             <?php
               if(has_viewing_rights(binet, term) && $request["granted_amount"] > 0) {
-              ?>
-                <p class="amount-used <?php echo request_used_amount_status($request); ?>-background">
-                  <?php echo pretty_amount($request["used_amount"], false, true);?>
-                </p>
-              <?php
+                $content = "<p class=\"amount-used ".request_used_amount_status($request)."-background\">".
+                  pretty_amount($request["used_amount"], false, true);
+                echo insert_tooltip($content,"Montant utilisé");
               }
             ?>
           </div>
