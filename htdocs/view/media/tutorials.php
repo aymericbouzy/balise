@@ -23,7 +23,11 @@
             }
             echo  "Votre navigateur n'est pas à jour, il ne peut pas lire cette vidéo !";
 
-            $video_tag = "<video controls poster=\"".$video['pathname'].".png\" width=\"75%\">".ob_get_clean()."</video>";
+            $video_tag = "<video controls poster=\"".$video['pathname'].".png\" width=\"75%\">".ob_get_clean().
+              <source src=$video['pathname'].".mp4">
+              <source src=$video['pathname'].".ogv">
+              <source src=$video['pathname'].".webm">
+              "</video>";
 
             $back_to_top = link_to("#", "<i class=\"fa fa-fw fa-arrow-up\"></i> Retour en haut de page" );
 
