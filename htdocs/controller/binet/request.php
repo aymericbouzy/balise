@@ -94,7 +94,6 @@
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send", "reject"));
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject", "send_back", "edit_converted_amount", "set_converted_amount"), array("model_name" => "request", "binet" => binet, "term" => term));
-  before_action("check_rough_draft_viewing_rights", array("show", "delete"));
   before_action("check_request_viewing_rights", array("show"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant", "reject", "send_back"));
