@@ -98,9 +98,15 @@
             $wave = select_wave(select_request($request, array("wave"))["wave"], array("id", "expiry_date"));
             echo pretty_wave($wave["id"]);
             echo " <span class=\"side-information\">(".pretty_date($wave["expiry_date"]).")</span>";
+            if(true){
+              echo link_to(path("edit_converted_amount", "request", $request, binet_prefix(binet,term), array("operation" => $operation["id"])),
+                "Attribuer le montant conditionnel",
+                array("class" => "btn btn-discrete btn-small"));
+            }
             echo "<div>";
+
             foreach($subsidies as $subsidy){
-              $subsidy = select_subsidy($subsidy, array("budget", "purpose", "used_amount", "granted_amount"));
+              $subsidy = select_subsidy($subsidy, array("budget", "purpose", "used_amount", "granted_amount", "conditional", "converted_amount"));
               $html_button = "<button class=\"pill\">".pretty_budget($subsidy["budget"], false, false).
                 " <span class=\"side-information\">".pretty_amount($subsidy["used_amount"])." / ".pretty_amount($subsidy["granted_amount"])."</span></button>";
               $popover_title = "Justification de la demande";
