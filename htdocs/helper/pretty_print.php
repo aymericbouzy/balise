@@ -75,26 +75,29 @@
   }
 
   function pretty_operation($operation, $link = false, $raw = false) {
-    $operation = select_operation($operation, array("binet", "term", "id", "amount", "type", "date"));
-    $raw_caption = ($operation["amount"] > 0 ? "Recette" : "Dépense")." ".pretty_date($operation["date"]);
+    $operation = select_operation($operation, array("binet", "term", "id", "amount", "type", "date","comment"));
+    $raw_caption = ($operation["amount"] > 0 ? "(+) " : "(-) ")." ".pretty_date($operation["date"]);
+    $raw_caption .= " : ".substr($operation["comment"], 0, 30).(strlen($operation["comment"]) > 30 ? "..." : " ");
     $caption = $raw ? $raw_caption : pretty_operation_type($operation["type"])." ".$raw_caption." (".pretty_amount($operation["amount"], false, true)." )";
     return $link? link_to(path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"])), $caption) : $caption;
   }
 
   function pretty_request($request, $link = true) {
     $request = select_request($request, array("id", "binet", "term"));
-    $caption = "Demande de subventions ".pretty_binet_term($request["binet"]."/".$request["term"], false);
+    $caption = "Demande de subventions ".pretty_binet_term(term_id($request["binet"], $request["term"]), false);
     return $link ? link_to(path("show", "request", $request["id"], binet_prefix($request["binet"], $request["term"])), $caption) : $caption;
   }
 
-  function pretty_terms_list($binet) {
+  function pretty_terms_list($binet,$in_list = false) {
     $list = "";
+    $li = $in_list ? "<li>" : "";
+    $liend = $in_list ? "</li>" : "";
     foreach (select_terms(array("binet" => $binet)) as $binet_term) {
       $binet_term = select_term_binet($binet_term["id"], array("binet", "term"));
       if (has_viewing_rights($binet_term["binet"], $binet_term["term"])) {
-        $list .= link_to(path("", "binet", binet_term_id($binet_term["binet"], $binet_term["term"])), $binet_term["term"])." ";
+        $list .= $li.link_to(path("", "binet", binet_term_id($binet_term["binet"], $binet_term["term"])), $binet_term["term"])." ".$liend;
       } else {
-        $list .= $binet_term["term"];
+        $list .= $li.$binet_term["term"]." <i> Tu n'as pas la possibilité de voir ce mandat </i>".$liend;
       }
     }
     return $list;

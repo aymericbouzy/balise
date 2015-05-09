@@ -110,7 +110,7 @@
 		if (fwrite(
       $htaccess,
       "
-      ErrorDocument  404  ".substr(true_path("400", "error"), 1)."
+      ErrorDocument  404  ".substr(true_path("unknown_url", "error"), 1)."
 	    AddDefaultCharset UTF-8
 	    RewriteEngine ".(URL_REWRITE ? "on" : "off")."
 	    ") === FALSE) {
@@ -133,10 +133,10 @@
     write_controller_rules(array("controller" => "validation", "except" => array("show", "edit", "update", "new", "create", "delete")));
 
     write_path_rule(path("", "binet", "([".allowed_clean_string_characters()."]+)/([0-9]+)"), true_path("", "budget", "", "binet/$1/$2"));
-    write_controller_rules(array("controller" => "admin", "binet_prefix" => true, "except" => array("show", "edit", "update")));
+    write_controller_rules(array("controller" => "member", "binet_prefix" => true, "except" => array("show", "edit", "update"), "action_on_collection" => array("new_viewer", "create_viewer"), "action_on_member" => array("delete_viewer")));
     write_controller_rules(array("controller" => "budget", "binet_prefix" => true, "action_on_collection" => array("transfer", "copy")));
     write_controller_rules(array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate", "review")));
-    write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant", "reject", "edit_converted_amount", "set_converted_amount")));
+    write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant", "reject", "edit_converted_amount", "set_converted_amount", "send_back")));
     write_controller_rules(array("controller" => "validation", "binet_prefix" => true, "except" => array("show", "edit", "update", "new", "create", "delete")));
     write_controller_rules(array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish", "open")));
 

@@ -6,12 +6,12 @@
   </div>
   <div class="sh-actions">
     <?php
-    if (has_editing_rights($binet,$term)) {
+    if (has_editing_rights(binet,term)) {
       if (budget_is_editable()) {
-        echo button(path("edit", "budget", $budget["id"], binet_prefix($binet, $term)), "Modifier", "edit", "grey");
+        echo button(path("edit", "budget", $budget["id"], binet_prefix(binet, term)), "Modifier", "edit", "grey");
       }
       if (budget_is_deletable()) {
-        echo button(path("delete", "budget", $budget["id"], binet_prefix($binet, $term), array(), true), "Supprimer", "trash", "red");
+        echo button(path("delete", "budget", $budget["id"], binet_prefix(binet, term), array(), true), "Supprimer", "trash", "red");
       }
     }
     ?>
@@ -25,7 +25,7 @@
         <?php echo $budget["label"]; ?>
       </p>
       <p class="sub">
-        <?php echo pretty_binet_term($budget["binet"]."/".$budget["term"]); ?>
+        <?php echo pretty_binet_term(term_id($budget["binet"], $budget["term"])); ?>
       </p>
     </div>
   </div>

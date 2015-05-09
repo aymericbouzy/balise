@@ -9,7 +9,8 @@
   </div>
   <div class="sh-actions">
     <?php
-      echo button(path("reject", "request", $request_info["id"], binet_prefix($binet, $term), array(), true), "Refuser", "times", "red");
+      echo button(path("reject", "request", $request_info["id"], binet_prefix(binet, term), array(), true), "Refuser", "times", "red");
+      echo modal_toggle("send_back_button", button("", "Renvoyer au binet", "paper-plane", "teal", false), "", "send_back_comment");
     ?>
   </div>
   <div class="sh-title shadowed">
@@ -19,7 +20,7 @@
     </div>
     <div class="text">
       <p class="main">
-        <?php echo pretty_binet_term($binet."/".$term); ?>
+        <?php echo pretty_binet_term(term_id(binet, term)); ?>
       </p>
       <p class="sub">
         <?php echo pretty_wave($request_info["wave"]["id"]); ?>
@@ -179,4 +180,3 @@
     <?php echo form_submit_button("Enregistrer"); ?>
   </div>
 </div>
-

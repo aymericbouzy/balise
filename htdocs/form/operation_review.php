@@ -4,8 +4,8 @@
   $destination_action = "validate";
   $id = $GLOBALS["operation"]["id"];
   $expense = select_operation($id, array("amount"))["amount"] < 0;
-  $form["redirect_to_if_error"] = path($origin_action, "operation", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
-  $form["destination_path"] = path($destination_action, "operation", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
+  $form["redirect_to_if_error"] = path($origin_action, "operation", $id, binet_prefix(binet, term));
+  $form["destination_path"] = path($destination_action, "operation", $id, binet_prefix(binet, term));
   $form["html_form_path"] = VIEW_PATH."binet/operation/review_form.php";
 
   foreach ($GLOBALS["binet_budgets"] as $budget) {

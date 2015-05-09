@@ -6,8 +6,8 @@
 </div>
 <?php
 if ($_GET["action"] == "new") {
-  $current_term_binet = current_term($binet);
-  $current_term_active = $current_term_binet == $term;
+  $current_term_binet = current_term(binet);
+  $current_term_active = $current_term_binet == term;
   ?>
   <div class="panel light-blue-background shadowed">
     <div class="content">
@@ -17,12 +17,12 @@ if ($_GET["action"] == "new") {
         <span class="left component <?php echo $current_term_active ? "active" : "inactive"; ?>" >
           <?php echo $current_term_binet." ".($current_term_active ? "<i class=\"fa fa-fw fa-check\"></i>" : ""); ?>
         </span>
-        <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
+        <?php echo link_to(path("new", "request", "", binet_prefix(binet, $current_term_binet), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
         <?php ob_start(); ?>
         <span class="left component <?php echo $current_term_active ? "inactive" : "active"; ?>" >
           <?php echo ($current_term_binet + 1)." ".($current_term_active ? " " : "<i class=\"fa fa-fw fa-check\"></i>"); ?>
         </span>
-        <?php echo link_to(path("new", "request", "", binet_prefix($binet, $current_term_binet + 1), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
+        <?php echo link_to(path("new", "request", "", binet_prefix(binet, $current_term_binet + 1), array("wave" => $request["wave"]["id"])), ob_get_clean(), array("goto" => true)); ?>
         </span>
       </div>
     </div>
@@ -40,8 +40,18 @@ if ($_GET["action"] == "new") {
     <?php echo form_input($request["wave"]["question"], "answer", $form, array("html_decoration" => array("placeholder" => "Justifiez votre demande", "style" => "color:#fff"))); ?>
   </div>
 </div>
+<div class="panel transparent-background">
+  <div class="actions">
+    <div class="btn btn-discrete action-on-request" onclick="reset_amounts()">
+      Remettre tous les montants à zéro
+    </div>
+  </div>
+  <div class="title-small">
+    Demandes de subventions par ligne budgétaire
+  </div>
+</div>
 <?php
-foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["term"], "amount" => array("<", 0))) as $budget) {
+foreach (select_budgets(array("binet" => binet, "term" => term, "amount" => array("<", 0))) as $budget) {
   $budget = select_budget($budget["id"], array("id", "label", "binet", "term","real_amount","amount","subsidized_amount_granted","subsidized_amount_used", "subsidized_amount_available"));
   ?>
   <div class="panel light-blue-background shadowed">
@@ -72,7 +82,7 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
         </table>
       </div>
       <div class="requested-amount">
-        <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé"))); ?>
+        <?php echo form_input("", "amount_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Montant demandé", "class" => "amount-input"))); ?>
       </div>
       <div class="explanation">
         <?php echo form_input("", "purpose_".$budget["id"], $form, array("html_decoration" => array("placeholder" => "Explication"))); ?>
@@ -86,3 +96,13 @@ foreach (select_budgets(array("binet" => $GLOBALS["binet"], "term" => $GLOBALS["
 <div class="submit-button">
   <?php echo form_submit_button("Sauvegarder"); ?>
 </div>
+
+<script charset="utf-8">
+  function reset_amounts() {
+    var inputs = document.getElementsByClassName('amount-input');
+    var i;
+    for (i = 0; i < inputs.length; i++) {
+      inputs[i].value = 0
+    }
+  }
+</script>

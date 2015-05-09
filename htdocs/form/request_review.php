@@ -3,8 +3,8 @@
   $origin_action = "review";
   $destination_action = "grant";
   $id = $GLOBALS["request"]["id"];
-  $form["redirect_to_if_error"] = path($origin_action, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
-  $form["destination_path"] = path($destination_action, "request", $id, binet_prefix($GLOBALS["binet"], $GLOBALS["term"]));
+  $form["redirect_to_if_error"] = path($origin_action, "request", $id, binet_prefix(binet, term));
+  $form["destination_path"] = path($destination_action, "request", $id, binet_prefix(binet, term));
   $form["html_form_path"] = VIEW_PATH."binet/request/review_form.php";
 
   foreach (select_subsidies(array("request" => $id)) as $subsidy) {

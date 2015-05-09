@@ -259,7 +259,7 @@
     left:5px;
     top:5px;
     height:50px;
-    width:260px;
+    width:520px;
   }
 
   #subsidies_used {
@@ -267,12 +267,6 @@
     top:60px;
     height:50px;
     width:200px;
-  }
-  #subsidies_used_std {
-    left:267px;
-    top:5px;
-    height:50px;
-    width:260px;
   }
 }
 
@@ -507,6 +501,11 @@
 }
 .sh-wa-request>.binet> a:hover {
   color:#B71C1C;
+}
+.sh-wa-request>.amount-used {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
 }
 
 #requests{
