@@ -52,7 +52,7 @@
       switch ($field["type"]) {
         case "amount":
         if (is_numeric($value)) {
-          $translated_input[$name] = ceil($value * 100);
+          $translated_input[$name] = round($value * 100);
           $valid = true;
         } elseif (is_empty($value)) {
           $valid = true;
