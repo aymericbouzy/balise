@@ -57,24 +57,6 @@
     header_if(!has_request_viewing_rights($GLOBALS["request"]["id"]), 401);
   }
 
-  function converted_amount_is_editable($request) {
-    $request = select_request($request, array("id", "state", "wave"));
-    if ($request["state"] != "accepted") {
-      return false;
-    }
-    $wave = select_wave($request["wave"], array("binet", "term"));
-    if (!has_editing_rights($wave["binet"], $wave["term"]) && !is_current_kessier()) {
-      return false;
-    }
-    foreach (select_subsidies(array("request" => $request)) as $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("conditional"));
-      if ($subsidy["conditional"]) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   function check_converted_amount_is_editable() {
     header_if(!converted_amount_is_editable($GLOBALS["request"]["id"]), 401);
   }
