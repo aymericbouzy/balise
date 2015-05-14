@@ -98,7 +98,7 @@
             $wave = select_wave(select_request($request, array("wave"))["wave"], array("id", "expiry_date"));
             echo pretty_wave($wave["id"]);
             echo " <span class=\"side-information\">(".pretty_date($wave["expiry_date"]).")</span>";
-            if(true){
+            if(converted_amount_is_editable($request)){
               echo link_to(path("edit_converted_amount", "request", $request, binet_prefix(binet,term), array("operation" => $operation["id"])),
                 "Attribuer le montant conditionnel",
                 array("class" => "btn btn-discrete btn-small"));

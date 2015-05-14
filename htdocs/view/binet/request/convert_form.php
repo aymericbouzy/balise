@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="<?php echo ASSET_PATH; ?>css/action/show.css" type="text/css">
-<?php $request_state = request_state($request_info["state"],has_editing_rights($request_info["wave"]["binet"], $request_info["wave"]["term"])); ?>
+<?php $request_state = request_state($request["state"],has_editing_rights($request["wave"]["binet"], $request["wave"]["term"])); ?>
 <div class="sh-plus <?php echo $request_state["color"]; ?>-background shadowed">
   <i class="fa fa-fw fa-<?php echo $request_state["icon"] ?>"></i>
   <div class="text">
@@ -8,7 +8,7 @@
 </div>
 <div class="sh-actions">
   <?php
-    echo button(path("reject", "request", $request_info["id"], binet_prefix($binet, $term), array(), true), "Refuser", "times", "red");
+    echo button(path("reject", "request", $request["id"], binet_prefix(binet, term), array(), true), "Refuser", "times", "red");
   ?>
 </div>
 <div class="sh-title shadowed">
@@ -18,10 +18,10 @@
   </div>
   <div class="text">
     <p class="main">
-      <?php echo pretty_binet_term($binet."/".$term); ?>
+      <?php echo pretty_binet_term(binet."/".term); ?>
     </p>
     <p class="sub">
-      <?php echo pretty_wave($request_info["wave"]["id"]); ?>
+      <?php echo pretty_wave($request["wave"]["id"]); ?>
     </p>
   </div>
 </div>
@@ -33,13 +33,13 @@
 <!-- Answer to the wave question -->
 <div class="panel green-background shadowed">
   <div class="content white-text">
-    <?php echo $request_info["answer"]; ?>
+    <?php echo $request["answer"]; ?>
   </div>
 </div>
 <!-- Form -->
 <?php
-foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) {
-  $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose"));
+foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
+  $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "purpose", "explanation", "conditional", "granted_amount"));
   $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term", "real_amount", "amount", "subsidized_amount", "subsidized_amount_granted", "subsidized_amount_used", "subsidized_amount_available"));
   if($subsidy["conditional"] == 1){
     ?>
@@ -78,7 +78,7 @@ foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) 
             </tbody>
           </table>
         </div>
-        <div class="granted-amount">
+        <div class="granted-amount conditional-amount">
           <?php
             echo pretty_amount($subsidy["granted_amount"]);
             echo form_input("Montant accordé après vérification des conditions :", "amount_".$subsidy["id"], $form);
@@ -88,7 +88,7 @@ foreach (select_subsidies(array("request" => $request_info["id"])) as $subsidy) 
           <?php echo $subsidy["purpose"]?>
         </div>
         <div class="explanation">
-          <?php echo $susbsidy["explanation"]; ?>
+          <?php echo $subsidy["explanation"]; ?>
         </div>
       </div>
     </div>

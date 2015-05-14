@@ -65,7 +65,7 @@
     if (isset($_GET["operation"])) {
       header_if(!validate_input(array("operation")), 400);
       header_if(!exists_operation($_GET["operation"]), 404);
-      select_operation($_GET["operation"], array("id", "binet", "term"));
+      $operation = select_operation($_GET["operation"], array("id", "binet", "term"));
       $_SESSION["return_to"] = path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"]));
     }
   }
@@ -193,6 +193,8 @@
     break;
 
   case "edit_converted_amount":
+    $request = select_request($request["id"], array("wave", "id", "state", "binet", "answer"));
+    $request["wave"] = select_wave($request["wave"], array("binet", "term", "question", "id", "description"));
     break;
 
   case "set_converted_amount":
