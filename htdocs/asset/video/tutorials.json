@@ -2,27 +2,27 @@
   "videos":[
     {
       "name": "presentation",
-      "id": "file1",
+      "id": "presentation",
       "title": "Présentation du site"
     } ,
     {
       "name": "operation",
-      "id": "file2",
+      "id": "operation",
       "title": "Créer une opération"
     } ,
     {
       "name": "monbinet",
-      "id": "file3",
+      "id": "monbinet",
       "title": "Aspect du binet"
     } ,
     {
       "name": "droits",
-      "id": "file4",
+      "id": "droits",
       "title": "Qui peut faire quoi ?"
     } ,
     {
       "name": "subvention",
-      "id": "file5",
+      "id": "subvention",
       "title": "Demander des subventions"
     }
   ]
