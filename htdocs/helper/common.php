@@ -160,3 +160,11 @@
   function get_bug_reference() {
     return "bug #".substr(md5(rand()), 0, 10);
   }
+
+  function badged_counter($counter) {
+    if ($counter > 0) {
+      return " <span class=\"badge\">".$counter."</span>";
+    } else {
+      return "";
+    }
+  }

@@ -92,7 +92,7 @@
 
   case "create":
     $request["id"] = create_request($_POST["wave"], $_POST["subsidies"], $_POST["answer"]);
-    $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons. N'oublie pas de l'envoyer avant la date limite !";
     redirect_to_action("index");
     break;
 
@@ -116,7 +116,7 @@
     foreach ($_POST["subsidies"] as $subsidy) {
       create_subsidy($subsidy["budget"], $request["id"], $subsidy["requested_amount"], $subsidy["optional_values"]);
     }
-    $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès. N'oublie pas de l'envoyer avant la date limite !";
     redirect_to_action("show");
     break;
 
