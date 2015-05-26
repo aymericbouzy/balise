@@ -8,11 +8,16 @@
         <li>gérer la trésorerie de ton binet</li>
         <li>demander et gérer tes subventions</li>
       </ul>
-      Pour recevoir les droits d'administration de ton binet, <?php echo link_to("https://docs.google.com/spreadsheets/d/1haTwZQud3of6Tmc_5dGDUqnicxTtTQtt0UhJKWMAt3g/edit#gid=0", "inscris-toi à un créneau à la Kès"); ?>.
+      Pour recevoir les droits d'administration de ton binet, va faire ta passation à la Kès et demande les droits aux kessiers binets.
     </p>
     <p>
-      Si tu as des remarques ou des suggestions, n'hésite pas à nous en faire part à l'aide du bouton "Contact".
+      Si tu as des remarques ou des suggestions, sens toi libre d'utiliser le bouton "Contact" pour nous en faire part.</br>
+      N'hésite pas à te mettre sympathisant <a href="https://www.frankiz.net/groups/see/projetbalise">frankiz</a> ou à consulter notre page <a href="http://wikix.polytechnique.org/balise">wikiX</a>.</br>
+      N'hésite pas non plus à aller regarder les tutoriels vidéos si tu as un souci.
     </p>
   </div>
+
+  <?php include VIEW_PATH."media/tutorials.php"?>
+
 </div>
  <!-- /container -->

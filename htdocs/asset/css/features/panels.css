@@ -290,6 +290,13 @@
   background-color:rgba(0,0,0,0.2);
 }
 
+.content>.video-content{
+	position:relative;
+}
+.content>.video-content>video{
+	width:100%;
+}
+
 /*------------------------------------------------------*/
 /* Pills */
 .pill {

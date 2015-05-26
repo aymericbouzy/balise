@@ -1,0 +1,29 @@
+{
+  "videos":[
+    {
+      "name": "presentation",
+      "id": "presentation",
+      "title": "Présentation du site"
+    } ,
+    {
+      "name": "operation",
+      "id": "operation",
+      "title": "Créer une opération"
+    } ,
+    {
+      "name": "monbinet",
+      "id": "monbinet",
+      "title": "Aspect du binet"
+    } ,
+    {
+      "name": "droits",
+      "id": "droits",
+      "title": "Qui peut faire quoi ?"
+    } ,
+    {
+      "name": "subvention",
+      "id": "subvention",
+      "title": "Demander des subventions"
+    }
+  ]
+}
