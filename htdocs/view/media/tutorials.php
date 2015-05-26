@@ -16,11 +16,13 @@
             $title_tag = "<div class=\"title\">".$video['title']."</div>";
 
             ob_start();
-            $format=array('.mp4', '.webm', '.ogv');
-            foreach($format as $video_format) {
-                echo "<source src=\"".$video['pathname'].$video_format."\">";
-                echo  "Votre navigateur n'est pas à jour, il ne peut pas lire cette vidéo !";
+            $formats = array("mp4" => ".mp4", "webm" => ".webm", "ogg" => ".ogv");
+            foreach($formats as $format_key => $format) {
+              if (file_does_exist($video['pathname'].$format)) {
+                echo "<source src=\"".$video['pathname'].$format."\" type=\"video/".$format_key."\">";
+              }
             }
+            echo  "Votre navigateur n'est pas à jour, il ne peut pas lire cette vidéo !";
 
             $video_tag = "<video controls poster=\"".$video['pathname'].".png\" width=\"75%\">".ob_get_clean()."</video>";
 

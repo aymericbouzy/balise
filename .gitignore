@@ -14,3 +14,6 @@ htdocs/test.php
 
 htdocs/.htaccess
 vendor
+
+htdocs/asset/video
+!htdocs/asset/video/tutorials.json
