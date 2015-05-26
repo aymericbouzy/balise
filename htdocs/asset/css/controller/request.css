@@ -165,7 +165,7 @@
 }
 .action-on-request {
   position:relative;
-  max-width:120px;
+  max-width:170px;
   font-size:10px;
   padding:4px;
   margin-left:5px;
@@ -212,7 +212,7 @@
 #reviewForm_granted-requested,
 #reviewForm_used-available,
 #reviewForm_granted-requested_old,
-#reviewForm_used-available_old { 
+#reviewForm_used-available_old {
 	position:relative;
 	display: inline-block;
 	width:48%;
@@ -226,7 +226,7 @@
   -webkit-filter: sepia(0.6);
 }
 
-#current-term:hover , 
+#current-term:hover ,
 #previous-term:hover{
   -webkit-filter:brightness(0.7);
 }

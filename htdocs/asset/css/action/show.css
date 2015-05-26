@@ -502,6 +502,11 @@
 .sh-wa-request>.binet> a:hover {
   color:#B71C1C;
 }
+.sh-wa-request>.amount-used {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
 
 #requests{
   position:relative;

@@ -62,17 +62,19 @@
   before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send", "reject"));
-  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject"), array("model_name" => "request", "binet" => binet, "term" => term));
+  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject", "send_back"), array("model_name" => "request", "binet" => binet, "term" => term));
   before_action("check_request_viewing_rights", array("show"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
-  before_action("check_granting_rights", array("review", "grant", "reject"));
+  before_action("check_granting_rights", array("review", "grant", "reject", "send_back"));
   before_action("create_form", array("new", "create", "edit", "update"), "request_entry");
   before_action("check_form", array("create", "update"), "request_entry");
   before_action("create_form", array("review", "grant"), "request_review");
   before_action("check_form", array("grant"), "request_review");
+  before_action("create_form", array("send_back", "review"), "send_back_request");
+  before_action("check_form", array("send_back"), "send_back_request");
   before_action("check_is_sendable", array("send"));
   before_action("check_is_editable", array("edit", "update", "delete"));
-  before_action("sent_and_not_published", array("review", "grant", "reject"));
+  before_action("sent_and_not_published", array("review", "grant", "reject", "send_back"));
 
   switch ($_GET["action"]) {
 
@@ -90,7 +92,7 @@
 
   case "create":
     $request["id"] = create_request($_POST["wave"], $_POST["subsidies"], $_POST["answer"]);
-    $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été sauvegardée dans tes brouillons. N'oublie pas de l'envoyer avant la date limite !";
     redirect_to_action("index");
     break;
 
@@ -114,7 +116,7 @@
     foreach ($_POST["subsidies"] as $subsidy) {
       create_subsidy($subsidy["budget"], $request["id"], $subsidy["requested_amount"], $subsidy["optional_values"]);
     }
-    $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès.";
+    $_SESSION["notice"][] = "Ta demande de subvention a été mise à jour avec succès. N'oublie pas de l'envoyer avant la date limite !";
     redirect_to_action("show");
     break;
 
@@ -135,7 +137,7 @@
     review_request($request["id"]);
     $request = select_request($request["id"], array("id", "wave"));
     $wave = select_wave($request["wave"], array("id", "binet", "term"));
-    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(binet, term)." a été étudiée.";
+    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(term_id(binet, term))." a été étudiée.";
     redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
     break;
 
@@ -146,7 +148,7 @@
     review_request($request["id"]);
     $request = select_request($request["id"], array("id", "wave"));
     $wave = select_wave($request["wave"], array("id", "binet", "term"));
-    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(binet, term)." a été marquée refusée. Nous vous conseillons tout de même de rajouter un commentaire explicatif.";
+    $_SESSION["notice"][] = "La demande de subvention du binet ".pretty_binet_term(term_id(binet, term))." a été marquée refusée. Nous vous conseillons tout de même de rajouter un commentaire explicatif.";
     redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
     break;
 
@@ -160,6 +162,17 @@
     send_request($request["id"]);
     $_SESSION["notice"][] = "Ta demande de subvention a été envoyée avec succès.";
     redirect_to_path(path("", "request", "", binet_prefix(binet, term)));
+    break;
+
+  case "send_back":
+    send_back_request($request["id"]);
+    $_SESSION["notice"][] = "Les administrateurs du binet ont été prévenus que leur demande leur a été renvoyée.";
+    foreach (select_admins(binet, term) as $student) {
+      send_email($student["id"], "Demande de subventions renvoyée", "request_sent_back", array("request" => $request["id"], "binet" => binet, "term" => term, "comment" => $_POST["comment"]));
+    }
+    $request = select_request($request["id"], array("id", "wave"));
+    $wave = select_wave($request["wave"], array("id", "binet", "term"));
+    redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
     break;
 
   default:
