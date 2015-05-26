@@ -12,5 +12,7 @@ htdocs/-FProjet
 
 htdocs/test.php
 
-htdocs/.htaccess
+.htaccess
 vendor
+
+htdocs/asset/video
