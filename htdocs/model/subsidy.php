@@ -23,7 +23,7 @@
     }
     $subsidy = select_entry(
       "subsidy",
-      array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation"),
+      array("id", "budget", "request", "purpose", "requested_amount", "granted_amount", "explanation", "converted_amount", "conditional"),
       $subsidy,
       $fields
     );
@@ -57,7 +57,7 @@
 
   function update_subsidy($subsidy, $hash) {
     update_entry("subsidy",
-                  array("requested_amount", "granted_amount"),
+                  array("requested_amount", "granted_amount", "conditional", "converted_amount"),
                   array("purpose", "explanation"),
                   $subsidy,
                   $hash);
@@ -70,7 +70,7 @@
   function select_subsidies($criteria, $order_by = "", $ascending = true) {
     return select_entries(
       "subsidy",
-      array("budget", "request", "requested_amount", "granted_amount"),
+      array("budget", "request", "requested_amount", "granted_amount", "conditional", "converted_amount"),
       array(),
       array("used_amount", "wave", "expiry_date"),
       $criteria,

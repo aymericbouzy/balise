@@ -57,12 +57,25 @@
     header_if(!has_request_viewing_rights($GLOBALS["request"]["id"]), 401);
   }
 
+  function check_converted_amount_is_editable() {
+    header_if(!converted_amount_is_editable($GLOBALS["request"]["id"]), 401);
+  }
+
+  function check_return_to_operation() {
+    if (isset($_GET["operation"])) {
+      header_if(!validate_input(array("operation")), 400);
+      header_if(!exists_operation($_GET["operation"]), 404);
+      $operation = select_operation($_GET["operation"], array("id", "binet", "term"));
+      $_SESSION["return_to"] = path("show", "operation", $operation["id"], binet_prefix($operation["binet"], $operation["term"]));
+    }
+  }
+
   before_action("check_wave_parameter", array("new"));
   before_action("check_no_existing_request", array("new"));
   before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send", "reject"));
-  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject", "send_back"), array("model_name" => "request", "binet" => binet, "term" => term));
+  before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject", "send_back", "edit_converted_amount", "set_converted_amount"), array("model_name" => "request", "binet" => binet, "term" => term));
   before_action("check_request_viewing_rights", array("show"));
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant", "reject", "send_back"));
@@ -74,7 +87,11 @@
   before_action("check_form", array("send_back"), "send_back_request");
   before_action("check_is_sendable", array("send"));
   before_action("check_is_editable", array("edit", "update", "delete"));
+  before_action("check_converted_amount_is_editable", array("edit_converted_amount", "set_converted_amount"));
+  before_action("create_form", array("edit_converted_amount", "set_converted_amount"), "request_convert");
+  before_action("check_form", array("set_converted_amount"), "request_convert");
   before_action("sent_and_not_published", array("review", "grant", "reject", "send_back"));
+  before_action("check_return_to_operation", array("edit_converted_amount"));
 
   switch ($_GET["action"]) {
 
@@ -173,6 +190,25 @@
     $request = select_request($request["id"], array("id", "wave"));
     $wave = select_wave($request["wave"], array("id", "binet", "term"));
     redirect_to_path(path("show", "wave", $request["wave"], binet_prefix($wave["binet"], $wave["term"])));
+    break;
+
+  case "edit_converted_amount":
+    $request = select_request($request["id"], array("wave", "id", "state", "binet", "answer"));
+    $request["wave"] = select_wave($request["wave"], array("binet", "term", "question", "id", "description"));
+    break;
+
+  case "set_converted_amount":
+    foreach ($_POST as $subsidy => $converted_amount) {
+      update_subsidy($subsidy, array("converted_amount" => $converted_amount));
+    }
+    $_SESSION["notice"][] = "Le montant débloqué de la demande de subvention a été mis à jour.";
+    if (isset($_SESSION["return_to"])) {
+      $return_to = $_SESSION["return_to"];
+      unset($_SESSION["return_to"]);
+      redirect_to_path($return_to);
+    } else {
+      redirect_to_action("show");
+    }
     break;
 
   default:

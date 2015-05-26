@@ -12,6 +12,7 @@
     $budget = select_budget($subsidy["budget"], array("label"));
     $form["fields"]["amount_".$subsidy["id"]] = create_amount_field("le montant accordé au budget \"".$budget["label"]."\"", array("optional" => 1));
     $form["fields"]["explanation_".$subsidy["id"]] = create_text_field("l'explication pour le montant accordé au budget \"".$budget["label"]."\"", array("optional" => 1));
+    $form["fields"]["conditional_".$subsidy["id"]] = create_boolean_field("le choix que le montant accordé au budget \"".$budget["label"]."\" soit conditionnel", array("optional" => 1));
   }
 
   function structured_review_maker($validated_input) {
@@ -20,8 +21,11 @@
       $matched_groups = array();
       if (preg_match("/^amount_([0-9]*)$/", $name, $matched_groups)) {
         $structured_input[$matched_groups[1]]["granted_amount"] = $value;
+        $structured_input[$matched_groups[1]]["converted_amount"] = $value;
       } elseif (preg_match("/^explanation_([0-9]*)$/", $name, $matched_groups)) {
         $structured_input[$matched_groups[1]]["explanation"] = $value;
+      } elseif (preg_match("/^conditional_([0-9]*)$/", $name, $matched_groups)) {
+        $structured_input[$matched_groups[1]]["conditional"] = $value;
       }
     }
     return $structured_input;
@@ -33,12 +37,15 @@
     $initial_input = array();
     $request = $GLOBALS["request"]["id"];
     foreach (select_subsidies(array("request" => $request)) as $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation"));
+      $subsidy = select_subsidy($subsidy["id"], array("id", "granted_amount", "explanation", "conditional"));
       if (!is_empty($subsidy["granted_amount"])) {
         $initial_input["amount_".$subsidy["id"]] = $subsidy["granted_amount"];
       }
       if (!is_empty($subsidy["explanation"])) {
         $initial_input["explanation_".$subsidy["id"]] = $subsidy["explanation"];
+      }
+      if (!is_empty($subsidy["conditional"])) {
+        $initial_input["conditional_".$subsidy["id"]] = $subsidy["conditional"];
       }
     }
     return $initial_input;

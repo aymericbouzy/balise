@@ -136,7 +136,7 @@
     write_controller_rules(array("controller" => "member", "binet_prefix" => true, "except" => array("show", "edit", "update"), "action_on_collection" => array("new_viewer", "create_viewer"), "action_on_member" => array("delete_viewer")));
     write_controller_rules(array("controller" => "budget", "binet_prefix" => true, "action_on_collection" => array("transfer", "copy")));
     write_controller_rules(array("controller" => "operation", "binet_prefix" => true, "action_on_member" => array("validate", "review")));
-    write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant", "reject", "send_back")));
+    write_controller_rules(array("controller" => "request", "binet_prefix" => true, "action_on_member" => array("send", "review", "grant", "reject", "edit_converted_amount", "set_converted_amount", "send_back")));
     write_controller_rules(array("controller" => "wave", "binet_prefix" => true, "except" => array("delete"), "action_on_member" => array("publish", "open")));
 
     fclose($htaccess);

@@ -164,3 +164,10 @@
 .btn-discrete:hover{
   background-color: rgba(0,0,0,0.5);
 }
+
+.btn-small {
+  max-width:170px;
+  font-size:10px;
+  padding:4px;
+  margin-left:5px;
+}

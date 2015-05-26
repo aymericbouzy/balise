@@ -45,6 +45,10 @@
   width:29%;
   float:right;
 }
+
+.content>.granted-amount.conditional-amount {
+  font-size: 0.85em;
+}
 .content>.requested-amount {
   display:inline-block;
   width:39%;

@@ -163,6 +163,7 @@
           </div>
           <div class="granted-amount">
             <?php echo form_input("Montant accordé :", "amount_".$subsidy["id"], $form); ?>
+            <?php echo form_input("sous condition", "conditional_".$subsidy["id"], $form); ?>
           </div>
           <div class="purpose green-background white-text">
             <?php echo $subsidy["purpose"]?>
