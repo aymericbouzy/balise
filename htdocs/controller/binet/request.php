@@ -46,7 +46,7 @@
   }
 
   function check_no_existing_request() {
-    $requests = select_requests(array("binet" => binet, "term" => term, "wave" => $_GET["wave"]));
+    $requests = select_requests(array("binet" => binet, "term" => term, "wave" => $_GET["wave"], "state" => array("NOT IN", array())));
     if (!is_empty($requests)) {
       $GLOBALS["request"] = $requests[0];
       redirect_to_action("show");

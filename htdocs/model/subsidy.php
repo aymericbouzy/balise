@@ -15,7 +15,7 @@
   function select_subsidy($subsidy, $fields = NULL) {
     $present_virtual_fields = array_intersect($fields, array("available_amount"));
     if (!is_empty($present_virtual_fields)) {
-      $fields = array_merge(array("expiry_date", "granted_amount", "used_amount", "published"), $fields);
+      $fields = array_merge(array("expiry_date", "converted_amount", "used_amount", "published"), $fields);
     }
     $present_virtual_fields = array_intersect($fields, array("used_amount", "wave", "expiry_date", "published"));
     if (!is_empty($present_virtual_fields)) {
@@ -42,11 +42,11 @@
       $subsidy["expiry_date"] = $wave["expiry_date"];
       $subsidy["published"] = $wave["published"];
     }
-    if (in_array("granted_amount", $fields)) {
-      set_if_not_set($subsidy["granted_amount"], 0);
+    if (in_array("converted_amount", $fields)) {
+      set_if_not_set($subsidy["converted_amount"], 0);
     }
     if (in_array("available_amount", $fields)) {
-      $subsidy["available_amount"] = current_date() > $subsidy["expiry_date"] || !$subsidy["published"] ? 0 : $subsidy["granted_amount"] - $subsidy["used_amount"];
+      $subsidy["available_amount"] = current_date() > $subsidy["expiry_date"] || !$subsidy["published"] ? 0 : $subsidy["converted_amount"] - $subsidy["used_amount"];
     }
     return $subsidy;
   }
@@ -56,11 +56,13 @@
   }
 
   function update_subsidy($subsidy, $hash) {
-    update_entry("subsidy",
-                  array("requested_amount", "granted_amount", "conditional", "converted_amount"),
-                  array("purpose", "explanation"),
-                  $subsidy,
-                  $hash);
+    update_entry(
+      "subsidy",
+      array("requested_amount", "granted_amount", "conditional", "converted_amount"),
+      array("purpose", "explanation"),
+      $subsidy,
+      $hash
+    );
   }
 
   function delete_subsidy($subsidy) {

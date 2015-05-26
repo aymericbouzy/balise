@@ -18,7 +18,7 @@
     foreach ($validated_input as $name => $value) {
       $matched_groups = array();
       if (preg_match("/^amount_([0-9]*)$/", $name, $matched_groups)) {
-        $structured_input[$matched_groups[1]]["converted_amount"] = $value;
+        $structured_input[$matched_groups[1]] = $value;
       }
     }
     return $structured_input;

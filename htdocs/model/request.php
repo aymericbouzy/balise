@@ -1,4 +1,4 @@
-  <?php
+<?php
 
   function create_request($wave, $subsidies, $answer = "") {
     $values["wave"] = $wave;
