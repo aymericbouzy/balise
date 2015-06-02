@@ -116,8 +116,8 @@
         ) :
         $caption;
 
-      if(converted_amount_is_editable($request['id'])){
-        $convert_amount_link = link_to(path("edit_converted_amount", "request", $request['id'], binet_prefix(binet,term), array("operation" => $operation["id"])),
+      if (converted_amount_is_editable($request['id'])) {
+        $convert_amount_link = link_to(path("edit_converted_amount", "request", $request['id'], binet_prefix(binet,term)),
           "Attribuer le montant conditionnel",
           array("class" => "btn btn-success btn-small"));
         $panel_content.=  "<div class=\"content\">".$convert_amount_link."</div>";
