@@ -385,6 +385,14 @@
   font-size:15px;
 }
 
+.sh-req-budget>.content>.text>.conditional-subsidy {
+  display: block;
+  width: 100%;
+  padding-left: 5%;
+  font-size: 0.9em;
+  font-weight: 700;
+}
+
 .sh-req-budget>.content>.amount {
   width:100%;
   text-indent: 10px;

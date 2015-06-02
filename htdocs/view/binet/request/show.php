@@ -88,10 +88,10 @@
   ?>
   <?php
     foreach (select_subsidies(array("request" => $request["id"])) as $subsidy) {
-      $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "requested_amount", "granted_amount", "used_amount", "purpose"));
+      $subsidy = select_subsidy($subsidy["id"], array("id", "budget", "conditional", "requested_amount", "granted_amount", "used_amount", "purpose"));
       $budget = select_budget($subsidy["budget"], array("id", "label", "binet", "term"));
+      $panel_header = "<div class=\"header\"><span class=\"name\">".$budget["label"]."</span></div>";
       ob_start();
-      echo "<div class=\"header\"><span class=\"name\">".$budget["label"]."</span></div>";
       echo "<div class=\"content\">
         <p class=\"amount\">".
         ($has_viewing_rights ? pretty_amount($subsidy["used_amount"])." utilisés, " : "").
@@ -99,17 +99,31 @@
         ($has_viewing_rights ? ", ".pretty_amount($subsidy["requested_amount"])." demandés" :"")."</i>
         </p>
         <p class=\"text\">".
+            ($subsidy['conditional'] ? "
+              <span class=\"conditional-subsidy white-text green-background\">
+                Subvention soumise à conditions
+              </span>"
+              : "").
         		$subsidy["purpose"].
        "</p>
         </div>";
-      $caption = "<div class=\"sh-req-budget shadowed\">".ob_get_clean()."</div>";
-      echo has_viewing_rights(binet, term) ?
+      $caption = ob_get_clean();
+      $panel_content = has_viewing_rights(binet, term) ?
         link_to(
           path("show", "budget", $budget["id"], binet_prefix($budget["binet"], $budget["term"])),
           $caption,
           array("goto" => true)
         ) :
         $caption;
+
+      if(converted_amount_is_editable($request['id'])){
+        $convert_amount_link = link_to(path("edit_converted_amount", "request", $request['id'], binet_prefix(binet,term), array("operation" => $operation["id"])),
+          "Attribuer le montant conditionnel",
+          array("class" => "btn btn-success btn-small"));
+        $panel_content.=  "<div class=\"content\">".$convert_amount_link."</div>";
+      }
+
+      echo "<div class=\"sh-req-budget shadowed\">".$panel_header.$panel_content."</div>";
     }
   ?>
 </div>
