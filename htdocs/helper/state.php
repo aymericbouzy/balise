@@ -36,7 +36,13 @@
     }
   }
 
-  function wave_state($state) {
+  function wave_state($state, $has_conditionals = 0) {
+    if($has_conditionals){
+      switch ($state) {
+      case "distribution":
+      return array("name" => "Émise - subventions sous condtion", "color" => "green", "icon" => "money");
+      }
+    }
     switch ($state) {
       case "rough_draft":
       return array("name" => "Brouillon", "color" => "grey", "icon" => "user-secret");
@@ -53,7 +59,7 @@
 
   function request_used_amount_status($request){
     if($request["granted_amount"] == 0) return "grey";
-    
+
     $remaining = ($request["granted_amount"] - $request["used_amount"]) / $request["granted_amount"];
     if($remaining < 0){
       return "red";

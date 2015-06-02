@@ -44,7 +44,7 @@
       <?php
       foreach ($waves as $wave) {
         $wave = select_wave($wave["id"], array("id", "name", "submission_date", "expiry_date", "binet", "term", "state", "granted_amount", "requested_amount"));
-        $wave_state = wave_state($wave["state"]);
+        $wave_state = wave_state($wave["state"], wave_has_conditionals($wave['id']));
         ?>
         <li class="content-line-panel-small">
           <?php

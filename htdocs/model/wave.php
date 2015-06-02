@@ -174,3 +174,15 @@
     }
     return array("used_amount" => $used_amount, "granted_amount" => $granted_amount, "requested_amount" => $requested_amount);
   }
+
+  function wave_has_conditionals($wave){
+    if(select_wave($wave, array("state"))["state"] != "distribution")
+      return false;
+
+    foreach(select_requests(array("wave" => $wave)) as $request) {
+      foreach (select_subsidies(array("request" => $request)) as $subsidy) {
+        if(select_subsidy($subsidy, array("conditional"))['conditional']) return true;
+      }
+    }
+    return false;
+  }
