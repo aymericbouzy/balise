@@ -144,10 +144,17 @@
                     <div class="content light-blue-background">
                       <?php
                         foreach(select_subsidies(array("request" => $request["id"])) as $subsidy){
-                          $subsidy = select_subsidy($subsidy["id"],array("id","budget","purpose","requested_amount","used_amount","granted_amount"));
+                          $subsidy = select_subsidy($subsidy["id"],array("id","budget","purpose", "conditional","requested_amount","used_amount","granted_amount"));
                           ?>
                           <div class="subsidy">
-                            <span><?php echo pretty_budget($subsidy["budget"], true, false); ?></span>
+                            <span>
+                              <?php
+                                echo pretty_budget($subsidy["budget"], true, false);
+                                if($subsidy["conditional"]){
+                                  echo " (subvention sous conditions)";
+                                }
+                              ?>
+                              </span>
                             <span class="grey-400-background"><?php echo ($can_see_granted_amount ? pretty_amount($subsidy["granted_amount"])."/": " ").pretty_amount($subsidy["requested_amount"]); ?></span>
                             <span><?php echo $subsidy["used_amount"] > 0 ? pretty_amount($subsidy["used_amount"], false) : ""; ?></span>
                           </div>
