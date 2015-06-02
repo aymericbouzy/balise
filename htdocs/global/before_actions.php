@@ -97,14 +97,14 @@
 
   function has_editing_rights($binet, $term) {
     $current_term = current_term($binet);
-    $terms_admin = select_terms(array("binet" => $binet, "term" => array(">=", $current_term), "student" => connected_student(), "rights" => editing_rights), "term");
+    $terms_admin = select_terms(array("binet" => $binet, "student" => connected_student(), "rights" => editing_rights), "term");
     if (is_empty($terms_admin)) {
       return false;
     }
     $term_admin = explode("/", $terms_admin[0]["id"])[1];
     return is_numeric($term_admin) &&
       $term_admin >= $current_term &&
-      $term_admin <= $term;
+      ($term_admin == $term || $term_admin + 1 == $term);
   }
 
   function has_request_viewing_rights($request) {

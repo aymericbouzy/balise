@@ -2,12 +2,12 @@
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
   <div class="col-lg-10 col-md-10 col-sm-12">
   	<?php
-      if (is_transferable()) {
+      if (is_transferable() && has_editing_rights(binet, term)) {
       ?>
       <div class="row">
         <div id="transfer_budgets">
            <?php
-            if (sizeOf($budgets) == 0) {
+           if (sizeOf($budgets) == 0) {
               echo link_to(
                 path("transfer", "budget", "", binet_prefix(binet, term)),
                 "<i class=\"fa fa-fw fa-arrow-down\"></i> Importer des budgets du mandat précédent",
