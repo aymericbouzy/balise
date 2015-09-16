@@ -259,7 +259,7 @@
     left:5px;
     top:5px;
     height:50px;
-    width:520px;
+    width:260px;
   }
 
   #subsidies_used {
@@ -267,6 +267,13 @@
     top:60px;
     height:50px;
     width:200px;
+  }
+
+  #subsidies_used_std {
+    left:270px;
+    top:5px;
+    height:50px;
+    width:260px;
   }
 }
 
