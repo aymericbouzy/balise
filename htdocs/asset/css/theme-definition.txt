@@ -1,7 +1,12 @@
+Standard panels width : 543 px
+Standard width for media requests : 768px
+
 Colors :
 #2e2e2e Dark grey
 #3399FF Blue
 #cbddff Light blue
+
+See more colors in background-colors.css
 
 --> Change a color using find/replace
 

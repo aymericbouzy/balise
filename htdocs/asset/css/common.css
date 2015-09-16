@@ -26,6 +26,7 @@ body {
     padding-bottom: 50px;
     height:auto;
     padding-top:100px;
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .huge {
@@ -220,6 +221,7 @@ a#uncollapse_terms {
 
 /*-------------------------------------------------------------------*/
 /*Tags and containers*/
+
 .tip {
   display : block;
   padding:5px;
@@ -321,7 +323,6 @@ a#uncollapse_terms {
 }
 
 /*------ Footer ------------*/
-/*------ Footer ------------*/
 footer {
   all:none;
   position :fixed;
@@ -343,7 +344,6 @@ footer>#bug-report-action {
 }
 
 /*----- Switch -----------*/
-/*-- Switch -- */
 .switch{
   display: inline-block;
   margin-top: 2px;

@@ -1,7 +1,4 @@
-/* Use only for indexing binets & show binet */
-#page-wrapper {
-  background-color:rgba(0,0,0,0);
-}
+/* Used only for binet index & binet show */
 #wrapper {
   padding-left:0px;
 }
