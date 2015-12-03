@@ -34,6 +34,7 @@
     }
     return "";
   }
+
   $form["validations"] = array("check_total_amount_positive");
 
   function structured_request_maker($validated_input) {
