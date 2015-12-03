@@ -67,6 +67,7 @@
   before_action("check_editing_rights", array("new", "create", "edit", "update", "delete", "send"));
   before_action("check_granting_rights", array("review", "grant", "reject", "send_back"));
   before_action("create_form", array("new", "create", "edit", "update"), "request_entry");
+  before_action("create_form", array("new", "create", "edit", "update"), "budget");
   before_action("check_form", array("create", "update"), "request_entry");
   before_action("create_form", array("review", "grant"), "request_review");
   before_action("check_form", array("grant"), "request_review");
