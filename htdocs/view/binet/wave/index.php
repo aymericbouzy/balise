@@ -1,5 +1,6 @@
 <div id="wave-index-wrapper">
   <div id="wave-index">
+    <?php echo link_to(path("new", "wave", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-money\"></i> Nouvelle vague de subvention", array("class" => "btn")); ?>
     <ul class="list">
       <?php
       if (has_viewing_rights(binet, term)) {
