@@ -79,6 +79,11 @@
 <div class="row">
 	<div class="col-lg-1 col-md-1 col-sm-0"></div>
 	<div class="col-lg-10 col-md-10 col-sm-12">
+    <div class="row">
+      <div id="transfer_budgets">
+        <?php echo link_to(path("new", "operation", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-calculator\"></i> Nouvelle Opération", array("class" => "btn")); ?>
+      </div>
+    </div>
 	  <div class="panel shadowed">
 	    <div class="title">Opérations</div>
 	    <div class="content">

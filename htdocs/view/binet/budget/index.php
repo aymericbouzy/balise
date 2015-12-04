@@ -23,8 +23,8 @@
             }
             ?>
           </div>
-         </div>
-       <?php
+        </div>
+        <?php
        }
       ?>
     <div class="panel shadowed">
