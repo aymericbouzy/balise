@@ -81,7 +81,11 @@
 	<div class="col-lg-10 col-md-10 col-sm-12">
     <div class="row">
       <div id="transfer_budgets">
-        <?php echo link_to(path("new", "operation", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-database\"></i> Nouvelle opération", array("class" => "btn")); ?>
+        <?php
+        if (has_editing_rights(binet, term)) {
+          echo link_to(path("new", "operation", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-database\"></i> Nouvelle opération", array("class" => "btn"));
+        }
+        ?>
       </div>
     </div>
 	  <div class="panel shadowed">

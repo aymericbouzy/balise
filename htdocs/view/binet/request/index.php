@@ -1,5 +1,9 @@
 <div id="index-wrapper">
-  <?php echo modal_toggle("request","<i class=\"fa fa-fw fa-money\"></i> Nouvelle demande de subventions","btn","wave-select");?>
+  <?php
+  if (has_editing_rights(binet, term)) {
+    echo modal_toggle("request","<i class=\"fa fa-fw fa-money\"></i> Nouvelle demande de subventions","btn","wave-select");
+  }
+  ?>
   <div class="panel shadowed light-blue-background">
     <div class="title">
       Informations générales
