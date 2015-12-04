@@ -117,7 +117,14 @@
         } else {
           foreach ($waves_for_modal as $wave_for_modal) {
             $wave_for_modal = select_wave($wave_for_modal["id"], array("state","id"));
-            if ($wave_for_modal["state"] == "submission") {
+            $requests_for_modal = select_requests(array("wave", $wave_for_modal["id"]));
+            if (is_empty($requests_for_modal)) {
+              $request_is_late = true;
+            } else {
+              $request_for_modal = select_request($requests_for_modal[0]["id"], array("sending_date"));
+              $request_is_late = is_empty($request_for_modal["sending_date"]);
+            }
+            if (!$request_is_late) {
               echo link_to(
                 path("new", "request", "", binet_prefix(binet,term),array("wave" => $wave_for_modal["id"])),
                 pretty_wave($wave_for_modal["id"],false),
