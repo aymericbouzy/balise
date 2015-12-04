@@ -1,15 +1,13 @@
 <div class="row">
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
   <div class="col-lg-10 col-md-10 col-sm-12">
-  	<?php
-    if (is_transferable()) {
-      ?>
-      <div class="row">
-        <div id="transfer_budgets">
-          <?php
-          if (has_editing_rights(binet, term)) {
-            echo link_to(path("new", "budget", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Nouvelle ligne budgétaire", array("class" => "btn"));
-          }
+    <div class="row">
+      <div id="transfer_budgets">
+        <?php
+        if (has_editing_rights(binet, term)) {
+          echo link_to(path("new", "budget", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Nouvelle ligne budgétaire", array("class" => "btn"));
+        }
+        if (is_transferable()) {
           if (sizeOf($budgets) == 0) {
             echo link_to(
               path("transfer", "budget", "", binet_prefix(binet, term)),
@@ -24,12 +22,10 @@
               "Importer des budgets du mandat précédent"
             );
           }
-          ?>
-        </div>
+        }
+        ?>
       </div>
-      <?php
-    }
-    ?>
+    </div>
     <div class="panel shadowed">
       <div class="title">Résumé de la trésorerie du binet</div>
       <div class="content">
