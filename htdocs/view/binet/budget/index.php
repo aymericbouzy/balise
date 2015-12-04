@@ -6,7 +6,8 @@
       ?>
       <div class="row">
         <div id="transfer_budgets">
-           <?php
+          <?php echo link_to(path("new", "budget", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Nouvelle ligne budgétaire", array("class" => "btn")); ?>
+          <?php
             if (sizeOf($budgets) == 0) {
               echo link_to(
                 path("transfer", "budget", "", binet_prefix(binet, term)),
