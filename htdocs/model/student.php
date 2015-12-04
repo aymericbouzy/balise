@@ -14,7 +14,7 @@
     return $binet;
   }
 
-  function select_students($criteria = array(), $order_by = NULL, $ascending = true) {
+  function select_students($criteria = array(), $order_by = "name", $ascending = true) {
     return select_entries(
       "student",
       array(),
