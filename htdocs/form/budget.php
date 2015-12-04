@@ -2,17 +2,28 @@
 
   define("new_tag_submit_value", "+");
 
-  if (in_array($_GET["action"], array("new", "create"))) {
+  if ($_GET["controller"] == "budget" && !(isset($_GET["from_request"]) && $_GET["from_request"] == 1)) {
+    $controller = "budget";
+    $query_array = array();
+    if (in_array($_GET["action"], array("new", "create"))) {
+      $origin_action = "new";
+      $destination_action = "create";
+      $id = "";
+    } else {
+      $origin_action = "edit";
+      $destination_action = "update";
+      $id = $GLOBALS["budget"]["id"];
+    }
+  } else {
+    $controller = "request";
     $origin_action = "new";
     $destination_action = "create";
     $id = "";
-  } else {
-    $origin_action = "edit";
-    $destination_action = "update";
-    $id = $GLOBALS["budget"]["id"];
+    $query_array = array("wave" => $_GET["wave"], "from_request" => 1);
   }
-  $form["redirect_to_if_error"] = path($origin_action, "budget", $id, binet_prefix(binet, term));
-  $form["destination_path"] = path($destination_action, "budget", $id, binet_prefix(binet, term));
+
+  $form["redirect_to_if_error"] = path($origin_action, $controller, $id, binet_prefix(binet, term), $query_array);
+  $form["destination_path"] = path($destination_action, "budget", $id, binet_prefix(binet, term), $query_array);
   $form["html_form_path"] = VIEW_PATH."binet/budget/form.php";
   $form["fields"]["label"] = create_name_field("le nom du budget", array("optional" => $origin_action == "edit" ? 1 : 0));
   $form["fields"]["tags"] = create_id_field("la liste des mots-clefs", "tag", array("optional" => 1, "multiple" => 1));

@@ -48,7 +48,7 @@
     add_admin_binet($_POST["student"], binet, $admin_term);
     send_email($_POST["student"], "Nouveau binet", "new_admin_rights", array("binet_term" => term_id(binet, $admin_term)));
     $_SESSION["notice"][] = pretty_student($_POST["student"])." est à présent administrateur du binet ".pretty_binet(binet)." pour la promotion ".$admin_term.".";
-    redirect_to_action("");
+    redirect_to_action("new");
     break;
 
   case "delete":
@@ -65,7 +65,7 @@
     $admin_term = current_term(binet) + $_POST["next_term"];
     add_viewer_binet($_POST["student"], binet, $admin_term);
     $_SESSION["notice"][] = pretty_student($_POST["student"])." peut à présent voir le détail de la trésorerie du binet ".pretty_binet(binet)." pour la promotion ".$admin_term.".";
-    redirect_to_action("");
+    redirect_to_action("new_viewer");
     break;
 
   case "delete_viewer":

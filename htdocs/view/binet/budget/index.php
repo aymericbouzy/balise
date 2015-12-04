@@ -2,31 +2,34 @@
   <div class="col-lg-1 col-md-1 col-sm-0"></div>
   <div class="col-lg-10 col-md-10 col-sm-12">
   	<?php
-      if (is_transferable() && has_editing_rights(binet, term)) {
+    if (is_transferable()) {
       ?>
       <div class="row">
         <div id="transfer_budgets">
-           <?php
-           if (sizeOf($budgets) == 0) {
-              echo link_to(
+          <?php
+          if (has_editing_rights(binet, term)) {
+            echo link_to(path("new", "budget", "", binet_prefix(binet, term)), "<i class=\"fa fa-fw fa-bar-chart\"></i> Nouvelle ligne budgétaire", array("class" => "btn"));
+          }
+          if (sizeOf($budgets) == 0) {
+            echo link_to(
+              path("transfer", "budget", "", binet_prefix(binet, term)),
+              "<i class=\"fa fa-fw fa-arrow-down\"></i> Importer des budgets du mandat précédent",
+              array("class" => "btn")
+            );
+          } else {
+            echo insert_tooltip(
+              link_to(
                 path("transfer", "budget", "", binet_prefix(binet, term)),
-                "<i class=\"fa fa-fw fa-arrow-down\"></i> Importer des budgets du mandat précédent",
-                array("class" => "btn")
-              );
-            } else {
-              echo insert_tooltip(
-                link_to(
-                  path("transfer", "budget", "", binet_prefix(binet, term)),
-                  "<i class=\"fa fa-fw fa-arrow-down\"></i>",array("class" => "btn btn-discrete")),
-                "Importer des budgets du mandat précédent"
-              );
-            }
-            ?>
-          </div>
-         </div>
-       <?php
-       }
-      ?>
+                "<i class=\"fa fa-fw fa-arrow-down\"></i>",array("class" => "btn btn-discrete")),
+              "Importer des budgets du mandat précédent"
+            );
+          }
+          ?>
+        </div>
+      </div>
+      <?php
+    }
+    ?>
     <div class="panel shadowed">
       <div class="title">Résumé de la trésorerie du binet</div>
       <div class="content">

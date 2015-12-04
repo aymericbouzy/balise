@@ -114,7 +114,7 @@
 	     			echo minipane("reviewForm_granted-requested_old", "Accordées / demandées ",
 	          		$previous_binet["subsidized_amount_granted"],
 	          		$previous_binet["subsidized_amount_requested"]);
-	          echo minipane("reviewForm_used-available_old", " Utilisées",
+	          echo minipane("reviewForm_used-available_old", " Utilisées / disponibles",
 	          		$previous_binet["subsidized_amount_used"],"0");
 	        ?>
 	    	</div>

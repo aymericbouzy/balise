@@ -27,7 +27,7 @@
     return select_binet($binet) ? true : false;
   }
 
-  function select_binets($criteria = array(), $order_by = "", $ascending = true) {
+  function select_binets($criteria = array(), $order_by = "name", $ascending = true) {
     return select_entries(
       "binet",
       array("subsidy_provider", "current_term", "id"),

@@ -59,6 +59,9 @@
       add_tag_budget($tag, $budget["id"]);
     }
     $_SESSION["notice"][] = "La ligne de budget a été créée avec succès.";
+    if (isset($_GET["from_request"]) && $_GET["from_request"] == 1) {
+      redirect_to_path(path("new", "request", "", binet_prefix(binet, term), array("wave" => $_GET["wave"])));
+    }
     redirect_to_action("index");
     break;
 
