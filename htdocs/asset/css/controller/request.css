@@ -226,29 +226,6 @@
   -webkit-filter: sepia(0.6);
 }
 
-#current-term:hover ,
-#previous-term:hover{
-  -webkit-filter:brightness(0.7);
-}
-#current-term >.message,
-#previous-term>.message{
-  color:#fff;
-  position:absolute;
-  top:10px;
-  left:30%;
-  margin:auto;
-  background-color:#2e2e2e;
-  padding:5px;
-  border-radius:4px;
-  z-index:1000;
-  visibility:hidden;
-}
-#current-term:hover>.message,
-#previous-term:hover>.message {
-  visibility : visible;
-}
-
-
 #reviewForm_owner-granted-requested {background-color:#AA00FF;}
 #reviewForm_owner-used-available { background-color: #3E2723;}
 #reviewForm_owner-used-granted_old { background-color: #5e5e5e;}

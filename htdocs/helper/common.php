@@ -45,7 +45,7 @@
     return "<img src=\"".IMG_PATH.$src."\" alt = \"".$alt."\"\>";
   }
 
-  function button($path, $caption, $icon, $background_color, $link = true, $size = "",$label_position="right") {
+  function button($path, $caption, $icon, $background_color, $link = true, $size = "", $label_position = "right") {
     if ($size != "") {
       $size = "-".$size;
     }
