@@ -108,48 +108,97 @@
         }
       ?>
       <div class="sh-wa-stats-container shadowed2">
-        <div class="sh-wa-stats">
+        <?php
+        ob_start();
+        if (has_viewing_rights(binet, term)) {
+          ?>
+          <div class="item blue-background">
+            Montant total demandé :<br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
+            <?php echo " / ".pretty_amount($wave["amount"], false, true)." à répartir"; ?>
+          </div>
           <?php
-          if (has_viewing_rights(binet, term)) {
-            ?>
-            <div class="item blue-background">
-              Montant total demandé :<br> <?php echo pretty_amount($wave["requested_amount"], false, true); ?>
-              <?php echo " / ".pretty_amount($wave["amount"], false, true)." à répartir"; ?>
-            </div>
-            <?php
+        }
+        ?>
+        <div class="item green-background">
+          <?php
+          if ((has_viewing_rights(binet, term) && $subsidizer_can_study) || (!$subsidizer_can_study && !has_viewing_rights(binet, term))) {
+            echo "Montant total accordé :<br> ".pretty_amount($wave["granted_amount"], false, true);
+          } else if (has_viewing_rights(binet, term) && !$subsidizer_can_study) {
+            echo "Montant total utilisé :<br> ".pretty_amount($wave["used_amount"], false, false)." / ".pretty_amount($wave["granted_amount"], false, true)." accordé.";
+          } else {
+            echo "Montant total accordé : <br> <i>non divulgé pour l'instant</i>";
           }
           ?>
-          <div class="item green-background">
-            <?php
-            if ((has_viewing_rights(binet, term) && $subsidizer_can_study) || (!$subsidizer_can_study && !has_viewing_rights(binet, term))) {
-              echo "Montant total accordé :<br> ".pretty_amount($wave["granted_amount"], false, true);
-            } else if (has_viewing_rights(binet, term) && !$subsidizer_can_study) {
-              echo "Montant total utilisé :<br> ".pretty_amount($wave["used_amount"], false, false)." / ".pretty_amount($wave["granted_amount"], false, true)." accordé.";
-            } else {
-              echo "Montant total accordé : <br> <i>non divulgé pour l'instant</i>";
-            }
-            ?>
-          </div>
-          <div class="item teal-background">
-            <?php
-            if(has_viewing_rights(binet, term)) {
-              if($subsidizer_can_study){
-                echo "Demandes traitées :<br> ".$wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";
-              } else {
-                echo "Demandes acceptées :<br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
-              }
-            }
-            else {
-              if($subsidizer_can_study){
-                echo "Demandes reçues :<br> ".$wave["requests_received"];
-              } else {
-                echo "Demandes acceptées :<br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
-              }
-            }
-            ?>
-          </div>
         </div>
+        <div class="item teal-background">
+          <?php
+          if(has_viewing_rights(binet, term)) {
+            if($subsidizer_can_study){
+              echo "Demandes traitées :<br> ".$wave["requests_reviewed"]." / ".$wave["requests_received"]." demandes";
+            } else {
+              echo "Demandes acceptées :<br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+            }
+          }
+          else {
+            if($subsidizer_can_study){
+              echo "Demandes reçues :<br> ".$wave["requests_received"];
+            } else {
+              echo "Demandes acceptées :<br> ".$wave["requests_accepted"]." / ".$wave["requests_received"]." demandes";
+            }
+          }
+          ?>
+        </div>
+        <?php
+        if (has_viewing_rights(binet, term)) {
+          echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Exporter dans un tableau</span>";
+          echo modal_toggle("subsidies-export-toggle", ob_get_clean(), "sh-wa-stats", "subsidies-export");
+        } else {
+          echo ob_get_clean();
+        }
+
+        ?>
       </div>
     </div>
   </div>
 </div>
+
+<?php
+if (has_viewing_rights(binet, term)) {
+  ob_start();
+  ?>
+  <table class="table table-bordered table-hover table-small-char">
+    <thead>
+      <tr>
+        <td>Binet</td>
+        <td>Promo</td>
+        <td>Montant demandé</td>
+        <td>Subventions déjà utilisées</td>
+        <td>Subventions déjà accordées</td>
+        <td>Subventions utilisées par la promo précédente</td>
+      </tr>
+    </thead>
+    <tbody class="list">
+    <?php
+    $requests = select_requests(array("wave" => $wave["id"]));
+    foreach ($requests as $request) {
+      $request = select_request($request["id"], array("id", "binet", "term", "requested_amount"));
+      $binet_term = select_term_binet(term_id($request["binet"], $request["term"]), array("subsidized_amount_used", "subsidized_amount_granted"));
+      $previous_binet_term = select_term_binet(term_id($request["binet"], $request["term"] - 1), array("subsidized_amount_used"));
+      ?>
+      <tr>
+        <td><?php echo pretty_binet($request["binet"], false, false); ?></td>
+        <td><?php echo $request["term"]; ?></td>
+        <td><?php echo pretty_amount($request["requested_amount"], false); ?></td>
+        <td><?php echo pretty_amount($binet_term["subsidized_amount_used"], false); ?></td>
+        <td><?php echo pretty_amount($binet_term["subsidized_amount_granted"], false); ?></td>
+        <td><?php echo is_empty($previous_binet_term) ? "" : pretty_amount($previous_binet_term["subsidized_amount_used"], false); ?></td>
+      </tr>
+      <?php
+    }
+    ?>
+    </tbody>
+  </table>
+  <?php
+  echo modal("subsidies-export", ob_get_clean(), array("title" => "Tableau résumé de toutes les demandes de subventions"));
+}
+?>
