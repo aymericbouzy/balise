@@ -30,7 +30,8 @@
       }
     }
     if ($sum <= 0) {
-      return "Tu n'as pas demandé d'argent dans ta demande de subventions.";
+      $budgets = select_budgets(array("binet" => binet, "term" => term, "amount" => array("<", 0)));
+      return is_empty($budgets) ? "Tu n'as pas créé de budget pour lequel demander des subventions." : "Tu n'as pas demandé d'argent dans ta demande de subventions.";
     }
     return "";
   }

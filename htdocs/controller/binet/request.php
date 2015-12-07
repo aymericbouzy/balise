@@ -59,7 +59,7 @@
 
   before_action("check_wave_parameter", array("new"));
   before_action("check_no_existing_request", array("new"));
-  before_action("check_exists_spending_budget", array("new"));
+  // before_action("check_exists_spending_budget", array("new"));
   before_action("check_csrf_post", array("update", "create", "grant"));
   before_action("check_csrf_get", array("delete", "send", "reject"));
   before_action("check_entry", array("show", "edit", "update", "delete", "send", "review", "grant", "reject", "send_back"), array("model_name" => "request", "binet" => binet, "term" => term));

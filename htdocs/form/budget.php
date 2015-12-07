@@ -19,7 +19,7 @@
     $origin_action = "new";
     $destination_action = "create";
     $id = "";
-    $query_array = array("wave" => $_GET["wave"], "from_request" => 1);
+    $query_array = isset($_GET["wave"]) ? array("wave" => $_GET["wave"], "from_request" => 1) : array();
   }
 
   $form["redirect_to_if_error"] = path($origin_action, $controller, $id, binet_prefix(binet, term), $query_array);
