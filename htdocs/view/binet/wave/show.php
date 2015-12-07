@@ -153,9 +153,8 @@
           echo "<span class=\"message\"><i class=\"fa fa-fw fa-eye\"></i> Exporter dans un tableau</span>";
           echo modal_toggle("subsidies-export-toggle", ob_get_clean(), "sh-wa-stats", "subsidies-export");
         } else {
-          echo ob_get_clean();
+          echo "<div class=\"sh-wa-stats\">".ob_get_clean()."</div>";
         }
-
         ?>
       </div>
     </div>
