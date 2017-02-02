@@ -88,3 +88,7 @@ Il existe une exception à cette norme : les vues. Les vues sont tellement susce
 * *le dossier form/* : la logique de chaque formulaire est décrite a cette endroit. Il permet ensuite soit de génerer le formulaire HTML montré à l'utilisateur, soit de vérifier que `$_POST` contient des informations valides pour ce formulaire, et de les mettre en forme pour être utilisable par le controlleur.
 * *les fichiers base.php* : ces fichiers contiennent du code qui doit être effectué préalablement à l'exécution de n'importe quel fichier dans le même dossier.
 * *le fichier .htaccess* : il est généré par le site : inutile d'aller le modifier soi-même ! c'est la fonction `urlrewrite` qui s'en occupe.
+
+## Contact
+
+Vous pouvez contacter aymeric.bouzy@polytechnique.edu pour tout renseignement.
